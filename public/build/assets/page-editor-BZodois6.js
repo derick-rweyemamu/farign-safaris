@@ -1307,7 +1307,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
       </div>
     </div>
     <div class="why-content">
-      <div class="section-label">Why Jairo's Adventure</div>
+      <div class="section-label">Why Mwangwi Safaris</div>
       <h2 class="section-title">The Expert With<br><em>In-Depth Knowledge</em></h2>
       <p class="section-sub" style="color: rgba(255,255,255,0.6);">Born and raised in Tanzania, our team brings unmatched local knowledge, personal connections, and genuine passion for sharing this incredible country with the world.</p>
       <ul class="why-list">
@@ -1767,7 +1767,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
           <span style="font-size:12px; font-weight:600; color:#00aa6c; letter-spacing:0.03em;">TripAdvisor</span>
         </div>
         <div class="review-stars" style="color:#00aa6c;">★★★★★</div>
-        <p class="review-text">"An absolutely unforgettable honeymoon. Jairo's team handled everything — from the airport pickup to sunset game drives. Our guide Issa felt like family within minutes. Seeing the Big Five in Ngorongoro was pure magic."</p>
+        <p class="review-text">"An absolutely unforgettable honeymoon. Mwangwi's team handled everything — from the airport pickup to sunset game drives. Our guide Issa felt like family within minutes. Seeing the Big Five in Ngorongoro was pure magic."</p>
         <div class="review-author">
           <div class="review-avatar">MK</div>
           <div><div class="review-name">Maria &amp; Karl</div><div class="review-loc">Germany · Safari + Zanzibar, 2025</div></div>
@@ -1809,7 +1809,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
           <span style="font-size:12px; font-weight:600; color:#00aa6c; letter-spacing:0.03em;">TripAdvisor</span>
         </div>
         <div class="review-stars" style="color:#00aa6c;">★★★★★</div>
-        <p class="review-text">"We traveled as a family of five with three kids. Jairo's team tailored every single detail — pace, lodges, activities. Our children saw lions, elephants, and a cheetah! This trip changed all of us."</p>
+        <p class="review-text">"We traveled as a family of five with three kids. Mwangwi's team tailored every single detail — pace, lodges, activities. Our children saw lions, elephants, and a cheetah! This trip changed all of us."</p>
         <div class="review-author">
           <div class="review-avatar">SF</div>
           <div><div class="review-name">Sarah F.</div><div class="review-loc">USA · Family Safari, 2024</div></div>
