@@ -1,0 +1,12 @@
+/.env
+/app.zip
+/node_modules
+/storage
+/zamani.zip
+/public/storage
+/bootstrap/cache
+/public/.htaccess
+/.htaccess
+/public/hot
+/vendor
+scratch/

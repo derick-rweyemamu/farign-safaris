@@ -1,0 +1,69 @@
+{
+  "_module.esm-DyhVr_xI.js": {
+    "file": "assets/module.esm-DyhVr_xI.js",
+    "name": "module.esm"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-Cc7Nby_c.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-BmZMf76l.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_module.esm-DyhVr_xI.js"
+    ]
+  },
+  "resources/js/page-editor.js": {
+    "file": "assets/page-editor-BZodois6.js",
+    "name": "page-editor",
+    "src": "resources/js/page-editor.js",
+    "isEntry": true,
+    "css": [
+      "assets/page-editor-DPZiZnSR.css"
+    ]
+  },
+  "resources/themes/admin/assets/css/app.css": {
+    "file": "assets/app-B8zlc6pW.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/themes/admin/assets/css/app.css",
+    "isEntry": true
+  },
+  "resources/themes/admin/assets/js/app.js": {
+    "file": "assets/app-Cb2gGk2b.js",
+    "name": "app",
+    "src": "resources/themes/admin/assets/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_module.esm-DyhVr_xI.js"
+    ]
+  },
+  "resources/themes/frontend/assets/css/app.css": {
+    "file": "assets/app-DRcQS87x.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/themes/frontend/assets/css/app.css",
+    "isEntry": true
+  },
+  "resources/themes/frontend/assets/js/app.js": {
+    "file": "assets/app-BpZ8Cb2z.js",
+    "name": "app",
+    "src": "resources/themes/frontend/assets/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_module.esm-DyhVr_xI.js"
+    ]
+  }
+}
