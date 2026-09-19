@@ -12,10 +12,10 @@
                 onclick="toggleQuickNav(false)">
                 <h3
                     class="!text-xs font-bold text-gray-900 dark:text-white capitalize tracking-wider m-0 flex items-center gap-2">
-                    <x-icon name="bars-3" class="w-5 h-5 mr-2 text-[#EC9824]" />
+                    <x-icon name="bars-3" class="w-5 h-5 mr-2 text-[#fbb158]" />
                     <span>{{ $categoryName ?? 'Quick Navigate' }}</span>
                 </h3>
-                <x-icon name="chevron-left" class="w-5 h-5 text-[#EC9824]" />
+                <x-icon name="chevron-left" class="w-5 h-5 text-[#fbb158]" />
             </div>
 
             <!-- List Body (adds scrollbar if content is long) -->
@@ -41,7 +41,7 @@
         <!-- Closed State Icon Button (attached to parent section edge) -->
         <button id="quickNavTrigger" onclick="toggleQuickNav(true)"
             class="hidden bg-white dark:bg-gray-900 text-[#2E1F12] dark:text-white p-4 rounded-r-lg shadow-md border border-l-0 border-gray-200 dark:border-gray-800 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex items-center justify-center">
-            <x-icon name="bars-3" class="w-6 h-6 text-[#EC9824]" />
+            <x-icon name="bars-3" class="w-6 h-6 text-[#fbb158]" />
         </button>
     </div>
 </div>
@@ -122,11 +122,11 @@
 
     /* Hover states using brand colors */
     .quick-nav-link:hover .quick-nav-text {
-        color: #EC9824;
+        color: #fbb158;
     }
 
     .quick-nav-link:hover .quick-nav-diamond {
-        background: #EC9824;
+        background: #fbb158;
         box-shadow: 0 0 8px rgba(201, 168, 76, 0.4);
     }
 

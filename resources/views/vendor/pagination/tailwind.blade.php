@@ -41,7 +41,7 @@ $currentPage = $paginator->currentPage();
                         @if (is_array($element))
                             @foreach ($element as $page => $url)
                                 @if ($page == $paginator->currentPage())
-                                    <span class="w-8 h-8 flex items-center justify-center rounded-[3px] bg-[#EC9824] text-white text-xs font-bold shadow-sm shadow-[#EC9824]/30">
+                                    <span class="w-8 h-8 flex items-center justify-center rounded-[3px] bg-[#fbb158] text-white text-xs font-bold shadow-sm shadow-[#fbb158]/30">
                                         {{ $page }}
                                     </span>
                                 @else

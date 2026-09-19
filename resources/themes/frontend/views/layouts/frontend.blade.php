@@ -60,50 +60,50 @@
         class="sticky top-0 z-50 w-full transition-all duration-300">
 
         <!-- Top Bar (Collapses smoothly on scroll) -->
-        <div class="hidden md:block bg-[#2E1F12] border-b border-[#EC9824]/15 transition-all duration-300 overflow-hidden"
+        <div class="hidden md:block bg-[#2E1F12] border-b border-[#fbb158]/15 transition-all duration-300 overflow-hidden"
             :class="isSticky ? 'max-h-0 opacity-0 border-none' : 'max-h-[50px] opacity-100'">
             <div class="mx-auto max-w-7xl px-6 lg:px-4 h-[38px] flex items-center justify-between">
                 <div class="flex items-center gap-7">
                     <a href="tel:{{ $companySetting?->phone ?? ' ' }}"
-                        class="flex items-center gap-1.5 text-white/65 hover:text-[#EC9824] text-[12px] font-light tracking-[0.02em] transition-colors"
+                        class="flex items-center gap-1.5 text-white/65 hover:text-[#fbb158] text-[12px] font-light tracking-[0.02em] transition-colors"
                         style="font-family: 'Lora', Georgia, serif;">
-                        <x-icon name="phone" class="w-3.5 h-3.5 text-[#EC9824]" />
+                        <x-icon name="phone" class="w-3.5 h-3.5 text-[#fbb158]" />
                         {{ $companySetting?->phone ?? '' }}
                     </a>
                     <a href="mailto:{{ $companySetting?->email ?? ' ' }}"
-                        class="flex items-center gap-1.5 text-white/65 hover:text-[#EC9824] text-[12px] font-light tracking-[0.02em] transition-colors"
+                        class="flex items-center gap-1.5 text-white/65 hover:text-[#fbb158] text-[12px] font-light tracking-[0.02em] transition-colors"
                         style="font-family: 'Lora', Georgia, serif;">
-                        <x-icon name="envelope" class="w-3.5 h-3.5 text-[#EC9824]" />
+                        <x-icon name="envelope" class="w-3.5 h-3.5 text-[#fbb158]" />
                         {{ $companySetting?->email ?? '' }}
                     </a>
                 </div>
                 <div class="flex items-center gap-4">
                     @if($companySetting?->facebook_url)
                         <a href="{{ $companySetting->facebook_url }}" target="_blank" rel="noopener noreferrer"
-                            class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-[#EC9824] hover:border-[#EC9824] transition-all text-[10px] font-sans"><span
+                            class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-[#fbb158] hover:border-[#fbb158] transition-all text-[10px] font-sans"><span
                                 class="sr-only">{{ __('Facebook') }}</span><x-icon name="facebook" type="solid"
                                 class="w-3 h-3" /></a>
                     @endif
                     @if($companySetting?->instagram_url)
                         <a href="{{ $companySetting->instagram_url }}" target="_blank" rel="noopener noreferrer"
-                            class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-[#EC9824] hover:border-[#EC9824] transition-all text-[10px] font-sans"><span
+                            class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-[#fbb158] hover:border-[#fbb158] transition-all text-[10px] font-sans"><span
                                 class="sr-only">{{ __('Instagram') }}</span><x-icon name="instagram" type="solid"
                                 class="w-3 h-3" /></a>
                     @endif
                     @if($companySetting?->youtube_url)
                         <a href="{{ $companySetting->youtube_url }}" target="_blank" rel="noopener noreferrer"
-                            class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-[#EC9824] hover:border-[#EC9824] transition-all text-[10px] font-sans"><span
+                            class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-[#fbb158] hover:border-[#fbb158] transition-all text-[10px] font-sans"><span
                                 class="sr-only">{{ __('YouTube') }}</span><x-icon name="youtube" type="solid"
                                 class="w-3 h-3" /></a>
                     @endif
                     @if($companySetting?->x_url)
                         <a href="{{ $companySetting->x_url }}" target="_blank" rel="noopener noreferrer"
-                            class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-[#EC9824] hover:border-[#EC9824] transition-all text-[10px] font-sans"><span
+                            class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-[#fbb158] hover:border-[#fbb158] transition-all text-[10px] font-sans"><span
                                 class="sr-only">X</span><x-icon name="x" type="solid" class="w-3 h-3" /></a>
                     @endif
                     @if($companySetting?->tiktok_url)
                         <a href="{{ $companySetting->tiktok_url }}" target="_blank" rel="noopener noreferrer"
-                            class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-[#EC9824] hover:border-[#EC9824] transition-all text-[10px] font-sans"><span
+                            class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center text-white/50 hover:text-[#fbb158] hover:border-[#fbb158] transition-all text-[10px] font-sans"><span
                                 class="sr-only">{{ __('TikTok') }}</span><x-icon name="tiktok" type="solid"
                                 class="w-3 h-3" /></a>
                     @endif
@@ -112,7 +112,7 @@
         </div>
 
         <!-- Sticky Navbar Container -->
-        <nav class="w-full bg-[#140c05]/97 backdrop-blur-[20px] saturate-150 border-b border-[#EC9824]/22 shadow-[0_2px_30px_rgba(0,0,0,0.3)] transition-all duration-300"
+        <nav class="w-full bg-[#140c05]/97 backdrop-blur-[20px] saturate-150 border-b border-[#fbb158]/22 shadow-[0_2px_30px_rgba(0,0,0,0.3)] transition-all duration-300"
             :class="isSticky ? 'h-[60px] shadow-2xl' : 'h-[68px]'">
             <div class="mx-auto max-w-7xl px-6 lg:px-4 h-full">
                 <div class="flex items-center justify-between h-full">
@@ -126,7 +126,7 @@
                                         class="w-auto object-contain transition-all duration-300" style="height: 52px;"
                                         :style="isSticky ? 'height: 42px;' : 'height: 52px;'">
                                 @else
-                                    <div class="text-[#EC9824] font-semibold text-[22px] tracking-[0.01em] leading-[1.1]"
+                                    <div class="text-[#fbb158] font-semibold text-[22px] tracking-[0.01em] leading-[1.1]"
                                         style="font-family: 'Playfair Display', Georgia, serif;">
                                         {{ $companySetting?->company_name ?? config('app.name', ' ') }}
                                     </div>
@@ -147,12 +147,12 @@
                                             @mouseenter="open = true" @mouseleave="open = false">
                                             <a href="{{ $item->resolved_url }}" @if($item->is_external) target="_blank"
                                             rel="noopener noreferrer" @endif
-                                                class="flex h-full items-center gap-1 text-white/80 hover:text-[#EC9824] px-4 text-[12px] font-medium tracking-[0.08em] uppercase transition-colors whitespace-nowrap"
+                                                class="flex h-full items-center gap-1 text-white/80 hover:text-[#fbb158] px-4 text-[12px] font-medium tracking-[0.08em] uppercase transition-colors whitespace-nowrap"
                                                 style="font-family: 'Lora', Georgia, serif;">
                                                 {{ $item->label }}
                                                 <x-icon name="chevron-down"
                                                     class="w-[9px] h-[9px] mt-px opacity-50 transition-transform duration-200"
-                                                    x-bind:class="open ? 'rotate-180 opacity-100 text-[#EC9824]' : ''" />
+                                                    x-bind:class="open ? 'rotate-180 opacity-100 text-[#fbb158]' : ''" />
                                             </a>
                                             <!-- Dropdown Menu -->
                                             <div x-show="open" x-transition:enter="transition ease-out duration-200"
@@ -161,14 +161,14 @@
                                                 x-transition:leave="transition ease-in duration-150"
                                                 x-transition:leave-start="opacity-100 translate-y-0"
                                                 x-transition:leave-end="opacity-0 translate-y-2"
-                                                class="absolute left-0 top-[100%] min-w-[220px] bg-[#140c05]/97 border border-[#EC9824]/15 border-t-2 border-t-[#EC9824] rounded-b-[4px] py-0 shadow-[0_12px_40px_rgba(0,0,0,0.4)] z-50"
+                                                class="absolute left-0 top-[100%] min-w-[220px] bg-[#140c05]/97 border border-[#fbb158]/15 border-t-2 border-t-[#fbb158] rounded-b-[4px] py-0 shadow-[0_12px_40px_rgba(0,0,0,0.4)] z-50"
                                                 style="display: none;">
                                                 <ul class="flex flex-col">
                                                     @foreach($item->children as $child)
                                                         <li>
                                                             <a href="{{ $child->resolved_url }}" @if($child->is_external)
                                                             target="_blank" rel="noopener noreferrer" @endif
-                                                                class="block py-[9px] px-[1.4rem] text-white/70 text-[12.5px] font-light tracking-[0.03em] border-l-2 border-transparent transition-all duration-150 hover:text-[#EC9824] hover:pl-[1.8rem] hover:border-l-[#EC9824] hover:bg-[#EC9824]/5"
+                                                                class="block py-[9px] px-[1.4rem] text-white/70 text-[12.5px] font-light tracking-[0.03em] border-l-2 border-transparent transition-all duration-150 hover:text-[#fbb158] hover:pl-[1.8rem] hover:border-l-[#fbb158] hover:bg-[#fbb158]/5"
                                                                 style="font-family: 'Lora', Georgia, serif;">
                                                                 {{ $child->label }}
                                                             </a>
@@ -182,7 +182,7 @@
                                         <div class="h-full flex items-center">
                                             <a href="{{ $item->resolved_url }}" @if($item->is_external) target="_blank"
                                             rel="noopener noreferrer" @endif
-                                                class="flex h-full items-center text-white/80 hover:text-[#EC9824] px-4 text-[12px] font-medium tracking-[0.08em] uppercase transition-colors whitespace-nowrap"
+                                                class="flex h-full items-center text-white/80 hover:text-[#fbb158] px-4 text-[12px] font-medium tracking-[0.08em] uppercase transition-colors whitespace-nowrap"
                                                 style="font-family: 'Lora', Georgia, serif;">
                                                 {{ $item->label }}
                                             </a>
@@ -211,7 +211,7 @@
                     <!-- Mobile menu toggle button -->
                     <div class="-mr-2 flex md:hidden items-center h-full shrink-0">
                         <button @click="mobileMenuOpen = true" type="button"
-                            class="relative inline-flex items-center justify-center rounded-[3px] p-2 text-white/80 hover:text-[#EC9824] focus:outline-none transition-colors">
+                            class="relative inline-flex items-center justify-center rounded-[3px] p-2 text-white/80 hover:text-[#fbb158] focus:outline-none transition-colors">
                             <span class="sr-only">{{ __('Open main menu') }}</span>
                             <x-icon name="bars-3" class="block h-7 w-7" />
                         </button>
@@ -243,7 +243,7 @@
 
                 {{-- Gold top accent line --}}
                 <div class="h-[3px] w-full flex-shrink-0"
-                    style="background: linear-gradient(90deg, transparent, #EC9824 30%, #f0d080 60%, #EC9824 80%, transparent);">
+                    style="background: linear-gradient(90deg, transparent, #fbb158 30%, #f0d080 60%, #fbb158 80%, transparent);">
                 </div>
 
                 {{-- ── HEADER ── --}}
@@ -255,7 +255,7 @@
                                 alt="{{ $companySetting->company_name ?? config('app.name') }}"
                                 class="h-10 w-auto object-contain">
                         @else
-                            <span class="text-[#EC9824] font-semibold text-[20px] tracking-[0.01em] leading-tight"
+                            <span class="text-[#fbb158] font-semibold text-[20px] tracking-[0.01em] leading-tight"
                                 style="font-family: 'Playfair Display', Georgia, serif;">
                                 {{ $companySetting?->company_name ?? config('app.name', ' ') }}
                             </span>
@@ -269,7 +269,7 @@
                         onmouseover="this.style.background='rgba(201,168,76,0.18)'"
                         onmouseout="this.style.background='rgba(201,168,76,0.08)'">
                         <span class="sr-only">{{ __('Close menu') }}</span>
-                        <svg class="w-5 h-5 text-[#EC9824]" fill="none" stroke="currentColor" stroke-width="2"
+                        <svg class="w-5 h-5 text-[#fbb158]" fill="none" stroke="currentColor" stroke-width="2"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -292,18 +292,18 @@
                                                 class="flex-1 flex items-center gap-3 px-4 py-[14px] group">
                                                 {{-- Gold dot accent --}}
                                                 <span class="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-200"
-                                                    x-bind:style="open ? 'background:#EC9824' : 'background:rgba(201,168,76,0.4)'"></span>
+                                                    x-bind:style="open ? 'background:#fbb158' : 'background:rgba(201,168,76,0.4)'"></span>
                                                 <span
                                                     class="text-[15px] font-medium tracking-[0.06em] uppercase transition-colors duration-200"
                                                     style="font-family: 'Lora', Georgia, serif;"
-                                                    x-bind:style="open ? 'color:#EC9824' : 'color:rgba(255,255,255,0.85)'">
+                                                    x-bind:style="open ? 'color:#fbb158' : 'color:rgba(255,255,255,0.85)'">
                                                     {{ $item->label }}
                                                 </span>
                                             </a>
                                             <button @click="open = !open" type="button"
                                                 class="flex items-center justify-center w-10 h-[50px] flex-shrink-0 focus:outline-none transition-colors duration-200">
                                                 <svg class="w-4 h-4 transition-transform duration-300"
-                                                    x-bind:style="open ? 'transform:rotate(180deg); color:#EC9824' : 'color:rgba(255,255,255,0.85)'"
+                                                    x-bind:style="open ? 'transform:rotate(180deg); color:#fbb158' : 'color:rgba(255,255,255,0.85)'"
                                                     fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                                                 </svg>
@@ -324,7 +324,7 @@
                                                 rel="noopener noreferrer" @endif @click="mobileMenuOpen = false"
                                                     class="flex items-center gap-3 pl-4 pr-4 py-3 transition-all duration-150 group"
                                                     style="border-bottom: 1px solid rgba(201,168,76,0.06);"
-                                                    onmouseover="this.style.background='rgba(201,168,76,0.06)'; this.querySelector('span.sub-label').style.color='#EC9824'"
+                                                    onmouseover="this.style.background='rgba(201,168,76,0.06)'; this.querySelector('span.sub-label').style.color='#fbb158'"
                                                     onmouseout="this.style.background='transparent'; this.querySelector('span.sub-label').style.color='rgba(255,255,255,0.55)'">
                                                     <svg class="w-2.5 h-2.5 flex-shrink-0" style="color:rgba(201,168,76,0.5)"
                                                         fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -345,7 +345,7 @@
                                     rel="noopener noreferrer" @endif @click="mobileMenuOpen = false"
                                         class="flex items-center gap-3 px-4 py-[14px] mb-1 rounded-[6px] transition-all duration-200"
                                         style="border: 1px solid rgba(201,168,76,0.0);"
-                                        onmouseover="this.style.borderColor='rgba(201,168,76,0.18)'; this.style.background='rgba(201,168,76,0.05)'; this.querySelector('span.nav-label').style.color='#EC9824'; this.querySelector('span.nav-dot').style.background='#EC9824'"
+                                        onmouseover="this.style.borderColor='rgba(201,168,76,0.18)'; this.style.background='rgba(201,168,76,0.05)'; this.querySelector('span.nav-label').style.color='#fbb158'; this.querySelector('span.nav-dot').style.background='#fbb158'"
                                         onmouseout="this.style.borderColor='rgba(201,168,76,0.0)'; this.style.background='transparent'; this.querySelector('span.nav-label').style.color='rgba(255,255,255,0.85)'; this.querySelector('span.nav-dot').style.background='rgba(201,168,76,0.4)'">
                                         <span class="nav-dot w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-200"
                                             style="background: rgba(201,168,76,0.4);"></span>
@@ -400,11 +400,11 @@
                                 class="flex items-center gap-2.5 group">
                                 <div class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
                                     style="background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2);">
-                                    <x-icon name="phone" class="w-3.5 h-3.5 text-[#EC9824]" />
+                                    <x-icon name="phone" class="w-3.5 h-3.5 text-[#fbb158]" />
                                 </div>
                                 <span class="text-[13px] font-light transition-colors duration-150"
                                     style="color: rgba(255,255,255,0.65); font-family: 'Lora', Georgia, serif;"
-                                    onmouseover="this.style.color='#EC9824'"
+                                    onmouseover="this.style.color='#fbb158'"
                                     onmouseout="this.style.color='rgba(255,255,255,0.65)'">
                                     {{ $companySetting->phone }}
                                 </span>
@@ -414,11 +414,11 @@
                                 class="flex items-center gap-2.5 group">
                                 <div class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
                                     style="background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2);">
-                                    <x-icon name="envelope" class="w-3.5 h-3.5 text-[#EC9824]" />
+                                    <x-icon name="envelope" class="w-3.5 h-3.5 text-[#fbb158]" />
                                 </div>
                                 <span class="text-[13px] font-light transition-colors duration-150 truncate"
                                     style="color: rgba(255,255,255,0.65); font-family: 'Lora', Georgia, serif;"
-                                    onmouseover="this.style.color='#EC9824'"
+                                    onmouseover="this.style.color='#fbb158'"
                                     onmouseout="this.style.color='rgba(255,255,255,0.65)'">
                                     {{ $companySetting->email }}
                                 </span>
@@ -435,7 +435,7 @@
                                     style="background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);"
                                     onmouseover="this.style.background='rgba(201,168,76,0.2)'; this.style.borderColor='rgba(201,168,76,0.6)'"
                                     onmouseout="this.style.background='rgba(201,168,76,0.08)'; this.style.borderColor='rgba(201,168,76,0.2)'">
-                                    <x-icon name="facebook" type="solid" class="w-3.5 h-3.5 text-[#EC9824]" />
+                                    <x-icon name="facebook" type="solid" class="w-3.5 h-3.5 text-[#fbb158]" />
                                 </a>
                             @endif
                             @if($companySetting?->instagram_url)
@@ -444,7 +444,7 @@
                                     style="background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);"
                                     onmouseover="this.style.background='rgba(201,168,76,0.2)'; this.style.borderColor='rgba(201,168,76,0.6)'"
                                     onmouseout="this.style.background='rgba(201,168,76,0.08)'; this.style.borderColor='rgba(201,168,76,0.2)'">
-                                    <x-icon name="instagram" type="solid" class="w-3.5 h-3.5 text-[#EC9824]" />
+                                    <x-icon name="instagram" type="solid" class="w-3.5 h-3.5 text-[#fbb158]" />
                                 </a>
                             @endif
                             @if($companySetting?->youtube_url)
@@ -453,7 +453,7 @@
                                     style="background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);"
                                     onmouseover="this.style.background='rgba(201,168,76,0.2)'; this.style.borderColor='rgba(201,168,76,0.6)'"
                                     onmouseout="this.style.background='rgba(201,168,76,0.08)'; this.style.borderColor='rgba(201,168,76,0.2)'">
-                                    <x-icon name="youtube" type="solid" class="w-3.5 h-3.5 text-[#EC9824]" />
+                                    <x-icon name="youtube" type="solid" class="w-3.5 h-3.5 text-[#fbb158]" />
                                 </a>
                             @endif
                             @if($companySetting?->x_url)
@@ -462,7 +462,7 @@
                                     style="background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);"
                                     onmouseover="this.style.background='rgba(201,168,76,0.2)'; this.style.borderColor='rgba(201,168,76,0.6)'"
                                     onmouseout="this.style.background='rgba(201,168,76,0.08)'; this.style.borderColor='rgba(201,168,76,0.2)'">
-                                    <x-icon name="x" type="solid" class="w-3.5 h-3.5 text-[#EC9824]" />
+                                    <x-icon name="x" type="solid" class="w-3.5 h-3.5 text-[#fbb158]" />
                                 </a>
                             @endif
                             @if($companySetting?->tiktok_url)
@@ -471,7 +471,7 @@
                                     style="background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);"
                                     onmouseover="this.style.background='rgba(201,168,76,0.2)'; this.style.borderColor='rgba(201,168,76,0.6)'"
                                     onmouseout="this.style.background='rgba(201,168,76,0.08)'; this.style.borderColor='rgba(201,168,76,0.2)'">
-                                    <x-icon name="tiktok" type="solid" class="w-3.5 h-3.5 text-[#EC9824]" />
+                                    <x-icon name="tiktok" type="solid" class="w-3.5 h-3.5 text-[#fbb158]" />
                                 </a>
                             @endif
                         </div>
@@ -480,7 +480,7 @@
 
                 {{-- Bottom gold accent line --}}
                 <div class="h-[3px] flex-shrink-0"
-                    style="background: linear-gradient(90deg, transparent, #EC9824 30%, #f0d080 60%, #EC9824 80%, transparent);">
+                    style="background: linear-gradient(90deg, transparent, #fbb158 30%, #f0d080 60%, #fbb158 80%, transparent);">
                 </div>
             </div>
         </div>

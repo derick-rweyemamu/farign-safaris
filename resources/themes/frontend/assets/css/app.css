@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Outfit:wght@300..800&display=swap');
 @import 'tailwindcss';
 @import '../../../../public/css/pagebuilder.css';
 
@@ -28,9 +29,9 @@
 }
 
 :root {
-  --gold: #EC9824;
+  --gold: #fbb158;
   --gold-light: #FDF4E7;
-  --gold-dark: #D88515;
+  --gold-dark: #e09f4f;
   --earth: #223D55;
   --earth-mid: #2C4B68;
   --earth-light: #615547;
@@ -42,62 +43,62 @@
   --text-mid: #615547;
   --text-muted: #615547;
   --green-safari: #223D55;
-  --green-light: #EC9824;
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-serif: 'Lora', Georgia, serif;
-  --font-body: 'Lora', sans-serif;
+  --green-light: #fbb158;
+  --font-display: 'Outfit', sans-serif;
+  --font-serif: 'Outfit', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
   --shadow-warm: 0 8px 40px rgba(34, 61, 85, 0.13);
-  --shadow-gold: 0 4px 20px rgba(236, 152, 36, 0.25);
-  --brand-primary: #EC9824;
-  --brand-primary-hover: #D88515;
+  --shadow-gold: 0 4px 20px rgba(251, 177, 88, 0.25);
+  --brand-primary: #fbb158;
+  --brand-primary-hover: #e09f4f;
   --brand-secondary: #223D55;
   --brand-secondary-hover: #1A2F42;
   --brand-stone: #615547;
   --brand-light: #FDF4E7;
   --brand-light-hover: #FBEBD4;
-  --font-brand: 'Playfair Display', Georgia, serif;
-  --font-brand-secondary: 'Cormorant Garamond', serif;
+  --font-brand: 'Outfit', sans-serif;
+  --font-brand-secondary: 'DM Sans', sans-serif;
 
   /* Sidebar Defaults */
   --color-sidebar: #FFFFFF;
   --color-sidebar-hover: #FDF4E7;
-  --color-sidebar-active: #EC9824;
+  --color-sidebar-active: #fbb158;
   --sidebar-border: #F5EFE6;
   --sidebar-text: #223D55;
   --sidebar-muted: #615547;
 }
 
 @theme {
-  --font-sans: 'Poppins', sans-serif;
+  --font-sans: 'DM Sans', sans-serif;
   --font-brand: var(--font-brand);
-  --font-poppins: 'Poppins', sans-serif;
-  --font-playfair: 'Playfair Display', serif;
-  --font-jost: 'Lora', Georgia, serif;
-  --font-lora: 'Lora', serif;
+  --font-poppins: 'DM Sans', sans-serif;
+  --font-playfair: 'Outfit', sans-serif;
+  --font-jost: 'Outfit', sans-serif;
+  --font-lora: 'DM Sans', sans-serif;
   --font-brand-secondary: var(--font-brand-secondary);
-  --color-brand-primary: #EC9824;
-  --color-brand-primary-hover: #D88515;
+  --color-brand-primary: #fbb158;
+  --color-brand-primary-hover: #e09f4f;
   --color-brand-secondary: #223D55;
   --color-brand-secondary-hover: #1A2F42;
   --color-brand-stone: #615547;
   --color-brand-light: #FDF4E7;
   --color-brand-light-hover: #FBEBD4;
 
-  --color-primary-50: #FDF4E7;
-  --color-primary-100: #FBEBD4;
-  --color-primary-200: #F6CE95;
-  --color-primary-300: #F1B258;
-  --color-primary-400: #EC9824;
-  --color-primary-500: #EC9824;
-  --color-primary-600: #EC9824;
-  --color-primary-700: #D88515;
-  --color-primary-800: #B56D0E;
-  --color-primary-900: #8B5007;
-  --color-primary-950: #4D2B03;
+  --color-primary-50: #fef7ed;
+  --color-primary-100: #fdefd5;
+  --color-primary-200: #fbddab;
+  --color-primary-300: #f9c77b;
+  --color-primary-400: #fbb158;
+  --color-primary-500: #fbb158;
+  --color-primary-600: #fbb158;
+  --color-primary-700: #e09f4f;
+  --color-primary-800: #b58140;
+  --color-primary-900: #8f6531;
+  --color-primary-950: #4a3419;
 
   --color-sidebar: #FFFFFF;
   --color-sidebar-hover: #FDF4E7;
-  --color-sidebar-active: #EC9824;
+  --color-sidebar-active: #fbb158;
   --sidebar-border: #F5EFE6;
   --sidebar-text: #223D55;
   --sidebar-muted: #615547;
@@ -1092,12 +1093,12 @@ body.frontend-body {
 }
 
 .trust-item svg {
-  color: #EC9824 !important;
+  color: #fbb158 !important;
   flex-shrink: 0 !important;
 }
 
 .trust-stars {
-  color: #EC9824 !important;
+  color: #fbb158 !important;
   font-size: 14px !important;
   letter-spacing: 1px !important;
 }
@@ -1168,7 +1169,7 @@ body.frontend-body {
 
 .form-group input:focus,
 .form-group select:focus {
-  border-color: #EC9824 !important;
+  border-color: #fbb158 !important;
   background: #fff !important;
   box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1) !important;
 }
@@ -1359,14 +1360,14 @@ body.frontend-body {
 }
 
 .frontend-body .btn-ghost:hover {
-  border-color: var(--gold, #EC9824);
-  color: var(--gold, #EC9824);
+  border-color: var(--gold, #fbb158);
+  color: var(--gold, #fbb158);
   background: rgba(201, 168, 76, 0.08);
 }
 
 /* Global btn-primary — fallback outside .hero context */
 .frontend-body .btn-primary {
-  background: var(--gold, #EC9824);
+  background: var(--gold, #fbb158);
   color: var(--earth, #2E1F12);
   padding: 13px 28px;
   border: none;

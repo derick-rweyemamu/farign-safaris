@@ -22,16 +22,16 @@
 
     <!-- Import Progress Bar (Active / Processing) -->
     <div wire:loading wire:target="importFromJson"
-        class="w-full bg-card rounded-[3px] p-4 border border-[#EC9824]/30 shadow-sm transition-all animate-pulse">
+        class="w-full bg-card rounded-[3px] p-4 border border-[#fbb158]/30 shadow-sm transition-all animate-pulse">
         <div class="flex items-center justify-between text-xs font-bold text-gray-800 dark:text-gray-200 mb-2">
             <span class="flex items-center gap-2">
-                <x-icon name="arrow-path" class="w-4 h-4 animate-spin text-[#EC9824]" />
+                <x-icon name="arrow-path" class="w-4 h-4 animate-spin text-[#fbb158]" />
                 {{ __('Importing language JSON files into database...') }}
             </span>
-            <span class="text-[#EC9824] uppercase text-[11px] font-extrabold">{{ __('Processing...') }}</span>
+            <span class="text-[#fbb158] uppercase text-[11px] font-extrabold">{{ __('Processing...') }}</span>
         </div>
         <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2.5 overflow-hidden">
-            <div class="bg-gradient-to-r from-[#EC9824] to-[#F1B153] h-2.5 rounded-full animate-pulse w-full"></div>
+            <div class="bg-gradient-to-r from-[#fbb158] to-[#F1B153] h-2.5 rounded-full animate-pulse w-full"></div>
         </div>
         <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-2">
             {{ __('Syncing lang. All json translation keys across all locales without disrupting active site visitors.') }}
@@ -70,10 +70,10 @@
         class="flex items-center gap-1 bg-gray-100 dark:bg-gray-800/50 p-1 rounded-[3px] w-fit overflow-x-auto max-w-full flex-wrap">
         @foreach($availableLanguages as $code => $label)
             <button type="button" wire:key="lang-tab-{{ $code }}" wire:click="$set('selectedLang', '{{ $code }}')"
-                class="flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-medium rounded-[3px] transition-all whitespace-nowrap {{ $selectedLang === $code ? 'bg-white dark:bg-gray-700 text-[#EC9824] dark:text-[#EC9824] shadow-sm font-bold' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300' }}">
+                class="flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-medium rounded-[3px] transition-all whitespace-nowrap {{ $selectedLang === $code ? 'bg-white dark:bg-gray-700 text-[#fbb158] dark:text-[#fbb158] shadow-sm font-bold' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300' }}">
                 <span>{{ $label }}</span>
                 <span
-                    class="py-0.5 px-2 rounded-full text-[10px] font-bold uppercase {{ $selectedLang === $code ? 'bg-[#EC9824]/15 text-[#EC9824]' : 'bg-gray-200/60 text-gray-600 dark:bg-gray-800 dark:text-gray-400' }}">
+                    class="py-0.5 px-2 rounded-full text-[10px] font-bold uppercase {{ $selectedLang === $code ? 'bg-[#fbb158]/15 text-[#fbb158]' : 'bg-gray-200/60 text-gray-600 dark:bg-gray-800 dark:text-gray-400' }}">
                     {{ strtoupper($code) }}
                 </span>
             </button>
@@ -91,7 +91,7 @@
         </div>
         <div class="text-xs text-gray-500 font-medium">{{ __('Showing') }} <span
                 class="font-bold text-gray-900 dark:text-white">{{ $translations->total() }}</span>
-            {{ __('strings for') }} <span class="uppercase font-bold text-[#EC9824]">{{ $selectedLang }}</span>
+            {{ __('strings for') }} <span class="uppercase font-bold text-[#fbb158]">{{ $selectedLang }}</span>
         </div>
     </div>
 
@@ -128,12 +128,12 @@
                             <td class="px-5 py-3 align-top">
                                 <textarea x-model="value" @input="isDirty = true" rows="2"
                                     placeholder="Enter translation in {{ strtoupper($selectedLang) }}..."
-                                    class="w-full form-input text-xs py-1.5 px-2.5 rounded-[3px] focus:ring-[#EC9824] focus:border-[#EC9824]"></textarea>
+                                    class="w-full form-input text-xs py-1.5 px-2.5 rounded-[3px] focus:ring-[#fbb158] focus:border-[#fbb158]"></textarea>
                             </td>
                             <td class="px-5 py-3 text-right align-top">
                                 <button type="button"
                                     @click="$wire.saveTranslation({{ $item->id }}, value); isDirty = false"
-                                    :class="isDirty ? 'bg-[#EC9824] hover:bg-[#A68A3D] text-white shadow-sm' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200'"
+                                    :class="isDirty ? 'bg-[#fbb158] hover:bg-[#e09f4f] text-white shadow-sm' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200'"
                                     class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[3px] text-xs font-semibold transition-colors">
                                     <x-icon name="check" class="w-3.5 h-3.5" />
                                     <span>{{ __('Save') }}</span>

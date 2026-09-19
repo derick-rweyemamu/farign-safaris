@@ -8,7 +8,7 @@
 }
 
 :root {
-  --gold: #EC9824;
+  --gold: #fbb158;
   --gold-light: #E8D5A3;
   --gold-dark: #8B6914;
   --earth: #2E1F12;
@@ -28,8 +28,8 @@
   --font-body: 'Lora', sans-serif;
   --shadow-warm: 0 8px 40px rgba(61, 43, 31, 0.13);
   --shadow-gold: 0 4px 20px rgba(201, 168, 76, 0.18);
-  --brand-primary: #EC9824;
-  --brand-primary-hover: #A68A3D;
+  --brand-primary: #fbb158;
+  --brand-primary-hover: #e09f4f;
   --brand-light: #F5EDD8;
   --brand-light-hover: #EEE5D4;
   --font-brand: 'Playfair Display', Georgia, serif;
@@ -1272,12 +1272,12 @@ body.frontend-body {
 }
 
 .trust-item svg {
-  color: #EC9824 !important;
+  color: #fbb158 !important;
   flex-shrink: 0 !important;
 }
 
 .trust-stars {
-  color: #EC9824 !important;
+  color: #fbb158 !important;
   font-size: 14px !important;
   letter-spacing: 1px !important;
 }
@@ -1348,7 +1348,7 @@ body.frontend-body {
 
 .form-group input:focus,
 .form-group select:focus {
-  border-color: #EC9824 !important;
+  border-color: #fbb158 !important;
   background: #fff !important;
   box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1) !important;
 }
@@ -1539,14 +1539,14 @@ body.frontend-body {
 }
 
 .frontend-body .btn-ghost:hover {
-  border-color: var(--gold, #EC9824);
-  color: var(--gold, #EC9824);
+  border-color: var(--gold, #fbb158);
+  color: var(--gold, #fbb158);
   background: rgba(201, 168, 76, 0.08);
 }
 
 /* Global btn-primary — fallback outside .hero context */
 .frontend-body .btn-primary {
-  background: var(--gold, #EC9824);
+  background: var(--gold, #fbb158);
   color: var(--earth, #2E1F12);
   padding: 13px 28px;
   border: none;

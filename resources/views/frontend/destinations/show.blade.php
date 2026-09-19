@@ -277,7 +277,7 @@
             <div class="max-w-[1400px] mx-auto px-4 md:px-10 lg:px-16">
                 {{-- Section header --}}
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-[2.75rem] font-bold text-[#EC9824] mb-6" style="font-family: 'Indie Flower', cursive; letter-spacing: 0.05em; text-transform: uppercase;">
+                    <h2 class="text-4xl md:text-[2.75rem] font-bold text-[#fbb158] mb-6" style="font-family: 'Indie Flower', cursive; letter-spacing: 0.05em; text-transform: uppercase;">
                         {{ strtoupper($destination->name) }} ATTRACTIONS
                     </h2>
                     @if($destination->content)
@@ -356,7 +356,7 @@
                         <template x-for="(_, index) in totalPages" :key="index">
                             <button @click="scrollToPage(index)" 
                                     class="h-1.5 transition-all duration-300 rounded-full"
-                                    :class="currentPage === index ? 'w-8 bg-[#EC9824]' : 'w-4 bg-[#F9E3C5] dark:bg-gray-700 hover:bg-[#EC9824]/50'">
+                                    :class="currentPage === index ? 'w-8 bg-[#fbb158]' : 'w-4 bg-[#F9E3C5] dark:bg-gray-700 hover:bg-[#fbb158]/50'">
                             </button>
                         </template>
                     </div>

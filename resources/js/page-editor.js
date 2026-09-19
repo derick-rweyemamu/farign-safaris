@@ -209,7 +209,7 @@ bm.add('safaris-kili-calculator', {
                     <img src="https://images.unsplash.com/photo-1589553460732-57ef51160601?auto=format&fit=crop&q=80" alt="Mount Kilimanjaro Summit Climb" data-gjs-type="image" class="absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none" style="pointer-events: none;"></div>
                     <div class="relative z-10 space-y-2">
-                        <span class="inline-block px-3 py-1 rounded-full bg-[#EC9824] text-[#2E1F12] text-xs font-bold uppercase tracking-wider kili-badge" data-gjs-type="text">Mount Kilimanjaro (5,895m)</span>
+                        <span class="inline-block px-3 py-1 rounded-full bg-[#fbb158] text-[#2E1F12] text-xs font-bold uppercase tracking-wider kili-badge" data-gjs-type="text">Mount Kilimanjaro (5,895m)</span>
                         <h3 class="text-2xl font-bold font-brand text-white kili-heading" data-gjs-type="text">Conquer the Roof of Africa</h3>
                         <p class="text-xs text-gray-200 kili-desc" data-gjs-type="text">Choosing the right route duration and acclimatization strategy can raise your summit success rate from 60% to over 95%.</p>
                     </div>
@@ -217,11 +217,11 @@ bm.add('safaris-kili-calculator', {
                 <!-- Right Calculator Preview -->
                 <div class="lg:col-span-7 p-4 flex flex-col justify-between">
                     <div>
-                        <span class="inline-block px-3 py-1 rounded-full bg-[#EC9824]/15 text-[#EC9824] text-xs font-bold uppercase tracking-wider mb-2">Summit Estimator</span>
+                        <span class="inline-block px-3 py-1 rounded-full bg-[#fbb158]/15 text-[#fbb158] text-xs font-bold uppercase tracking-wider mb-2">Summit Estimator</span>
                         <h2 class="text-2xl font-bold font-brand text-gray-900 dark:text-white kili-title" data-gjs-type="text">Kilimanjaro Success Rate Calculator</h2>
                         <p class="text-xs text-gray-500 mt-1 kili-sub" data-gjs-type="text">Estimate your summit success probability based on acclimatization and route profiles.</p>
                         <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-800/40 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
-                            <i class="fa-solid fa-calculator text-2xl text-[#EC9824] mb-2"></i>
+                            <i class="fa-solid fa-calculator text-2xl text-[#fbb158] mb-2"></i>
                             <p class="text-xs font-bold text-gray-700 dark:text-gray-300">Live Interactive Calculator Widget</p>
                             <p class="text-[11px] text-gray-400 mt-1">Users can calculate success rates & request quotes directly on your website.</p>
                         </div>
@@ -1139,7 +1139,7 @@ editor.DomComponents.addType('tours-listing', {
                 const cats = category.split(',');
                 tabsHtml = '<div class="flex gap-2 mt-4 justify-center">';
                 cats.forEach(cat => {
-                    tabsHtml += `<span class="px-4 py-1.5 bg-[#EC9824]/20 text-[#8B6914] text-xs font-bold uppercase rounded-full border border-[#EC9824]/30">${cat}</span>`;
+                    tabsHtml += `<span class="px-4 py-1.5 bg-[#fbb158]/20 text-[#8B6914] text-xs font-bold uppercase rounded-full border border-[#fbb158]/30">${cat}</span>`;
                 });
                 tabsHtml += '</div>';
             }
@@ -1170,7 +1170,7 @@ bm.add('safaris-tours-dynamic', {
         </div>
         <h2 class="section-title text-[clamp(2.2rem,3.5vw,3.4rem)] font-medium text-[#2E1F12] leading-[1.12] mb-[1.3rem] tracking-[-0.01em] font-display">Popular <em class="italic text-[#A67C5B] font-normal">Adventures</em></h2>
       </div>
-      <a href="/tours" class="btn-primary bg-[#EC9824] text-[#2E1F12] py-[13px] px-[34px] rounded-[3px] text-[12px] font-semibold tracking-[0.1em] uppercase cursor-pointer no-underline inline-block transition-all duration-250 shadow-[0_3px_16px_rgba(201,168,76,0.3)] hover:bg-[#d4b060] hover:-translate-y-[2px] hover:shadow-[0_6px_24px_rgba(201,168,76,0.4)] whitespace-nowrap">View All Trips</a>
+      <a href="/tours" class="btn-primary bg-[#fbb158] text-[#2E1F12] py-[13px] px-[34px] rounded-[3px] text-[12px] font-semibold tracking-[0.1em] uppercase cursor-pointer no-underline inline-block transition-all duration-250 shadow-[0_3px_16px_rgba(201,168,76,0.3)] hover:bg-[#d4b060] hover:-translate-y-[2px] hover:shadow-[0_6px_24px_rgba(201,168,76,0.4)] whitespace-nowrap">View All Trips</a>
     </div>
 
     <!-- Tours Listing Container -->
@@ -2395,7 +2395,7 @@ bm.add('cta-block', {
 
 // ── Safaris Table Block ────────────────────────────────────────────────────────
 
-const TH_STYLE = "padding: 14px 18px; text-align: left; color: #EC9824; font-family: 'Playfair Display', Georgia, serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border: none;";
+const TH_STYLE = "padding: 14px 18px; text-align: left; color: #fbb158; font-family: 'Playfair Display', Georgia, serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border: none;";
 const TD_STYLE_DARK = "padding: 14px 18px; color: #2E1F12; font-family: 'Lora', Georgia, serif; font-size: 15px;";
 const TD_STYLE = "padding: 14px 18px; color: #4A3728; font-family: 'Lora', Georgia, serif; font-size: 15px;";
 

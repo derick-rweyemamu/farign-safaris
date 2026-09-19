@@ -8,8 +8,8 @@
                     <button wire:click="setActiveTab('{{ $category->slug }}')"
                         class="px-7 py-3 text-[13px] font-medium tracking-[0.06em] uppercase cursor-pointer border-b-2 -mb-[2px] transition-all duration-200 flex flex-shrink-0 items-center justify-center gap-2 bg-transparent whitespace-nowrap focus:outline-none 
                                                     {{ $activeCategoryTab === $category->slug
-                    ? 'text-[#2E1F12] border-[#EC9824] dark:text-white dark:border-[#EC9824] bg-[#EC9824]/5 dark:bg-[#EC9824]/10'
-                    : 'text-[#8C7565] border-transparent hover:text-[#EC9824] hover:border-[#EC9824]/50 dark:text-gray-400 dark:hover:text-[#EC9824] hover:bg-gray-50 dark:hover:bg-gray-800' }}">
+                    ? 'text-[#2E1F12] border-[#fbb158] dark:text-white dark:border-[#fbb158] bg-[#fbb158]/5 dark:bg-[#fbb158]/10'
+                    : 'text-[#8C7565] border-transparent hover:text-[#fbb158] hover:border-[#fbb158]/50 dark:text-gray-400 dark:hover:text-[#fbb158] hover:bg-gray-50 dark:hover:bg-gray-800' }}">
                         <span class="text-[16px]">✦</span>
                         {{ $category->name }}
                         @php
@@ -17,7 +17,7 @@
                         @endphp
                         @if($minPrice > 0)
                             <span
-                                class="{{ $activeCategoryTab === $category->slug ? 'bg-[rgba(201,168,76,0.18)] text-[#8B6914] dark:bg-[#EC9824]/20 dark:text-[#EC9824]' : 'bg-[#EEE5D4] text-[#8C7565] dark:bg-gray-800 dark:text-gray-450' }} text-[10px] px-2 py-0.5 rounded-full font-normal tracking-normal transition-colors duration-200">
+                                class="{{ $activeCategoryTab === $category->slug ? 'bg-[rgba(201,168,76,0.18)] text-[#8B6914] dark:bg-[#fbb158]/20 dark:text-[#fbb158]' : 'bg-[#EEE5D4] text-[#8C7565] dark:bg-gray-800 dark:text-gray-450' }} text-[10px] px-2 py-0.5 rounded-full font-normal tracking-normal transition-colors duration-200">
                                 {{__('From')}} ${{ number_format($minPrice, 0) }}
                             </span>
                         @endif

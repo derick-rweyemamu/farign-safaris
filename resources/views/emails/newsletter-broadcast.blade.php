@@ -59,7 +59,7 @@
         }
 
         .footer a {
-            color: #EC9824;
+            color: #fbb158;
             text-decoration: underline;
         }
 
@@ -72,7 +72,7 @@
             font-weight: 600;
             margin-bottom: 15px;
             text-decoration: underline;
-            color: #EC9824;
+            color: #fbb158;
         }
 
         .social-icon {

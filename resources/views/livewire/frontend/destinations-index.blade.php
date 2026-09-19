@@ -116,7 +116,7 @@
         {{-- Loading Overlay --}}
         <div wire:loading.class.remove="hidden"
             class="hidden absolute inset-0 bg-white/40 rounded z-10 flex items-center justify-center">
-            <div class="w-6 h-6 border-2 border-[#EC9824] border-t-transparent rounded-full animate-spin"></div>
+            <div class="w-6 h-6 border-2 border-[#fbb158] border-t-transparent rounded-full animate-spin"></div>
         </div>
 
         @if($destinations->count() > 0)
@@ -140,7 +140,7 @@
                                 @else
                                     <div
                                         class="w-full h-full bg-gradient-to-br from-[#2E1F12] to-[#5a3e28] flex items-center justify-center">
-                                        <svg class="w-12 h-12 text-[#EC9824]/40" fill="none" stroke="currentColor"
+                                        <svg class="w-12 h-12 text-[#fbb158]/40" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
                                                 d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
