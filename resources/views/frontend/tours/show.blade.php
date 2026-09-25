@@ -64,7 +64,7 @@
                     <!-- Left: Tab Content -->
                     <div class="tour-tab-left  w-full lg:flex-1">
                         <!-- Sticky Tab Bar -->
-                        <div class="sticky top-[60px] z-40 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm mb-8 sm:mx-0 -mx-4 px-4 sm:px-0">
+                        <div class="sticky top-0 z-40 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm mb-8 sm:mx-0 -mx-4 px-4 sm:px-0">
                             <nav class="flex overflow-x-auto w-full">
                                 <!-- Overview -->
                                 <button @click="activeTab = 'overview'"
@@ -211,15 +211,13 @@
                                         <div class="flex items-center gap-2">
                                             <x-icon name="plane"
                                                 class="w-4.5 h-4.5 text-brand-primary flex-shrink-0 rotate-90" />
-                                            <span><strong class="text-gray-800 dark:text-white">{{ __('Arrival:') }}</strong>{{ __('Kilimanjaro
-                                                Airport, Airport
-                                                transfer included') }}</span>
+                                            <span><strong class="text-gray-800 dark:text-white">{{ __('Arrival:') }}</strong>{{ __(' Airport transfer included') }}</span>
                                         </div>
                                         <span class="hidden md:inline text-gray-300 dark:text-gray-750">|</span>
                                         <div class="flex items-center gap-2">
                                             <x-icon name="map-pin" class="w-4.5 h-4.5 text-brand-primary flex-shrink-0" />
                                             <span><strong class="text-gray-800 dark:text-white">{{ __('Start Destination:') }}</strong>
-                                                {{ $groupedItineraries[0]['location'] ?? 'Arusha' }}</span>
+                                                {{ $groupedItineraries[0]['location'] ?? ' ' }}</span>
                                         </div>
                                     </div>
 
@@ -266,18 +264,26 @@
                                                             </span>
                                                         </td>
                                                         <td class="py-2.5 px-4 !text-sm font-medium text-gray-900 dark:text-white">
-                                                            {{ $group['location'] ?? 'Not specified' }}
+                                                            @if($group['location'])
+                                                                <span class="!text-sm text-gray-800 dark:text-gray-200">{{ $group['location'] }}</span>
+                                                            @else
+                                                                <span class="!text-sm text-gray-400 dark:text-gray-500 italic">{{ __('Based on the intenary') }}</span>
+                                                            @endif
                                                         </td>
                                                         <td class="py-2.5 px-4 !text-sm text-gray-600 dark:text-gray-300">
                                                             @if($group['accommodation'])
                                                                 <span
                                                                     class="!text-sm text-gray-800 dark:text-gray-200">{{ $group['accommodation']->name }}</span>
                                                             @else
-                                                                <span class="!text-sm text-gray-400 dark:text-gray-500 italic">{{ __('No accommodation') }}</span>
+                                                                <span class="!text-sm text-gray-400 dark:text-gray-500 italic">{{ __('Based on the intenary') }}</span>
                                                             @endif
                                                         </td>
                                                         <td class="py-2.5 px-4 !text-sm text-gray-600 dark:text-gray-300">
-                                                            {{ $group['meal_plan']?->name ?? 'Not specified' }}
+                                                            @if($group['meal_plan'])
+                                                                <span class="!text-sm text-gray-800 dark:text-gray-200">{{ $group['meal_plan']->name }}</span>
+                                                            @else
+                                                                <span class="!text-sm text-gray-400 dark:text-gray-500 italic">{{ __('Based on the intenary') }}</span>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -568,46 +574,40 @@
                                 <div
                                     class="relative pl-6 md:pl-10 border-l border-dashed border-gray-300 dark:border-gray-800 ml-4 space-y-12 pb-6">
                                     @foreach($tour->itineraries as $index => $day)
-                                        <div class="relative">
+                                        <div class="relative flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
                                             <!-- Timeline Node -->
                                             <div
-                                                class="absolute -left-[32px] md:-left-[48px] top-[88px] md:top-[120px] w-4 h-4 rounded-sm border-2 border-brand-primary bg-white dark:bg-gray-950 shadow-sm flex items-center justify-center z-10">
+                                                class="absolute -left-[32px] md:-left-[48px] top-6 md:top-8 w-4 h-4 rounded-sm border-2 border-brand-primary bg-white dark:bg-gray-950 shadow-sm flex items-center justify-center z-10">
                                                 <span class="w-1.5 h-1.5 rounded-sm bg-brand-primary"></span>
                                             </div>
 
-                                            <!-- Day Header -->
-                                            <div
-                                                class="relative w-full h-48 md:h-64 rounded-[3px] overflow-hidden shadow-sm group mb-6">
-                                                @if($day->featured_image)
-                                                    <img src="{{ Storage::url($day->featured_image) }}"
-                                                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                                                        alt="{{ $day->title }}">
-                                                @elseif($companySetting?->tour_fallback_image)
-                                                    <img src="{{ Storage::url($companySetting->tour_fallback_image) }}"
-                                                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                                                        alt="{{ $day->title }}">
-                                                @else
-                                                    <div
-                                                        class="absolute inset-0 w-full h-full bg-gray-800 flex items-center justify-center">
-                                                        <x-icon name="photo" class="w-12 h-12 text-gray-600" />
-                                                    </div>
-                                                @endif
-                                                <div
-                                                    class="absolute inset-0 bg-gradient-to-t from-gray-950/90 via-gray-900/40 to-transparent">
-                                                </div>
-                                                <div class="absolute bottom-0 left-0 p-6 md:p-8 text-white">
-                                                    <span
-                                                        class="inline-block px-2 py-0.5 rounded bg-brand-primary text-white dark:text-gray-950 text-[10px] font-bold uppercase tracking-wider mb-2">Day
-                                                        {{ $loop->iteration }}</span>
-                                                    <h3
-                                                        class="text-xl tracking-wide leading-normal md:text-2xl font-bold font-brand text-white">
-                                                        {{ $day->title }}
-                                                    </h3>
+                                            <!-- Left: Image (Square) -->
+                                            <div class="w-full md:w-1/3 lg:w-1/4 flex-shrink-0 order-2 md:order-1 mt-4 md:mt-0">
+                                                <div class="w-full aspect-square rounded-[3px] overflow-hidden shadow-sm group border border-gray-100 dark:border-gray-800">
+                                                    @if($day->featured_image)
+                                                        <img src="{{ Storage::url($day->featured_image) }}"
+                                                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                                                            alt="{{ $day->title }}">
+                                                    @elseif($companySetting?->tour_fallback_image)
+                                                        <img src="{{ Storage::url($companySetting->tour_fallback_image) }}"
+                                                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                                                            alt="{{ $day->title }}">
+                                                    @else
+                                                        <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+                                                            <x-icon name="photo" class="w-12 h-12 text-gray-400" />
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
 
-                                            <!-- Day Content -->
-                                            <div class="space-y-6">
+                                            <!-- Right: Day Content -->
+                                            <div class="flex-1 space-y-6 order-1 md:order-2">
+                                                <div>
+                                                    <h3 class="text-xl md:text-2xl font-bold font-brand text-gray-900 dark:text-white uppercase tracking-wide">
+                                                        DAY {{ $day->day_number ?? $loop->iteration }}: {{ $day->title }}
+                                                    </h3>
+                                                </div>
+
                                                 <div class="prose max-w-none text-gray-600 dark:text-gray-300 font-lora">
                                                     {!! $day->description !!}
                                                 </div>
@@ -1046,18 +1046,6 @@
 
                             <!-- Trust Badges -->
                             <div class="grid grid-cols-2 gap-4">
-                                <div
-                                    class="bg-white dark:bg-gray-900 rounded-[3px] p-4 text-center border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col items-center">
-                                    <x-icon name="shield-check" class="w-8 h-8 text-brand-primary mb-2" />
-                                    <span
-                                        class="!text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wide">{{ __('Secure Booking') }}</span>
-                                </div>
-                                <div
-                                    class="bg-white dark:bg-gray-900 rounded-[3px] p-4 text-center border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col items-center">
-                                    <x-icon name="star" class="w-8 h-8 text-brand-primary mb-2" />
-                                    <span
-                                        class="!text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wide">{{ __('Top Rated') }}</span>
-                                </div>
                                 <div
                                     class="bg-white dark:bg-gray-900 rounded-[3px] p-4 text-center border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col items-center col-span-2">
                                     <x-icon name="device-phone-mobile" class="w-8 h-8 text-brand-primary mb-2" />

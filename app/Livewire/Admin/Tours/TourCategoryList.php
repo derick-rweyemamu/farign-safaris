@@ -131,6 +131,8 @@ class TourCategoryList extends Component {
         ]);
 
         $data = [
+            'name' => array_filter($this->names, fn($v) => $v !== '' && $v !== null),
+            'description' => array_filter($this->descriptions, fn($v) => $v !== '' && $v !== null),
             'slug' => $this->slug,
             'is_active' => $this->is_active,
             'sort_order' => (int) $this->sort_order,
@@ -145,27 +147,9 @@ class TourCategoryList extends Component {
         if ($this->isEdit) {
             $category = TourCategory::find($this->category_id);
             $category->update($data);
-            foreach ($this->locales as $locale) {
-                if (!empty($this->names[$locale])) {
-                    $category->setTranslation('name', $locale, $this->names[$locale]);
-                }
-                if (!empty($this->descriptions[$locale])) {
-                    $category->setTranslation('description', $locale, $this->descriptions[$locale]);
-                }
-            }
-            $category->save();
             $this->dispatch('notify', message: __('Category updated successfully!'), type: 'success');
         } else {
-            $category = TourCategory::create($data);
-            foreach ($this->locales as $locale) {
-                if (!empty($this->names[$locale])) {
-                    $category->setTranslation('name', $locale, $this->names[$locale]);
-                }
-                if (!empty($this->descriptions[$locale])) {
-                    $category->setTranslation('description', $locale, $this->descriptions[$locale]);
-                }
-            }
-            $category->save();
+            TourCategory::create($data);
             $this->dispatch('notify', message: __('Category created successfully!'), type: 'success');
         }
 
