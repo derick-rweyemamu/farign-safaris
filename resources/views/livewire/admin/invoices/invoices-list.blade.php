@@ -1,4 +1,3 @@
-<!-- [MODIFY] [invoices-list.blade.php](file:///d:/LOCALSERVER/laragon/www/ mwangwi-safaris/resources/views/livewire/invoices/invoices-list.blade.php) -->
 <div class="space-y-4 animate-fade-in">
 
     <!-- Header -->

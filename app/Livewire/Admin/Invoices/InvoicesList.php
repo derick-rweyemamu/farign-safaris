@@ -1,5 +1,4 @@
 <?php
-/* [MODIFY] [InvoicesList.php](file:///d:/LOCALSERVER/laragon/www/ mwangwi-safaris/app/Livewire/Invoices/InvoicesList.php) */
 
 namespace App\Livewire\Admin\Invoices;
 

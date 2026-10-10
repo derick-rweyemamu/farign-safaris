@@ -2812,33 +2812,33 @@ section.hero iframe {
 ───────────────────────────────────────────────────────────────────────────── */
 
 /* Headings */
-.frontend-body h1:not(.zanzibar-block *),
-.frontend-body h2:not(.zanzibar-block *),
-.frontend-body h3:not(.zanzibar-block *),
-.frontend-body h4:not(.zanzibar-block *),
-.frontend-body h5:not(.zanzibar-block *),
-.frontend-body h6:not(.zanzibar-block *),
-.frontend-body .prose h1:not(.zanzibar-block *),
-.frontend-body .prose h2:not(.zanzibar-block *),
-.frontend-body .prose h3:not(.zanzibar-block *),
-.frontend-body .prose h4:not(.zanzibar-block *),
-.frontend-body .prose h5:not(.zanzibar-block *),
-.frontend-body .prose h6:not(.zanzibar-block *) {
+.frontend-body h1:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h2:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h3:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h4:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h5:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h6:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h1:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h2:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h3:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h4:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h5:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h6:not(.zanzibar-block *):not(.safaris-about-block *) {
   font-family: 'Playfair Display', Georgia, serif !important;
 }
 
 /* Body text */
-.frontend-body p:not(.zanzibar-block *),
-.frontend-body ul:not(.zanzibar-block *),
-.frontend-body ol:not(.zanzibar-block *),
-.frontend-body li:not(.zanzibar-block *),
-.frontend-body span:not(.zanzibar-block *),
-.frontend-body td:not(.zanzibar-block *),
-.frontend-body .prose p:not(.zanzibar-block *),
-.frontend-body .prose ul:not(.zanzibar-block *),
-.frontend-body .prose ol:not(.zanzibar-block *),
-.frontend-body .prose li:not(.zanzibar-block *),
-.frontend-body .prose span:not(.zanzibar-block *) {
+.frontend-body p:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body ul:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body ol:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body li:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body span:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body td:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose p:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose ul:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose ol:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose li:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose span:not(.zanzibar-block *):not(.safaris-about-block *) {
   font-size: 15px !important;
   font-family: 'Lora', Georgia, serif !important;
 }

@@ -8,9 +8,9 @@
 }
 
 :root {
-  --gold: #fbb158;
-  --gold-light: #E8D5A3;
-  --gold-dark: #8B6914;
+  --gold: #CA9A2E;
+  --gold-light: #F7E8C6;
+  --gold-dark: #967018;
   --earth: #2E1F12;
   --earth-mid: #5C3D26;
   --earth-light: #A67C5B;
@@ -21,17 +21,17 @@
   --text-dark: #1A1108;
   --text-mid: #4A3728;
   --text-muted: #8C7565;
-  --green-safari: #2D4A2A;
-  --green-light: #4A7343;
+  --green-safari: #2D3A2A;
+  --green-light: #455537;
   --font-display: 'Playfair Display', Georgia, serif;
   --font-serif: 'Lora', Georgia, serif;
   --font-body: 'Lora', sans-serif;
   --shadow-warm: 0 8px 40px rgba(61, 43, 31, 0.13);
-  --shadow-gold: 0 4px 20px rgba(201, 168, 76, 0.18);
-  --brand-primary: #fbb158;
-  --brand-primary-hover: #e09f4f;
-  --brand-light: #F5EDD8;
-  --brand-light-hover: #EEE5D4;
+  --shadow-gold: 0 4px 20px rgba(202, 154, 46, 0.18);
+  --brand-primary: #455537;
+  --brand-primary-hover: #354329;
+  --brand-light: #EDF2EA;
+  --brand-light-hover: #E2EBD9;
   --font-brand: 'Playfair Display', Georgia, serif;
   --font-brand-secondary: 'Cormorant Garamond', serif;
 
@@ -102,10 +102,10 @@
 }
 
 .dark {
-  --brand-primary: #f5a352;
-  --brand-primary-hover: #e88427;
-  --brand-light: #2c1409;
-  --brand-light-hover: #3d1c0c;
+  --brand-primary: #5c7249;
+  --brand-primary-hover: #455537;
+  --brand-light: #1c2417;
+  --brand-light-hover: #26311f;
 
   --color-sidebar: oklch(0.16 0.04 257);
   --color-sidebar-hover: var(--brand-light);
@@ -2455,8 +2455,8 @@ body.frontend-body {
   min-height: 640px !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
   overflow: hidden !important;
 }
 
@@ -2487,7 +2487,7 @@ body.frontend-body {
   content: '' !important;
   position: absolute !important;
   inset: 0 !important;
-  background: linear-gradient(to bottom, rgba(15, 10, 5, 0.55) 0%, rgba(15, 10, 5, 0.3) 50%, rgba(15, 10, 5, 0.75) 100%) !important;
+  background: linear-gradient(105deg, rgba(5, 10, 8, 0.72) 0%, rgba(5, 10, 8, 0.45) 55%, rgba(5, 10, 8, 0.12) 100%) !important;
   z-index: 2 !important;
   pointer-events: none !important;
 }
@@ -2695,6 +2695,283 @@ section.hero iframe {
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.45), transparent) !important;
 }
 
+/* ── HERO TGE (Tanzania Glimpse Style) ── */
+.hero-content-tge {
+  position: relative !important;
+  z-index: 10 !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  padding: 0 4rem !important;
+  margin: 0 auto !important;
+  animation: fadeUp 1.2s ease both !important;
+}
+
+.hero-tge-layout {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  gap: 2rem !important;
+}
+
+.hero-tge-main-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 2.5rem !important;
+  width: 100% !important;
+}
+
+.hero-tge-left-col {
+  flex: 1 1 50% !important;
+  max-width: 560px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.hero-tge-right-col {
+  flex: 1 1 50% !important;
+  max-width: 520px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 1.25rem !important;
+}
+
+/* Backwards compatibility for old saved HTML */
+.hero-tge-left {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  gap: 1.5rem !important;
+}
+
+.hero-tge-mid-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 2rem !important;
+  width: 100% !important;
+}
+
+.hero-tge-mid-row .hero-tge-sub {
+  flex: 1 1 45% !important;
+  max-width: 450px !important;
+  margin: 0 !important;
+}
+
+.hero-tge-mid-row .hero-tge-feature-cards {
+  flex: 1 1 50% !important;
+  margin: 0 !important;
+}
+
+.hero .hero-tge-title,
+section.hero h1.hero-tge-title,
+h1.hero-tge-title,
+.hero-tge-title {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: clamp(2.2rem, 4vw, 3.4rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0.04em !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.95) !important;
+  text-stroke: 2px rgba(255, 255, 255, 0.95) !important;
+  text-transform: uppercase !important;
+  margin-bottom: 1rem !important;
+  text-shadow: none !important;
+  white-space: normal !important;
+}
+
+.hero-tge-sub {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem) !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  line-height: 1.55 !important;
+  margin: 0 !important;
+  font-style: normal !important;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.5) !important;
+}
+
+.hero-tge-feature-cards {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  gap: 12px !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.hero-tge-card {
+  flex: 1 1 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  background: rgba(255, 255, 255, 0.22) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.32) !important;
+  border-radius: 12px !important;
+  padding: 14px 12px !important;
+  min-width: 95px !important;
+  cursor: default !important;
+  transition: background 0.25s, border-color 0.25s, transform 0.2s !important;
+  text-align: center !important;
+}
+
+.hero-tge-card--active {
+  background: rgba(255, 255, 255, 0.28) !important;
+  border-color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.hero-tge-card:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  transform: translateY(-2px) !important;
+}
+
+.hero-tge-card-icon {
+  color: #fff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.hero-tge-card-icon svg {
+  width: 22px !important;
+  height: 22px !important;
+  stroke: #fff !important;
+}
+
+.hero-tge-card span {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  text-transform: none !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.01em !important;
+  display: block !important;
+}
+
+.hero-tge-quote {
+  font-family: 'Lora', Georgia, serif !important;
+  font-size: 14px !important;
+  font-style: italic !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.4) !important;
+}
+
+.hero-tge-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+  margin-top: 1.5rem !important;
+}
+
+.hero-tge-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  background: #f1f0e8 !important;
+  color: #221c0f !important;
+  padding: 13px 28px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  letter-spacing: 0.02em !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background 0.22s, transform 0.18s, box-shadow 0.22s !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25) !important;
+  white-space: nowrap !important;
+}
+
+.hero-tge-btn--left {
+  border-radius: 30px 0 0 30px !important;
+}
+
+.hero-tge-btn--right {
+  border-radius: 0 30px 30px 0 !important;
+}
+
+.hero-tge-btn:not(.hero-tge-btn--left):not(.hero-tge-btn--right) {
+  border-radius: 30px !important;
+}
+
+.hero-tge-btn:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.35) !important;
+}
+
+.hero-scroll {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .hero-tge-main-row,
+  .hero-tge-mid-row {
+    flex-direction: column !important;
+    gap: 1.8rem !important;
+  }
+
+  .hero-tge-left-col,
+  .hero-tge-right-col,
+  .hero-tge-mid-row .hero-tge-sub,
+  .hero-tge-mid-row .hero-tge-feature-cards {
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-content-tge {
+    padding: 0 1.5rem !important;
+  }
+
+  .hero-tge-title {
+    font-size: clamp(2rem, 8vw, 3rem) !important;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.9) !important;
+  }
+
+  .hero-tge-feature-cards {
+    gap: 8px !important;
+  }
+
+  .hero-tge-card {
+    min-width: 85px !important;
+    padding: 10px 8px !important;
+  }
+
+  .hero-tge-actions {
+    flex-direction: column !important;
+  }
+
+  .hero-tge-btn,
+  .hero-tge-btn--left,
+  .hero-tge-btn--right {
+    border-radius: 30px !important;
+    width: 100% !important;
+  }
+}
+
 @media (max-width: 900px) {
   .hero {
     height: 90vh !important;
@@ -2764,33 +3041,33 @@ section.hero iframe {
 ───────────────────────────────────────────────────────────────────────────── */
 
 /* Headings */
-.frontend-body h1:not(.zanzibar-block *),
-.frontend-body h2:not(.zanzibar-block *),
-.frontend-body h3:not(.zanzibar-block *),
-.frontend-body h4:not(.zanzibar-block *),
-.frontend-body h5:not(.zanzibar-block *),
-.frontend-body h6:not(.zanzibar-block *),
-.frontend-body .prose h1:not(.zanzibar-block *),
-.frontend-body .prose h2:not(.zanzibar-block *),
-.frontend-body .prose h3:not(.zanzibar-block *),
-.frontend-body .prose h4:not(.zanzibar-block *),
-.frontend-body .prose h5:not(.zanzibar-block *),
-.frontend-body .prose h6:not(.zanzibar-block *) {
+.frontend-body h1:not(.zanzibar-block *):not(.safaris-about-block *):not(.hero-tge-title),
+.frontend-body h2:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h3:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h4:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h5:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h6:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h1:not(.zanzibar-block *):not(.safaris-about-block *):not(.hero-tge-title),
+.frontend-body .prose h2:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h3:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h4:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h5:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h6:not(.zanzibar-block *):not(.safaris-about-block *) {
   font-family: 'Playfair Display', Georgia, serif !important;
 }
 
 /* Body text */
-.frontend-body p:not(.zanzibar-block *),
-.frontend-body ul:not(.zanzibar-block *),
-.frontend-body ol:not(.zanzibar-block *),
-.frontend-body li:not(.zanzibar-block *),
-.frontend-body span:not(.zanzibar-block *),
-.frontend-body td:not(.zanzibar-block *),
-.frontend-body .prose p:not(.zanzibar-block *),
-.frontend-body .prose ul:not(.zanzibar-block *),
-.frontend-body .prose ol:not(.zanzibar-block *),
-.frontend-body .prose li:not(.zanzibar-block *),
-.frontend-body .prose span:not(.zanzibar-block *) {
+.frontend-body p:not(.zanzibar-block *):not(.safaris-about-block *):not(.hero-tge-sub):not(.hero-tge-quote),
+.frontend-body ul:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body ol:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body li:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body span:not(.zanzibar-block *):not(.safaris-about-block *):not(.hero-tge-card span),
+.frontend-body td:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose p:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose ul:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose ol:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose li:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose span:not(.zanzibar-block *):not(.safaris-about-block *) {
   font-size: 15px !important;
   font-family: 'Lora', Georgia, serif !important;
 }

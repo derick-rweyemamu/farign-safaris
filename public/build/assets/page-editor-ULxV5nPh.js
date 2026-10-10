@@ -1002,7 +1002,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold font-brand text-gray-900 mb-6">Section Heading</h2>
             <p class="text-lg text-gray-600 leading-relaxed mb-4">
-                This is your premium content block. You can use it to build standard article bodies, description sections, or details about your itineraries and tours. It is pre-configured with a maximum width container (<code class="text-sm font-semibold bg-gray-100 px-1.5 py-0.5 rounded text-indigo-600">max-w-7xl</code>) to align beautifully with the rest of your site layout.
+                This is your premium content block. You can use it to build standard article bodies, description sections, or details about your itineraries and tours. It is pre-configured with a maximum width container (<code class="text-sm font-semibold bg-[#EDF2EA] px-1.5 py-0.5 rounded text-[#455537]">max-w-7xl</code>) to align beautifully with the rest of your site layout.
             </p>
             <p class="text-lg text-gray-600 leading-relaxed">
                 Double-click any text here to start editing. Use the toolbar to apply formatting, list styles, or insert links and media.
@@ -1010,20 +1010,17 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
         </div>
     </section>
     `}),DO.add(`safaris-page-header`,{label:`★ Page Header`,category:window.__(`Safaris Blocks`),content:`
-    <section data-gjs-type="safaris-page-header-block" class="safaris-page-header-block relative w-full h-72 md:h-96 overflow-hidden bg-gray-950">
+    <section data-gjs-type="safaris-page-header-block" class="safaris-page-header-block relative w-full h-96 md:h-[480px] overflow-hidden bg-gray-900">
         <div class="dynamic-bg-container absolute inset-0 w-full h-full">
-            <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&q=80" alt="Header Background" class="absolute inset-0 w-full h-full object-cover opacity-50">
+            <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&q=80" alt="Header Background" class="absolute inset-0 w-full h-full object-cover opacity-85">
         </div>
-        <div class="absolute inset-0 bg-gradient-to-b from-gray-950/60 via-gray-950/30 to-gray-950/80 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/35 via-black/15 to-black/45 pointer-events-none"></div>
 
         <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-            <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-brand-primary/20 border border-brand-primary/40 text-brand-primary text-xs font-bold uppercase tracking-widest mb-4">
-                Discover Africa
-            </span>
-            <h1 class="dynamic-page-title text-4xl md:text-6xl font-bold text-white font-brand leading-tight mb-4">
+            <h1 class="dynamic-page-title text-4xl md:text-6xl !font-normal font-normal text-white font-brand leading-tight mb-4" style="font-weight: 400; text-shadow: 0 2px 10px rgba(0,0,0,0.6);">
                 Explore Our Destinations
             </h1>
-            <p class="text-gray-300 text-base md:text-lg max-w-2xl">
+            <p class="text-white/90 text-base md:text-lg max-w-2xl" style="text-shadow: 0 1px 6px rgba(0,0,0,0.6);">
                 From the vast plains of the Serengeti to the misty heights of Kilimanjaro — discover Africa's most
                 extraordinary places.
             </p>
@@ -1048,7 +1045,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                     <img src="https://images.unsplash.com/photo-1589553460732-57ef51160601?auto=format&fit=crop&q=80" alt="Mount Kilimanjaro Summit Climb" data-gjs-type="image" class="absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none" style="pointer-events: none;"></div>
                     <div class="relative z-10 space-y-2">
-                        <span class="inline-block px-3 py-1 rounded-full bg-[#fbb158] text-[#2E1F12] text-xs font-bold uppercase tracking-wider kili-badge" data-gjs-type="text">Mount Kilimanjaro (5,895m)</span>
+                        <span class="inline-block px-3 py-1 rounded-full bg-[#455537] text-white text-xs font-bold uppercase tracking-wider kili-badge" data-gjs-type="text">Mount Kilimanjaro (5,895m)</span>
                         <h3 class="text-2xl font-bold font-brand text-white kili-heading" data-gjs-type="text">Conquer the Roof of Africa</h3>
                         <p class="text-xs text-gray-200 kili-desc" data-gjs-type="text">Choosing the right route duration and acclimatization strategy can raise your summit success rate from 60% to over 95%.</p>
                     </div>
@@ -1056,11 +1053,11 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                 <!-- Right Calculator Preview -->
                 <div class="lg:col-span-7 p-4 flex flex-col justify-between">
                     <div>
-                        <span class="inline-block px-3 py-1 rounded-full bg-[#fbb158]/15 text-[#fbb158] text-xs font-bold uppercase tracking-wider mb-2">Summit Estimator</span>
+                        <span class="inline-block px-3 py-1 rounded-full bg-[#455537]/15 text-[#455537] text-xs font-bold uppercase tracking-wider mb-2">Summit Estimator</span>
                         <h2 class="text-2xl font-bold font-brand text-gray-900 dark:text-white kili-title" data-gjs-type="text">Kilimanjaro Success Rate Calculator</h2>
                         <p class="text-xs text-gray-500 mt-1 kili-sub" data-gjs-type="text">Estimate your summit success probability based on acclimatization and route profiles.</p>
                         <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-800/40 rounded-xl border border-gray-200 dark:border-gray-700 text-center">
-                            <i class="fa-solid fa-calculator text-2xl text-[#fbb158] mb-2"></i>
+                            <i class="fa-solid fa-calculator text-2xl text-[#CA9A2E] mb-2"></i>
                             <p class="text-xs font-bold text-gray-700 dark:text-gray-300">Live Interactive Calculator Widget</p>
                             <p class="text-[11px] text-gray-400 mt-1">Users can calculate success rates & request quotes directly on your website.</p>
                         </div>
@@ -1132,7 +1129,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
     });
     _acc_observer.observe(document.body, { childList: true, subtree: true });
 })();
-            `,t.body.appendChild(r)}catch{}}$.Traits.getType(`button`)||$.Traits.addType(`button`,{createInput({trait:e}){let t=document.createElement(`button`);return t.type=`button`,t.textContent=e.get(`text`)||`Click`,t.style.cssText=`width:100%; padding:8px 12px; background:linear-gradient(135deg,#6366f1,#8b5cf6); color:#fff; border:none; border-radius:4px; font-size:12px; font-weight:600; cursor:pointer; letter-spacing:0.03em; transition:all .15s;`,t.onmouseover=()=>t.style.opacity=`0.85`,t.onmouseout=()=>t.style.opacity=`1`,t.addEventListener(`click`,()=>{let t=e.get(`command`);typeof t==`function`&&t($,e)}),t},onUpdate(){}}),$.on(`component:selected`,e=>{e&&e.get(`type`)===`safaris-accordion`&&setTimeout(()=>r($),120)}),$.on(`load`,()=>{setTimeout(()=>r($),500)}),DO.add(`safaris-accordion`,{label:`FAQ Accordion`,category:window.__(`Safaris Blocks`),media:`<svg viewBox="0 0 24 24" style="fill: none !important;" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            `,t.body.appendChild(r)}catch{}}$.Traits.getType(`button`)||$.Traits.addType(`button`,{createInput({trait:e}){let t=document.createElement(`button`);return t.type=`button`,t.textContent=e.get(`text`)||`Click`,t.style.cssText=`width:100%; padding:8px 12px; background:linear-gradient(135deg,#455537,#354329); color:#fff; border:none; border-radius:4px; font-size:12px; font-weight:600; cursor:pointer; letter-spacing:0.03em; transition:all .15s;`,t.onmouseover=()=>t.style.opacity=`0.85`,t.onmouseout=()=>t.style.opacity=`1`,t.addEventListener(`click`,()=>{let t=e.get(`command`);typeof t==`function`&&t($,e)}),t},onUpdate(){}}),$.on(`component:selected`,e=>{e&&e.get(`type`)===`safaris-accordion`&&setTimeout(()=>r($),120)}),$.on(`load`,()=>{setTimeout(()=>r($),500)}),DO.add(`safaris-accordion`,{label:`FAQ Accordion`,category:window.__(`Safaris Blocks`),media:`<svg viewBox="0 0 24 24" style="fill: none !important;" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 6h16M4 6v3h16V6M4 12h16M4 12v3h16v-3M4 18h16M15 9l2 1.5L15 12"/>
         </svg>`,content:{type:`safaris-accordion`}})})(),$.on(`load`,()=>{let e=document.createElement(`style`);e.innerHTML=`body { font-family: "Lora", serif !important; }`,$.Canvas.getDocument().head.appendChild(e),$.Canvas.getBody().classList.add(`frontend-body`,`font-lora`);let t={el:null,tiny:null,ready:!1,originalContent:``,panel(){return document.getElementById(`gjs-rte-panel`)},textarea(){return document.getElementById(`gjs-rte-textarea`)},open(){this.panel()?.classList.add(`rte-open`)},close(){this.panel()?.classList.remove(`rte-open`)},initTiny(e){if(this.ready&&this.tiny){e(this.tiny);return}if(typeof tinymce>`u`){console.error(`TinyMCE not loaded`);return}tinymce.init({target:this.textarea(),height:370,menubar:!1,license_key:`gpl`,branding:!1,promotion:!1,plugins:[`advlist`,`autolink`,`lists`,`link`,`image`,`charmap`,`preview`,`anchor`,`searchreplace`,`visualblocks`,`code`,`fullscreen`,`insertdatetime`,`media`,`table`,`code`,`help`,`wordcount`],toolbar:`undo redo | blocks | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media table | removeformat | help`,toolbar_mode:`sliding`,skin:document.documentElement.classList.contains(`dark`)?`oxide-dark`:`oxide`,content_css:[document.documentElement.classList.contains(`dark`)?`dark`:`default`,...Array.from(document.querySelectorAll(`link[rel="stylesheet"]`)).map(e=>e.href),`https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Indie+Flower&family=Instrument+Sans:wght@400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap`,`/css/pagebuilder.css`,window.APP_CSS_URL||``].filter(Boolean),forced_root_block:!1,default_link_target:`_blank`,link_default_protocol:`https`,link_assume_external_targets:!0,base_url:`/js/tinymce`,suffix:`.min`,file_picker_callback(e,t,n){let r=`tinymce_`+Math.random().toString(36).substring(2,9),i=t=>{let n=Array.isArray(t.detail)?t.detail[0]:t.detail;n&&n.callbackId===r&&(e(n.url,{alt:n.name||``}),window.removeEventListener(`media-picker-chosen`,i))};window.addEventListener(`media-picker-chosen`,i),window.Livewire.dispatch(`open-media-picker`,{callbackId:r,filterType:n.filetype===`image`?`image`:n.filetype===`media`?`video`:`all`})},setup:n=>{t.tiny=n,n.on(`init`,()=>{t.ready=!0,e(n)})}})},applyContent(){if(!(!this.tiny||!this.el))try{let e=this.tiny.getContent();e=e.replace(/<p[^>]*>/gi,``).replace(/<\/p>/gi,`<br>`).replace(/(<br>)+$/i,``);let t=$.getSelected();t?t.components(e):this.el.innerHTML=e}catch{}},restoreContent(){if(this.el)try{this.el.innerHTML=this.originalContent,this.tiny&&this.tiny.setContent(this.originalContent||``)}catch{}}};document.getElementById(`gjs-rte-apply`)?.addEventListener(`click`,()=>{t.applyContent(),t.close(),t.el=null,$.select(null)}),document.getElementById(`gjs-rte-cancel`)?.addEventListener(`click`,()=>{t.restoreContent(),t.close(),t.el=null,$.select(null)}),$.setCustomRte({enable(e,n){t.el=e,t.originalContent=e.innerHTML||``,t.open();let r=t=>{let n=t.getBody();if(n&&e){n.className=e.className,n.classList.add(`frontend-body`,`font-lora`),n.style.cssText=e.style.cssText;try{let t=e.ownerDocument.defaultView.getComputedStyle(e);t&&(n.style.fontFamily=t.fontFamily,n.style.fontSize=t.fontSize,n.style.fontWeight=t.fontWeight,n.style.color=t.color,n.style.lineHeight=t.lineHeight,n.style.letterSpacing=t.letterSpacing)}catch{}n.style.minHeight=`100px`,n.style.padding=`15px`,n.style.margin=`0`,n.style.overflowY=`auto`}};if(t.ready&&t.tiny){try{t.tiny.setContent(e.innerHTML||``),r(t.tiny),setTimeout(()=>t.tiny.focus(),80)}catch{}return t.tiny}return new Promise(n=>{t.initTiny(t=>{t.setContent(e.innerHTML||``),r(t),setTimeout(()=>t.focus(),80),n(t)})})},disable(e,n){t.panel()?.classList.contains(`rte-open`)||(t.applyContent(),t.close(),t.el=null)},getContent(e,n){if(t.tiny)try{return t.tiny.getContent()}catch{}return e.innerHTML}});let n=$.StyleManager,r=n.getProperty(`typography`,`font-family`);if(r){if(typeof r.addOption==`function`)r.addOption({id:`Lora, serif`,label:`Lora`}),r.addOption({id:`"Playfair Display", serif`,label:`Playfair Display`}),r.addOption({id:`Jost, sans-serif`,label:`Jost`}),r.addOption({id:`Merriweather, serif`,label:`Merriweather`}),r.addOption({id:`"Indie Flower", cursive`,label:`Indie Flower`}),r.addOption({id:`Montserrat, sans-serif`,label:`Montserrat`});else{let e=r.get(`options`)||r.get(`list`)||[];e.push({value:`Lora, serif`,name:`Lora`,id:`Lora, serif`,label:`Lora`}),e.push({value:`"Playfair Display", serif`,name:`Playfair Display`,id:`"Playfair Display", serif`,label:`Playfair Display`}),e.push({value:`Jost, sans-serif`,name:`Jost`,id:`Jost, sans-serif`,label:`Jost`}),e.push({value:`Merriweather, serif`,name:`Merriweather`,id:`Merriweather, serif`,label:`Merriweather`}),e.push({value:`"Indie Flower", cursive`,name:`Indie Flower`,id:`"Indie Flower", cursive`,label:`Indie Flower`}),e.push({value:`Montserrat, sans-serif`,name:`Montserrat`,id:`Montserrat, sans-serif`,label:`Montserrat`}),r.set(`list`,e),r.set(`options`,e)}r.set(`default`,`Lora, serif`),n.render()}}),$.Traits.addType(`multiselect`,{createInput({trait:e}){let t=document.createElement(`div`);return t.style.display=`flex`,t.style.flexDirection=`column`,t.style.gap=`8px`,t.style.padding=`8px`,t.style.maxHeight=`200px`,t.style.overflowY=`auto`,t.style.background=`rgba(0,0,0,0.2)`,t.style.borderRadius=`3px`,t.style.color=`#fff`,(e.get(`options`)||[]).forEach(n=>{let r=document.createElement(`label`);r.style.display=`flex`,r.style.alignItems=`center`,r.style.gap=`8px`,r.style.fontSize=`13px`,r.style.cursor=`pointer`,r.style.margin=`0`;let i=document.createElement(`input`);i.type=`checkbox`,i.value=n.value,i.className=`trait-checkbox`,i.style.appearance=`checkbox`,i.style.webkitAppearance=`checkbox`,i.style.width=`16px`,i.style.height=`16px`,i.style.margin=`0`,i.style.cursor=`pointer`,i.addEventListener(`change`,()=>{let n=t.querySelectorAll(`.trait-checkbox:checked`),r=Array.from(n).map(e=>e.value).join(`,`);e.set(`value`,r)}),r.appendChild(i),r.appendChild(document.createTextNode(n.name)),t.appendChild(r)}),t},onUpdate({elInput:e,trait:t}){let n=(t.get(`value`)||``).split(`,`);e.querySelectorAll(`.trait-checkbox`).forEach(e=>{e.checked=n.includes(e.value)})}}),$.Traits.addType(`media_picker`,{createInput({trait:e}){let t=document.createElement(`div`);t.innerHTML=`
             <div style="display:flex; gap:5px;">
@@ -1143,51 +1140,197 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                 <div class="hero-bg-container" data-gjs-locked="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
                     <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80')"></div>
                 </div>
-                <div class="hero-content" style="position: relative; z-index: 10;">
-                    <div class="hero-badge">✦ Tanzania Safari Specialist</div>
-                    <h1>Where the Wild<br><em>Calls Your Name</em></h1>
-                    <p class="hero-sub">Tailor-made safaris, Kilimanjaro climbs & Zanzibar escapes — crafted by people who were born here, grew up here, and can't imagine anywhere else.</p>
-                    <div class="hero-actions">
-                        <a href="#contact" class="btn-primary">Plan My Adventure</a>
-                        <a href="#trips" class="btn-ghost">View Itineraries</a>
+                <div class="hero-content-tge" style="position: relative; z-index: 10;">
+                    <div class="hero-tge-layout">
+                        <div class="hero-tge-main-row">
+                            <div class="hero-tge-left-col">
+                                <h1 class="hero-tge-title">DISCOVER TANZANIA</h1>
+                                <p class="hero-tge-sub">Uncover the magic of Tanzania's wilderness,<br>culture, and adventure.</p>
+                            </div>
+                            <div class="hero-tge-right-col">
+                                <div class="hero-tge-feature-cards">
+                                    <div class="hero-tge-card">
+                                        <div class="hero-tge-card-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
+                                        </div>
+                                        <span>Tanzania's<br>Wild Side</span>
+                                    </div>
+                                    <div class="hero-tge-card">
+                                        <div class="hero-tge-card-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>
+                                        </div>
+                                        <span>Travel with<br>Experts</span>
+                                    </div>
+                                    <div class="hero-tge-card hero-tge-card--active">
+                                        <div class="hero-tge-card-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/></svg>
+                                        </div>
+                                        <span>Tailored<br>Experiences</span>
+                                    </div>
+                                </div>
+                                <p class="hero-tge-quote">"Dive into Tanzania's breathtaking landscapes and vibrant wildlife. Let us guide you to memories that last a lifetime."</p>
+                            </div>
+                        </div>
+                        <div class="hero-tge-actions">
+                            <a href="#safaris" class="hero-tge-btn hero-tge-btn--left">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M15.5 14.5c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm-7-4c0 2.7 1.5 5 3.7 6.3L10.5 20H13l1.3-2.7c.4.1.8.2 1.2.2s.8-.1 1.2-.2L18 20h2.5l-1.7-3.2c2.2-1.3 3.7-3.6 3.7-6.3 0-4-3.1-7.2-7-7.2S8.5 6.5 8.5 10.5zM4 12c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm3.5 3.5C6.1 16.9 4.1 18 2 18v2c2.8 0 5.2-1.4 6.7-3.5L7.5 15.5z"/></svg>
+                                Tanzania Safaris
+                            </a>
+                            <a href="#trekking" class="hero-tge-btn hero-tge-btn--right">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm4 5.28c-1.23-.37-2.22-1.17-2.8-2.22l-1-1.6c-.4-.64-1.07-1-1.8-.96-.75 0-1.33.4-1.7 1l-3.2 5.4c-.34.56-.34 1.24 0 1.8l2.8 4.4.4.65V21h2v-2.5l-1.4-2.65 1.2-2L15 16v5h2v-6l-2.6-1.5.6-1 .74 1.28c.56.93 1.33 1.69 2.26 2.22V15h2v-2.5c-1.1 0-2-.9-2-2.22z"/></svg>
+                                Mount Trekking
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="hero-scroll" style="position: relative; z-index: 10;">Scroll</div>
-            `},init(){this.on(`change:attributes:data-bg-type change:attributes:data-bg-image change:attributes:data-bg-video change:attributes:data-bg-video-url`,this.updateBackground),setTimeout(()=>this.updateBackground(),50)},updateBackground(){let e=this.getAttributes()[`data-bg-type`]||`image`,t=this.getAttributes()[`data-bg-image`]||``,n=this.getAttributes()[`data-bg-video`]||``,r=this.getAttributes()[`data-bg-video-url`]||``,i=this.components().models.find(e=>e.getClasses().includes(`hero-bg-container`));if(!i)return;i.addStyle({overflow:`hidden`});let a=[];if(e===`image`)a=[{tagName:`div`,style:{"background-image":`url('${t}')`,"background-size":`cover`,"background-position":`center`,width:`100%`,height:`100%`,position:`absolute`,inset:`0`},attributes:{class:`hero-bg`}}];else if(e===`video_upload`&&n||e===`video_url`&&r){let t=e===`video_upload`?n:r,i=t.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|live\/|watch\?v=|\&v=)([^#\&\?]*).*/),o=i&&i[2].length===11?i[2]:null;a=o?[{tagName:`iframe`,style:{position:`absolute`,top:`50%`,left:`50%`,width:`150vw`,height:`150vh`,transform:`translate(-50%, -50%)`,"pointer-events":`none`,"min-width":`100%`,"min-height":`100%`},attributes:{class:`hero-bg-video`,src:`https://www.youtube.com/embed/${o}?autoplay=1&loop=1&mute=1&controls=0&playlist=${o}&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3`,frameborder:`0`,allow:`autoplay; fullscreen`}},{tagName:`div`,style:{position:`absolute`,inset:`0`,background:`rgba(0,0,0,0.4)`,"z-index":`2`},attributes:{class:`hero-bg-overlay`}}]:[{tagName:`video`,style:{position:`absolute`,top:`0`,left:`0`,width:`100%`,height:`100%`,"object-fit":`cover`,"pointer-events":`none`},attributes:{class:`hero-bg-video`,autoplay:`autoplay`,loop:`loop`,muted:`muted`,playsinline:`playsinline`},components:[{tagName:`source`,attributes:{src:t,type:`video/mp4`}}]},{tagName:`div`,style:{position:`absolute`,inset:`0`,background:`rgba(0,0,0,0.4)`,"z-index":`2`},attributes:{class:`hero-bg-overlay`}}]}else a=[{tagName:`div`,style:{"background-image":`url('')`,"background-size":`cover`,"background-position":`center`,width:`100%`,height:`100%`,position:`absolute`,inset:`0`},attributes:{class:`hero-bg`}}];i.components(a)}}}),$.DomComponents.addType(`safaris-kili-calculator-block`,{model:{defaults:{tagName:`div`,attributes:{class:`safaris-kili-calculator-block`,"data-title":`Kilimanjaro Success Rate Calculator`,"data-subtitle":`Estimate your summit success probability based on acclimatization and route profiles.`,"data-image":``,"data-badge":`Mount Kilimanjaro (5,895m)`,"data-heading":`Conquer the Roof of Africa`,"data-description":`Choosing the right route duration and acclimatization strategy can raise your summit success rate from 60% to over 95%.`}}}}),$.DomComponents.addType(`tours-listing`,{model:{defaults:{tagName:`div`,attributes:{class:`tours-listing`,"data-category":`all`,"data-country":`all`,"data-limit":`5`},traits:[{type:`multiselect`,name:`data-category`,label:`Category`,options:[{value:`all`,name:window.__(`All Categories`)},...(window.TOUR_CATEGORIES||[]).map(e=>({value:e.slug,name:typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name}))]},{type:`select`,name:`data-tour-type`,label:`Tour Type`,options:[{value:`all`,name:window.__(`All Tour Types`)},...(window.TOUR_TYPES||[]).map(e=>({value:e.slug,name:typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name}))]},{type:`select`,name:`data-country`,label:`Country`,options:[{value:`all`,name:window.__(`All Countries`)},...(window.COUNTRIES||[]).map(e=>({value:e.id,name:typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name}))]},{type:`number`,name:`data-limit`,label:`Limit / Per Page`,min:1,max:100,value:6}]},init(){this.on(`change:attributes:data-category change:attributes:data-tour-type change:attributes:data-country change:attributes:data-limit`,this.updateCanvasHtml),this.updateCanvasHtml()},updateCanvasHtml(){let e=this.getAttributes()[`data-category`]||`all`,t=this.getAttributes()[`data-tour-type`]||`all`,n=this.getAttributes()[`data-country`]||`all`,r=this.getAttributes()[`data-limit`]||`5`,i=``;if(e!==`all`&&e.includes(`,`)){let t=e.split(`,`);i=`<div class="flex gap-2 mt-4 justify-center">`,t.forEach(e=>{i+=`<span class="px-4 py-1.5 bg-[#fbb158]/20 text-[#8B6914] text-xs font-bold uppercase rounded-full border border-[#fbb158]/30">${e}</span>`}),i+=`</div>`}this.set(`content`,`
-               <div class="text-center py-10 bg-gray-50 border border-dashed border-gray-300 rounded-[3px] p-6" style="pointer-events: none;">
-                  <p class="text-gray-700 font-bold text-base">🚙 Dynamic Tour Listing</p>
-                  <p class="text-sm text-gray-500 mt-2">Type: <span class="font-bold text-indigo-600">${t}</span> | Country: <span class="font-bold text-indigo-600">${n}</span> | Limit: <span class="font-bold text-indigo-600">${r}</span></p>
-                  ${i||`<p class="text-sm text-gray-500 mt-2">Category: <span class="font-bold text-indigo-600">${e}</span></p>`}
-                  <p class="text-[10px] text-gray-400 mt-4 uppercase tracking-wider font-semibold">Will load live tours from the database on the frontend</p>
-               </div>
-            `)}}}),DO.add(`safaris-tours-dynamic`,{label:`🚙 Dynamic Tours`,category:window.__(`Safaris Blocks`),content:`
-<section class="trips-section py-20" id="trips">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="trips-header flex justify-between items-end mb-12">
-      <div>
-        <div class="section-label text-[11px] tracking-[0.18em] uppercase text-[#8B6914] font-medium mb-[0.6rem] flex items-center gap-[10px]">
-          <span class="inline-block w-[28px] h-[1px] bg-[#8B6914]"></span>
-          Our Itineraries
+            `},init(){this.on(`change:attributes:data-bg-type change:attributes:data-bg-image change:attributes:data-bg-video change:attributes:data-bg-video-url`,this.updateBackground),setTimeout(()=>this.updateBackground(),50)},updateBackground(){let e=this.getAttributes()[`data-bg-type`]||`image`,t=this.getAttributes()[`data-bg-image`]||``,n=this.getAttributes()[`data-bg-video`]||``,r=this.getAttributes()[`data-bg-video-url`]||``,i=this.components().models.find(e=>e.getClasses().includes(`hero-bg-container`));if(!i)return;i.addStyle({overflow:`hidden`});let a=[];if(e===`image`)a=[{tagName:`div`,style:{"background-image":`url('${t}')`,"background-size":`cover`,"background-position":`center`,width:`100%`,height:`100%`,position:`absolute`,inset:`0`},attributes:{class:`hero-bg`}}];else if(e===`video_upload`&&n||e===`video_url`&&r){let t=e===`video_upload`?n:r,i=t.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|live\/|watch\?v=|\&v=)([^#\&\?]*).*/),o=i&&i[2].length===11?i[2]:null;a=o?[{tagName:`iframe`,style:{position:`absolute`,top:`50%`,left:`50%`,width:`150vw`,height:`150vh`,transform:`translate(-50%, -50%)`,"pointer-events":`none`,"min-width":`100%`,"min-height":`100%`},attributes:{class:`hero-bg-video`,src:`https://www.youtube.com/embed/${o}?autoplay=1&loop=1&mute=1&controls=0&playlist=${o}&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3`,frameborder:`0`,allow:`autoplay; fullscreen`}},{tagName:`div`,style:{position:`absolute`,inset:`0`,background:`rgba(0,0,0,0.4)`,"z-index":`2`},attributes:{class:`hero-bg-overlay`}}]:[{tagName:`video`,style:{position:`absolute`,top:`0`,left:`0`,width:`100%`,height:`100%`,"object-fit":`cover`,"pointer-events":`none`},attributes:{class:`hero-bg-video`,autoplay:`autoplay`,loop:`loop`,muted:`muted`,playsinline:`playsinline`},components:[{tagName:`source`,attributes:{src:t,type:`video/mp4`}}]},{tagName:`div`,style:{position:`absolute`,inset:`0`,background:`rgba(0,0,0,0.4)`,"z-index":`2`},attributes:{class:`hero-bg-overlay`}}]}else a=[{tagName:`div`,style:{"background-image":`url('')`,"background-size":`cover`,"background-position":`center`,width:`100%`,height:`100%`,position:`absolute`,inset:`0`},attributes:{class:`hero-bg`}}];i.components(a)}}}),$.DomComponents.addType(`safaris-kili-calculator-block`,{model:{defaults:{tagName:`div`,attributes:{class:`safaris-kili-calculator-block`,"data-title":`Kilimanjaro Success Rate Calculator`,"data-subtitle":`Estimate your summit success probability based on acclimatization and route profiles.`,"data-image":``,"data-badge":`Mount Kilimanjaro (5,895m)`,"data-heading":`Conquer the Roof of Africa`,"data-description":`Choosing the right route duration and acclimatization strategy can raise your summit success rate from 60% to over 95%.`}}}});var OO=$.TraitManager||$.Traits;OO&&typeof OO.addType==`function`&&OO.addType(`multiselect`,{createInput({trait:e}){let t=document.createElement(`div`);t.className=`gjs-multiselect-container`,t.style.cssText=`width: 100%; box-sizing: border-box;`;let n=document.createElement(`input`);n.type=`text`,n.placeholder=`🔍 Search country...`,n.className=`gjs-multiselect-search`,n.style.cssText=`width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid #334155; border-radius: 4px; color: #cbd5e1; font-size: 11px; padding: 6px 8px; margin-bottom: 6px; outline: none;`,t.appendChild(n);let r=document.createElement(`div`);return r.className=`gjs-multiselect-wrap`,r.style.cssText=`width: 100%; max-height: 200px; overflow-y: auto; background: #0f172a; border: 1px solid #334155; border-radius: 4px; padding: 6px; box-sizing: border-box;`,(e.get(`options`)||[]).forEach(e=>{let t=document.createElement(`label`);t.className=`gjs-multiselect-item`,t.setAttribute(`data-label`,(e.name||``).toLowerCase()),t.style.cssText=`display: flex; align-items: center; gap: 8px; font-size: 12px; color: #cbd5e1; cursor: pointer; padding: 4px; user-select: none; border-radius: 3px; margin-bottom: 2px;`,t.onmouseover=()=>t.style.background=`#1e293b`,t.onmouseout=()=>t.style.background=`transparent`;let n=document.createElement(`input`);n.type=`checkbox`,n.value=e.value,n.className=`gjs-multiselect-checkbox`,n.style.cssText=`cursor: pointer; accent-color: #455537; width: 15px; height: 15px;`;let i=document.createElement(`span`);i.textContent=e.name,t.appendChild(n),t.appendChild(i),r.appendChild(t)}),n.addEventListener(`input`,e=>{let t=(e.target.value||``).toLowerCase().trim();r.querySelectorAll(`.gjs-multiselect-item`).forEach(e=>{let n=e.getAttribute(`data-label`)||``;e.style.display=!t||n.includes(t)?`flex`:`none`})}),t.appendChild(r),t},onUpdate({elInput:e,component:t,trait:n}){let r=(t.getAttributes()[n.get(`name`)]||`all`).split(`,`).map(e=>e.trim());e.querySelectorAll(`input[type="checkbox"]`).forEach(e=>{e.checked=r.includes(e.value)})},onEvent({elInput:e,component:t,trait:n}){let r=e.querySelectorAll(`input[type="checkbox"]:checked`),i=Array.from(r).map(e=>e.value),a=i.join(`,`);(!a||i.includes(`all`))&&(a=i.includes(`all`)&&i.length>1?i.filter(e=>e!==`all`).join(`,`):`all`),t.addAttributes({[n.get(`name`)]:a}),t.view&&typeof t.view.renderView==`function`&&t.view.renderView()}}),$.on(`component:selected`,e=>{if(!e)return;let t=e.get?e.get(`type`):null,n=e.getClasses?e.getClasses():[],r=e;if(t!==`tours-listing`&&!n.includes(`tours-listing`)){let t=null;if(typeof e.closest==`function`&&(t=e.closest(`.tours-listing`)||e.closest(`[data-gjs-type="tours-listing"]`)),!t&&typeof e.find==`function`){let n=e.find(`.tours-listing`);n&&n.length&&(t=n[0])}t&&(r=t)}if(r&&(r.get(`type`)===`tours-listing`||r.getClasses&&r.getClasses().includes(`tours-listing`))){if(r!==e){$.select(r);return}try{let e=$.Panels,t=e?e.getButton(`views`,`open-tm`):null;t?t.set(`active`,!0):$.runCommand(`open-tm`)}catch{try{$.runCommand(`open-tm`)}catch{}}}});var kO=()=>{let e=[...window.TOUR_COUNTRIES||window.COUNTRIES||[]].sort((e,t)=>{let n=(t.destinations_count||0)+(t.tours_count||0)-((e.destinations_count||0)+(e.tours_count||0));if(n!==0)return n;let r=typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name,i=typeof t.name==`object`?t.name.en||Object.values(t.name)[0]:t.name;return(r||``).localeCompare(i||``)}),t=[{value:`all`,name:`🌍 All Countries (Auto)`}];return e.forEach(e=>{let n=typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name,r=[];e.destinations_count&&r.push(`${e.destinations_count} dest`),e.tours_count&&r.push(`${e.tours_count} tours`);let i=r.length?` (${r.join(`, `)})`:``;t.push({value:e.id.toString(),name:`${n}${i}`})}),t},AO=e=>{let t=window.TOUR_COUNTRIES||window.COUNTRIES||[];if(e&&e!==`all`){let n=e.split(`,`).map(e=>e.trim()).filter(Boolean),r=[];if(n.forEach(e=>{let n=t.find(t=>t.id.toString()===e);if(n){let e=typeof n.name==`object`?n.name.en||Object.values(n.name)[0]:n.name;r.push({id:n.id,name:e,meta:n})}}),r.length>0)return r}let n=t.filter(e=>(e.destinations_count||0)>0||(e.tours_count||0)>0),r=n.length?n:t.filter(e=>{let t=typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name;return[`Tanzania`,`Kenya`,`Uganda`,`Rwanda`,`Zanzibar`].includes(t)});return(r.length?r:t).slice(0,5).map(e=>({id:e.id,name:typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name,meta:e}))},jO=(e,t=0)=>{let n=e&&e[`data-country`]||`all`,r=e&&e[`data-layout`]||`auto`,i=e&&e[`data-heading`]||``,a=e&&e[`data-heading-accent`]||``,o=e&&e[`data-subheading`]||`Choose a destination to explore Africa's iconic safaris and signature experiences`,s=e&&e[`data-limit`]||`4`,c=AO(n),l=Math.max(0,Math.min(t,c.length-1)),u=c[l]||{id:90,name:`Tanzania`,meta:{}},d=u.name,f=u.meta||{};f.tagline||`${d}`;let p=f.description||`Explore extraordinary landscapes, wildlife reserves, and signature safari journeys across ${d}.`,m=f.image||`https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80`,h=f.tours&&f.tours.length?f.tours:[{name:`7-Day ${d} Wildlife & Safari Explorer`,days:7,price:`$2,850`,image:m},{name:`5-Day Best of ${d} Signature Journey`,days:5,price:`$2,100`,image:m}],g=i||(c.length===1?c[0].name:c.length+` Destinations.`),_=a||(c.length===1?`Signature Safaris.`:`One Journey.`),v=`
+        <div style="background: linear-gradient(135deg, #1b281f, #0d1611); border: 1px solid #455537; border-radius: 8px; padding: 12px 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-family: sans-serif; gap: 12px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <span style="background: #455537; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;">🌍 DYNAMIC TOURS SHOWCASE</span>
+                <span style="font-size: 13px; color: #e2e8f0;">Selected: <strong style="color: #CA9A2E; background: rgba(202,154,46,0.15); padding: 2px 8px; border-radius: 4px;">${c.map(e=>e.name).join(`, `)}</strong></span>
+                <span style="font-size: 12px; color: #94a3b8;">(${s} per page)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 11px; color: #CA9A2E;">💡 Click heading text to edit</span>
+                <button type="button" class="js-open-settings" style="background: #CA9A2E; color: #1E271C; font-weight: 700; font-size: 12px; padding: 6px 14px; border: none; border-radius: 4px; cursor: pointer; transition: opacity .15s;">
+                    ⚙ Edit Settings / Countries
+                </button>
+            </div>
         </div>
-        <h2 class="section-title text-[clamp(2.2rem,3.5vw,3.4rem)] font-medium text-[#2E1F12] leading-[1.12] mb-[1.3rem] tracking-[-0.01em] font-display">Popular <em class="italic text-[#A67C5B] font-normal">Adventures</em></h2>
-      </div>
-      <a href="/tours" class="btn-primary bg-[#fbb158] text-[#2E1F12] py-[13px] px-[34px] rounded-[3px] text-[12px] font-semibold tracking-[0.1em] uppercase cursor-pointer no-underline inline-block transition-all duration-250 shadow-[0_3px_16px_rgba(201,168,76,0.3)] hover:bg-[#d4b060] hover:-translate-y-[2px] hover:shadow-[0_6px_24px_rgba(201,168,76,0.4)] whitespace-nowrap">View All Trips</a>
-    </div>
+    `;if(r===`grid`)return`
+            <div style="color: #e8eee9; padding: 10px; font-family: sans-serif; position: relative; min-height: 200px;">
+                ${v}
+                <div style="text-align: center; margin-bottom: 32px;">
+                    <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <span style="width: 28px; height: 2px; background: #CA9A2E; display: inline-block;"></span>
+                        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: #CA9A2E; text-transform: uppercase;">SAFARI ADVENTURES</span>
+                    </div>
+                    <div style="margin: 0 0 10px;">
+                        <h2 class="js-edit-heading" data-bind-trait="data-heading" contenteditable="true" title="Click to edit heading" style="display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-size: 38px; color: #fff; margin: 0; cursor: text; outline: none; border-bottom: 1px dashed rgba(202,154,46,0.3);">
+                            ${g}
+                        </h2>
+                        <em class="js-edit-accent" data-bind-trait="data-heading-accent" contenteditable="true" title="Click to edit accent" style="display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-size: 34px; font-style: italic; color: #CA9A2E; cursor: text; outline: none; border-bottom: 1px dashed rgba(202,154,46,0.3); margin-left: 8px;">
+                            ${_}
+                        </em>
+                    </div>
+                    <p class="js-edit-subheading" data-bind-trait="data-subheading" contenteditable="true" title="Click to edit description" style="font-size: 15px; color: #8fa593; max-width: 600px; margin: 0 auto; cursor: text; outline: none; border-bottom: 1px dashed rgba(255,255,255,0.15);">
+                        ${o}
+                    </p>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+                    ${h.slice(0,Math.min(3,parseInt(s,10)||3)).map(e=>{let t=e.name||e.title,n=e.days?typeof e.days==`string`&&e.days.includes(`Day`)?e.days:`${e.days} Days`:`7 Days`,r=e.price?typeof e.price==`string`&&e.price.includes(`$`)?e.price:`$${Number(e.price).toLocaleString()}`:`$2,400`;return`
+                        <div style="background: #142319; border: 1px solid #213829; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+                            <div style="height: 180px; position: relative;">
+                                <img src="${e.image||e.img||m}" style="width: 100%; height: 100%; object-fit: cover;" />
+                                <span style="position: absolute; top: 12px; right: 12px; background: rgba(13,22,17,0.85); color: #CA9A2E; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px;">${n}</span>
+                            </div>
+                            <div style="padding: 18px;">
+                                <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 18px; color: #fff; margin: 0 0 6px;">${t}</h3>
+                                <p style="font-size: 12px; color: #7f9c85; margin: 0 0 14px;">${d} · ${n}</p>
+                                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px;">
+                                    <span style="font-size: 14px; font-weight: 700; color: #CA9A2E;">From ${r}</span>
+                                    <span style="font-size: 12px; color: #fff;">View Safari &rarr;</span>
+                                </div>
+                            </div>
+                        </div>
+                        `}).join(``)}
+                </div>
+            </div>
+        `;let y=``;c.forEach((e,t)=>{let n=String(t+1).padStart(2,`0`),r=t===l,i=e.meta&&e.meta.tagline||`${e.name} Safaris & Adventures`;y+=`
+            <div class="js-tour-tab" data-country-idx="${t}" style="padding: 14px 18px; border-radius: 8px; margin-bottom: 8px; border: 1px solid ${r?`#2e4c36`:`rgba(255,255,255,0.06)`}; background: ${r?`#223829`:`transparent`}; display: flex; align-items: start; gap: 14px; position: relative; cursor: pointer; transition: all 0.2s ease;">
+                ${r?`<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #CA9A2E; border-top-left-radius: 8px; border-bottom-left-radius: 8px;"></div>`:``}
+                <span style="font-family: monospace; font-size: 13px; font-weight: 700; color: ${r?`#CA9A2E`:`#587360`}; padding-top: 2px;">${n}</span>
+                <div style="flex: 1;">
+                    <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 19px; font-weight: 500; color: ${r?`#fff`:`#b8cbbd`};">${e.name}</div>
+                    <div style="font-size: 12px; color: ${r?`#9cb5a2`:`#6a8773`}; margin-top: 2px;">${i}</div>
+                </div>
+                ${r?`<span style="color: #CA9A2E; font-size: 14px;">●</span>`:``}
+            </div>
+        `});let b=h.map(e=>{let t=e.name||e.title,n=e.days?typeof e.days==`string`&&e.days.includes(`Day`)?e.days:`${e.days} Days`:`7 Days`,r=e.price?typeof e.price==`string`&&e.price.includes(`$`)?e.price:`$${Number(e.price).toLocaleString()}`:`$2,400`;return`
+        <div style="background: #142319; border: 1px solid #213829; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 10px;">
+            <div style="width: 70px; height: 50px; border-radius: 6px; background: #223829; overflow: hidden; flex-shrink: 0;">
+                <img src="${e.image||e.img||m}" style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <div style="flex: 1;">
+                <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 15px; font-weight: 600; color: #fff;">${t}</div>
+                <div style="font-size: 12px; color: #7f9c85; margin-top: 2px;">${n} · Signature Tour</div>
+            </div>
+            <div style="text-align: right; flex-shrink: 0;">
+                <div style="font-size: 13px; font-weight: 700; color: #CA9A2E;">${r}</div>
+                <span style="color: #CA9A2E; font-size: 14px;">&rarr;</span>
+            </div>
+        </div>
+        `}).join(``);return`
+        <div style="color: #e8eee9; padding: 10px; font-family: sans-serif; position: relative; min-height: 300px;">
+            ${v}
+            
+            <div style="display: grid; grid-template-columns: 5fr 7fr; gap: 36px; align-items: start;">
+                <!-- Left Column -->
+                <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                        <span style="display: inline-block; width: 28px; height: 2px; background: #CA9A2E;"></span>
+                        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: #CA9A2E; text-transform: uppercase;">WHERE WILL YOU GO</span>
+                    </div>
+                    <div style="margin-bottom: 12px;">
+                        <h2 class="js-edit-heading" data-bind-trait="data-heading" contenteditable="true" title="Click to edit heading" style="font-family: 'Playfair Display', Georgia, serif; font-size: 38px; font-weight: normal; line-height: 1.15; color: #fff; margin: 0; cursor: text; outline: none; border-bottom: 1px dashed rgba(202,154,46,0.3); display: inline-block;">
+                            ${g}
+                        </h2>
+                        <div class="js-edit-accent" data-bind-trait="data-heading-accent" contenteditable="true" title="Click to edit accent" style="font-family: 'Playfair Display', Georgia, serif; font-size: 34px; font-style: italic; color: #CA9A2E; cursor: text; outline: none; border-bottom: 1px dashed rgba(202,154,46,0.3); display: inline-block; margin-top: 4px;">
+                            ${_}
+                        </div>
+                    </div>
+                    <p class="js-edit-subheading" data-bind-trait="data-subheading" contenteditable="true" title="Click to edit description" style="font-size: 14px; color: #8fa593; line-height: 1.6; margin-bottom: 24px; max-width: 400px; cursor: text; outline: none; border-bottom: 1px dashed rgba(255,255,255,0.15);">
+                        ${o}
+                    </p>
+                    <div style="border-top: 1px solid #1c2e22; padding-top: 12px;">
+                        ${y}
+                    </div>
+                </div>
 
-    <!-- Tours Listing Container -->
-    <div data-gjs-type="tours-listing" class="tours-listing" data-category="all" data-tour-type="all" data-country="all" data-limit="4">
-       <div class="text-center py-10 bg-gray-50 border border-dashed border-gray-300 rounded-[3px] p-6" style="pointer-events: none;">
-          <p class="text-gray-700 font-bold text-base">🚙 Dynamic Tour Listing</p>
-          <p class="text-sm text-gray-500 mt-1">Category: <span class="font-bold text-indigo-600">all</span> | Type: <span class="font-bold text-indigo-600">all</span> | Country ID: <span class="font-bold text-indigo-600">all</span> | Limit: <span class="font-bold text-indigo-600">4</span></p>
-          <p class="text-[10px] text-gray-400 mt-2 uppercase tracking-wider font-semibold">Will load live tours from the database on the frontend</p>
-       </div>
+                <!-- Right Column Preview -->
+                <div>
+                    <div style="position: relative; border-radius: 14px; overflow: hidden; height: 320px; background: #142319; border: 1px solid #223a2a; margin-bottom: 24px;">
+                        <img src="${m}" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.88;" />
+                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, #0c1610 0%, rgba(12,22,16,0.4) 60%, transparent 100%);"></div>
+                        <div style="position: absolute; bottom: 20px; left: 24px; right: 24px;">
+                            <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 34px; font-weight: 500; color: #fff; margin-bottom: 6px;">${d}</div>
+                            <div style="font-size: 13px; color: #d1ded4; line-height: 1.5;">${p}</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: #CA9A2E; text-transform: uppercase;">FEATURED JOURNEYS (${d})</span>
+                        <span style="font-size: 12px; color: #8fa593;">Live Tours from Database &rarr;</span>
+                    </div>
+
+                    <div>
+                        ${b}
+                    </div>
+
+                    <!-- Bottom Pagination Arrows -->
+                    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.08);">
+                        <div style="width: 36px; height: 36px; border-radius: 6px; border: 1px solid #2e4c36; background: #16271c; color: #CA9A2E; display: flex; align-items: center; justify-content: center; font-size: 15px;">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </div>
+                        <div style="width: 36px; height: 36px; border-radius: 6px; border: 1px solid #2e4c36; background: #16271c; color: #CA9A2E; display: flex; align-items: center; justify-content: center; font-size: 15px;">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `};$.DomComponents.addType(`tours-listing`,{isComponent:e=>e&&e.classList&&e.classList.contains(`tours-listing`)?{type:`tours-listing`}:!1,model:{defaults:{tagName:`div`,droppable:!1,highlightable:!0,attributes:{class:`tours-listing`,"data-category":`all`,"data-tour-type":`all`,"data-country":`all`,"data-limit":`4`,"data-layout":`auto`,"data-heading":``,"data-heading-accent":``,"data-subheading":`Choose a destination to explore Africa's iconic safaris and signature experiences`},traits:[{type:`text`,name:`data-heading`,label:`Section Heading`,placeholder:`Auto (e.g. 6 Destinations. or Tanzania)`},{type:`text`,name:`data-heading-accent`,label:`Accent Heading (Italic)`,placeholder:`Auto (e.g. One Journey. or Signature Safaris.)`},{type:`text`,name:`data-subheading`,label:`Subheading Description`,value:`Choose a destination to explore Africa's iconic safaris and signature experiences`},{type:`multiselect`,name:`data-country`,label:`Countries (Multi-Select)`,options:kO()},{type:`select`,name:`data-layout`,label:`Showcase Layout`,options:[{value:`auto`,name:`Auto (SafariHQ Showcase)`},{value:`safarihq`,name:`SafariHQ (Showcase with Tabs)`},{value:`grid`,name:`Standard Card Grid`}]},{type:`select`,name:`data-category`,label:`Tour Category`,options:[{value:`all`,name:window.__(`All Categories`)},...(window.TOUR_CATEGORIES||[]).map(e=>({value:e.slug,name:typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name}))]},{type:`select`,name:`data-tour-type`,label:`Tour Type Filter`,options:[{value:`all`,name:window.__(`All Tour Types`)},...(window.TOUR_TYPES||[]).map(e=>({value:e.slug,name:typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name}))]},{type:`number`,name:`data-limit`,label:`Tours Per Page`,min:1,max:20,value:4}]}},view:{init(){this.activeCountryIdx=0,this.listenTo(this.model,`change:attributes`,this.renderView)},onRender(){this.renderView()},renderView(){if(!this.el)return;let e=this.model.getAttributes();this.el.innerHTML=jO(e,this.activeCountryIdx),this.bindEvents()},bindEvents(){this.el&&(this.el.querySelectorAll(`.js-tour-tab`).forEach(e=>{e.addEventListener(`click`,t=>{t.stopPropagation();let n=parseInt(e.getAttribute(`data-country-idx`),10)||0;this.activeCountryIdx=n,this.renderView()})}),this.el.querySelectorAll(`.js-open-settings`).forEach(e=>{e.addEventListener(`click`,e=>{e.stopPropagation(),$.select(this.model);try{let e=$.Panels,t=e?e.getButton(`views`,`open-tm`):null;t?t.set(`active`,!0):$.runCommand(`open-tm`)}catch{}})}),this.el.querySelectorAll(`[data-bind-trait]`).forEach(e=>{e.addEventListener(`blur`,()=>{let t=e.getAttribute(`data-bind-trait`),n=e.innerText.trim();this.model.addAttributes({[t]:n})}),e.addEventListener(`keydown`,t=>{t.key===`Enter`&&e.tagName!==`P`&&(t.preventDefault(),e.blur())})}))}}}),DO.add(`safaris-tours-dynamic`,{label:`🌍 Dynamic Tours`,category:window.__(`Safaris Blocks`),attributes:{class:`fa-solid fa-earth-africa`},content:`
+<section class="trips-section py-16 md:py-24 bg-[#0d1611] text-[#e8eee9] relative overflow-hidden" id="trips">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div data-gjs-type="tours-listing" class="tours-listing" data-category="all" data-tour-type="all" data-country="all" data-limit="4" data-layout="auto">
+      ${jO({"data-category":`all`,"data-tour-type":`all`,"data-country":`all`,"data-limit":`4`,"data-layout":`auto`},0)}
     </div>
   </div>
 </section>`}),$.DomComponents.addType(`group-tours-listing`,{model:{defaults:{tagName:`div`,attributes:{class:`group-tours-listing`,"data-group-category":`all`,"data-limit":`3`},traits:[{type:`select`,name:`data-group-category`,label:`Group Category`,options:[{value:`all`,name:window.__(`All Group Categories`)},...(window.GROUP_CATEGORIES||[]).map(e=>({value:e.slug,name:typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name}))]},{type:`number`,name:`data-limit`,label:`Limit / Per Page`,min:1,max:100,value:6}]},init(){this.on(`change:attributes:data-group-category change:attributes:data-limit`,this.updateCanvasHtml),this.updateCanvasHtml()},updateCanvasHtml(){let e=this.getAttributes()[`data-group-category`]||`all`,t=this.getAttributes()[`data-limit`]||`3`;this.set(`content`,`
-               <div class="text-center py-10 bg-amber-50 border border-dashed border-amber-300 rounded-[3px] p-6" style="pointer-events: none;">
-                  <p class="text-amber-800 font-bold text-base">🚌 Dynamic Group Tours Listing</p>
-                  <p class="text-sm text-amber-700 mt-1">Category: <span class="font-bold">${e}</span> | Limit: <span class="font-bold">${t}</span></p>
-                  <p class="text-[10px] text-amber-500 mt-2 uppercase tracking-wider font-semibold">Will load live group tours from the database on the frontend</p>
+               <div class="text-center py-10 bg-[#EDF2EA] border border-dashed border-[#455537]/40 rounded-[3px] p-6" style="pointer-events: none;">
+                  <p class="text-[#455537] font-bold text-base">🚌 Dynamic Group Tours Listing</p>
+                  <p class="text-sm text-[#354329] mt-1">Category: <span class="font-bold">${e}</span> | Limit: <span class="font-bold">${t}</span></p>
+                  <p class="text-[10px] text-[#CA9A2E] mt-2 uppercase tracking-wider font-semibold">Will load live group tours from the database on the frontend</p>
                </div>
             `)}}}),DO.add(`safaris-group-tours-dynamic`,{label:`🚌 Group Tours`,category:window.__(`Safaris Blocks`),content:`
 <section class="py-20 bg-gray-50">
@@ -1197,7 +1340,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
         <h2 class="text-4xl font-bold font-brand text-gray-900 mb-4">Upcoming Group Tours</h2>
         <p class="text-gray-600 max-w-2xl">Join a group of like-minded travelers on our scheduled group adventures.</p>
       </div>
-      <a href="/group-tours" class="hidden md:inline-flex items-center text-amber-600 font-bold hover:text-amber-700">
+      <a href="/group-tours" class="hidden md:inline-flex items-center text-[#455537] font-bold hover:text-[#354329]">
         View All Group Tours
         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
       </a>
@@ -1205,10 +1348,10 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
 
     <!-- Group Tours Listing Container -->
     <div data-gjs-type="group-tours-listing" class="group-tours-listing" data-group-category="all" data-limit="3">
-       <div class="text-center py-10 bg-amber-50 border border-dashed border-amber-300 rounded-[3px] p-6" style="pointer-events: none;">
-          <p class="text-amber-800 font-bold text-base">🚌 Dynamic Group Tours Listing</p>
-          <p class="text-sm text-amber-700 mt-1">Category: <span class="font-bold">all</span> | Limit: <span class="font-bold">3</span></p>
-          <p class="text-[10px] text-amber-500 mt-2 uppercase tracking-wider font-semibold">Will load live group tours from the database on the frontend</p>
+       <div class="text-center py-10 bg-[#EDF2EA] border border-dashed border-[#455537]/40 rounded-[3px] p-6" style="pointer-events: none;">
+          <p class="text-[#455537] font-bold text-base">🚌 Dynamic Group Tours Listing</p>
+          <p class="text-sm text-[#354329] mt-1">Category: <span class="font-bold">all</span> | Limit: <span class="font-bold">3</span></p>
+          <p class="text-[10px] text-[#CA9A2E] mt-2 uppercase tracking-wider font-semibold">Will load live group tours from the database on the frontend</p>
        </div>
     </div>
   </div>
@@ -1274,7 +1417,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
 </section>
     `}),DO.add(`safaris-start-planning-btn`,{label:`📋 Start Planning Button`,category:window.__(`Safaris Blocks`),content:`
       <div class="p-5 text-center">
-        <button data-gjs-type="text" class="btn-primary start-planning-btn-trigger bg-brand-primary text-earth px-8 py-3 rounded-[3px] text-xs font-semibold tracking-[0.1em] uppercase cursor-pointer no-underline inline-block transition-all duration-250 border-none shadow-[var(--shadow-gold)]">
+        <button data-gjs-type="text" class="btn-primary start-planning-btn-trigger bg-brand-primary text-white px-8 py-3 rounded-[3px] text-xs font-semibold tracking-[0.1em] uppercase cursor-pointer no-underline inline-block transition-all duration-250 border-none shadow-[var(--shadow-gold)]">
             Start Planning
         </button>
       </div>
@@ -1307,7 +1450,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
       </div>
     </div>
     <div class="why-content">
-      <div class="section-label">Why mwangwi safaris</div>
+      <div class="section-label">Why Choose Us</div>
       <h2 class="section-title">The Expert With<br><em>In-Depth Knowledge</em></h2>
       <p class="section-sub" style="color: rgba(255,255,255,0.6);">Born and raised in Tanzania, our team brings unmatched local knowledge, personal connections, and genuine passion for sharing this incredible country with the world.</p>
       <ul class="why-list">
@@ -1324,40 +1467,149 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
       </div>
     </div>
   </div>
-</section>`}),DO.add(`safaris-about-story`,{label:`📖 About Story`,category:window.__(`Safaris Blocks`),content:`
-<section class="py-20 bg-white overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col lg:flex-row gap-16 items-center">
-      <div class="w-full lg:w-1/2 relative">
-        <div class="absolute -inset-4 bg-amber-100 rounded-[2rem] transform -rotate-3 z-0"></div>
-        <img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=800&q=80" alt="Safari Experience" class="relative z-10 w-full h-[500px] object-cover rounded-[2rem] shadow-2xl">
-        <div class="absolute -bottom-8 -right-8 bg-white p-6 rounded-[3px] shadow-xl z-20 hidden md:block">
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center text-white">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <div>
-              <p class="text-sm font-bold text-gray-500 uppercase tracking-wider">Trusted by</p>
-              <p class="text-xl font-bold font-brand text-gray-900">5,000+ Travelers</p>
-            </div>
+</section>`}),DO.add(`safaris-about-story`,{label:`📖 About Story / What We Do`,category:window.__(`Safaris Blocks`),content:`
+<section data-gjs-type="safaris-about-block" class="safaris-about-block">
+  <div class="wrap">
+    <div class="safaris-about-grid">
+      <!-- Left Copy Column -->
+      <div>
+        <div class="eyebrow" data-gjs-type="text">About Mwangwi Safaris</div>
+        <h2 data-gjs-type="text">What We Do</h2>
+        <p class="lede" data-gjs-type="text">At Mwangwi Safaris, we organize safe, comfortable, and enjoyable Kilimanjaro climbing adventures and wildlife safaris throughout Tanzania.</p>
+        
+        <p data-gjs-type="text">We understand that a trip to Tanzania is not just another vacation; it’s a special event that requires careful planning and significant investment. With this in mind, we’ve established a dedicated adventure planning team. Our team members are highly experienced in organizing trips across Tanzania and have an intimate knowledge of the country’s national parks, conservation areas, and hidden gems. Our consultants will work with you to select the perfect itinerary, ensuring you experience the very best that Tanzania has to offer.</p>
+        
+        <p data-gjs-type="text"><strong>Mwangwi Safaris</strong> prides itself on providing personalized and high-quality service, with a strong commitment to sustainable tourism. The company works closely with local communities and conservation organizations to ensure that their tours contribute positively to the environment and local economies. By focusing exclusively on these areas, Mwangwi Safaris ensures that each journey is expertly managed and delivers a truly enriching experience.</p>
+        
+        <p data-gjs-type="text">Our team is dedicated to providing exceptional customer service, and we work closely with our clients to tailor our safari packages to their unique needs and preferences. We believe that every safari experience should be as unique and unforgettable as the individual who embarks on it.</p>
+        
+        <p style="font-weight: 600; color: var(--forest); margin-top: 24px;" data-gjs-type="text">Thank you for considering Mwangwi Safaris for your Tanzanian safari adventure. We look forward to sharing the wonder and beauty of Tanzania with you.</p>
+
+        <div class="safaris-about-actions">
+          <a href="/tours" class="safaris-about-btn-primary" data-gjs-type="text">Explore Our Safaris <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="/contact" class="safaris-about-btn-ghost" data-gjs-type="text">Plan Custom Itinerary</a>
+        </div>
+      </div>
+
+      <!-- Right Visual & Mission Column -->
+      <div class="safaris-about-visual">
+        <div class="safaris-about-img-wrap">
+          <img src="/storage/4/about-us-1791623834.webp" alt="Mwangwi Safaris Expert Guide" />
+        </div>
+
+        <div class="safaris-about-mission-card">
+          <div class="safaris-about-mission-tag">
+            <i class="fa-solid fa-compass"></i> <span data-gjs-type="text">Our Mission</span>
+          </div>
+          <h3 data-gjs-type="text">“To make Tanzania a memory-making destination for every adventurer.”</h3>
+        </div>
+
+        <div class="safaris-about-stats">
+          <div class="safaris-about-stat-item">
+            <span class="safaris-about-stat-val" data-gjs-type="text">100%</span>
+            <span class="safaris-about-stat-lbl" data-gjs-type="text">Tailored Safaris</span>
+          </div>
+          <div class="safaris-about-stat-item">
+            <span class="safaris-about-stat-val" data-gjs-type="text">Top Rated</span>
+            <span class="safaris-about-stat-lbl" data-gjs-type="text">Local Expertise</span>
+          </div>
+          <div class="safaris-about-stat-item">
+            <span class="safaris-about-stat-val" data-gjs-type="text">Eco-First</span>
+            <span class="safaris-about-stat-lbl" data-gjs-type="text">Community Care</span>
           </div>
         </div>
       </div>
-      <div class="w-full lg:w-1/2">
-        <span class="inline-block py-1 px-3 rounded-full bg-amber-100 text-amber-700 text-sm font-bold tracking-widest uppercase mb-4">Your Journey, Our Passion</span>
-        <h2 class="text-4xl md:text-5xl font-bold font-brand text-gray-900 mb-6 leading-tight">From a Local Dream to a Global Connection</h2>
-        <p class="text-lg text-gray-600 mb-6 leading-relaxed">We believe going on a safari in Tanzania isn’t just about taking pictures. It’s about discovering stories that stay with you long after your journey ends.</p>
-        <p class="text-lg text-gray-600 mb-8 leading-relaxed">  was born with a simple idea: to give you the real Tanzania, unfiltered, immersive and full of heart. Growing up surrounded by diverse wildlife and mountains, our founder knew he wanted to share his country with the world. Today, we are trusted by travelers globally, but our roots, values, and passion remain the same.</p>
-        <div class="grid grid-cols-2 gap-6 pt-6 border-t border-gray-100">
-          <div>
-            <h4 class="font-bold text-gray-900 mb-2">Our Mission</h4>
-            <p class="text-sm text-gray-600">To design meaningful travel experiences that show Tanzania’s natural wonders while empowering local communities.</p>
+    </div>
+
+    <!-- Core Pillars Grid -->
+    <div class="safaris-about-pillars">
+      <div class="safaris-about-pillar-card">
+        <div class="safaris-about-pillar-num" data-gjs-type="text">01</div>
+        <h4 data-gjs-type="text">Dedicated Planning Team</h4>
+        <p data-gjs-type="text">Specialists with intimate knowledge of Tanzania’s national parks, wildlife migrations, and routes to craft your ideal journey.</p>
+      </div>
+      <div class="safaris-about-pillar-card">
+        <div class="safaris-about-pillar-num" data-gjs-type="text">02</div>
+        <h4 data-gjs-type="text">Sustainable Tourism</h4>
+        <p data-gjs-type="text">Collaborating with local Tanzanian communities and conservation projects so every trip protects nature and empowers locals.</p>
+      </div>
+      <div class="safaris-about-pillar-card">
+        <div class="safaris-about-pillar-num" data-gjs-type="text">03</div>
+        <h4 data-gjs-type="text">Personalized Service</h4>
+        <p data-gjs-type="text">Attentive care from arrival to departure, customizing pacing, lodging, and activities to your personal expectations.</p>
+      </div>
+    </div>
+  </div>
+</section>`}),DO.add(`safaris-about-block`,{label:`★ About Us Block`,category:window.__(`Safaris Blocks`),content:`
+<section data-gjs-type="safaris-about-block" class="safaris-about-block">
+  <div class="wrap">
+    <div class="safaris-about-grid">
+      <!-- Left Copy Column -->
+      <div>
+        <div class="eyebrow" data-gjs-type="text">About Mwangwi Safaris</div>
+        <h2 data-gjs-type="text">What We Do</h2>
+        <p class="lede" data-gjs-type="text">At Mwangwi Safaris, we organize safe, comfortable, and enjoyable Kilimanjaro climbing adventures and wildlife safaris throughout Tanzania.</p>
+        
+        <p data-gjs-type="text">We understand that a trip to Tanzania is not just another vacation; it’s a special event that requires careful planning and significant investment. With this in mind, we’ve established a dedicated adventure planning team. Our team members are highly experienced in organizing trips across Tanzania and have an intimate knowledge of the country’s national parks, conservation areas, and hidden gems. Our consultants will work with you to select the perfect itinerary, ensuring you experience the very best that Tanzania has to offer.</p>
+        
+        <p data-gjs-type="text"><strong>Mwangwi Safaris</strong> prides itself on providing personalized and high-quality service, with a strong commitment to sustainable tourism. The company works closely with local communities and conservation organizations to ensure that their tours contribute positively to the environment and local economies. By focusing exclusively on these areas, Mwangwi Safaris ensures that each journey is expertly managed and delivers a truly enriching experience.</p>
+        
+        <p data-gjs-type="text">Our team is dedicated to providing exceptional customer service, and we work closely with our clients to tailor our safari packages to their unique needs and preferences. We believe that every safari experience should be as unique and unforgettable as the individual who embarks on it.</p>
+        
+        <p style="font-weight: 600; color: var(--forest); margin-top: 24px;" data-gjs-type="text">Thank you for considering Mwangwi Safaris for your Tanzanian safari adventure. We look forward to sharing the wonder and beauty of Tanzania with you.</p>
+
+        <div class="safaris-about-actions">
+          <a href="/tours" class="safaris-about-btn-primary" data-gjs-type="text">Explore Our Safaris <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="/contact" class="safaris-about-btn-ghost" data-gjs-type="text">Plan Custom Itinerary</a>
+        </div>
+      </div>
+
+      <!-- Right Visual & Mission Column -->
+      <div class="safaris-about-visual">
+        <div class="safaris-about-img-wrap">
+          <img src="/storage/4/about-us-1791623834.webp" alt="Mwangwi Safaris Expert Guide" />
+        </div>
+
+        <div class="safaris-about-mission-card">
+          <div class="safaris-about-mission-tag">
+            <i class="fa-solid fa-compass"></i> <span data-gjs-type="text">Our Mission</span>
           </div>
-          <div>
-            <h4 class="font-bold text-gray-900 mb-2">Our Vision</h4>
-            <p class="text-sm text-gray-600">To become East Africa’s most trusted and responsible travel partner, leaving a positive impact.</p>
+          <h3 data-gjs-type="text">“To make Tanzania a memory-making destination for every adventurer.”</h3>
+        </div>
+
+        <div class="safaris-about-stats">
+          <div class="safaris-about-stat-item">
+            <span class="safaris-about-stat-val" data-gjs-type="text">100%</span>
+            <span class="safaris-about-stat-lbl" data-gjs-type="text">Tailored Safaris</span>
+          </div>
+          <div class="safaris-about-stat-item">
+            <span class="safaris-about-stat-val" data-gjs-type="text">Top Rated</span>
+            <span class="safaris-about-stat-lbl" data-gjs-type="text">Local Expertise</span>
+          </div>
+          <div class="safaris-about-stat-item">
+            <span class="safaris-about-stat-val" data-gjs-type="text">Eco-First</span>
+            <span class="safaris-about-stat-lbl" data-gjs-type="text">Community Care</span>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Core Pillars Grid -->
+    <div class="safaris-about-pillars">
+      <div class="safaris-about-pillar-card">
+        <div class="safaris-about-pillar-num" data-gjs-type="text">01</div>
+        <h4 data-gjs-type="text">Dedicated Planning Team</h4>
+        <p data-gjs-type="text">Specialists with intimate knowledge of Tanzania’s national parks, wildlife migrations, and routes to craft your ideal journey.</p>
+      </div>
+      <div class="safaris-about-pillar-card">
+        <div class="safaris-about-pillar-num" data-gjs-type="text">02</div>
+        <h4 data-gjs-type="text">Sustainable Tourism</h4>
+        <p data-gjs-type="text">Collaborating with local Tanzanian communities and conservation projects so every trip protects nature and empowers locals.</p>
+      </div>
+      <div class="safaris-about-pillar-card">
+        <div class="safaris-about-pillar-num" data-gjs-type="text">03</div>
+        <h4 data-gjs-type="text">Personalized Service</h4>
+        <p data-gjs-type="text">Attentive care from arrival to departure, customizing pacing, lodging, and activities to your personal expectations.</p>
       </div>
     </div>
   </div>
@@ -1369,14 +1621,14 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
   
   <!-- Content overlay -->
   <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
-    <span class="inline-block py-1.5 px-4 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-bold tracking-widest uppercase mb-6">Kilimanjaro Group Climbs</span>
+    <span class="inline-block py-1.5 px-4 rounded-full bg-[#455537]/25 text-[#CA9A2E] border border-[#CA9A2E]/30 text-xs font-bold tracking-widest uppercase mb-6">Kilimanjaro Group Climbs</span>
     <h1 class="text-4xl md:text-6xl font-bold font-brand mb-6 leading-tight text-white drop-shadow-lg animate-fade-in">Join Our Kilimanjaro Group Climbs</h1>
     <p class="text-base md:text-lg text-gray-250 mb-10 max-w-3xl mx-auto leading-relaxed drop-shadow">
       Kilimanjaro group climbs depart regularly throughout the month. Joining one of these climbs is a wonderful way to experience the grandeur of Africa’s highest peak while connecting with fellow adventurers from around the world. Securing your spot is simple: a 20% deposit is all that’s required. If none of the listed dates align with your plans, simply reach out to arrange a custom departure.
     </p>
     
     <div class="flex justify-center">
-      <a href="#quote-form" class="inline-flex bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-bold py-3.5 px-8 rounded-[3px] transition-all duration-300 text-base shadow-xl hover:-translate-y-1">
+      <a href="#quote-form" class="inline-flex bg-[#455537] hover:bg-[#354329] active:bg-[#25301c] text-white font-bold py-3.5 px-8 rounded-[3px] transition-all duration-300 text-base shadow-xl hover:-translate-y-1">
         Get Your Custom Proposal
       </a>
     </div>
@@ -1462,10 +1714,10 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
   </div>
 </section>`}),DO.add(`safaris-about-values`,{label:`💎 Core Values`,category:window.__(`Safaris Blocks`),content:`
 <section class="py-20 bg-gray-900 text-white relative overflow-hidden">
-  <div class="absolute inset-0 bg-amber-500/5"></div>
+  <div class="absolute inset-0 bg-[#455537]/10"></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="text-center mb-16">
-      <span class="inline-block py-1 px-3 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 text-sm font-bold tracking-widest uppercase mb-4">What Drives Us</span>
+      <span class="inline-block py-1 px-3 rounded-full bg-[#455537]/25 text-[#CA9A2E] border border-[#CA9A2E]/30 text-sm font-bold tracking-widest uppercase mb-4">What Drives Us</span>
       <h2 class="text-4xl md:text-5xl font-bold font-brand mb-4">Our Core Values</h2>
       <p class="text-gray-400 max-w-2xl mx-auto text-lg">The principles that guide every safari, trek, and connection we make.</p>
     </div>
@@ -1473,7 +1725,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
     <div class="flex flex-wrap justify-center items-center gap-8">
       <!-- Value 1 -->
       <div class="w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-22px)] bg-gray-800/50 backdrop-blur-sm p-8 rounded-[3px] border border-gray-700/50 hover:bg-gray-800 transition-colors">
-        <div class="w-14 h-14 bg-amber-500/20 text-amber-400 rounded-[3px] flex items-center justify-center mb-6">
+        <div class="w-14 h-14 bg-[#455537]/30 text-[#CA9A2E] rounded-[3px] flex items-center justify-center mb-6">
           <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
         </div>
         <h3 class="text-xl font-bold mb-3">Human Connection</h3>
@@ -1482,7 +1734,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
       
       <!-- Value 2 -->
       <div class="w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-22px)] bg-gray-800/50 backdrop-blur-sm p-8 rounded-[3px] border border-gray-700/50 hover:bg-gray-800 transition-colors">
-        <div class="w-14 h-14 bg-amber-500/20 text-amber-400 rounded-[3px] flex items-center justify-center mb-6">
+        <div class="w-14 h-14 bg-[#455537]/30 text-[#CA9A2E] rounded-[3px] flex items-center justify-center mb-6">
           <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         </div>
         <h3 class="text-xl font-bold mb-3">Authenticity</h3>
@@ -1491,7 +1743,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
 
       <!-- Value 3 -->
       <div class="w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-22px)] bg-gray-800/50 backdrop-blur-sm p-8 rounded-[3px] border border-gray-700/50 hover:bg-gray-800 transition-colors">
-        <div class="w-14 h-14 bg-amber-500/20 text-amber-400 rounded-[3px] flex items-center justify-center mb-6">
+        <div class="w-14 h-14 bg-[#455537]/30 text-[#CA9A2E] rounded-[3px] flex items-center justify-center mb-6">
           <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
         </div>
         <h3 class="text-xl font-bold mb-3">Integrity</h3>
@@ -1500,7 +1752,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
 
       <!-- Value 4 -->
       <div class="w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-22px)] bg-gray-800/50 backdrop-blur-sm p-8 rounded-[3px] border border-gray-700/50 hover:bg-gray-800 transition-colors">
-        <div class="w-14 h-14 bg-amber-500/20 text-amber-400 rounded-[3px] flex items-center justify-center mb-6">
+        <div class="w-14 h-14 bg-[#455537]/30 text-[#CA9A2E] rounded-[3px] flex items-center justify-center mb-6">
           <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
         </div>
         <h3 class="text-xl font-bold mb-3">Excellence</h3>
@@ -1509,7 +1761,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
 
       <!-- Value 5 -->
       <div class="w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-22px)] bg-gray-800/50 backdrop-blur-sm p-8 rounded-[3px] border border-gray-700/50 hover:bg-gray-800 transition-colors">
-        <div class="w-14 h-14 bg-amber-500/20 text-amber-400 rounded-[3px] flex items-center justify-center mb-6">
+        <div class="w-14 h-14 bg-[#455537]/30 text-[#CA9A2E] rounded-[3px] flex items-center justify-center mb-6">
           <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         </div>
         <h3 class="text-xl font-bold mb-3">Sustainability</h3>
@@ -1522,7 +1774,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
   <div class="absolute inset-0 bg-white/50 backdrop-blur-3xl"></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="text-center mb-16">
-      <span class="inline-block py-1 px-3 rounded-full bg-amber-100 text-amber-700 text-sm font-bold tracking-widest uppercase mb-4">Contact Us</span>
+      <span class="inline-block py-1 px-3 rounded-full bg-[#EDF2EA] text-[#455537] text-sm font-bold tracking-widest uppercase mb-4">Contact Us</span>
       <h2 class="text-4xl md:text-5xl font-bold font-brand text-gray-900 mb-4">Let Plan Together your Safari</h2>
       <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">Every unforgettable journey begins with a single step. Reach out to us today and take the first step toward an experience you'll remember for a lifetime.</p>
     </div>
@@ -1534,7 +1786,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
         <div class="space-y-8">
           
           <div class="flex items-start gap-4">
-            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-[3px] flex items-center justify-center shrink-0">
+            <div class="w-12 h-12 bg-[#EDF2EA] text-[#455537] rounded-[3px] flex items-center justify-center shrink-0">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
             </div>
             <div>
@@ -1544,7 +1796,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
           </div>
 
           <div class="flex items-start gap-4">
-            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-[3px] flex items-center justify-center shrink-0">
+            <div class="w-12 h-12 bg-[#EDF2EA] text-[#455537] rounded-[3px] flex items-center justify-center shrink-0">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
             </div>
             <div>
@@ -1556,13 +1808,13 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
           </div>
 
           <div class="flex items-start gap-4">
-            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-[3px] flex items-center justify-center shrink-0">
+            <div class="w-12 h-12 bg-[#EDF2EA] text-[#455537] rounded-[3px] flex items-center justify-center shrink-0">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
             </div>
             <div>
               <h4 class="text-lg font-bold text-gray-900 mb-1">Email Address</h4>
               <p class="text-gray-600 leading-relaxed">Contact us for a detailed quote.</p>
-              <a href="mailto:info@safarisadventure.com" class="text-amber-600 font-bold hover:text-amber-700">info@safarisadventure.com</a>
+              <a href="mailto:info@safarisadventure.com" class="text-[#455537] font-bold hover:text-[#354329]">info@safarisadventure.com</a>
             </div>
           </div>
           
@@ -1576,28 +1828,28 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label class="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
-              <input type="text" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all" placeholder="John Doe">
+              <input type="text" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-[#455537] focus:border-[#455537] outline-none transition-all" placeholder="John Doe">
             </div>
             <div>
               <label class="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
-              <input type="email" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all" placeholder="john@example.com">
+              <input type="email" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-[#455537] focus:border-[#455537] outline-none transition-all" placeholder="john@example.com">
             </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label class="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
-              <input type="tel" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all" placeholder="+1 234 567 890">
+              <input type="tel" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-[#455537] focus:border-[#455537] outline-none transition-all" placeholder="+1 234 567 890">
             </div>
             <div>
               <label class="block text-sm font-bold text-gray-700 mb-2">Subject</label>
-              <input type="text" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all" placeholder="Safari Inquiry">
+              <input type="text" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-[#455537] focus:border-[#455537] outline-none transition-all" placeholder="Safari Inquiry">
             </div>
           </div>
           <div>
             <label class="block text-sm font-bold text-gray-700 mb-2">Your Message</label>
-            <textarea rows="4" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all" placeholder="Tell us about your dream safari..."></textarea>
+            <textarea rows="4" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-[#455537] focus:border-[#455537] outline-none transition-all" placeholder="Tell us about your dream safari..."></textarea>
           </div>
-          <button type="button" class="w-full py-4 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-[3px] transition-all shadow-lg hover:shadow-amber-500/30 transform hover:-translate-y-0.5">Send Message</button>
+          <button type="button" class="w-full py-4 bg-[#455537] hover:bg-[#354329] text-white font-bold rounded-[3px] transition-all shadow-lg hover:shadow-[#455537]/30 transform hover:-translate-y-0.5">Send Message</button>
         </form>
       </div>
     </div>
@@ -1706,7 +1958,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                   <h3 class="text-lg font-bold text-gray-900 font-brand">Quick Nav (Posts)</h3>
                   <p class="text-xs text-gray-500 mt-2">Category: <span class="font-bold text-brand-primary">${e}</span> | Target: <span class="font-bold text-brand-primary">${t}</span></p>
                </div>
-            `)}}}),window.CURRENT_LOCALE=`en`,window.switchLocale=async function(e){e!==window.CURRENT_LOCALE&&confirm(`Switch editing language to ${e.toUpperCase()}? Make sure you have saved any changes to ${window.CURRENT_LOCALE.toUpperCase()} first.`)&&(window.CURRENT_LOCALE=e,document.querySelectorAll(`.lang-tab-btn`).forEach(t=>{let n=t.getAttribute(`data-locale`)===e;t.classList.toggle(`active`,n),t.style.background=n?`#6366f1`:`transparent`,t.style.color=n?`#fff`:`#94a3b8`}),kO(`Loading ${e.toUpperCase()} translation...`,`success`),await OO(e))};async function OO(e=window.CURRENT_LOCALE){try{let t=await(await fetch(`/admin/api/${window.RECORD_TYPE}/${window.RECORD_ID}/content?locale=${e}&t=${Date.now()}`,{headers:{"X-CSRF-TOKEN":window.CSRF_TOKEN,Accept:`application/json`}})).json();t.builder_data&&t.builder_data.components?($.setComponents(t.builder_data.components),t.builder_data.styles&&$.setStyle(t.builder_data.styles)):t.builder_html?$.setComponents(t.builder_html):$.setComponents(``)}catch(e){console.warn(`No existing content to load:`,e)}}OO(),window.setDevice=function(e){$.setDevice({desktop:`Desktop`,tablet:`Tablet`,mobile:`Mobile portrait`}[e]||`Desktop`),document.querySelectorAll(`.device-btn`).forEach(e=>e.classList.remove(`active`)),document.getElementById(`btn-${e}`)?.classList.add(`active`)},window.previewPage=function(){$.runCommand(`preview`)},window.savePage=async function(){let e=document.getElementById(`save-btn`);e.disabled=!0;let t=e.innerHTML;e.innerHTML=`<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;try{let e=$.getHtml(),t=$.getCss(),n=$.getComponents().toJSON(),r=$.getStyle().toJSON(),i=`<style>${t}</style>${e}`,a=JSON.stringify({components:n,styles:r});(await(await fetch(`/admin/api/${window.RECORD_TYPE}/${window.RECORD_ID}/content?locale=${window.CURRENT_LOCALE}`,{method:`POST`,headers:{"Content-Type":`application/json`,"X-CSRF-TOKEN":window.CSRF_TOKEN,Accept:`application/json`},body:JSON.stringify({html_base64:btoa(unescape(encodeURIComponent(i))),data_base64:btoa(unescape(encodeURIComponent(a)))})})).json()).success?kO(`✓ Saved (${window.CURRENT_LOCALE.toUpperCase()}) successfully!`,`success`):kO(`✗ Save failed. Try again.`,`error`)}catch(e){kO(`✗ Network error. Try again.`,`error`),console.error(e)}finally{e.disabled=!1,e.innerHTML=t}};function kO(e,t=`success`){let n=document.getElementById(`status-toast`);document.getElementById(`toast-msg`).textContent=e,n.className=t,setTimeout(()=>{n.className=``},3500)}DO.add(`reviews-block`,{label:`⭐ Reviews Block`,category:window.__(`Safaris Blocks`),content:`<!-- REVIEWS -->
+            `)}}}),window.CURRENT_LOCALE=`en`,window.switchLocale=async function(e){e!==window.CURRENT_LOCALE&&confirm(`Switch editing language to ${e.toUpperCase()}? Make sure you have saved any changes to ${window.CURRENT_LOCALE.toUpperCase()} first.`)&&(window.CURRENT_LOCALE=e,document.querySelectorAll(`.lang-tab-btn`).forEach(t=>{let n=t.getAttribute(`data-locale`)===e;t.classList.toggle(`active`,n),t.style.background=n?`#455537`:`transparent`,t.style.color=n?`#fff`:`#94a3b8`}),NO(`Loading ${e.toUpperCase()} translation...`,`success`),await MO(e))};async function MO(e=window.CURRENT_LOCALE){try{let t=await(await fetch(`/admin/api/${window.RECORD_TYPE}/${window.RECORD_ID}/content?locale=${e}&t=${Date.now()}`,{headers:{"X-CSRF-TOKEN":window.CSRF_TOKEN,Accept:`application/json`}})).json();t.builder_data&&t.builder_data.components?($.setComponents(t.builder_data.components),t.builder_data.styles&&$.setStyle(t.builder_data.styles)):t.builder_html?$.setComponents(t.builder_html):$.setComponents(``)}catch(e){console.warn(`No existing content to load:`,e)}}MO(),window.setDevice=function(e){$.setDevice({desktop:`Desktop`,tablet:`Tablet`,mobile:`Mobile portrait`}[e]||`Desktop`),document.querySelectorAll(`.device-btn`).forEach(e=>e.classList.remove(`active`)),document.getElementById(`btn-${e}`)?.classList.add(`active`)},window.previewPage=function(){$.runCommand(`preview`)},window.savePage=async function(){let e=document.getElementById(`save-btn`);e.disabled=!0;let t=e.innerHTML;e.innerHTML=`<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;try{let e=$.getHtml(),t=$.getCss(),n=$.getComponents().toJSON(),r=$.getStyle().toJSON(),i=`<style>${t}</style>${e}`,a=JSON.stringify({components:n,styles:r});(await(await fetch(`/admin/api/${window.RECORD_TYPE}/${window.RECORD_ID}/content?locale=${window.CURRENT_LOCALE}`,{method:`POST`,headers:{"Content-Type":`application/json`,"X-CSRF-TOKEN":window.CSRF_TOKEN,Accept:`application/json`},body:JSON.stringify({html_base64:btoa(unescape(encodeURIComponent(i))),data_base64:btoa(unescape(encodeURIComponent(a)))})})).json()).success?NO(`✓ Saved (${window.CURRENT_LOCALE.toUpperCase()}) successfully!`,`success`):NO(`✗ Save failed. Try again.`,`error`)}catch(e){NO(`✗ Network error. Try again.`,`error`),console.error(e)}finally{e.disabled=!1,e.innerHTML=t}};function NO(e,t=`success`){let n=document.getElementById(`status-toast`);document.getElementById(`toast-msg`).textContent=e,n.className=t,setTimeout(()=>{n.className=``},3500)}DO.add(`reviews-block`,{label:`⭐ Reviews Block`,category:window.__(`Safaris Blocks`),content:`<!-- REVIEWS -->
 <section class="reviews-section" id="reviews">
   <div class="reviews-inner">
     <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem;">
@@ -1767,7 +2019,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
           <span style="font-size:12px; font-weight:600; color:#00aa6c; letter-spacing:0.03em;">TripAdvisor</span>
         </div>
         <div class="review-stars" style="color:#00aa6c;">★★★★★</div>
-        <p class="review-text">"An absolutely unforgettable honeymoon. Mwangwi's team handled everything — from the airport pickup to sunset game drives. Our guide Issa felt like family within minutes. Seeing the Big Five in Ngorongoro was pure magic."</p>
+        <p class="review-text">"An absolutely unforgettable honeymoon. The team handled everything — from the airport pickup to sunset game drives. Our guide Issa felt like family within minutes. Seeing the Big Five in Ngorongoro was pure magic."</p>
         <div class="review-author">
           <div class="review-avatar">MK</div>
           <div><div class="review-name">Maria &amp; Karl</div><div class="review-loc">Germany · Safari + Zanzibar, 2025</div></div>
@@ -1809,7 +2061,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
           <span style="font-size:12px; font-weight:600; color:#00aa6c; letter-spacing:0.03em;">TripAdvisor</span>
         </div>
         <div class="review-stars" style="color:#00aa6c;">★★★★★</div>
-        <p class="review-text">"We traveled as a family of five with three kids. Mwangwi's team tailored every single detail — pace, lodges, activities. Our children saw lions, elephants, and a cheetah! This trip changed all of us."</p>
+        <p class="review-text">"We traveled as a family of five with three kids. The team tailored every single detail — pace, lodges, activities. Our children saw lions, elephants, and a cheetah! This trip changed all of us."</p>
         <div class="review-author">
           <div class="review-avatar">SF</div>
           <div><div class="review-name">Sarah F.</div><div class="review-loc">USA · Family Safari, 2024</div></div>
@@ -1871,7 +2123,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
     </form>
     <p style="font-size:12px; color:rgba(255,255,255,0.35); margin-top:1rem;">No spam, ever. Unsubscribe anytime.</p>
   </div>
-</section>`,attributes:{class:`fa-solid fa-envelope-open-text`}});var AO=`padding: 14px 18px; text-align: left; color: #fbb158; font-family: 'Playfair Display', Georgia, serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border: none;`,jO=`padding: 14px 18px; color: #2E1F12; font-family: 'Lora', Georgia, serif; font-size: 15px;`,MO=`padding: 14px 18px; color: #4A3728; font-family: 'Lora', Georgia, serif; font-size: 15px;`;DO.add(`safaris-table`,{label:`📋 Table`,category:window.__(`Safaris Blocks`),attributes:{class:`fa-solid fa-table`},content:`
+</section>`,attributes:{class:`fa-solid fa-envelope-open-text`}});var PO=`padding: 14px 18px; text-align: left; color: #CA9A2E; font-family: 'Playfair Display', Georgia, serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border: none;`,FO=`padding: 14px 18px; color: #2E1F12; font-family: 'Lora', Georgia, serif; font-size: 15px;`,IO=`padding: 14px 18px; color: #4A3728; font-family: 'Lora', Georgia, serif; font-size: 15px;`;DO.add(`safaris-table`,{label:`📋 Table`,category:window.__(`Safaris Blocks`),attributes:{class:`fa-solid fa-table`},content:`
 <section data-gjs-name="Table Section" style="padding: 60px 20px; background: #fff;">
   <div data-gjs-name="Table Container" style="max-width: 900px; margin: 0 auto;">
     <h2 data-gjs-type="text" style="font-family: 'Playfair Display', Georgia, serif; font-size: 25px; font-weight: 700; color: #2E1F12; margin-bottom: 1.5rem;">Table Heading</h2>
@@ -1879,43 +2131,43 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
       <table style="width: 100%; border-collapse: collapse; font-family: 'Lora', Georgia, serif; font-size: 15px; background: #fff;">
         <thead>
           <tr style="background: #2E1F12;">
-            <th style="${AO}"><div data-gjs-type="text">Column 1</div></th>
-            <th style="${AO}"><div data-gjs-type="text">Column 2</div></th>
-            <th style="${AO}"><div data-gjs-type="text">Column 3</div></th>
-            <th style="${AO}"><div data-gjs-type="text">Column 4</div></th>
+            <th style="${PO}"><div data-gjs-type="text">Column 1</div></th>
+            <th style="${PO}"><div data-gjs-type="text">Column 2</div></th>
+            <th style="${PO}"><div data-gjs-type="text">Column 3</div></th>
+            <th style="${PO}"><div data-gjs-type="text">Column 4</div></th>
           </tr>
         </thead>
         <tbody>
           <tr style="border-bottom: 1px solid #EEE5D4;">
-            <td style="${jO}"><div data-gjs-type="text">Row 1, Cell 1</div></td>
-            <td style="${MO}"><div data-gjs-type="text">Row 1, Cell 2</div></td>
-            <td style="${MO}"><div data-gjs-type="text">Row 1, Cell 3</div></td>
-            <td style="${MO}"><div data-gjs-type="text">Row 1, Cell 4</div></td>
+            <td style="${FO}"><div data-gjs-type="text">Row 1, Cell 1</div></td>
+            <td style="${IO}"><div data-gjs-type="text">Row 1, Cell 2</div></td>
+            <td style="${IO}"><div data-gjs-type="text">Row 1, Cell 3</div></td>
+            <td style="${IO}"><div data-gjs-type="text">Row 1, Cell 4</div></td>
           </tr>
           <tr style="border-bottom: 1px solid #EEE5D4; background: #FAF6EF;">
-            <td style="${jO}"><div data-gjs-type="text">Row 2, Cell 1</div></td>
-            <td style="${MO}"><div data-gjs-type="text">Row 2, Cell 2</div></td>
-            <td style="${MO}"><div data-gjs-type="text">Row 2, Cell 3</div></td>
-            <td style="${MO}"><div data-gjs-type="text">Row 2, Cell 4</div></td>
+            <td style="${FO}"><div data-gjs-type="text">Row 2, Cell 1</div></td>
+            <td style="${IO}"><div data-gjs-type="text">Row 2, Cell 2</div></td>
+            <td style="${IO}"><div data-gjs-type="text">Row 2, Cell 3</div></td>
+            <td style="${IO}"><div data-gjs-type="text">Row 2, Cell 4</div></td>
           </tr>
           <tr style="border-bottom: 1px solid #EEE5D4;">
-            <td style="${jO}"><div data-gjs-type="text">Row 3, Cell 1</div></td>
-            <td style="${MO}"><div data-gjs-type="text">Row 3, Cell 2</div></td>
-            <td style="${MO}"><div data-gjs-type="text">Row 3, Cell 3</div></td>
-            <td style="${MO}"><div data-gjs-type="text">Row 3, Cell 4</div></td>
+            <td style="${FO}"><div data-gjs-type="text">Row 3, Cell 1</div></td>
+            <td style="${IO}"><div data-gjs-type="text">Row 3, Cell 2</div></td>
+            <td style="${IO}"><div data-gjs-type="text">Row 3, Cell 3</div></td>
+            <td style="${IO}"><div data-gjs-type="text">Row 3, Cell 4</div></td>
           </tr>
           <tr style="background: #FAF6EF;">
-            <td style="${jO}"><div data-gjs-type="text">Row 4, Cell 1</div></td>
-            <td style="${MO}"><div data-gjs-type="text">Row 4, Cell 2</div></td>
-            <td style="${MO}"><div data-gjs-type="text">Row 4, Cell 3</div></td>
-            <td style="${MO}"><div data-gjs-type="text">Row 4, Cell 4</div></td>
+            <td style="${FO}"><div data-gjs-type="text">Row 4, Cell 1</div></td>
+            <td style="${IO}"><div data-gjs-type="text">Row 4, Cell 2</div></td>
+            <td style="${IO}"><div data-gjs-type="text">Row 4, Cell 3</div></td>
+            <td style="${IO}"><div data-gjs-type="text">Row 4, Cell 4</div></td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>`}),DO.add(`safaris-zanzibar-page`,{label:`🏝️ Zanzibar Island Block`,category:window.__(`Safaris Blocks`),attributes:{class:`fa-solid fa-umbrella-beach`},content:`<div class="safaris-zanzibar-page-block zanzibar-block">
-  <!-- Sticky Top Navigation Bar (Single Tour Tab Bar Structure) -->
+  <!-- Sticky Top Navigation Bar -->
   <header class="zanzibar-nav">
     <div class="zanzibar-nav-row">
       <nav class="zanzibar-links">
@@ -1924,7 +2176,6 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
         <a href="#zanzibar-stonetown"><i class="fa-solid fa-city"></i> <span data-gjs-type="text">Stone Town</span></a>
         <a href="#zanzibar-experiences"><i class="fa-solid fa-umbrella-beach"></i> <span data-gjs-type="text">Experiences</span></a>
         <a href="#zanzibar-when"><i class="fa-solid fa-calendar-days"></i> <span data-gjs-type="text">When To Go</span></a>
-        <a href="#zanzibar-stay"><i class="fa-solid fa-hotel"></i> <span data-gjs-type="text">Where To Stay</span></a>
         <a href="#zanzibar-plan" class="zanzibar-nav-cta"><i class="fa-solid fa-paper-plane"></i> <span data-gjs-type="text">Plan My Trip</span></a>
       </nav>
     </div>
@@ -1935,69 +2186,62 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
     <div class="wrap">
       <div class="zanzibar-hero-grid">
         <div>
-          <div class="eyebrow" data-gjs-type="text">  · Tanzania &amp; Zanzibar</div>
-          <h1 data-gjs-type="text">Where the savannah<br>gives way to <em>the sea.</em></h1>
-          <p class="lede" data-gjs-type="text">Zanzibar is the reward at the end of a Tanzanian journey — spice-scented lanes, warm shallows, and a horizon lined with dhow sails.   builds the route that gets you there, from the plains to the shore.</p>
+          <div class="eyebrow" data-gjs-type="text">Mwangwi Safaris · Zanzibar Island Escape</div>
+          <h1 data-gjs-type="text">Where the savannah gives way to <em>paradise.</em></h1>
+          <p class="lede" data-gjs-type="text">Zanzibar truly is paradise, offering an idyllic blend of rich history, stunning nature, and serene white-sand beaches. It’s an ideal destination for both relaxation and adventure seekers alike. Exploring Zanzibar is an immersive sensory journey, from the bustling markets of Stone Town to the tranquil turquoise shallows and diverse cuisine. Mwangwi Safaris builds the seamless route that takes you from thrilling game drives on the mainland to complete coastal relaxation.</p>
           <div class="zanzibar-hero-ctas">
-            <a class="zanzibar-btn-primary" href="#zanzibar-plan" data-gjs-type="text">Start Planning</a>
-            <a class="zanzibar-btn-ghost" href="#zanzibar-why" data-gjs-type="text">See Why Go</a>
+            <a class="zanzibar-btn-primary" href="#zanzibar-plan" data-gjs-type="text">Plan Your Zanzibar Escape</a>
+            <a class="zanzibar-btn-ghost" href="#zanzibar-why" data-gjs-type="text">Why Visit Zanzibar</a>
           </div>
           <div class="zanzibar-stat-strip">
             <div><div class="zanzibar-stat-num" data-gjs-type="text">40+</div><div class="zanzibar-stat-label" data-gjs-type="text">islands in archipelago</div></div>
-            <div><div class="zanzibar-stat-num" data-gjs-type="text">25</div><div class="zanzibar-stat-label" data-gjs-type="text">beaches on Unguja</div></div>
-            <div><div class="zanzibar-stat-num" data-gjs-type="text">20min</div><div class="zanzibar-stat-label" data-gjs-type="text">flight from Dar</div></div>
-            <div><div class="zanzibar-stat-num" data-gjs-type="text">Jun–Oct</div><div class="zanzibar-stat-label" data-gjs-type="text">prime dry season</div></div>
+            <div><div class="zanzibar-stat-num" data-gjs-type="text">Top 10</div><div class="zanzibar-stat-label" data-gjs-type="text">world-class white beaches</div></div>
+            <div><div class="zanzibar-stat-num" data-gjs-type="text">UNESCO</div><div class="zanzibar-stat-label" data-gjs-type="text">Stone Town World Heritage</div></div>
+            <div><div class="zanzibar-stat-num" data-gjs-type="text">Jun–Feb</div><div class="zanzibar-stat-label" data-gjs-type="text">prime dry beach season</div></div>
           </div>
         </div>
         <div>
-          <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&q=80" alt="Zanzibar Dhow Sail" style="width: 100%; max-height: 520px; object-fit: cover; border-radius: 4px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); display: block;" />
+          <img src="https://farginsafaris.com/wp-content/uploads/2024/10/zanzibar-fargin-1024x683.webp" alt="Zanzibar White Sand Beach - Mwangwi Safaris" style="width: 100%; max-height: 520px; object-fit: cover; border-radius: 4px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); display: block;" />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Why Zanzibar Section -->
+  <!-- Why Zanzibar Section (The 4 Core Pillars) -->
   <section class="zanzibar-section" id="zanzibar-why">
     <div class="wrap">
       <div class="zanzibar-section-head">
-        <div class="eyebrow" data-gjs-type="text">Why Zanzibar</div>
-        <h2 data-gjs-type="text">Five reasons this island earns a place on every Tanzania itinerary</h2>
-        <p data-gjs-type="text">Zanzibar sits at a crossroads of African, Arab and Asian trade routes, and that layered history still shapes everything from its food to its architecture.</p>
+        <div class="eyebrow" data-gjs-type="text">Why Visit Zanzibar</div>
+        <h2 data-gjs-type="text">Four reasons this paradise earns a place on every Tanzania itinerary</h2>
+        <p data-gjs-type="text">Zanzibar provides exceptional diving and snorkeling experiences, mouthwatering cuisine, and a relaxed atmosphere ideal for unwinding after your African safari. The island’s unique blend of cultures and stunning natural beauty makes it a truly unforgettable destination.</p>
       </div>
       <div class="zanzibar-why-grid">
         <div class="zanzibar-why-card">
           <div class="zanzibar-why-num" data-gjs-type="text">01</div>
           <div>
-            <h3 data-gjs-type="text">Stone Town's living history</h3>
-            <p data-gjs-type="text">A UNESCO-listed old quarter of carved doorways, palace ruins and spice-scented alleys, still very much a working town rather than a museum piece.</p>
+            <h3 data-gjs-type="text">Stunning White Beaches</h3>
+            <p data-gjs-type="text">Zanzibar boasts some of the world’s most beautiful beaches with powder-soft white sand and crystal-clear turquoise waters. Popular shores like Nungwi, Kendwa, and Paje offer idyllic settings for relaxation, swimming, and water sports.</p>
           </div>
         </div>
         <div class="zanzibar-why-card">
           <div class="zanzibar-why-num" data-gjs-type="text">02</div>
           <div>
-            <h3 data-gjs-type="text">Beaches for every mood</h3>
-            <p data-gjs-type="text">Powder-soft sand rings the island, from lively northern shores to tidal, wind-swept coves in the east and south.</p>
+            <h3 data-gjs-type="text">Rich Stone Town History</h3>
+            <p data-gjs-type="text">Zanzibar’s Stone Town, a UNESCO World Heritage Site, is a historic gem with narrow winding alleys, ancient coral-stone buildings, and vibrant markets reflecting centuries of trade, culture, and coastal Swahili civilization.</p>
           </div>
         </div>
         <div class="zanzibar-why-card">
           <div class="zanzibar-why-num" data-gjs-type="text">03</div>
           <div>
-            <h3 data-gjs-type="text">A reef worth diving for</h3>
-            <p data-gjs-type="text">Warm, clear water around Mnemba Atoll and beyond shelters turtles, reef sharks and dense coral gardens, all within reach of the shore.</p>
+            <h3 data-gjs-type="text">Unique Cultural Blend</h3>
+            <p data-gjs-type="text">The island is an enchanting melting pot of cultures, with rich influences from Africa, Arabia, Persia, and India. This heritage is wonderfully evident in its aromatic cuisine, intricate architecture, and warm hospitality.</p>
           </div>
         </div>
         <div class="zanzibar-why-card">
           <div class="zanzibar-why-num" data-gjs-type="text">04</div>
           <div>
-            <h3 data-gjs-type="text">Stays at every price point</h3>
-            <p data-gjs-type="text">Family-run guesthouses sit a short drive from private-island lodges, so the same coastline can suit a honeymoon or a group trip.</p>
-          </div>
-        </div>
-        <div class="zanzibar-why-card">
-          <div class="zanzibar-why-num" data-gjs-type="text">05</div>
-          <div>
-            <h3 data-gjs-type="text">The safari's natural finale</h3>
-            <p data-gjs-type="text">A short hop from the northern parks or the southern reserves, Zanzibar is where a dust-and-game-drive trip ends in salt air and stillness.</p>
+            <h3 data-gjs-type="text">Legendary Spice Tours</h3>
+            <p data-gjs-type="text">Known worldwide as the “Spice Island” due to its heritage of producing cloves, nutmeg, cinnamon, and black pepper. Guided spice plantation tours offer a fascinating sensory insight into their cultivation and traditional uses.</p>
           </div>
         </div>
       </div>
@@ -2010,28 +2254,28 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
       <div class="zanzibar-section-head">
         <div class="eyebrow" data-gjs-type="text">The Coast, Point By Point</div>
         <h2 data-gjs-type="text">Which shore of Zanzibar fits your holiday?</h2>
-        <p data-gjs-type="text">Unguja, the main island, wears a different character on each side. Here's how the four coasts compare.</p>
+        <p data-gjs-type="text">Unguja, the main island, wears a different character on each side. Here is how the four coasts compare.</p>
       </div>
       <div class="zanzibar-compass-grid">
         <div class="zanzibar-coast-card">
           <div class="dir" data-gjs-type="text">North</div>
           <h3 data-gjs-type="text">Nungwi &amp; Kendwa</h3>
-          <p data-gjs-type="text">The island's liveliest shoreline, with tide-free water year-round, a dense run of restaurants and bars, and the easiest swimming conditions on Zanzibar.</p>
+          <p data-gjs-type="text">The island's liveliest shoreline, with tide-free crystal waters year-round, idyllic powder sands, oceanfront restaurants, and the easiest swimming conditions on Zanzibar.</p>
         </div>
         <div class="zanzibar-coast-card">
           <div class="dir" data-gjs-type="text">East</div>
           <h3 data-gjs-type="text">Matemwe &amp; Pongwe</h3>
-          <p data-gjs-type="text">A long reef runs just offshore, making this the island's best base for snorkelling and kite-surfing, though the tide pulls the sea far out twice a day.</p>
+          <p data-gjs-type="text">A coral reef runs just offshore facing Mnemba Atoll, making this the island's premier base for snorkelling, scuba diving, and tranquil beachfront retreats.</p>
         </div>
         <div class="zanzibar-coast-card">
           <div class="dir" data-gjs-type="text">South-East</div>
           <h3 data-gjs-type="text">Paje, Jambiani &amp; Bwejuu</h3>
-          <p data-gjs-type="text">Steady trade winds and soft, sweeping sand draw sailors and kite-surfers to these quiet fishing villages, still among the least crowded stretches of coast.</p>
+          <p data-gjs-type="text">Steady Indian Ocean trade winds and soft sand draw kite-surfers, ocean lovers, and sailors to these authentic coastal fishing villages and crystal lagoons.</p>
         </div>
         <div class="zanzibar-coast-card">
           <div class="dir" data-gjs-type="text">South-West</div>
           <h3 data-gjs-type="text">Kizimkazi &amp; Stone Town</h3>
-          <p data-gjs-type="text">Quieter and less developed, with dolphin-watching off Kizimkazi and easy access to historic Stone Town and the Menai Bay marine conservation area.</p>
+          <p data-gjs-type="text">Quiet and traditional, famous for dolphin safaris off Kizimkazi, protected marine sanctuaries in Menai Bay, and immediate access to historic Stone Town.</p>
         </div>
       </div>
     </div>
@@ -2045,14 +2289,14 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
           <img src="https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?w=1000&q=80" alt="Stone Town Historic Streets" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
         </div>
         <div class="zanzibar-stone-copy">
-          <div class="eyebrow" data-gjs-type="text">Stone Town</div>
-          <h2 data-gjs-type="text">The old trading capital, still very much alive</h2>
-          <p data-gjs-type="text">Most visitors arrive and depart through Stone Town, the island's historic hub of commerce and culture. Its narrow, winding streets carry the fingerprints of Arab, Persian, Indian and African traders who passed through for centuries — grand doorways, courtyard houses and the crumbling remains of a Sultan's palace.</p>
-          <p data-gjs-type="text">The call to prayer, market chatter and the smell of cloves and cardamom still fill the same lanes today. A night or two is usually enough to take it in before heading for the beach.</p>
+          <div class="eyebrow" data-gjs-type="text">Stone Town Heritage</div>
+          <h2 data-gjs-type="text">The ancient trading capital, alive with Swahili culture</h2>
+          <p data-gjs-type="text">Most visitors begin their Zanzibar adventure in Stone Town, the island's UNESCO-designated cultural hub. Its narrow, winding labyrinth carries the enduring footprints of Arab, Persian, Indian, and African trade — intricately carved doorways, coral-stone mansions, and historic palace ruins.</p>
+          <p data-gjs-type="text">The call to prayer, lively street chatter, and the rich scent of cloves, cardamom, and fresh seafood fill the air today. A stay here immerses you deep into the island’s culture, traditions, and coastal life before heading to the beach.</p>
           <div class="zanzibar-stone-list">
-            <div><span class="mark"></span><span data-gjs-type="text">Wander the carved-door alleys and Forodhani or Darajani food markets.</span></div>
-            <div><span class="mark"></span><span data-gjs-type="text">Visit the Old Fort, House of Wonders and the former Sultan's Palace.</span></div>
-            <div><span class="mark"></span><span data-gjs-type="text">Take a guided walking tour to unpack the layered Swahili, Arab and colonial history.</span></div>
+            <div><span class="mark"></span><span data-gjs-type="text">Wander through UNESCO-listed alleys, historic carved doors, and bustling Darajani spice markets.</span></div>
+            <div><span class="mark"></span><span data-gjs-type="text">Explore the iconic Old Fort, House of Wonders, coastal gardens, and the former Sultan's Palace.</span></div>
+            <div><span class="mark"></span><span data-gjs-type="text">Enjoy a guided walking and cultural tour to unpack Zanzibar's layered Swahili and merchant history.</span></div>
           </div>
         </div>
       </div>
@@ -2064,16 +2308,16 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
     <div class="wrap">
       <div class="zanzibar-section-head">
         <div class="eyebrow" data-gjs-type="text">On The Island</div>
-        <h2 data-gjs-type="text">Beyond the beach chair</h2>
-        <p data-gjs-type="text">Zanzibar rewards travellers who leave the sunbed for a morning. A few excursions worth building into any itinerary.</p>
+        <h2 data-gjs-type="text">Water sports, island excursions &amp; culinary journeys</h2>
+        <p data-gjs-type="text">Guests have the opportunity to indulge in water sports, embark on spice tours, explore local villages, and witness breathtaking sunsets over the Indian Ocean.</p>
       </div>
       <div class="zanzibar-exp-grid">
-        <div class="zanzibar-exp-card"><div class="tag" data-gjs-type="text">Culture</div><h3 data-gjs-type="text">Spice Farm Tour</h3><p data-gjs-type="text">Walk through working plantations and learn to recognise clove, nutmeg, vanilla and cardamom by sight and smell — the trade that gave the island its nickname.</p></div>
-        <div class="zanzibar-exp-card"><div class="tag" data-gjs-type="text">Wildlife</div><h3 data-gjs-type="text">Jozani Forest</h3><p data-gjs-type="text">Zanzibar's only national park protects mangroves and the last patch of indigenous forest, home to the rare, endemic red colobus monkey.</p></div>
-        <div class="zanzibar-exp-card"><div class="tag" data-gjs-type="text">History</div><h3 data-gjs-type="text">Prison Island</h3><p data-gjs-type="text">A short boat ride from Stone Town leads to a former quarantine station, now home to giant Aldabra tortoises and a calm beach for snorkelling.</p></div>
-        <div class="zanzibar-exp-card"><div class="tag" data-gjs-type="text">On The Water</div><h3 data-gjs-type="text">Dhow Sunset Sail</h3><p data-gjs-type="text">Traditional wooden dhows still cruise the coast at golden hour — a slow, wind-powered way to watch the island's famous sunsets.</p></div>
-        <div class="zanzibar-exp-card"><div class="tag" data-gjs-type="text">Underwater</div><h3 data-gjs-type="text">Mnemba Atoll Snorkelling</h3><p data-gjs-type="text">One of the archipelago's best reef systems, with clear water, healthy coral and regular sightings of turtles and reef fish.</p></div>
-        <div class="zanzibar-exp-card"><div class="tag" data-gjs-type="text">Dining</div><h3 data-gjs-type="text">The Rock Restaurant</h3><p data-gjs-type="text">Perched on a rock in the Indian Ocean and reachable on foot at low tide or by boat at high tide — as much a landmark as a meal.</p></div>
+        <div class="zanzibar-exp-card"><div class="tag" data-gjs-type="text">Culinary &amp; Culture</div><h3 data-gjs-type="text">Spice Farm Tour</h3><p data-gjs-type="text">Walk through working plantations and learn to recognise cloves, nutmeg, cinnamon, vanilla, and cardamom by touch and smell on Zanzibar's iconic Spice Island tour.</p></div>
+        <div class="zanzibar-exp-card"><div class="tag" data-gjs-type="text">Wildlife Reserve</div><h3 data-gjs-type="text">Jozani Forest</h3><p data-gjs-type="text">Zanzibar's protected national park features ancient mahogany trees, coastal mangroves, and the only natural habitat of the rare, playful red colobus monkey.</p></div>
+        <div class="zanzibar-exp-card"><div class="tag" data-gjs-type="text">History &amp; Sea</div><h3 data-gjs-type="text">Prison Island Sanctuary</h3><p data-gjs-type="text">A scenic dhow boat ride from Stone Town leads to Changuu Island, home to century-old giant Aldabra tortoises and pristine coral reefs for swimming and snorkelling.</p></div>
+        <div class="zanzibar-exp-card"><div class="tag" data-gjs-type="text">Sunset Sailing</div><h3 data-gjs-type="text">Dhow Sunset Cruise</h3><p data-gjs-type="text">Set sail on a handcrafted wooden dhow as the afternoon breeze carries you along the coastline, watching breathtaking golden-hour sunsets over the Indian Ocean.</p></div>
+        <div class="zanzibar-exp-card"><div class="tag" data-gjs-type="text">Marine Adventures</div><h3 data-gjs-type="text">Mnemba Atoll Diving</h3><p data-gjs-type="text">A world-renowned marine conservation reserve boasting crystal-clear visibility, thriving coral gardens, green sea turtles, and playful schools of tropical reef fish.</p></div>
+        <div class="zanzibar-exp-card"><div class="tag" data-gjs-type="text">Iconic Dining</div><h3 data-gjs-type="text">The Rock Restaurant</h3><p data-gjs-type="text">Perched atop an ancient coral outcrop in the Indian Ocean off Michamvi beach — reachable on foot at low tide or by boat at high tide for an unforgettable meal.</p></div>
       </div>
     </div>
   </section>
@@ -2083,8 +2327,8 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
     <div class="wrap">
       <div class="zanzibar-section-head">
         <div class="eyebrow" data-gjs-type="text">When To Go</div>
-        <h2 data-gjs-type="text">Reading Zanzibar's seasons</h2>
-        <p data-gjs-type="text">Zanzibar is a year-round destination, but the calendar still shapes what your trip will feel like.</p>
+        <h2 data-gjs-type="text">Best Time to Visit Zanzibar</h2>
+        <p data-gjs-type="text">The best time to visit Zanzibar falls during the dry season from June to October, and from December to February. Travelers can anticipate clear skies, balmy temperatures, and reduced humidity, creating ideal conditions for beach exploration and water-based activities such as swimming, diving, and snorkeling.</p>
       </div>
       <div class="zanzibar-season-wrap">
         <div class="zanzibar-season-row">
@@ -2103,38 +2347,10 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
         </div>
       </div>
       <div class="zanzibar-legend">
-        <span><i style="background:var(--clove-bright)"></i><span data-gjs-type="text">Prime dry season, best for beaches &amp; diving</span></span>
-        <span><i style="background:var(--gold)"></i><span data-gjs-type="text">Warm and reliable, slightly busier</span></span>
-        <span><i style="background:var(--sand-soft); border:1px solid var(--line)"></i><span data-gjs-type="text">Shoulder season, good rates</span></span>
-        <span><i style="border:1px dashed var(--line)"></i><span data-gjs-type="text">Short or long rains, quieter and cheaper</span></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Where To Stay Section -->
-  <section class="zanzibar-section" id="zanzibar-stay" style="background:var(--sand-soft);">
-    <div class="wrap">
-      <div class="zanzibar-section-head">
-        <div class="eyebrow" data-gjs-type="text">Where To Stay</div>
-        <h2 data-gjs-type="text">Three ways to sleep on the island</h2>
-        <p data-gjs-type="text">Zanzibar's accommodation spans the full range —   matches the stay to the traveller, not the other way around.</p>
-      </div>
-      <div class="zanzibar-stay-grid">
-        <div class="zanzibar-stay-card">
-          <div class="price" data-gjs-type="text">Simple</div>
-          <h3 data-gjs-type="text">Beach guesthouses</h3>
-          <p data-gjs-type="text">Small, family-run lodges close to the sand, often with a warm, personal welcome and easy access to nearby restaurants and bars in the evening.</p>
-        </div>
-        <div class="zanzibar-stay-card">
-          <div class="price" data-gjs-type="text">Considered</div>
-          <h3 data-gjs-type="text">Boutique beach hotels</h3>
-          <p data-gjs-type="text">Mid-size properties with real character — private plunge pools, sea-facing rooms and a stronger focus on food and service without the ultra-luxury price tag.</p>
-        </div>
-        <div class="zanzibar-stay-card">
-          <div class="price" data-gjs-type="text">Exclusive</div>
-          <h3 data-gjs-type="text">Private island &amp; villa lodges</h3>
-          <p data-gjs-type="text">From private-island retreats to sprawling beachfront villas, the top tier of Zanzibar stays trades scale for total seclusion.</p>
-        </div>
+        <span><i style="background:var(--clove-bright)"></i><span data-gjs-type="text">Prime dry season: ideal for beaches, diving &amp; safaris</span></span>
+        <span><i style="background:var(--gold)"></i><span data-gjs-type="text">Warm &amp; tropical: sunny skies and calm ocean</span></span>
+        <span><i style="background:var(--sand-soft); border:1px solid var(--line)"></i><span data-gjs-type="text">Shoulder months: pleasant weather, fewer crowds</span></span>
+        <span><i style="border:1px dashed var(--line)"></i><span data-gjs-type="text">Green season rains: lush landscapes &amp; quieter island</span></span>
       </div>
     </div>
   </section>
@@ -2142,13 +2358,13 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
   <!-- Plan My Trip / CTA Section -->
   <section class="zanzibar-cta" id="zanzibar-plan">
     <div class="wrap">
-      <div class="eyebrow" data-gjs-type="text"> </div>
-      <h2 data-gjs-type="text">Let's route your Zanzibar journey</h2>
-      <p data-gjs-type="text">Tell us how many days you have, whether a mainland safari comes first, and what kind of coast you're picturing. We'll sketch an itinerary built around it.</p>
+      <div class="eyebrow" data-gjs-type="text">Mwangwi Safaris Experience</div>
+      <h2 data-gjs-type="text">Explore our collection of unforgettable safaris in Tanzania &amp; Zanzibar</h2>
+      <p data-gjs-type="text">Mwangwi Safaris offers various travel experiences that highlight Tanzania’s rich culture, diverse wildlife, and stunning landscapes. Tell us how many days you have, whether a mainland safari comes first, and we'll craft an itinerary tailored to your vision.</p>
       <div class="zanzibar-cta-ctas">
-        <a class="zanzibar-btn-primary" href="/contact" data-gjs-type="text">Request A Proposal</a>
-        <a class="zanzibar-btn-ghost" href="/contact" data-gjs-type="text">Talk To A Travel Expert</a>
+        <a class="zanzibar-btn-primary" href="/contact" data-gjs-type="text">Plan My Zanzibar Safari</a>
+        <a class="zanzibar-btn-ghost" href="/tours" data-gjs-type="text">Explore All Tours &amp; Safaris</a>
       </div>
     </div>
   </section>
-</div>`}),$.DomComponents.addType(`safaris-zanzibar-page-block`,{model:{defaults:{tagName:`div`,attributes:{class:`safaris-zanzibar-page-block`}}}}),$.DomComponents.addType(`safaris-page-header-block`,{model:{defaults:{tagName:`div`,attributes:{class:`safaris-page-header-block`}}}}),$.DomComponents.addType(`safaris-kili-calculator-block`,{model:{defaults:{tagName:`div`,attributes:{class:`safaris-kili-calculator-block`}}}});
+</div>`}),$.DomComponents.addType(`safaris-zanzibar-page-block`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-zanzibar-page-block`)?{type:`safaris-zanzibar-page-block`}:!1,model:{defaults:{tagName:`div`,attributes:{class:`safaris-zanzibar-page-block`}}}}),$.DomComponents.addType(`safaris-page-header-block`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-page-header-block`)?{type:`safaris-page-header-block`}:!1,model:{defaults:{tagName:`section`,attributes:{class:`safaris-page-header-block`}}}}),$.DomComponents.addType(`safaris-kili-calculator-block`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-kili-calculator-block`)?{type:`safaris-kili-calculator-block`}:!1,model:{defaults:{tagName:`div`,attributes:{class:`safaris-kili-calculator-block`}}}}),$.DomComponents.addType(`safaris-about-block`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-about-block`)?{type:`safaris-about-block`}:!1,model:{defaults:{tagName:`section`,attributes:{class:`safaris-about-block`}}}});

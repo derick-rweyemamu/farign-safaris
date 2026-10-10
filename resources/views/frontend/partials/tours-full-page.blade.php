@@ -374,38 +374,24 @@
                                                 </p>
                                             @endif
 
-                                            {{-- Quick facts --}}
-                                            <div class="flex flex-wrap gap-3 text-xs text-gray-550 dark:text-gray-400 mb-5">
-                                                @if($tour->destinations && $tour->destinations->count())<span class="flex items-center gap-1">
-                                                        <x-icon name="map-pin" class="w-3.5 h-3.5 text-brand-primary" />
-                                                        {{ $tour->destinations->first()->name }}
-                                                    </span>
-                                                @endif
-                                                @if($tour->max_guests)
-                                                    <span class="flex items-center gap-1 !text-sm">
-                                                        <x-icon name="users" class="w-3.5 h-3.5 text-brand-primary" />
-                                                       {{ __('Max') }} {{ $tour->max_guests }}
-                                                    </span>
-                                                @endif
-
+                                            {{-- Price (Single Line) --}}
+                                            <div class="flex items-baseline gap-1 text-gray-900 dark:text-white mb-4">
+                                                <span class="!text-xs text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider">{{ __('From') }}</span>
+                                                <span class="text-brand-primary font-bold !text-xs leading-none">{{ $currency_symbol }}</span>
+                                                <span class="text-lg font-bold text-gray-900 dark:text-white font-brand leading-none">{{ number_format($tour->adult_price, 0) }}</span>
+                                                <span class="!text-xs text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider">{{ __('per person') }}</span>
                                             </div>
 
-                                            {{-- Price + CTA --}}
-                                            <div
-                                                class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex items-end justify-between">
-                                                <div class="flex flex-col items-center">
-                                                    <div
-                                                        class="!text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-widest mb-0.5 text-center">{{ __('From') }}</div>
-                                                    <div class="flex items-baseline justify-center gap-0.5 leading-none">
-                                                        <span
-                                                            class="text-brand-primary font-bold text-base leading-none">{{ $currency_symbol }}</span>
-                                                        <span
-                                                            class="text-2xl font-black text-gray-900 dark:text-white font-brand leading-none">{{ number_format($tour->adult_price, 0) }}</span>
-                                                    </div>
-                                                    <div
-                                                        class="!text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase mt-1 text-center">
-                                                        / {{__('person')}}</div>
-                                                </div>
+                                            {{-- Max People + CTA --}}
+                                            <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                                                @if($tour->max_guests)
+                                                    <span class="flex items-center gap-1.5 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                                        <x-icon name="users" class="w-4 h-4 text-brand-primary" />
+                                                        <span>{{ __('Max') }} {{ $tour->max_guests }}</span>
+                                                    </span>
+                                                @else
+                                                    <span></span>
+                                                @endif
                                                 <a href="{{ route('tours.show', $tour->slug) }}"
                                                     class="inline-flex items-center gap-1.5 bg-brand-light text-brand-primary hover:bg-brand-primary hover:text-white dark:text-brand-primary px-4 py-2.5 rounded-[3px] font-bold text-sm transition-all duration-300 group/btn">{{ __('View Tour') }}<x-icon name="arrow-right"
                                                         class="w-3.5 h-3.5 transform group-hover/btn:translate-x-1 transition-transform" />
@@ -417,88 +403,72 @@
                 </div>
 
                 {{-- Pagination --}}
-                <div x-show="!loading && totalPages > 1" class="mt-8">
-                    <nav role="navigation" aria-label="{{ __('Pagination Navigation') }}" class="flex items-center justify-between">
-                        {{-- Mobile View --}}
-                        <div class="flex justify-between flex-1 sm:hidden">
-                            <span>
-                                <button type="button"
-                                    x-on:click="if(currentPage &gt; 1) { currentPage--; applyFilters(false); window.scrollTo({top: document.getElementById('tours-grid').offsetTop - 100, behavior: 'smooth'}); }"
-                                    :disabled="currentPage === 1"
-                                    :class="{'opacity-50 cursor-not-allowed': currentPage === 1}"
-                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-[3px] hover:text-gray-500 focus:outline-none focus:ring ring-blue-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-755 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300">{{ __('Previous') }}</button>
-                            </span>
-
-                            <span>
-                                <button type="button"
-                                    x-on:click="if(currentPage &lt; totalPages) { currentPage++; applyFilters(false); window.scrollTo({top: document.getElementById('tours-grid').offsetTop - 100, behavior: 'smooth'}); }"
-                                    :disabled="currentPage === totalPages"
-                                    :class="{'opacity-50 cursor-not-allowed': currentPage === totalPages}"
-                                    class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-[3px] hover:text-gray-500 focus:outline-none focus:ring ring-blue-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-755 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300">{{ __('Next') }}</button>
-                            </span>
+                <div x-show="!loading && totalPages > 1" class="mt-12 pt-8 border-t border-gray-150 dark:border-gray-800">
+                    <nav role="navigation" aria-label="{{ __('Pagination Navigation') }}" class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        {{-- Page status info (very small, no dot) --}}
+                        <div class="!text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 order-2 sm:order-1">
+                            <span class="!text-xs">{{ __('Page') }} <strong class="text-gray-900 dark:text-white" x-text="currentPage"></strong> {{ __('of') }} <strong class="text-gray-900 dark:text-white" x-text="totalPages"></strong></span>
                         </div>
 
-                        {{-- Desktop View --}}
-                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-end">
-                            <div
-                                class="flex items-center gap-6 bg-white dark:bg-gray-800 p-2 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
-                                {{-- Pagination Links --}}
-                                <span class="flex items-center gap-1.5">
-                                    {{-- Previous Page Link --}}
-                                    <button type="button"
-                                        x-on:click="if(currentPage &gt; 1) { currentPage--; applyFilters(false); window.scrollTo({top: document.getElementById('tours-grid').offsetTop - 100, behavior: 'smooth'}); }"
-                                        :disabled="currentPage === 1"
-                                        :class="{'text-gray-300 bg-gray-50 border-gray-100 cursor-not-allowed dark:bg-gray-800/50 dark:border-gray-700 dark:text-gray-600': currentPage === 1, 'text-gray-600 bg-white border-gray-200 hover:bg-brand-primary/10 hover:text-brand-primary hover:border-brand-primary/30 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-brand-primary/20 dark:hover:text-brand-primary dark:hover:border-brand-primary/50': currentPage &gt; 1}"
-                                        class="w-9 h-9 flex items-center justify-center border rounded-md transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-1 dark:focus:ring-offset-gray-900"
-                                        aria-label="{{ __('Previous') }}">
-                                        <x-icon name="chevron-left-solid" class="w-4 h-4" />
-                                    </button>
+                        {{-- Pagination Controls --}}
+                        <div class="flex items-center gap-1.5 order-1 sm:order-2">
+                            {{-- Previous Page Button --}}
+                            <button type="button"
+                                x-on:click="if(currentPage > 1) { currentPage--; applyFilters(false); window.scrollTo({top: document.getElementById('tours-grid').offsetTop - 100, behavior: 'smooth'}); }"
+                                :disabled="currentPage === 1"
+                                :class="{'opacity-40 cursor-not-allowed bg-gray-50 dark:bg-gray-800/40 text-gray-400 border-gray-200 dark:border-gray-800': currentPage === 1, 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-brand-primary hover:border-brand-primary hover:text-white dark:hover:text-white shadow-2xs': currentPage > 1}"
+                                class="group inline-flex items-center gap-1 px-2.5 h-7 rounded-[3px] border font-bold !text-xs uppercase tracking-wider transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-brand-primary"
+                                aria-label="{{ __('Previous') }}">
+                                <x-icon name="arrow-left" class="w-3 h-3 transform group-hover:-translate-x-0.5 transition-transform" />
+                                <span class="hidden xs:inline">{{ __('Prev') }}</span>
+                            </button>
 
-                                    {{-- Page Numbers --}}
-                                    <template x-for="page in totalPages" :key="page">
-                                        <span>
-                                            {{-- Current Page --}}
-                                            <span x-show="currentPage === page"
-                                                class="min-w-[36px] h-9 px-2 flex items-center justify-center text-sm font-semibold text-white bg-brand-primary border border-brand-primary rounded-md shadow-md dark:bg-brand-primary dark:border-brand-primary"
-                                                x-text="page"></span>
-                                            {{-- Other Page --}}
-                                            <button x-show="currentPage !== page" type="button"
-                                                x-on:click="currentPage = page; applyFilters(false); window.scrollTo({top: document.getElementById('tours-grid').offsetTop - 100, behavior: 'smooth'});"
-                                                class="min-w-[36px] h-9 px-2 flex items-center justify-center text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-md hover:bg-gray-50 hover:text-gray-900 transition-all shadow-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-1 dark:focus:ring-offset-gray-900"
-                                                x-text="page"></button>
+                            {{-- Numbers Segmented Capsule --}}
+                            <div class="flex items-center gap-1 p-0.5 bg-gray-50 dark:bg-gray-900/70 rounded-[3px] border border-gray-200/80 dark:border-gray-800">
+                                <template x-for="page in totalPages" :key="page">
+                                    <div>
+                                        {{-- Current Page --}}
+                                        <span x-show="currentPage === page"
+                                            class="min-w-[28px] h-6 px-1.5 flex items-center justify-center text-[10px] font-black tracking-wider text-white bg-brand-primary rounded-[2px] shadow-2xs ring-1 ring-brand-primary/25 cursor-default select-none"
+                                            x-text="page < 10 ? '0' + page : page">
                                         </span>
-                                    </template>
 
-                                    {{-- Next Page Link --}}
-                                    <button type="button"
-                                        x-on:click="if(currentPage &lt; totalPages) { currentPage++; applyFilters(false); window.scrollTo({top: document.getElementById('tours-grid').offsetTop - 100, behavior: 'smooth'}); }"
-                                        :disabled="currentPage === totalPages"
-                                        :class="{'text-gray-300 bg-gray-50 border-gray-100 cursor-not-allowed dark:bg-gray-800/50 dark:border-gray-700 dark:text-gray-600': currentPage === totalPages, 'text-gray-600 bg-white border-gray-200 hover:bg-brand-primary/10 hover:text-brand-primary hover:border-brand-primary/30 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-brand-primary/20 dark:hover:text-brand-primary dark:hover:border-brand-primary/50': currentPage &lt; totalPages}"
-                                        class="w-9 h-9 flex items-center justify-center border rounded-md transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-1 dark:focus:ring-offset-gray-900"
-                                        aria-label="{{ __('Next') }}">
-                                        <x-icon name="chevron-right-solid" class="w-4 h-4" />
-                                    </button>
-                                </span>
-
-                                {{-- Vertical Divider --}}
-                                <div class="h-8 w-px bg-gray-200 dark:bg-gray-700"></div>
-
-                                {{-- Go To Page Input --}}
-                                <div class="flex items-center gap-3">
-                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('Go to') }}</span>
-                                    <div class="relative flex items-center">
-                                        <input type="number" min="1" :max="totalPages" x-data="{ pageVal: currentPage }"
-                                            x-effect="pageVal = currentPage" x-model="pageVal"
-                                            x-on:keydown.enter="if(pageVal &gt;= 1 &amp;&amp; pageVal &lt;= totalPages) { currentPage = parseInt(pageVal); applyFilters(false); window.scrollTo({top: document.getElementById('tours-grid').offsetTop - 100, behavior: 'smooth'}); }"
-                                            class="w-16 h-9 pl-3 pr-8 text-sm font-medium text-center text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                            placeholder="#" />
-                                        <button type="button"
-                                            x-on:click="let inputPage = parseInt($el.previousElementSibling.value); if(inputPage &gt;= 1 &amp;&amp; inputPage &lt;= totalPages) { currentPage = inputPage; applyFilters(false); window.scrollTo({top: document.getElementById('tours-grid').offsetTop - 100, behavior: 'smooth'}); }"
-                                            class="absolute right-1 w-6 h-6 flex items-center justify-center text-gray-400 hover:text-brand-primary dark:hover:text-brand-primary bg-gray-50 hover:bg-brand-primary/10 dark:bg-gray-700 dark:hover:bg-brand-primary/20 rounded transition-colors"
-                                            title="{{ __('Go') }}">
-                                            <x-icon name="arrow-right" class="w-3.5 h-3.5" />
+                                        {{-- Inactive Page --}}
+                                        <button x-show="currentPage !== page" type="button"
+                                            x-on:click="currentPage = page; applyFilters(false); window.scrollTo({top: document.getElementById('tours-grid').offsetTop - 100, behavior: 'smooth'});"
+                                            class="min-w-[28px] h-6 px-1.5 flex items-center justify-center text-[10px] font-bold tracking-wider text-gray-600 dark:text-gray-300 bg-transparent hover:bg-white dark:hover:bg-gray-800 hover:text-brand-primary dark:hover:text-brand-primary rounded-[2px] transition-all duration-200 focus:outline-none"
+                                            x-text="page < 10 ? '0' + page : page">
                                         </button>
                                     </div>
+                                </template>
+                            </div>
+
+                            {{-- Next Page Button --}}
+                            <button type="button"
+                                x-on:click="if(currentPage < totalPages) { currentPage++; applyFilters(false); window.scrollTo({top: document.getElementById('tours-grid').offsetTop - 100, behavior: 'smooth'}); }"
+                                :disabled="currentPage === totalPages"
+                                :class="{'opacity-40 cursor-not-allowed bg-gray-50 dark:bg-gray-800/40 text-gray-400 border-gray-200 dark:border-gray-800': currentPage === totalPages, 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-brand-primary hover:border-brand-primary hover:text-white dark:hover:text-white shadow-2xs': currentPage < totalPages}"
+                                class="group inline-flex items-center gap-1 px-2.5 h-7 rounded-[3px] border font-bold text-[10px] uppercase tracking-wider transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-brand-primary"
+                                aria-label="{{ __('Next') }}">
+                                <span class="hidden xs:inline">{{ __('Next') }}</span>
+                                <x-icon name="arrow-right" class="w-3 h-3 transform group-hover:translate-x-0.5 transition-transform" />
+                            </button>
+
+                            {{-- Optional Go To Page Input when there are > 3 pages --}}
+                            <div x-show="totalPages > 3" class="hidden md:flex items-center gap-1.5 pl-2.5 border-l border-gray-200 dark:border-gray-800">
+                                <span class="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">{{ __('Go to') }}</span>
+                                <div class="relative flex items-center">
+                                    <input type="number" min="1" :max="totalPages" x-data="{ pageVal: currentPage }"
+                                        x-effect="pageVal = currentPage" x-model="pageVal"
+                                        x-on:keydown.enter="if(pageVal >= 1 && pageVal <= totalPages) { currentPage = parseInt(pageVal); applyFilters(false); window.scrollTo({top: document.getElementById('tours-grid').offsetTop - 100, behavior: 'smooth'}); }"
+                                        class="w-12 h-6 pl-1.5 pr-5 text-[10px] font-bold text-center text-gray-900 dark:text-white bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-[2px] shadow-2xs focus:ring-1 focus:ring-brand-primary focus:border-brand-primary transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                        placeholder="#" />
+                                    <button type="button"
+                                        x-on:click="let inputPage = parseInt($el.previousElementSibling.value); if(inputPage >= 1 && inputPage <= totalPages) { currentPage = inputPage; applyFilters(false); window.scrollTo({top: document.getElementById('tours-grid').offsetTop - 100, behavior: 'smooth'}); }"
+                                        class="absolute right-0.5 w-4 h-4 flex items-center justify-center text-gray-400 hover:text-brand-primary dark:hover:text-brand-primary rounded transition-colors"
+                                        title="{{ __('Go') }}">
+                                        <x-icon name="arrow-right" class="w-2.5 h-2.5" />
+                                    </button>
                                 </div>
                             </div>
                         </div>

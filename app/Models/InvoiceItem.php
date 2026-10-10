@@ -1,5 +1,4 @@
 <?php
-/* [NEW] [InvoiceItem.php](file:///d:/LOCALSERVER/laragon/www/ mwangwi-safaris/app/Models/InvoiceItem.php) */
 
 namespace App\Models;
 

@@ -55,6 +55,9 @@
 
 <body class="frontend-body bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased font-lora">
 
+    @hasSection('header')
+        @yield('header')
+    @else
     <!-- Navbar Wrapper to share state between nav and fixed drawer -->
     <header x-data="{ mobileMenuOpen: false, isSticky: false, navScrollY: 0 }"
         @scroll.window="isSticky = (window.pageYOffset > 150); navScrollY = window.pageYOffset" 
@@ -549,6 +552,7 @@
             </div>
         </div>
     </header>
+    @endif
 
     <!-- Main Content -->
     <main>

@@ -186,6 +186,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         $countries = \App\Models\Country::orderBy('name', 'asc')->get(['id', 'name']);
         $postCategories = \App\Models\PostCategory::where('is_active', true)->get(['name', 'slug']);
         $tourTags = \App\Models\TourTag::where('is_active', true)->orderBy('name', 'asc')->get(['name', 'slug']);
+        $tourCountries = \App\Livewire\Frontend\ToursBlock::editorCountryData();
 
         return view('livewire.admin.cms.page-editor', [
             'record' => $record,
@@ -198,7 +199,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
             'tourTypes' => $tourTypes,
             'tourTags' => $tourTags,
             'countries' => $countries,
-            'postCategories' => $postCategories
+            'postCategories' => $postCategories,
+            'tourCountries' => $tourCountries
         ]);
     })->name('visual-editor');
 

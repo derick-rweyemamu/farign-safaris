@@ -1,5 +1,4 @@
 <?php
-/* [MODIFY] [EstimationsList.php](file:///d:/LOCALSERVER/laragon/www/ mwangwi-safaris/app/Livewire/Estimations/EstimationsList.php) */
 
 namespace App\Livewire\Admin\Estimations;
 

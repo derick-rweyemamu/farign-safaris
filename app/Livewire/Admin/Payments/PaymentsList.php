@@ -1,5 +1,4 @@
 <?php
-/* [MODIFY] [PaymentsList.php](file:///d:/LOCALSERVER/laragon/www/ mwangwi-safaris/app/Livewire/Payments/PaymentsList.php) */
 
 namespace App\Livewire\Admin\Payments;
 

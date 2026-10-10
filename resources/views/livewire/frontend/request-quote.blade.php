@@ -1,7 +1,7 @@
 <div>
     <!-- Trigger Button -->
     <button wire:click="openQuoteModal"
-       class="w-full py-4 px-6 bg-brand-primary hover:bg-brand-primary-hover text-white dark:text-gray-950 text-center font-bold text-lg rounded-[3px] transition-all duration-300 shadow-lg shadow-brand-primary/20 hover:shadow-brand-primary/40 hover:-translate-y-0.5 flex items-center justify-center cursor-pointer">{{ __('Request a Quote') }}<x-icon name="arrow-right" class="w-5 h-5 ml-2" />
+       class="w-full py-4 px-6 bg-brand-primary hover:bg-brand-primary-hover text-white text-center font-bold text-lg rounded-[3px] transition-all duration-300 shadow-lg shadow-brand-primary/20 hover:shadow-brand-primary/40 hover:-translate-y-0.5 flex items-center justify-center cursor-pointer">{{ __('Request a Quote') }}<x-icon name="arrow-right" class="w-5 h-5 ml-2" />
     </button>
 
     <!-- Modal Backdrop & Window -->

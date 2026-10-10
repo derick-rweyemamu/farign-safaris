@@ -147,9 +147,31 @@ trait ParsesBuilderHtml
             $countryId = $node->getAttribute('data-country') ?: 'all';
             $tourTypeSlug = $node->getAttribute('data-tour-type') ?: 'all';
             $limit = $node->getAttribute('data-limit') ?: 6;
+            $heading = $node->getAttribute('data-heading') ?: null;
+            $headingAccent = $node->getAttribute('data-heading-accent') ?: null;
+            $subheading = $node->getAttribute('data-subheading') ?: null;
+            $layout = $node->getAttribute('data-layout') ?: 'auto';
             $rendered = \Illuminate\Support\Facades\Blade::render(
-                '@livewire("frontend.tours-block", ["categorySlug" => $categorySlug, "tourTypeSlug" => $tourTypeSlug, "countryId" => $countryId, "limit" => $limit])',
-                ['categorySlug' => $categorySlug, 'tourTypeSlug' => $tourTypeSlug, 'countryId' => $countryId, 'limit' => $limit]
+                '@livewire("frontend.tours-block", [
+                    "categorySlug" => $categorySlug,
+                    "tourTypeSlug" => $tourTypeSlug,
+                    "countryId" => $countryId,
+                    "limit" => $limit,
+                    "heading" => $heading,
+                    "headingAccent" => $headingAccent,
+                    "subheading" => $subheading,
+                    "layout" => $layout
+                ])',
+                [
+                    'categorySlug' => $categorySlug,
+                    'tourTypeSlug' => $tourTypeSlug,
+                    'countryId' => $countryId,
+                    'limit' => $limit,
+                    'heading' => $heading,
+                    'headingAccent' => $headingAccent,
+                    'subheading' => $subheading,
+                    'layout' => $layout
+                ]
             );
             $replaceNode($node, $rendered);
         }
@@ -624,7 +646,7 @@ trait ParsesBuilderHtml
                     $img = $dom->createElement('img');
                     $img->setAttribute('src', $imgUrl);
                     $img->setAttribute('alt', $this->title ?? 'Page Header');
-                    $img->setAttribute('class', 'absolute inset-0 w-full h-full object-cover opacity-50');
+                    $img->setAttribute('class', 'absolute inset-0 w-full h-full object-cover opacity-85');
                     $bgContainer->appendChild($img);
                 }
             }

@@ -50,16 +50,16 @@
 
         .btn-save {
             height: 34px; border-radius: 3px; border: none;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #455537, #354329);
             color: #fff; font-size: 13px; font-weight: 600;
             padding: 0 18px; cursor: pointer; display: inline-flex; align-items: center;
-            gap: 7px; transition: all .15s; box-shadow: 0 2px 8px rgba(99,102,241,.4);
+            gap: 7px; transition: all .15s; box-shadow: 0 2px 8px rgba(69, 85, 55, .4);
         }
-        .btn-save:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99,102,241,.5); }
+        .btn-save:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(69, 85, 55, .5); }
         .btn-save:disabled { opacity: .6; cursor: not-allowed; transform: none; }
 
         .lang-tab-btn:hover { color: #fff !important; }
-        .lang-tab-btn.active { background: #6366f1 !important; color: #fff !important; box-shadow: 0 1px 3px rgba(99,102,241,0.4); }
+        .lang-tab-btn.active { background: #455537 !important; color: #fff !important; box-shadow: 0 1px 3px rgba(69, 85, 55, 0.4); }
 
         .btn-back {
             height: 32px; border-radius: 3px; border: 1px solid #475569;
@@ -76,7 +76,7 @@
             display: inline-flex; align-items: center; justify-content: center;
             transition: all .15s; font-size: 14px;
         }
-        .device-btn:hover, .device-btn.active { background: #6366f1; border-color: #6366f1; color: #fff; }
+        .device-btn:hover, .device-btn.active { background: #455537; border-color: #455537; color: #fff; }
         .device-btn i { color: #cbd5e1; }
         .device-btn.active i, .device-btn:hover i { color: #fff; }
 
@@ -146,10 +146,10 @@
         .gjs-four-bg { background-color: #475569; }
         .gjs-color-main     { color: #e2e8f0; }
         .gjs-color-second   { color: #94a3b8; }
-        .gjs-color-active   { color: #6366f1; }
+        .gjs-color-active   { color: #CA9A2E; }
         
         /* Sidebar Button Overrides */
-        .gjs-pn-btn.gjs-pn-active { color: #fff !important; background: #6366f1 !important; box-shadow: 0 4px 12px rgba(99,102,241,0.3); }
+        .gjs-pn-btn.gjs-pn-active { color: #fff !important; background: #455537 !important; box-shadow: 0 4px 12px rgba(69,85,55,0.3); }
 
         /* General Icon Fix for GrapesJS UI */
         .gjs-pn-btn i, .gjs-pn-btn svg, .gjs-four-color, .gjs-toolbar i, .gjs-toolbar svg, .gjs-layer-vis, .gjs-layer-lock {
@@ -186,9 +186,9 @@
             gap: 8px !important;
             cursor: pointer;
         }
-        .gjs-block:hover { border-color: #6366f1; background: rgba(99,102,241,0.05); transform: translateY(-2px); }
+        .gjs-block:hover { border-color: #455537; background: rgba(69,85,55,0.15); transform: translateY(-2px); }
         .gjs-block__media { 
-            color: #6366f1; 
+            color: #CA9A2E; 
             line-height: 1; 
             display: flex; 
             align-items: center; 
@@ -200,22 +200,22 @@
             width: 32px !important;
             height: 32px !important;
             font-size: 32px !important;
-            fill: #6366f1 !important;
-            stroke: #6366f1 !important;
+            fill: #CA9A2E !important;
+            stroke: #CA9A2E !important;
             display: block;
         }
         /* Fix for layout column preview blocks (which use div borders instead of SVGs) */
         .gs-block-item__flex-row > div {
             border-style: solid !important;
-            border-color: #6366f1 !important;
+            border-color: #455537 !important;
         }
 
         .gjs-block__label { font-size: 10px !important; font-weight: 600 !important; color: #cbd5e1 !important; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; }
 
         .gjs-cv-canvas { background: #f8fafc; }
-        .gjs-toolbar { background: #1e293b; border: 1px solid #6366f1; border-radius: 3px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        .gjs-selected { outline: 3px solid #6366f1 !important; outline-offset: -3px; }
-        .gjs-hovered  { outline: 1px dashed #6366f1 !important; }
+        .gjs-toolbar { background: #1e293b; border: 1px solid #455537; border-radius: 3px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .gjs-selected { outline: 3px solid #455537 !important; outline-offset: -3px; }
+        .gjs-hovered  { outline: 1px dashed #455537 !important; }
 
         /* GrapesJS built-in RTE — hidden, we use panel-based TinyMCE instead */
         .gjs-rte-toolbar { display: none !important; }
@@ -229,7 +229,7 @@
             z-index: 9999;
             flex-direction: column;
             background: #1e293b;
-            border-top: 2px solid #6366f1;
+            border-top: 2px solid #455537;
             box-shadow: 0 -8px 32px rgba(0,0,0,0.5);
             animation: rteSlideUp 0.2s ease;
         }
@@ -249,17 +249,17 @@
             font-size: 12px; font-weight: 600; color: #94a3b8;
             display: flex; align-items: center; gap: 8px;
         }
-        #gjs-rte-header .rte-title i { color: #6366f1; }
-        #gjs-rte-header .rte-actions { display: flex; gap: 8px; }
+        #gjs-rte-header .rte-title i { color: #CA9A2E; }
+        #gjs-rte-actions { display: flex; gap: 8px; }
         #gjs-rte-apply {
             height: 30px; padding: 0 14px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #455537, #354329);
             border: none; border-radius: 3px;
             color: #fff; font-size: 12px; font-weight: 600;
             cursor: pointer; display: flex; align-items: center; gap: 6px;
             transition: all .15s;
         }
-        #gjs-rte-apply:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(99,102,241,.4); }
+        #gjs-rte-apply:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(69,85,55,.4); }
         #gjs-rte-cancel {
             height: 30px; padding: 0 12px;
             background: #334155; border: 1px solid #475569; border-radius: 3px;
@@ -321,7 +321,7 @@
                         data-locale="{{ $code }}"
                         id="lang-btn-{{ $code }}"
                         onclick="switchLocale('{{ $code }}')"
-                        style="padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; border: none; cursor: pointer; background: {{ $code === 'en' ? '#6366f1' : 'transparent' }}; color: {{ $code === 'en' ? '#fff' : '#94a3b8' }}; transition: all .15s;">
+                        style="padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600; border: none; cursor: pointer; background: {{ $code === 'en' ? '#455537' : 'transparent' }}; color: {{ $code === 'en' ? '#fff' : '#94a3b8' }}; transition: all .15s;">
                     {{ $label }}
                 </button>
             @endforeach
@@ -390,7 +390,8 @@
     window.TOUR_TAGS = @json($tourTags ?? []);
     window.COUNTRIES = @json($countries ?? []);
     window.POST_CATEGORIES = @json($postCategories ?? []);
-    window.APP_CSS_URL = '{{ Vite::asset('resources/themes/frontend/assets/css/app.css') }}';
+    window.TOUR_COUNTRIES = @json($tourCountries ?? []);
+    window.APP_CSS_URL = '{{ Vite::asset('resources/css/app.css') }}';
 
     // Editor Translations Dictionary
     window.EDITOR_TRANSLATIONS = {

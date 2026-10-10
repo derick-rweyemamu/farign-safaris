@@ -29,40 +29,40 @@
 }
 
 :root {
-  --gold: #fbb158;
-  --gold-light: #FDF4E7;
-  --gold-dark: #e09f4f;
-  --earth: #223D55;
-  --earth-mid: #2C4B68;
+  --gold: #CA9A2E;
+  --gold-light: #F7E8C6;
+  --gold-dark: #967018;
+  --earth: #2D3A2A;
+  --earth-mid: #3E4F39;
   --earth-light: #615547;
   --cream: #FEFEFE;
   --cream-dark: #F5EFE6;
   --cream-warm: #FDF4E7;
   --white: #FFFFFF;
-  --text-dark: #223D55;
-  --text-mid: #615547;
+  --text-dark: #1E271C;
+  --text-mid: #4A5646;
   --text-muted: #615547;
-  --green-safari: #223D55;
-  --green-light: #fbb158;
+  --green-safari: #2D3A2A;
+  --green-light: #455537;
   --font-display: 'Outfit', sans-serif;
   --font-serif: 'Outfit', sans-serif;
   --font-body: 'DM Sans', sans-serif;
-  --shadow-warm: 0 8px 40px rgba(34, 61, 85, 0.13);
-  --shadow-gold: 0 4px 20px rgba(251, 177, 88, 0.25);
-  --brand-primary: #fbb158;
-  --brand-primary-hover: #e09f4f;
-  --brand-secondary: #223D55;
-  --brand-secondary-hover: #1A2F42;
+  --shadow-warm: 0 8px 40px rgba(45, 58, 42, 0.13);
+  --shadow-gold: 0 4px 20px rgba(202, 154, 46, 0.25);
+  --brand-primary: #455537;
+  --brand-primary-hover: #354329;
+  --brand-secondary: #2D3A2A;
+  --brand-secondary-hover: #1E271C;
   --brand-stone: #615547;
-  --brand-light: #FDF4E7;
-  --brand-light-hover: #FBEBD4;
+  --brand-light: #EDF2EA;
+  --brand-light-hover: #E2EBD9;
   --font-brand: 'Outfit', sans-serif;
   --font-brand-secondary: 'DM Sans', sans-serif;
 
   /* Sidebar Defaults */
   --color-sidebar: #FFFFFF;
-  --color-sidebar-hover: #FDF4E7;
-  --color-sidebar-active: #fbb158;
+  --color-sidebar-hover: #EDF2EA;
+  --color-sidebar-active: #455537;
   --sidebar-border: #F5EFE6;
   --sidebar-text: #223D55;
   --sidebar-muted: #615547;
@@ -2585,33 +2585,33 @@ section.hero iframe {
 ───────────────────────────────────────────────────────────────────────────── */
 
 /* Headings */
-.frontend-body h1:not(.zanzibar-block *),
-.frontend-body h2:not(.zanzibar-block *),
-.frontend-body h3:not(.zanzibar-block *),
-.frontend-body h4:not(.zanzibar-block *),
-.frontend-body h5:not(.zanzibar-block *),
-.frontend-body h6:not(.zanzibar-block *),
-.frontend-body .prose h1:not(.zanzibar-block *),
-.frontend-body .prose h2:not(.zanzibar-block *),
-.frontend-body .prose h3:not(.zanzibar-block *),
-.frontend-body .prose h4:not(.zanzibar-block *),
-.frontend-body .prose h5:not(.zanzibar-block *),
-.frontend-body .prose h6:not(.zanzibar-block *) {
+.frontend-body h1:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h2:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h3:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h4:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h5:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body h6:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h1:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h2:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h3:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h4:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h5:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose h6:not(.zanzibar-block *):not(.safaris-about-block *) {
   font-family: 'Playfair Display', Georgia, serif !important;
 }
 
 /* Body text */
-.frontend-body p:not(.zanzibar-block *),
-.frontend-body ul:not(.zanzibar-block *),
-.frontend-body ol:not(.zanzibar-block *),
-.frontend-body li:not(.zanzibar-block *),
-.frontend-body span:not(.zanzibar-block *),
-.frontend-body td:not(.zanzibar-block *),
-.frontend-body .prose p:not(.zanzibar-block *),
-.frontend-body .prose ul:not(.zanzibar-block *),
-.frontend-body .prose ol:not(.zanzibar-block *),
-.frontend-body .prose li:not(.zanzibar-block *),
-.frontend-body .prose span:not(.zanzibar-block *) {
+.frontend-body p:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body ul:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body ol:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body li:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body span:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body td:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose p:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose ul:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose ol:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose li:not(.zanzibar-block *):not(.safaris-about-block *),
+.frontend-body .prose span:not(.zanzibar-block *):not(.safaris-about-block *) {
   font-size: 15px !important;
   font-family: 'Lora', Georgia, serif !important;
 }

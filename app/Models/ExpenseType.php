@@ -1,5 +1,4 @@
 <?php
-/* [NEW] [ExpenseType.php](file:///d:/LOCALSERVER/laragon/www/ mwangwi-safaris/app/Models/ExpenseType.php) */
 
 namespace App\Models;
 

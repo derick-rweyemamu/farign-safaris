@@ -1,5 +1,4 @@
 <?php
-/* [NEW] [Payment.php](file:///d:/LOCALSERVER/laragon/www/ mwangwi-safaris/app/Models/Payment.php) */
 
 namespace App\Models;
 
