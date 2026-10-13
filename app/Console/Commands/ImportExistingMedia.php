@@ -40,9 +40,9 @@ class ImportExistingMedia extends Command
             }
 
             // Skip Spatie numeric folders (e.g. storage/app/public/1, storage/app/public/2, etc.)
-            // Or livewire-tmp folder
+            // Or livewire-tmp or flags folder
             $firstSegment = explode('/', $relativePath)[0] ?? '';
-            if (is_numeric($firstSegment) || $firstSegment === 'livewire-tmp') {
+            if (is_numeric($firstSegment) || $firstSegment === 'livewire-tmp' || $firstSegment === 'flags') {
                 $skippedCount++;
                 continue;
             }
@@ -58,8 +58,11 @@ class ImportExistingMedia extends Command
             }
 
             try {
+                $cleanName = ucwords(str_replace(['-', '_'], ' ', pathinfo($filename, PATHINFO_FILENAME)));
                 $holder->addMedia($file->getPathname())
                     ->preservingOriginal()
+                    ->usingName($cleanName)
+                    ->usingFileName($filename)
                     ->toMediaCollection('default');
 
                 $importedCount++;

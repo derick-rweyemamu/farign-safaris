@@ -79,7 +79,23 @@ class ManageAttractions extends Component
         ];
 
         $enTitle = $this->title['en'] ?? reset($this->title);
-        $data['slug'] = Str::slug($enTitle);
+        $baseSlug = Str::slug($enTitle);
+        if (empty($baseSlug)) {
+            $baseSlug = 'attraction';
+        }
+
+        $slug = $baseSlug;
+        $counter = 1;
+
+        while (Attraction::withTrashed()
+            ->where('slug', $slug)
+            ->when($this->isEdit && $this->attraction_id, fn($q) => $q->where('id', '!=', $this->attraction_id))
+            ->exists()) {
+            $slug = "{$baseSlug}-{$counter}";
+            $counter++;
+        }
+
+        $data['slug'] = $slug;
 
         if ($this->featured_image) {
             if (is_string($this->featured_image)) {

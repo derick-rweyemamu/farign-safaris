@@ -115,4 +115,18 @@ class Destination extends Model implements HasMedia
         return $this->hasMany(Attraction::class)->orderBy('sort_order');
     }
 
+    protected static function booted()
+    {
+        static::deleting(function ($destination) {
+            if ($destination->isForceDeleting()) {
+                $destination->attractions()->forceDelete();
+            } else {
+                $destination->attractions()->delete();
+            }
+        });
+
+        static::restoring(function ($destination) {
+            $destination->attractions()->restore();
+        });
+    }
 }

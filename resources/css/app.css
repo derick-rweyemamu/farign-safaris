@@ -2724,8 +2724,8 @@ section.hero iframe {
 }
 
 .hero-tge-left-col {
-  flex: 1 1 50% !important;
-  max-width: 560px !important;
+  flex: 1 1 55% !important;
+  max-width: 650px !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: flex-start !important;
@@ -2772,19 +2772,38 @@ section.hero iframe {
 section.hero h1.hero-tge-title,
 h1.hero-tge-title,
 .hero-tge-title {
-  font-family: 'Montserrat', sans-serif !important;
-  font-size: clamp(2.2rem, 4vw, 3.4rem) !important;
-  font-weight: 900 !important;
-  line-height: 1.1 !important;
-  letter-spacing: 0.04em !important;
-  color: transparent !important;
-  -webkit-text-fill-color: transparent !important;
-  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.95) !important;
-  text-stroke: 2px rgba(255, 255, 255, 0.95) !important;
-  text-transform: uppercase !important;
-  margin-bottom: 1rem !important;
-  text-shadow: none !important;
+  font-family: 'Baskervville', 'Playfair Display', Georgia, serif !important;
+  font-size: clamp(3rem, 5.8vw, 4.8rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.015em !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-text-stroke: 0 !important;
+  text-stroke: 0 !important;
+  text-transform: none !important;
+  margin-bottom: 1.25rem !important;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
   white-space: normal !important;
+}
+
+.hero .hero-tge-title em,
+.hero .hero-tge-title i,
+section.hero h1.hero-tge-title em,
+section.hero h1.hero-tge-title i,
+.hero-tge-title em,
+.hero-tge-title i,
+.hero-tge-title .accent,
+.hero-tge-title span.accent {
+  font-family: 'Baskervville', 'Playfair Display', Georgia, serif !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  color: #c8b49a !important;
+  -webkit-text-fill-color: #c8b49a !important;
+  -webkit-text-stroke: 0 !important;
+  text-stroke: 0 !important;
+  display: inline-block !important;
+  white-space: nowrap !important;
 }
 
 .hero-tge-sub {
@@ -2947,8 +2966,12 @@ h1.hero-tge-title,
   }
 
   .hero-tge-title {
-    font-size: clamp(2rem, 8vw, 3rem) !important;
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.9) !important;
+    font-size: clamp(2.4rem, 8.5vw, 3.4rem) !important;
+    line-height: 1.1 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-text-stroke: 0 !important;
+    text-stroke: 0 !important;
   }
 
   .hero-tge-feature-cards {
@@ -3041,35 +3064,66 @@ h1.hero-tge-title,
 ───────────────────────────────────────────────────────────────────────────── */
 
 /* Headings */
-.frontend-body h1:not(.zanzibar-block *):not(.safaris-about-block *):not(.hero-tge-title),
-.frontend-body h2:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body h3:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body h4:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body h5:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body h6:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose h1:not(.zanzibar-block *):not(.safaris-about-block *):not(.hero-tge-title),
-.frontend-body .prose h2:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose h3:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose h4:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose h5:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose h6:not(.zanzibar-block *):not(.safaris-about-block *) {
+.frontend-body h1:not(.zanzibar-block *):not(.safaris-about-block *):not(.hero-tge-title):not(.request-section *),
+.frontend-body h2:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *),
+.frontend-body h3:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *),
+.frontend-body h4:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *),
+.frontend-body h5:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *),
+.frontend-body h6:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *),
+.frontend-body .prose h1:not(.zanzibar-block *):not(.safaris-about-block *):not(.hero-tge-title):not(.request-section *),
+.frontend-body .prose h2:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *),
+.frontend-body .prose h3:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *),
+.frontend-body .prose h4:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *),
+.frontend-body .prose h5:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *),
+.frontend-body .prose h6:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *) {
   font-family: 'Playfair Display', Georgia, serif !important;
 }
 
 /* Body text */
-.frontend-body p:not(.zanzibar-block *):not(.safaris-about-block *):not(.hero-tge-sub):not(.hero-tge-quote),
-.frontend-body ul:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body ol:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body li:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body span:not(.zanzibar-block *):not(.safaris-about-block *):not(.hero-tge-card span),
-.frontend-body td:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose p:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose ul:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose ol:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose li:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose span:not(.zanzibar-block *):not(.safaris-about-block *) {
+.frontend-body p:not(.zanzibar-block *):not(.safaris-about-block *):not(.hero-tge-sub):not(.hero-tge-quote):not(.request-section *):not(#floating-whatsapp *),
+.frontend-body ul:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *):not(#floating-whatsapp *),
+.frontend-body ol:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *):not(#floating-whatsapp *),
+.frontend-body li:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *):not(#floating-whatsapp *),
+.frontend-body span:not(.zanzibar-block *):not(.safaris-about-block *):not(.hero-tge-card span):not(.request-section *):not(#floating-whatsapp *),
+.frontend-body td:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *):not(#floating-whatsapp *),
+.frontend-body .prose p:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *):not(#floating-whatsapp *),
+.frontend-body .prose ul:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *):not(#floating-whatsapp *),
+.frontend-body .prose ol:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *):not(#floating-whatsapp *),
+.frontend-body .prose li:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *):not(#floating-whatsapp *),
+.frontend-body .prose span:not(.zanzibar-block *):not(.safaris-about-block *):not(.request-section *):not(#floating-whatsapp *) {
   font-size: 15px !important;
   font-family: 'Lora', Georgia, serif !important;
+}
+
+#floating-whatsapp,
+#floating-whatsapp * {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* Request Section / Start Planning block typography */
+.frontend-body .request-section h2,
+.frontend-body .request-section .request-heading {
+  font-family: 'Plus Jakarta Sans', 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-weight: 800 !important;
+  font-size: clamp(2.5rem, 4.5vw, 3.4rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.03em !important;
+  color: #1a1a1a !important;
+}
+
+.frontend-body .request-section h2 *,
+.frontend-body .request-section .request-heading * {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: 800 !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+}
+
+.frontend-body .request-section h2 span.wonders-highlight,
+.frontend-body .request-section h2 span[style*="c05621"],
+.frontend-body .request-section h2 span.text-\[\#c05621\] {
+  color: #c05621 !important;
 }
 
 /* ── Nav / Header Exception — override body 15px back to 12px ── */

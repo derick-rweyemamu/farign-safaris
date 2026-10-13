@@ -32,7 +32,7 @@ try {
     // Canvas styles — inject JKI brand into the editor iframe
     canvas: {
         styles: [
-            'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Indie+Flower&family=Instrument+Sans:wght@400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap',
+            'https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Indie+Flower&family=Instrument+Sans:wght@400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap',
             '/css/pagebuilder.css',
             window.APP_CSS_URL || ''
         ].filter(Boolean),
@@ -97,6 +97,8 @@ if (editor && editor.Commands) {
 
                     if (opts.onSelect && typeof opts.onSelect === 'function') {
                         opts.onSelect(asset);
+                    } else if (opts.select && typeof opts.select === 'function') {
+                        opts.select(asset, true);
                     } else if (target) {
                         const isImg = (target.is && (target.is('image') || target.is('video'))) || target.get('tagName') === 'img';
                         if (isImg && typeof target.set === 'function') {
@@ -109,6 +111,8 @@ if (editor && editor.Commands) {
 
                     if (opts.onClose && typeof opts.onClose === 'function') {
                         opts.onClose();
+                    } else if (opts.close && typeof opts.close === 'function') {
+                        opts.close();
                     }
 
                     window.removeEventListener('media-picker-chosen', handler);
@@ -117,15 +121,17 @@ if (editor && editor.Commands) {
 
             window.addEventListener('media-picker-chosen', handler);
 
+            const filterType = (opts.types && opts.types.includes('video')) || opts.type === 'video' ? 'video' : 'image';
+
             if (window.Livewire) {
                 window.Livewire.dispatch('open-media-picker', {
                     callbackId: callbackId,
-                    filterType: 'image',
+                    filterType: filterType,
                     multiple: false
                 });
             } else {
                 window.dispatchEvent(new CustomEvent('open-media-picker', {
-                    detail: { callbackId: callbackId, filterType: 'image', multiple: false }
+                    detail: { callbackId: callbackId, filterType: filterType, multiple: false }
                 }));
             }
         }
@@ -521,7 +527,7 @@ editor.on('load', () => {
                 content_css: [
                     document.documentElement.classList.contains('dark') ? 'dark' : 'default',
                     ...Array.from(document.querySelectorAll('link[rel="stylesheet"]')).map(link => link.href),
-                    'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Indie+Flower&family=Instrument+Sans:wght@400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap',
+                    'https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Indie+Flower&family=Instrument+Sans:wght@400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap',
                     '/css/pagebuilder.css',
                     window.APP_CSS_URL || ''
                 ].filter(Boolean),
@@ -687,6 +693,7 @@ editor.on('load', () => {
     const fontProp = sm.getProperty('typography', 'font-family');
     if (fontProp) {
         if (typeof fontProp.addOption === 'function') {
+            fontProp.addOption({ id: 'Baskervville, serif', label: 'Baskervville' });
             fontProp.addOption({ id: 'Lora, serif', label: 'Lora' });
             fontProp.addOption({ id: '"Playfair Display", serif', label: 'Playfair Display' });
             fontProp.addOption({ id: 'Jost, sans-serif', label: 'Jost' });
@@ -695,6 +702,7 @@ editor.on('load', () => {
             fontProp.addOption({ id: 'Montserrat, sans-serif', label: 'Montserrat' });
         } else {
             const list = fontProp.get('options') || fontProp.get('list') || [];
+            list.push({ value: 'Baskervville, serif', name: 'Baskervville', id: 'Baskervville, serif', label: 'Baskervville' });
             list.push({ value: 'Lora, serif', name: 'Lora', id: 'Lora, serif', label: 'Lora' });
             list.push({ value: '"Playfair Display", serif', name: 'Playfair Display', id: '"Playfair Display", serif', label: 'Playfair Display' });
             list.push({ value: 'Jost, sans-serif', name: 'Jost', id: 'Jost, sans-serif', label: 'Jost' });
@@ -773,27 +781,60 @@ editor.Traits.addType('multiselect', {
 editor.Traits.addType('media_picker', {
     createInput({ trait }) {
         const el = document.createElement('div');
+        const traitName = trait.get('name') || '';
+        const isVideo = traitName.toLowerCase().includes('video');
+        const placeholder = isVideo ? 'Video URL or pick from media library...' : 'Image URL or pick from media library...';
+        
         el.innerHTML = `
-            <div style="display:flex; gap:5px;">
-                <input type="text" class="trait-input" style="flex:1; width:100%; color:#fff; background:rgba(0,0,0,0.2); border:1px solid #475569; padding:4px; border-radius:3px; font-size:12px;">
-                <button class="trait-btn" type="button" style="background:#475569; border:none; border-radius:3px; color:#fff; cursor:pointer; padding:4px 8px;"><i class="fa fa-image"></i></button>
+            <div style="display:flex; gap:6px; align-items:center; width:100%;">
+                <input type="text" class="trait-input" placeholder="${placeholder}" style="flex:1; min-width:0; color:#fff; background:rgba(0,0,0,0.25); border:1px solid #475569; padding:6px 8px; border-radius:4px; font-size:12px;">
+                <button class="trait-btn" type="button" title="Choose from Media Library" style="background:#2563eb; border:none; border-radius:4px; color:#fff; cursor:pointer; padding:6px 10px; font-size:11px; font-weight:600; white-space:nowrap; display:inline-flex; align-items:center; gap:4px; flex-shrink:0;">
+                    <i class="fa fa-folder-open"></i> Browse
+                </button>
             </div>
         `;
         const input = el.querySelector('.trait-input');
         const btn = el.querySelector('.trait-btn');
-        
-        input.addEventListener('change', () => trait.set('value', input.value));
-        
+
+        const updateVal = (val) => {
+            input.value = val;
+            trait.set('value', val);
+            const target = trait.target || editor.getSelected();
+            if (target && target.addAttributes) {
+                target.addAttributes({ [traitName]: val });
+            }
+        };
+
+        input.addEventListener('change', () => updateVal(input.value));
+        input.addEventListener('input', () => updateVal(input.value));
+
         btn.addEventListener('click', () => {
-            editor.AssetManager.open({
-                select(asset, complete) {
-                    input.value = asset.getSrc();
-                    trait.set('value', input.value);
-                    if (complete) editor.AssetManager.close();
+            const callbackId = 'media_picker_' + Math.random().toString(36).substring(2, 9);
+            const handler = (event) => {
+                const detail = Array.isArray(event.detail) ? event.detail[0] : event.detail;
+                if (detail && detail.callbackId === callbackId) {
+                    const mediaUrl = detail.url;
+                    if (mediaUrl) {
+                        updateVal(mediaUrl);
+                    }
+                    window.removeEventListener('media-picker-chosen', handler);
                 }
-            });
+            };
+            window.addEventListener('media-picker-chosen', handler);
+
+            if (window.Livewire) {
+                window.Livewire.dispatch('open-media-picker', {
+                    callbackId: callbackId,
+                    filterType: isVideo ? 'video' : 'image',
+                    multiple: false
+                });
+            } else {
+                window.dispatchEvent(new CustomEvent('open-media-picker', {
+                    detail: { callbackId: callbackId, filterType: isVideo ? 'video' : 'image', multiple: false }
+                }));
+            }
         });
-        
+
         return el;
     },
     onUpdate({ elInput, trait }) {
@@ -852,16 +893,27 @@ editor.DomComponents.addType('explore-card', {
 
 // Register Safaris Hero Component
 editor.DomComponents.addType('safaris-hero-component', {
+    isComponent(el) {
+        if (!el || !el.classList) return false;
+        if (el.classList.contains('hero') && (el.tagName === 'SECTION' || el.id === 'home' || (el.getAttribute && el.getAttribute('data-gjs-type') === 'safaris-hero-component'))) {
+            return { type: 'safaris-hero-component' };
+        }
+        return false;
+    },
     model: {
         defaults: {
             tagName: 'section',
+            name: 'Hero Section',
+            droppable: true,
             attributes: {
                 class: 'hero',
                 id: 'home',
+                'data-gjs-type': 'safaris-hero-component',
                 'data-bg-type': 'image',
                 'data-bg-image': 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80',
                 'data-bg-video': '',
                 'data-bg-video-url': '',
+                'data-overlay-opacity': '0.4',
             },
             traits: [
                 {
@@ -869,9 +921,9 @@ editor.DomComponents.addType('safaris-hero-component', {
                     name: 'data-bg-type',
                     label: 'Background Type',
                     options: [
-                        { value: 'image', name: 'Image' },
-                        { value: 'video_upload', name: 'Uploaded Video' },
-                        { value: 'video_url', name: 'External Video URL' }
+                        { value: 'image', name: 'Background Image' },
+                        { value: 'video_url', name: 'Video URL (YouTube / MP4)' },
+                        { value: 'video_upload', name: 'Uploaded Video (Media Library)' }
                     ]
                 },
                 {
@@ -880,25 +932,38 @@ editor.DomComponents.addType('safaris-hero-component', {
                     label: 'Background Image'
                 },
                 {
+                    type: 'text',
+                    name: 'data-bg-video-url',
+                    label: 'Video URL (YouTube or MP4)',
+                    placeholder: 'https://www.youtube.com/watch?v=... or .mp4'
+                },
+                {
                     type: 'media_picker',
                     name: 'data-bg-video',
                     label: 'Uploaded Video (MP4)'
                 },
                 {
-                    type: 'text',
-                    name: 'data-bg-video-url',
-                    label: 'Video URL (Direct MP4 link)'
+                    type: 'select',
+                    name: 'data-overlay-opacity',
+                    label: 'Dark Overlay',
+                    options: [
+                        { value: '0', name: 'None (0%)' },
+                        { value: '0.2', name: 'Light (20%)' },
+                        { value: '0.4', name: 'Standard (40%)' },
+                        { value: '0.6', name: 'Dark (60%)' },
+                        { value: '0.8', name: 'Heavy (80%)' }
+                    ]
                 }
             ],
             components: `
-                <div class="hero-bg-container" data-gjs-locked="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+                <div class="hero-bg-container" data-gjs-locked="true" data-gjs-selectable="false" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
                     <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80')"></div>
                 </div>
                 <div class="hero-content-tge" style="position: relative; z-index: 10;">
                     <div class="hero-tge-layout">
                         <div class="hero-tge-main-row">
                             <div class="hero-tge-left-col">
-                                <h1 class="hero-tge-title">DISCOVER TANZANIA</h1>
+                                <h1 class="hero-tge-title">Begin Your<br><em>African Story.</em></h1>
                                 <p class="hero-tge-sub">Uncover the magic of Tanzania's wilderness,<br>culture, and adventure.</p>
                             </div>
                             <div class="hero-tge-right-col">
@@ -940,48 +1005,62 @@ editor.DomComponents.addType('safaris-hero-component', {
             `
         },
         init() {
-            this.on('change:attributes:data-bg-type change:attributes:data-bg-image change:attributes:data-bg-video change:attributes:data-bg-video-url', this.updateBackground);
-            setTimeout(() => this.updateBackground(), 50);
-        },
-        updateBackground() {
-            const bgType = this.getAttributes()['data-bg-type'] || 'image';
-            const bgImage = this.getAttributes()['data-bg-image'] || '';
-            const bgVideo = this.getAttributes()['data-bg-video'] || '';
-            const bgVideoUrl = this.getAttributes()['data-bg-video-url'] || '';
-            
-            const bgContainer = this.components().models.find(m => m.getClasses().includes('hero-bg-container'));
-            if (!bgContainer) return;
-            
-            // Enforce overflow hidden on the container to clip scaled videos
-            bgContainer.addStyle({ overflow: 'hidden' });
+            this.on('change:attributes:data-bg-type change:attributes:data-bg-image change:attributes:data-bg-video change:attributes:data-bg-video-url change:attributes:data-overlay-opacity', this.updateBackground);
 
-            let comps = [];
-            
-            if (bgType === 'image') {
-                comps = [
-                    {
-                        tagName: 'div',
-                        style: {
-                            'background-image': `url('${bgImage}')`,
-                            'background-size': 'cover',
-                            'background-position': 'center',
-                            'width': '100%',
-                            'height': '100%',
-                            'position': 'absolute',
-                            'inset': '0'
-                        },
-                        attributes: {
-                            class: 'hero-bg'
+            setTimeout(() => {
+                const attrs = this.getAttributes() || {};
+                if (!attrs['data-bg-image']) {
+                    const bgEl = (this.find && this.find('.hero-bg')[0]);
+                    if (bgEl) {
+                        const style = bgEl.getStyle() || {};
+                        const bgImg = style['background-image'] || '';
+                        const match = bgImg.match(/url\(['"]?(.*?)['"]?\)/);
+                        if (match && match[1]) {
+                            this.addAttributes({ 'data-bg-image': match[1] });
                         }
                     }
-                ];
-            } else if ((bgType === 'video_upload' && bgVideo) || (bgType === 'video_url' && bgVideoUrl)) {
-                const url = bgType === 'video_upload' ? bgVideo : bgVideoUrl;
-                
-                // Robust YouTube ID Extractor (handles watch, youtu.be, shorts, live, embed)
-                const ytMatch = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|live\/|watch\?v=|\&v=)([^#\&\?]*).*/);
+                }
+                this.updateBackground();
+            }, 80);
+        },
+        updateBackground() {
+            const attrs = this.getAttributes() || {};
+            const bgType = attrs['data-bg-type'] || 'image';
+            const bgImage = attrs['data-bg-image'] || '';
+            const bgVideo = attrs['data-bg-video'] || '';
+            const bgVideoUrl = attrs['data-bg-video-url'] || '';
+            const overlayOpacity = attrs['data-overlay-opacity'] || '0.4';
+
+            let bgContainer = (this.find && this.find('.hero-bg-container')[0]) ||
+                              this.components().models.find(m => m.getClasses && m.getClasses().includes('hero-bg-container'));
+
+            if (!bgContainer) {
+                const existingBg = (this.find && this.find('.hero-bg')[0]);
+                if (existingBg && existingBg.parent && existingBg.parent()) {
+                    bgContainer = existingBg.parent();
+                } else {
+                    bgContainer = this.components().add({
+                        tagName: 'div',
+                        attributes: { class: 'hero-bg-container', 'data-gjs-locked': 'true', 'data-gjs-selectable': 'false' },
+                        style: { position: 'absolute', top: '0', left: '0', width: '100%', height: '100%', 'z-index': '1', overflow: 'hidden' }
+                    }, { at: 0 });
+                }
+            }
+
+            if (!bgContainer) return;
+            bgContainer.addStyle({ overflow: 'hidden', position: 'absolute', top: '0', left: '0', width: '100%', height: '100%', 'z-index': '1' });
+
+            let comps = [];
+
+            const isVideoMode = bgType === 'video_url' || bgType === 'video_upload' || (!bgImage && (bgVideoUrl || bgVideo));
+
+            if (isVideoMode) {
+                const url = bgType === 'video_upload' ? (bgVideo || bgVideoUrl) : (bgVideoUrl || bgVideo);
+
+                // Robust YouTube ID Extractor
+                const ytMatch = url ? url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|live\/|watch\?v=|\&v=)([^#\&\?]*).*/) : null;
                 const ytId = (ytMatch && ytMatch[2].length === 11) ? ytMatch[2] : null;
-                
+
                 if (ytId) {
                     comps = [
                         {
@@ -990,12 +1069,14 @@ editor.DomComponents.addType('safaris-hero-component', {
                                 'position': 'absolute',
                                 'top': '50%',
                                 'left': '50%',
-                                'width': '150vw',
-                                'height': '150vh',
-                                'transform': 'translate(-50%, -50%)',
+                                'width': 'max(100vw, calc(100vh * (16 / 9)))',
+                                'height': 'max(100vh, calc(100vw * (9 / 16)))',
+                                'transform': 'translate(-50%, -50%) scale(1.25)',
                                 'pointer-events': 'none',
-                                'min-width': '100%',
-                                'min-height': '100%'
+                                'min-width': '100vw',
+                                'min-height': '100vh',
+                                'border': 'none',
+                                'z-index': '1'
                             },
                             attributes: {
                                 class: 'hero-bg-video',
@@ -1009,7 +1090,7 @@ editor.DomComponents.addType('safaris-hero-component', {
                             style: {
                                 'position': 'absolute',
                                 'inset': '0',
-                                'background': 'rgba(0,0,0,0.4)',
+                                'background': `rgba(0,0,0,${overlayOpacity})`,
                                 'z-index': '2'
                             },
                             attributes: {
@@ -1017,7 +1098,7 @@ editor.DomComponents.addType('safaris-hero-component', {
                             }
                         }
                     ];
-                } else {
+                } else if (url) {
                     // Standard MP4 Video
                     comps = [
                         {
@@ -1029,14 +1110,16 @@ editor.DomComponents.addType('safaris-hero-component', {
                                 'width': '100%',
                                 'height': '100%',
                                 'object-fit': 'cover',
-                                'pointer-events': 'none'
+                                'pointer-events': 'none',
+                                'z-index': '1'
                             },
                             attributes: {
                                 class: 'hero-bg-video',
                                 autoplay: 'autoplay',
                                 loop: 'loop',
                                 muted: 'muted',
-                                playsinline: 'playsinline'
+                                playsinline: 'playsinline',
+                                src: url
                             },
                             components: [
                                 {
@@ -1053,7 +1136,7 @@ editor.DomComponents.addType('safaris-hero-component', {
                             style: {
                                 'position': 'absolute',
                                 'inset': '0',
-                                'background': 'rgba(0,0,0,0.4)',
+                                'background': `rgba(0,0,0,${overlayOpacity})`,
                                 'z-index': '2'
                             },
                             attributes: {
@@ -1062,26 +1145,42 @@ editor.DomComponents.addType('safaris-hero-component', {
                         }
                     ];
                 }
-            } else {
+            }
+
+            if (comps.length === 0) {
+                const finalImg = bgImage || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80';
                 comps = [
                     {
                         tagName: 'div',
                         style: {
-                            'background-image': "url('')",
+                            'background-image': `url('${finalImg}')`,
                             'background-size': 'cover',
                             'background-position': 'center',
                             'width': '100%',
                             'height': '100%',
                             'position': 'absolute',
-                            'inset': '0'
+                            'inset': '0',
+                            'z-index': '1'
                         },
                         attributes: {
                             class: 'hero-bg'
                         }
+                    },
+                    {
+                        tagName: 'div',
+                        style: {
+                            'position': 'absolute',
+                            'inset': '0',
+                            'background': `rgba(0,0,0,${overlayOpacity})`,
+                            'z-index': '2'
+                        },
+                        attributes: {
+                            class: 'hero-bg-overlay'
+                        }
                     }
                 ];
             }
-            
+
             bgContainer.components(comps);
         }
     }
@@ -1185,6 +1284,326 @@ if (tm && typeof tm.addType === 'function') {
     });
 }
 
+// Register custom ordered-multiselect trait type with drag-and-drop & Up/Down reordering
+const registerOrderedMultiselectTrait = () => {
+    const handler = {
+        createInput({ trait, component }) {
+            const container = document.createElement('div');
+            container.className = 'gjs-ordered-multiselect-container';
+            container.style.cssText = 'width: 100%; box-sizing: border-box; font-family: sans-serif;';
+
+            const options = trait.get('options') || [];
+            const getComp = () => trait.target || component || (editor.getSelected && editor.getSelected());
+
+            // Read current attribute value
+            const getInitialValues = () => {
+                const comp = getComp();
+                const raw = (comp ? comp.getAttributes()[trait.get('name')] : trait.get('value')) || 'all';
+                if (raw === 'all' || !raw.trim()) return ['all'];
+                return raw.split(',').map(s => s.trim()).filter(Boolean);
+            };
+
+            let orderedValues = getInitialValues();
+
+            // 1. Order Management Section (Header & Ordered list)
+            const orderSection = document.createElement('div');
+            orderSection.style.cssText = 'background: #0b1322; border: 1px solid #1e293b; border-radius: 6px; padding: 8px; margin-bottom: 8px;';
+
+            const orderHeader = document.createElement('div');
+            orderHeader.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 11px;';
+            orderSection.appendChild(orderHeader);
+
+            const orderList = document.createElement('div');
+            orderList.style.cssText = 'display: flex; flex-direction: column; gap: 4px; max-height: 160px; overflow-y: auto;';
+            orderSection.appendChild(orderList);
+
+            container.appendChild(orderSection);
+
+            // 2. Search input
+            const search = document.createElement('input');
+            search.type = 'text';
+            search.placeholder = '🔍 Search country to add...';
+            search.className = 'gjs-ordered-multiselect-search';
+            search.style.cssText = 'width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid #334155; border-radius: 4px; color: #cbd5e1; font-size: 11px; padding: 6px 8px; margin-bottom: 6px; outline: none;';
+            container.appendChild(search);
+
+            // 3. Checkbox options container
+            const wrap = document.createElement('div');
+            wrap.className = 'gjs-ordered-multiselect-wrap';
+            wrap.style.cssText = 'width: 100%; max-height: 180px; overflow-y: auto; background: #0f172a; border: 1px solid #334155; border-radius: 4px; padding: 6px; box-sizing: border-box;';
+            container.appendChild(wrap);
+
+            const checkboxElements = {};
+            const badgeElements = {};
+
+            options.forEach(opt => {
+                const label = document.createElement('label');
+                label.className = 'gjs-multiselect-item';
+                label.setAttribute('data-label', (opt.name || '').toLowerCase());
+                label.style.cssText = 'display: flex; align-items: center; gap: 8px; font-size: 12px; color: #cbd5e1; cursor: pointer; padding: 4px 6px; user-select: none; border-radius: 4px; margin-bottom: 2px; transition: background 0.15s;';
+                label.onmouseover = () => label.style.background = '#1e293b';
+                label.onmouseout = () => label.style.background = 'transparent';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = opt.value;
+                checkbox.className = 'gjs-multiselect-checkbox';
+                checkbox.style.cssText = 'cursor: pointer; accent-color: #455537; width: 14px; height: 14px; margin: 0;';
+                checkboxElements[opt.value] = checkbox;
+
+                const nameSpan = document.createElement('span');
+                nameSpan.style.cssText = 'flex: 1;';
+                nameSpan.textContent = opt.name;
+
+                const orderBadge = document.createElement('span');
+                orderBadge.style.cssText = 'font-size: 10px; font-weight: 700; color: #CA9A2E; background: rgba(202,154,46,0.15); padding: 1px 5px; border-radius: 3px; display: none;';
+                badgeElements[opt.value] = orderBadge;
+
+                label.appendChild(checkbox);
+                label.appendChild(nameSpan);
+                label.appendChild(orderBadge);
+                wrap.appendChild(label);
+
+                checkbox.addEventListener('change', () => {
+                    if (opt.value === 'all') {
+                        orderedValues = ['all'];
+                    } else {
+                        orderedValues = orderedValues.filter(v => v !== 'all');
+                        if (checkbox.checked) {
+                            if (!orderedValues.includes(opt.value)) {
+                                orderedValues.push(opt.value);
+                            }
+                        } else {
+                            orderedValues = orderedValues.filter(v => v !== opt.value);
+                            if (orderedValues.length === 0) {
+                                orderedValues = ['all'];
+                            }
+                        }
+                    }
+                    syncState(true);
+                });
+            });
+
+            // Fast search filter
+            search.addEventListener('input', (e) => {
+                const q = (e.target.value || '').toLowerCase().trim();
+                wrap.querySelectorAll('.gjs-multiselect-item').forEach(item => {
+                    const text = item.getAttribute('data-label') || '';
+                    item.style.display = (!q || text.includes(q)) ? 'flex' : 'none';
+                });
+            });
+
+            // Sync state to component attributes and render order list + checkboxes
+            const syncState = (triggerRender = true) => {
+                let finalVal = orderedValues.join(',');
+                if (!finalVal || orderedValues.includes('all')) {
+                    finalVal = 'all';
+                    orderedValues = ['all'];
+                }
+
+                trait.set('value', finalVal);
+                const comp = getComp();
+                if (comp) {
+                    comp.addAttributes({ [trait.get('name')]: finalVal });
+                    if (triggerRender && comp.view && typeof comp.view.renderView === 'function') {
+                        comp.view.renderView();
+                    }
+                    try { editor.trigger('change:canvas'); } catch (_) {}
+                }
+
+                // Update Checkboxes & Badges
+                options.forEach(opt => {
+                    const cb = checkboxElements[opt.value];
+                    const bg = badgeElements[opt.value];
+                    if (!cb) return;
+
+                    if (finalVal === 'all') {
+                        cb.checked = (opt.value === 'all');
+                        if (bg) bg.style.display = 'none';
+                    } else {
+                        const idx = orderedValues.indexOf(opt.value);
+                        cb.checked = idx !== -1;
+                        if (bg) {
+                            if (idx !== -1) {
+                                bg.textContent = `#${idx + 1}`;
+                                bg.style.display = 'inline-block';
+                            } else {
+                                bg.style.display = 'none';
+                            }
+                        }
+                    }
+                });
+
+                // Update Order List UI
+                renderOrderListUI();
+            };
+
+            const renderOrderListUI = () => {
+                orderList.innerHTML = '';
+                const isAll = orderedValues.length === 0 || orderedValues.includes('all');
+
+                if (isAll) {
+                    orderHeader.innerHTML = `
+                        <span style="font-weight: 700; color: #8fa593; letter-spacing: 0.05em; text-transform: uppercase;">
+                            Active Order: Auto
+                        </span>
+                        <span style="color: #64748b; font-size: 10px;">Default DB Order</span>
+                    `;
+                    orderList.innerHTML = `
+                        <div style="padding: 8px 10px; background: rgba(69,85,55,0.2); border: 1px dashed #455537; border-radius: 4px; font-size: 11px; color: #a9c3b0; display: flex; align-items: center; gap: 6px;">
+                            <span style="font-size: 13px;">🌍</span>
+                            <span><strong>All Countries:</strong> Featured order from database. Check countries below to set custom sequence.</span>
+                        </div>
+                    `;
+                    return;
+                }
+
+                orderHeader.innerHTML = `
+                    <span style="font-weight: 700; color: #CA9A2E; letter-spacing: 0.05em; text-transform: uppercase;">
+                        Active Order (${orderedValues.length})
+                    </span>
+                    <button type="button" class="js-reset-auto" style="background: transparent; border: none; color: #94a3b8; font-size: 10px; text-decoration: underline; cursor: pointer; padding: 0;">
+                        Reset to Auto
+                    </button>
+                `;
+
+                const resetBtn = orderHeader.querySelector('.js-reset-auto');
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        orderedValues = ['all'];
+                        syncState(true);
+                    });
+                }
+
+                let draggedIdx = null;
+
+                orderedValues.forEach((val, idx) => {
+                    const opt = options.find(o => o.value === val) || { name: `Country #${val}`, value: val };
+                    const cleanName = opt.name.replace(/\s*\(.*?\)/, '');
+                    const isFirst = idx === 0;
+                    const isLast = idx === orderedValues.length - 1;
+
+                    const row = document.createElement('div');
+                    row.className = 'gjs-ordered-row';
+                    row.draggable = true;
+                    row.setAttribute('data-idx', idx);
+                    row.style.cssText = 'display: flex; align-items: center; gap: 6px; background: #162032; border: 1px solid #334155; border-radius: 4px; padding: 4px 6px; cursor: grab; transition: all 0.15s;';
+
+                    row.innerHTML = `
+                        <span style="color: #64748b; font-size: 12px; cursor: grab;" title="Drag to reorder">☰</span>
+                        <span style="font-family: monospace; font-size: 10px; font-weight: 700; color: #CA9A2E; background: rgba(202,154,46,0.15); padding: 1px 4px; border-radius: 3px; shrink: 0;">
+                            ${String(idx + 1).padStart(2, '0')}
+                        </span>
+                        <span style="flex: 1; font-size: 11px; font-weight: 500; color: #e2e8f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${cleanName}">
+                            ${cleanName}
+                        </span>
+                        <div style="display: flex; gap: 2px; align-items: center;">
+                            <button type="button" class="btn-up" style="width: 20px; height: 20px; border-radius: 3px; border: 1px solid #334155; background: ${isFirst ? '#1e293b' : '#334155'}; color: ${isFirst ? '#475569' : '#e2e8f0'}; cursor: ${isFirst ? 'default' : 'pointer'}; font-size: 10px; display: flex; align-items: center; justify-content: center; padding: 0;" ${isFirst ? 'disabled' : ''} title="Move Up">↑</button>
+                            <button type="button" class="btn-down" style="width: 20px; height: 20px; border-radius: 3px; border: 1px solid #334155; background: ${isLast ? '#1e293b' : '#334155'}; color: ${isLast ? '#475569' : '#e2e8f0'}; cursor: ${isLast ? 'default' : 'pointer'}; font-size: 10px; display: flex; align-items: center; justify-content: center; padding: 0;" ${isLast ? 'disabled' : ''} title="Move Down">↓</button>
+                            <button type="button" class="btn-remove" style="width: 20px; height: 20px; border-radius: 3px; border: 1px solid rgba(239,68,68,0.25); background: rgba(239,68,68,0.12); color: #f87171; cursor: pointer; font-size: 10px; display: flex; align-items: center; justify-content: center; padding: 0; margin-left: 2px;" title="Remove">✕</button>
+                        </div>
+                    `;
+
+                    // Button actions
+                    const btnUp = row.querySelector('.btn-up');
+                    const btnDown = row.querySelector('.btn-down');
+                    const btnRemove = row.querySelector('.btn-remove');
+
+                    if (!isFirst && btnUp) {
+                        btnUp.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            const temp = orderedValues[idx];
+                            orderedValues[idx] = orderedValues[idx - 1];
+                            orderedValues[idx - 1] = temp;
+                            syncState(true);
+                        });
+                    }
+
+                    if (!isLast && btnDown) {
+                        btnDown.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            const temp = orderedValues[idx];
+                            orderedValues[idx] = orderedValues[idx + 1];
+                            orderedValues[idx + 1] = temp;
+                            syncState(true);
+                        });
+                    }
+
+                    if (btnRemove) {
+                        btnRemove.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            orderedValues = orderedValues.filter(v => v !== val);
+                            if (orderedValues.length === 0) orderedValues = ['all'];
+                            syncState(true);
+                        });
+                    }
+
+                    // Drag & Drop
+                    row.addEventListener('dragstart', (e) => {
+                        draggedIdx = idx;
+                        e.dataTransfer.effectAllowed = 'move';
+                        row.style.opacity = '0.5';
+                    });
+                    row.addEventListener('dragend', () => {
+                        row.style.opacity = '1';
+                    });
+                    row.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        e.dataTransfer.dropEffect = 'move';
+                        row.style.borderColor = '#CA9A2E';
+                    });
+                    row.addEventListener('dragleave', () => {
+                        row.style.borderColor = '#334155';
+                    });
+                    row.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        row.style.borderColor = '#334155';
+                        if (draggedIdx !== null && draggedIdx !== idx) {
+                            const item = orderedValues.splice(draggedIdx, 1)[0];
+                            orderedValues.splice(idx, 0, item);
+                            syncState(true);
+                        }
+                    });
+
+                    orderList.appendChild(row);
+                });
+            };
+
+            // Initial sync on mount
+            syncState(false);
+
+            return container;
+        },
+        onUpdate({ elInput, component, trait }) {
+            const raw = (component ? component.getAttributes()[trait.get('name')] : trait.get('value')) || 'all';
+            let values = raw === 'all' || !raw.trim() ? ['all'] : raw.split(',').map(s => s.trim()).filter(Boolean);
+
+            const checkboxes = elInput.querySelectorAll('.gjs-multiselect-checkbox');
+            checkboxes.forEach(cb => {
+                if (values.includes('all')) {
+                    cb.checked = cb.value === 'all';
+                } else {
+                    cb.checked = values.includes(cb.value);
+                }
+            });
+        }
+    };
+
+    if (editor.Traits && typeof editor.Traits.addType === 'function') {
+        editor.Traits.addType('ordered-multiselect', handler);
+    }
+    const tm = editor.TraitManager || editor.Traits;
+    if (tm && typeof tm.addType === 'function') {
+        tm.addType('ordered-multiselect', handler);
+    }
+};
+
+registerOrderedMultiselectTrait();
+
 // Auto-switch to Trait Manager (Settings / ⚙ tab) when clicking Dynamic Tours block or its section
 editor.on('component:selected', (component) => {
     if (!component) return;
@@ -1212,8 +1631,13 @@ editor.on('component:selected', (component) => {
         target.get('type') === 'tours-listing' || 
         (target.getClasses && target.getClasses().includes('tours-listing'))
     );
+
+    const isHero = target && (
+        target.get('type') === 'safaris-hero-component' ||
+        (target.getClasses && target.getClasses().includes('hero'))
+    );
     
-    if (isToursListing) {
+    if (isToursListing || isHero) {
         if (target !== component) {
             editor.select(target);
             return;
@@ -1327,13 +1751,13 @@ const buildToursListingPreviewHtml = (attrs, activeIdx = 0) => {
         <div style="background: linear-gradient(135deg, #1b281f, #0d1611); border: 1px solid #455537; border-radius: 8px; padding: 12px 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-family: sans-serif; gap: 12px; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                 <span style="background: #455537; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;">🌍 DYNAMIC TOURS SHOWCASE</span>
-                <span style="font-size: 13px; color: #e2e8f0;">Selected: <strong style="color: #CA9A2E; background: rgba(202,154,46,0.15); padding: 2px 8px; border-radius: 4px;">${countryNamesList}</strong></span>
-                <span style="font-size: 12px; color: #94a3b8;">(${limit} per page)</span>
+                <span style="font-size: 13px; color: #e2e8f0;">Display Order: <strong style="color: #CA9A2E; background: rgba(202,154,46,0.15); padding: 2px 8px; border-radius: 4px;">${countryNamesList}</strong></span>
+                <span style="font-size: 11px; color: #8fa593;">(Use ▲ ▼ on tabs or open Settings to reorder)</span>
             </div>
             <div style="display: flex; align-items: center; gap: 10px;">
                 <span style="font-size: 11px; color: #CA9A2E;">💡 Click heading text to edit</span>
                 <button type="button" class="js-open-settings" style="background: #CA9A2E; color: #1E271C; font-weight: 700; font-size: 12px; padding: 6px 14px; border: none; border-radius: 4px; cursor: pointer; transition: opacity .15s;">
-                    ⚙ Edit Settings / Countries
+                    ⚙ Edit Order & Settings
                 </button>
             </div>
         </div>
@@ -1395,6 +1819,8 @@ const buildToursListingPreviewHtml = (attrs, activeIdx = 0) => {
         const pad = String(idx + 1).padStart(2, '0');
         const isActive = idx === safeIdx;
         const tag = (cObj.meta && cObj.meta.tagline) || `${cObj.name} Safaris & Adventures`;
+        const isFirst = idx === 0;
+        const isLast = idx === selectedCountries.length - 1;
         countryTabsHtml += `
             <div class="js-tour-tab" data-country-idx="${idx}" style="padding: 14px 18px; border-radius: 8px; margin-bottom: 8px; border: 1px solid ${isActive ? '#2e4c36' : 'rgba(255,255,255,0.06)'}; background: ${isActive ? '#223829' : 'transparent'}; display: flex; align-items: start; gap: 14px; position: relative; cursor: pointer; transition: all 0.2s ease;">
                 ${isActive ? '<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #CA9A2E; border-top-left-radius: 8px; border-bottom-left-radius: 8px;"></div>' : ''}
@@ -1403,7 +1829,12 @@ const buildToursListingPreviewHtml = (attrs, activeIdx = 0) => {
                     <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 19px; font-weight: 500; color: ${isActive ? '#fff' : '#b8cbbd'};">${cObj.name}</div>
                     <div style="font-size: 12px; color: ${isActive ? '#9cb5a2' : '#6a8773'}; margin-top: 2px;">${tag}</div>
                 </div>
-                ${isActive ? '<span style="color: #CA9A2E; font-size: 14px;">●</span>' : ''}
+                <!-- In-canvas Quick Reorder Buttons -->
+                <div class="js-tab-reorder-group" style="display: flex; flex-direction: column; gap: 2px; align-self: center;" onclick="event.stopPropagation();">
+                    ${!isFirst ? `<button type="button" class="js-reorder-canvas" data-action="up" data-country-idx="${idx}" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #CA9A2E; border-radius: 3px; font-size: 9px; line-height: 1; padding: 2px 5px; cursor: pointer;" title="Move ${cObj.name} Up">▲</button>` : ''}
+                    ${!isLast ? `<button type="button" class="js-reorder-canvas" data-action="down" data-country-idx="${idx}" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #CA9A2E; border-radius: 3px; font-size: 9px; line-height: 1; padding: 2px 5px; cursor: pointer;" title="Move ${cObj.name} Down">▼</button>` : ''}
+                </div>
+                ${isActive ? '<span style="color: #CA9A2E; font-size: 14px; align-self: center;">●</span>' : ''}
             </div>
         `;
     });
@@ -1531,9 +1962,9 @@ editor.DomComponents.addType('tours-listing', {
                     value: "Choose a destination to explore Africa's iconic safaris and signature experiences"
                 },
                 {
-                    type: 'multiselect',
+                    type: 'ordered-multiselect',
                     name: 'data-country',
-                    label: 'Countries (Multi-Select)',
+                    label: 'Countries (Select & Order)',
                     options: getCountryMultiselectOptions()
                 },
                 {
@@ -1601,10 +2032,54 @@ editor.DomComponents.addType('tours-listing', {
             // Country tab switching
             this.el.querySelectorAll('.js-tour-tab').forEach(tab => {
                 tab.addEventListener('click', (e) => {
+                    if (e.target.closest('.js-reorder-canvas')) return;
                     e.stopPropagation();
                     const idx = parseInt(tab.getAttribute('data-country-idx'), 10) || 0;
                     this.activeCountryIdx = idx;
                     this.renderView();
+                });
+            });
+
+            // Direct in-canvas country tab reordering (▲ and ▼ buttons)
+            this.el.querySelectorAll('.js-reorder-canvas').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    const action = btn.getAttribute('data-action');
+                    const idx = parseInt(btn.getAttribute('data-country-idx'), 10);
+                    const attrs = this.model.getAttributes();
+                    const currentAttr = attrs['data-country'] || 'all';
+
+                    let ids = [];
+                    if (currentAttr !== 'all') {
+                        ids = currentAttr.split(',').map(s => s.trim()).filter(Boolean);
+                    } else {
+                        const resolved = resolveToursSelectedCountries('all');
+                        ids = resolved.map(c => c.id.toString());
+                    }
+
+                    if (action === 'up' && idx > 0 && ids[idx] && ids[idx - 1]) {
+                        const temp = ids[idx];
+                        ids[idx] = ids[idx - 1];
+                        ids[idx - 1] = temp;
+                        this.activeCountryIdx = idx - 1;
+                    } else if (action === 'down' && idx < ids.length - 1 && ids[idx] && ids[idx + 1]) {
+                        const temp = ids[idx];
+                        ids[idx] = ids[idx + 1];
+                        ids[idx + 1] = temp;
+                        this.activeCountryIdx = idx + 1;
+                    }
+
+                    this.model.addAttributes({ 'data-country': ids.join(',') });
+                    this.renderView();
+
+                    // Re-render Trait Manager if open
+                    try {
+                        const tr = this.model.getTrait('data-country');
+                        if (tr && tr.view && typeof tr.view.render === 'function') {
+                            tr.view.render();
+                        }
+                    } catch (_) {}
                 });
             });
 
@@ -1742,63 +2217,177 @@ bm.add('safaris-start-planning', {
     label: '📋 Start Planning',
     category: window.__('Safaris Blocks'),
     content: `
-<section class="request-section" id="contact">
-  <div class="request-inner">
-    <div>
-      <div class="section-label">Start Planning</div>
-      <h2 class="section-title">Let's Design Your<br><em>Dream Safari</em></h2>
-      <p class="section-sub">Tell us your travel dates, group size, and interests — our Tanzania experts will craft a bespoke itinerary just for you. No cost, no obligation.</p>
+<section class="request-section py-20 bg-[#faf8f5] dark:bg-[#121c15] text-gray-800 dark:text-gray-100 relative overflow-hidden" id="contact" data-gjs-type="default">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 request-inner">
+    <div class="flex flex-col justify-center">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#CA9A2E]/10 border border-[#CA9A2E]/25 text-[#CA9A2E] text-xs font-bold tracking-widest uppercase mb-4 self-start" data-gjs-type="text">
+        <span>✦</span> Start Planning
+      </div>
+      <h2 class="request-heading text-4xl sm:text-5xl lg:text-[3.25rem] font-extrabold text-gray-900 dark:text-white leading-[1.08] tracking-tight mb-6" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; letter-spacing: -0.025em;" data-gjs-type="text">
+        Let us be your<br>guide to the<br><span style="color: #c05621;" class="wonders-highlight text-[#c05621]">wonders</span> of<br>Tanzania
+      </h2>
+      <p class="request-desc text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed font-normal mb-8 max-w-xl" data-gjs-type="text">
+        Fargin Safaris is a tour operator specializing exclusively in Tanzania adventures, offering a variety of travel experiences that highlight the rich culture, diverse wildlife, and stunning landscapes of Tanzania.
+      </p>
 
-      <ul class="why-list mt-8 text-text-mid">
-        <li>
-          <div class="why-check bg-earth-mid/10 border-earth-mid/25 text-earth-mid">✓</div>
-          All trips 100% customisable to your pace &amp; budget
+      <ul class="why-list space-y-3.5 text-text-mid">
+        <li class="flex items-center gap-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div class="why-check w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0" style="color: var(--brand-primary, #CA9A2E); background-color: color-mix(in srgb, var(--brand-primary, #CA9A2E) 12%, transparent);">✓</div>
+          <span data-gjs-type="text">All trips 100% customisable to your pace &amp; budget</span>
         </li>
-        <li>
-          <div class="why-check bg-earth-mid/10 border-earth-mid/25 text-earth-mid">✓</div>
-          Response within 24 hours from our local team
+        <li class="flex items-center gap-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div class="why-check w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0" style="color: var(--brand-primary, #CA9A2E); background-color: color-mix(in srgb, var(--brand-primary, #CA9A2E) 12%, transparent);">✓</div>
+          <span data-gjs-type="text">Response within 24 hours from our local team</span>
         </li>
-        <li>
-          <div class="why-check bg-earth-mid/10 border-earth-mid/25 text-earth-mid">✓</div>
-          Best price guarantee &amp; transparent pricing
+        <li class="flex items-center gap-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div class="why-check w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0" style="color: var(--brand-primary, #CA9A2E); background-color: color-mix(in srgb, var(--brand-primary, #CA9A2E) 12%, transparent);">✓</div>
+          <span data-gjs-type="text">Best price guarantee &amp; transparent pricing</span>
         </li>
       </ul>
     </div>
 
-    <form id="start-planning-form" class="request-form">
+    <form id="start-planning-form" class="request-form bg-white dark:bg-[#18231c] rounded-3xl p-8 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-stone-200/80 dark:border-white/10 relative">
       <div class="mb-6">
-        <div class="section-label mb-1.5 text-earth-mid">Free Quote</div>
-        <h3 class="font-brand text-2xl font-normal text-earth">Request a Proposal</h3>
+        <div class="text-xs font-bold tracking-widest uppercase mb-1" style="color: var(--brand-primary, #CA9A2E);" data-gjs-type="text">Free Quote</div>
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">Request a Proposal</h3>
       </div>
-      <div class="form-row">
+      <div class="form-row grid grid-cols-2 gap-4 mb-4">
         <div class="form-group">
-          <label>Adults</label>
-          <input type="number" name="adults" min="1" max="50" value="1" required>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1.5" data-gjs-type="text">Adults</label>
+          <input type="number" name="adults" min="1" max="50" value="1" required class="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-white/15 bg-stone-50/50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-[#CA9A2E] focus:outline-none">
         </div>
         <div class="form-group">
-          <label>Children</label>
-          <input type="number" name="children" min="0" max="50" value="0" required>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1.5" data-gjs-type="text">Children</label>
+          <input type="number" name="children" min="0" max="50" value="0" required class="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-white/15 bg-stone-50/50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-[#CA9A2E] focus:outline-none">
         </div>
       </div>
-      <div class="form-row">
+      <div class="form-row grid grid-cols-2 gap-4 mb-4">
         <div class="form-group">
-          <label>Arrival Date</label>
-          <input type="date" name="arrival_date" required>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1.5" data-gjs-type="text">Arrival Date</label>
+          <input type="date" name="arrival_date" required class="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-white/15 bg-stone-50/50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-[#CA9A2E] focus:outline-none">
         </div>
         <div class="form-group">
-          <label>Trip Type</label>
-          <select name="trip_type" class="dynamic-tour-types" required>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1.5" data-gjs-type="text">Trip Type</label>
+          <select name="trip_type" class="dynamic-tour-types w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-white/15 bg-stone-50/50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-[#CA9A2E] focus:outline-none" required>
             <option>Loading...</option>
           </select>
         </div>
       </div>
-      <div class="form-group">
-        <label>Your Email</label>
-        <input type="email" name="email" placeholder="you@example.com" required>
+      <div class="form-group mb-6">
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1.5" data-gjs-type="text">Your Email</label>
+        <input type="email" name="email" placeholder="you@example.com" required class="w-full px-4 py-3.5 rounded-xl border border-stone-200 dark:border-white/15 bg-stone-50/50 dark:bg-white/5 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-[#CA9A2E] focus:outline-none">
       </div>
-      <button type="submit" class="btn-primary w-full text-center block border-none cursor-pointer text-base">Get My Free Proposal →</button>
-      <p class="form-note">No strings attached. We'll design your trip at no cost or commitment.</p>
+      <button type="submit" class="w-full py-4 bg-[#ea963e] hover:bg-[#d97706] text-white font-bold rounded-xl shadow-lg shadow-[#ea963e]/25 hover:shadow-[#ea963e]/40 transform hover:-translate-y-0.5 transition-all text-sm tracking-wide uppercase cursor-pointer border-none block text-center">
+        <span data-gjs-type="text">Get My Free Proposal →</span>
+      </button>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-4 text-center font-light" data-gjs-type="text">No strings attached. We'll design your trip at no cost or commitment.</p>
     </form>
+  </div>
+</section>
+    `,
+});
+
+bm.add('safaris-wonders-tanzania', {
+    label: ' Wonders of Tanzania',
+    category: window.__('Safaris Blocks'),
+    content: `
+<section class="py-24 bg-white dark:bg-[#0e1611] text-gray-900 dark:text-gray-100 relative overflow-hidden" data-gjs-type="default">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      
+      <!-- Left Column: Heading & Description -->
+      <div class="lg:col-span-5 sticky top-24">
+        <h2 class="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-gray-900 dark:text-white leading-[1.1] tracking-tight mb-8" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
+          Let us be your<br>guide to the<br><span style="color: #c05621;">wonders</span> of<br>Tanzania
+        </h2>
+        <p class="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed font-light mb-8" data-gjs-type="text">
+          Fargin Safaris is a tour operator specializing exclusively in Tanzania adventures, offering a variety of travel experiences that highlight the rich culture, diverse wildlife, and stunning landscapes of Tanzania.
+        </p>
+      </div>
+
+      <!-- Right Column: 01 to 06 Numbered List -->
+      <div class="lg:col-span-7 divide-y divide-stone-200 dark:divide-white/10 border-t border-b border-stone-200 dark:border-white/10">
+        
+        <!-- 01 -->
+        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
+          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">01</span>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
+              Tailor-Made Tanzania Safaris
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
+              Customized, private safari experiences tailored to individual preferences or group sizes.
+            </p>
+          </div>
+        </div>
+
+        <!-- 02 -->
+        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
+          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">02</span>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
+              Authentic Cultural Encounters
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
+              Visit traditional villages and learn about their customs: Maasai villages, Chagga and Hadzabe tribes.
+            </p>
+          </div>
+        </div>
+
+        <!-- 03 -->
+        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
+          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">03</span>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
+              Conquer the Roof of Africa
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
+              Guided treks to the summit of Mount Kilimanjaro, the highest peak in Africa.
+            </p>
+          </div>
+        </div>
+
+        <!-- 04 -->
+        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
+          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">04</span>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
+              Tropical Escapes — Zanzibar
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
+              Beach holidays in Zanzibar, including Stone Town, spice farms and Mafia Island.
+            </p>
+          </div>
+        </div>
+
+        <!-- 05 -->
+        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
+          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">05</span>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
+              Luxury &amp; Wilderness Camping
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
+              Accommodation in high-end lodges and tented camps in prime wildlife areas.
+            </p>
+          </div>
+        </div>
+
+        <!-- 06 -->
+        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
+          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">06</span>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
+              Ultimate Outdoor Adventures
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
+              Explore the iconic Serengeti National Park, Ngorongoro Crater, Tarangire and Lake Manyara.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 </section>
     `,
@@ -2216,94 +2805,193 @@ bm.add('safaris-contact-section', {
     label: '📞 Contact Details',
     category: window.__('Safaris Blocks'),
     content: `
-<section class="py-20 bg-gray-50 overflow-hidden relative">
-  <div class="absolute inset-0 bg-white/50 backdrop-blur-3xl"></div>
+<section class="safaris-contact-block pt-20 pb-0 bg-gradient-to-b from-stone-50 via-white to-stone-100 dark:from-[#0d1410] dark:via-[#131c16] dark:to-[#0d1410] text-gray-800 dark:text-gray-100 relative overflow-hidden" data-gjs-type="default">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="text-center mb-16">
-      <span class="inline-block py-1 px-3 rounded-full bg-[#EDF2EA] text-[#455537] text-sm font-bold tracking-widest uppercase mb-4">Contact Us</span>
-      <h2 class="text-4xl md:text-5xl font-bold font-brand text-gray-900 mb-4">Let Plan Together your Safari</h2>
-      <p class="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">Every unforgettable journey begins with a single step. Reach out to us today and take the first step toward an experience you'll remember for a lifetime.</p>
+
+    <!-- Section Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#CA9A2E]/10 border border-[#CA9A2E]/25 text-[#CA9A2E] text-xs font-bold tracking-widest uppercase mb-4" data-gjs-type="text">
+        <span></span> Inquire &amp; Connect
+      </div>
+      <h2 class="text-4xl sm:text-5xl font-bold tracking-tight mb-5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif; line-height: 1.15;" data-gjs-type="text">
+        Request a Program
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed font-light" data-gjs-type="text">
+        We are always here to help. Our team is ready to assist you with any inquiries and help you create an unforgettable experience.
+      </p>
+      <div class="w-24 h-1 bg-gradient-to-r from-transparent via-[#CA9A2E] to-transparent mx-auto mt-6 rounded-full"></div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-      <!-- Contact Details -->
-      <div>
-        <h3 class="text-2xl font-bold font-brand text-gray-900 mb-8">Contact Information</h3>
-        <div class="space-y-8">
-          
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 bg-[#EDF2EA] text-[#455537] rounded-[3px] flex items-center justify-center shrink-0">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-            </div>
-            <div>
-              <h4 class="text-lg font-bold text-gray-900 mb-1">Physical Address</h4>
-              <p class="text-gray-600 leading-relaxed">Boman street, Near Clock Tower,<br>Arusha - NIC Building 1st Floor, Tanzania</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 bg-[#EDF2EA] text-[#455537] rounded-[3px] flex items-center justify-center shrink-0">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-            </div>
-            <div>
-              <h4 class="text-lg font-bold text-gray-900 mb-1">Call Us Today</h4>
-              <p class="text-gray-600 leading-relaxed mb-2">Vienna (Tour Consultant): +255 685 000 070</p>
-              <p class="text-gray-600 leading-relaxed mb-2">Salome (Local Guide): +255 685 000 070</p>
-              <p class="text-gray-600 leading-relaxed">Administration: +255 685 000 070</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 bg-[#EDF2EA] text-[#455537] rounded-[3px] flex items-center justify-center shrink-0">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-            </div>
-            <div>
-              <h4 class="text-lg font-bold text-gray-900 mb-1">Email Address</h4>
-              <p class="text-gray-600 leading-relaxed">Contact us for a detailed quote.</p>
-              <a href="mailto:info@safarisadventure.com" class="text-[#455537] font-bold hover:text-[#354329]">info@safarisadventure.com</a>
-            </div>
-          </div>
-          
+    <!-- Main 2-Column Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+      
+      <!-- Left Column: Inquiry Form Card -->
+      <div class="lg:col-span-7 bg-white dark:bg-[#18231c] rounded-3xl p-8 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-stone-200/80 dark:border-white/10 relative">
+        <div class="mb-8">
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
+            Start Your Journey
+          </h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400" data-gjs-type="text">
+            Fill out the details below and our safari specialists will get back to you within 24 hours.
+          </p>
         </div>
+
+        <form class="space-y-6" onsubmit="event.preventDefault();">
+          <!-- Full Name -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-2" data-gjs-type="text">Your Name *</label>
+            <input type="text" placeholder="Full Name" required class="w-full px-4 py-3.5 rounded-xl border border-stone-200 dark:border-white/15 bg-stone-50/50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#CA9A2E] focus:border-transparent transition text-sm">
+          </div>
+
+          <!-- Mobile & Email in 2 columns -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-2" data-gjs-type="text">Mobile Phone *</label>
+              <input type="tel" placeholder="+255 ... or international code" required class="w-full px-4 py-3.5 rounded-xl border border-stone-200 dark:border-white/15 bg-stone-50/50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#CA9A2E] focus:border-transparent transition text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-2" data-gjs-type="text">Email Address *</label>
+              <input type="email" placeholder="name@example.com" required class="w-full px-4 py-3.5 rounded-xl border border-stone-200 dark:border-white/15 bg-stone-50/50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#CA9A2E] focus:border-transparent transition text-sm">
+            </div>
+          </div>
+
+          <!-- Message Field -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-2" data-gjs-type="text">Message / Tour Preferences</label>
+            <textarea rows="4" placeholder="Tell us about your dream safari, estimated travel dates, group size, or questions..." class="w-full px-4 py-3.5 rounded-xl border border-stone-200 dark:border-white/15 bg-stone-50/50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#CA9A2E] focus:border-transparent transition text-sm"></textarea>
+          </div>
+
+          <!-- Communication Preference -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-2.5" data-gjs-type="text">I Prefer to be Contacted Via:</label>
+            <div class="flex flex-wrap gap-4 text-sm">
+              <label class="inline-flex items-center gap-2 cursor-pointer px-4 py-2 rounded-lg bg-stone-100 dark:bg-white/10 hover:bg-[#CA9A2E]/10 transition">
+                <input type="radio" name="contact_pref" value="email" checked class="text-[#CA9A2E] focus:ring-[#CA9A2E]">
+                <span class="text-gray-800 dark:text-gray-200 font-medium">✉️ Email</span>
+              </label>
+              <label class="inline-flex items-center gap-2 cursor-pointer px-4 py-2 rounded-lg bg-stone-100 dark:bg-white/10 hover:bg-[#CA9A2E]/10 transition">
+                <input type="radio" name="contact_pref" value="phone" class="text-[#CA9A2E] focus:ring-[#CA9A2E]">
+                <span class="text-gray-800 dark:text-gray-200 font-medium">📞 Phone</span>
+              </label>
+              <label class="inline-flex items-center gap-2 cursor-pointer px-4 py-2 rounded-lg bg-stone-100 dark:bg-white/10 hover:bg-[#CA9A2E]/10 transition">
+                <input type="radio" name="contact_pref" value="whatsapp" class="text-[#CA9A2E] focus:ring-[#CA9A2E]">
+                <span class="text-gray-800 dark:text-gray-200 font-medium">💬 WhatsApp</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Privacy & Submit -->
+          <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-xs text-gray-500 dark:text-gray-400" data-gjs-type="text">
+              By clicking 'Send Request', you agree to our <a href="/privacy" class="underline hover:text-[#CA9A2E]">Privacy Policy</a>.
+            </p>
+            <button type="submit" class="w-full sm:w-auto px-8 py-4 bg-[#ea963e] hover:bg-[#d97706] text-white font-bold rounded-xl shadow-lg shadow-[#ea963e]/25 hover:shadow-[#ea963e]/40 transform hover:-translate-y-0.5 transition-all text-sm tracking-wide uppercase inline-flex items-center justify-center gap-2">
+              <span data-gjs-type="text">Send Request</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+        </form>
       </div>
 
-      <!-- Contact Form -->
-      <div class="bg-white p-8 rounded-[2rem] shadow-xl border border-gray-100">
-        <h3 class="text-2xl font-bold font-brand text-gray-900 mb-6">Enquire Now</h3>
-        <form class="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label class="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
-              <input type="text" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-[#455537] focus:border-[#455537] outline-none transition-all" placeholder="John Doe">
+      <!-- Right Column: Information & Direct Contacts -->
+      <div class="lg:col-span-5 space-y-8">
+        
+        <!-- Fargin Safaris Advantage Card -->
+        <div class="bg-gradient-to-br from-[#1d2b22] to-[#121c15] text-white p-8 rounded-3xl shadow-xl border border-white/10 relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-[#CA9A2E]/15 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="inline-flex items-center gap-1.5 text-[#CA9A2E] text-xs font-bold tracking-widest uppercase mb-4" data-gjs-type="text">
+            <span>★</span> About Fargin Safaris
+          </div>
+          <h3 class="text-2xl font-bold mb-4" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
+            Dedicated Exclusively to Tanzania
+          </h3>
+          <p class="text-white/80 text-sm leading-relaxed mb-4 font-light" data-gjs-type="text">
+            As a company dedicated exclusively to Tanzania, we are proud to be one of the best in the country’s tourism sector. When you travel with Fargin Safaris, you can expect transparent pricing with no intermediaries or hidden costs.
+          </p>
+          <p class="text-white/80 text-sm leading-relaxed font-light" data-gjs-type="text">
+            Our team includes the most experienced Kilimanjaro guides and safari drivers in the region, and we are committed to providing personalized customer service.
+          </p>
+        </div>
+
+        <!-- Contact Channels Section -->
+        <div>
+          <h4 class="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4" data-gjs-type="text">
+            For more information or to plan your adventure:
+          </h4>
+
+          <div class="space-y-4">
+            <!-- Address Card -->
+            <div class="flex items-start gap-4 p-4 rounded-2xl bg-white dark:bg-[#18231c] border border-stone-200/80 dark:border-white/10 shadow-sm hover:shadow-md transition">
+              <div class="w-12 h-12 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--brand-primary, #CA9A2E) 12%, transparent); color: var(--brand-primary, #CA9A2E);">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              </div>
+              <div>
+                <span class="block text-xs font-bold uppercase tracking-wider text-brand-primary mb-0.5" style="color: var(--brand-primary, #CA9A2E);" data-gjs-type="text">Head Office</span>
+                <p class="text-sm font-semibold text-gray-800 dark:text-white" data-gjs-type="text">
+                  Fargin Safaris P.O.Box 10344, Arusha Tanzania
+                </p>
+              </div>
             </div>
-            <div>
-              <label class="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
-              <input type="email" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-[#455537] focus:border-[#455537] outline-none transition-all" placeholder="john@example.com">
+
+            <!-- Phone Card -->
+            <div class="flex items-start gap-4 p-4 rounded-2xl bg-white dark:bg-[#18231c] border border-stone-200/80 dark:border-white/10 shadow-sm hover:shadow-md transition">
+              <div class="w-12 h-12 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--brand-primary, #CA9A2E) 12%, transparent); color: var(--brand-primary, #CA9A2E);">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+              </div>
+              <div>
+                <span class="block text-xs font-bold uppercase tracking-wider text-brand-primary mb-0.5" style="color: var(--brand-primary, #CA9A2E);" data-gjs-type="text">Direct Phone &amp; WhatsApp</span>
+                <a href="tel:+255795618776" class="text-base font-bold text-gray-900 dark:text-white hover:text-brand-primary transition" style="--hover-color: var(--brand-primary, #CA9A2E);" data-gjs-type="text">
+                  +255 795 618 776
+                </a>
+              </div>
+            </div>
+
+            <!-- Email Card -->
+            <div class="flex items-start gap-4 p-4 rounded-2xl bg-white dark:bg-[#18231c] border border-stone-200/80 dark:border-white/10 shadow-sm hover:shadow-md transition">
+              <div class="w-12 h-12 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--brand-primary, #CA9A2E) 12%, transparent); color: var(--brand-primary, #CA9A2E);">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              </div>
+              <div>
+                <span class="block text-xs font-bold uppercase tracking-wider text-brand-primary mb-0.5" style="color: var(--brand-primary, #CA9A2E);" data-gjs-type="text">Email Inquiries</span>
+                <div class="flex flex-col gap-0.5">
+                  <a href="mailto:info@farginsafaris.com" class="text-sm font-semibold text-gray-800 dark:text-white hover:text-brand-primary transition" style="--hover-color: var(--brand-primary, #CA9A2E);" data-gjs-type="text">
+                    info@farginsafaris.com
+                  </a>
+                  <a href="mailto:sales@farginsafaris.com" class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-brand-primary transition" style="--hover-color: var(--brand-primary, #CA9A2E);" data-gjs-type="text">
+                    sales@farginsafaris.com
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label class="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
-              <input type="tel" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-[#455537] focus:border-[#455537] outline-none transition-all" placeholder="+1 234 567 890">
-            </div>
-            <div>
-              <label class="block text-sm font-bold text-gray-700 mb-2">Subject</label>
-              <input type="text" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-[#455537] focus:border-[#455537] outline-none transition-all" placeholder="Safari Inquiry">
-            </div>
+        </div>
+
+        <!-- Social Media Icons -->
+        <div class="pt-2">
+          <span class="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3" data-gjs-type="text">Follow Fargin Safaris</span>
+          <div class="flex items-center gap-3">
+            <a href="https://www.instagram.com/farginsafaris_/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-stone-100 dark:bg-white/10 text-gray-700 dark:text-gray-200 hover:bg-[#CA9A2E] hover:text-white flex items-center justify-center transition shadow-sm" title="Instagram">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-stone-100 dark:bg-white/10 text-gray-700 dark:text-gray-200 hover:bg-[#CA9A2E] hover:text-white flex items-center justify-center transition shadow-sm" title="Facebook">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-stone-100 dark:bg-white/10 text-gray-700 dark:text-gray-200 hover:bg-[#CA9A2E] hover:text-white flex items-center justify-center transition shadow-sm" title="X (Twitter)">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-stone-100 dark:bg-white/10 text-gray-700 dark:text-gray-200 hover:bg-[#CA9A2E] hover:text-white flex items-center justify-center transition shadow-sm" title="YouTube">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
           </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-700 mb-2">Your Message</label>
-            <textarea rows="4" class="w-full px-4 py-3 rounded-[3px] border border-gray-200 focus:ring-2 focus:ring-[#455537] focus:border-[#455537] outline-none transition-all" placeholder="Tell us about your dream safari..."></textarea>
-          </div>
-          <button type="button" class="w-full py-4 bg-[#455537] hover:bg-[#354329] text-white font-bold rounded-[3px] transition-all shadow-lg hover:shadow-[#455537]/30 transform hover:-translate-y-0.5">Send Message</button>
-        </form>
+        </div>
+
       </div>
     </div>
   </div>
 
-  <!-- Google Map Full Width -->
-  <div class="w-full h-[450px] mt-16 relative z-10">
-    <iframe src="https://maps.google.com/maps?q=Safaris%20Adventure%20Arusha&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <!-- Full-Width Location Map (Edge-to-Edge, No Titles) -->
+  <div class="w-full h-[450px] md:h-[500px] mt-16 relative overflow-hidden border-t border-stone-200/80 dark:border-white/10" data-gjs-type="default">
+    <iframe src="https://maps.google.com/maps?q=Arusha%2C%20Tanzania&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed" width="100%" height="100%" style="border:0; width:100%; height:100%; display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 </section>`,
 });
@@ -2713,7 +3401,7 @@ async function loadContent(locale = window.CURRENT_LOCALE) {
         });
         const data = await res.json();
 
-        if (data.builder_data && data.builder_data.components) {
+        if (data.builder_data && data.builder_data.components && (!Array.isArray(data.builder_data.components) || data.builder_data.components.length > 0)) {
             editor.setComponents(data.builder_data.components);
             if (data.builder_data.styles) {
                 editor.setStyle(data.builder_data.styles);

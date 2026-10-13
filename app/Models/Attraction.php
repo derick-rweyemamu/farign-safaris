@@ -35,4 +35,14 @@ class Attraction extends Model implements HasMedia
     {
         return $this->belongsTo(Destination::class);
     }
+
+    protected static function booted()
+    {
+        static::deleted(function ($attraction) {
+            if (!$attraction->isForceDeleting() && !empty($attraction->slug)) {
+                $attraction->slug = $attraction->slug . '-deleted-' . time();
+                $attraction->saveQuietly();
+            }
+        });
+    }
 }
