@@ -1392,6 +1392,54 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
        </div>
     </div>
   </div>
+</section>`});function MO(){let e=window.ACTIVITIES||[];return[{value:`all`,name:window.__(`All Activities`)},...e.map(e=>{let t=e.name;return typeof t==`object`&&t&&(t=t.en||Object.values(t)[0]||`Activity`),{value:String(e.id),name:String(t)}})]}function NO(e){let t=e[`data-heading`]||`Signature Activities & Experiences`,n=e[`data-heading-accent`]||`In The Wild`,r=e[`data-subheading`]||`Discover the heart of the wilderness through handpicked safari activities, guided by expert local trackers.`,i=e[`data-activities`]||`all`,a=(e[`data-theme`]||`light`)===`dark`,o=window.ACTIVITIES||[],s=[];if(i===`all`||!i)s=o.slice(0,6);else{let e=i.split(`,`).map(e=>e.trim()).filter(Boolean),t=new Map;o.forEach(e=>t.set(String(e.id),e)),e.forEach(e=>{t.has(e)&&s.push(t.get(e))}),s.length===0&&(s=o.slice(0,6))}let c=s.map((e,t)=>{let n=e.name;typeof n==`object`&&n&&(n=n.en||Object.values(n)[0]||`Safari Experience`);let r=e.description||``;typeof r==`object`&&r&&(r=r.en||Object.values(r)[0]||``),r=r.replace(/<[^>]*>?/gm,``).trim(),r.length>130&&(r=r.substring(0,130)+`...`);let i=e.image||``;return i&&!i.startsWith(`http`)&&(i=`/storage/`+i.replace(/^\/?storage\//,``)),i||=`https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80`,`
+            <div style="flex: 0 0 320px; height: 460px; position: relative; border-radius: 20px; overflow: hidden; background: #000; border: 1px solid rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: flex-end; padding: 24px;">
+                <img src="${i}" alt="${n}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.9;" />
+                <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.2) 100%);"></div>
+                
+                <div style="position: absolute; top: 18px; right: 18px; z-index: 2;">
+                    <span style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.4); color: #fff; border: 1px solid rgba(255,255,255,0.25);">→</span>
+                </div>
+
+                <div style="position: relative; z-index: 2;">
+                    <div style="width: 32px; height: 2px; background: #CA9A2E; border-radius: 2px; margin-bottom: 10px;"></div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff; line-height: 1.2; margin: 0 0 8px 0; font-family: Playfair Display, serif;">${n}</h3>
+                    <p style="font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.85); margin: 0; font-family: Lora, serif;">${r||`Authentic wilderness encounter curated by expert local safari guides.`}</p>
+                    <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 11px; font-weight: 700; color: #CA9A2E; text-transform: uppercase; letter-spacing: 0.05em;">Explore Details →</span>
+                    </div>
+                </div>
+            </div>
+        `}).join(``);return`
+        <div style="padding: 10px 0; font-family: sans-serif; pointer-events: none; background: ${a?`#0d1611`:`#ffffff`};">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; gap: 20px;">
+                <div>
+                    <h2 style="font-size: 2.1rem; font-weight: 800; color: ${a?`#fff`:`#111827`}; margin: 0 0 10px 0; line-height: 1.15; font-family: Playfair Display, serif;">
+                        ${t} <span style="font-family: Cormorant Garamond, serif; font-style: italic; color: #CA9A2E; font-weight: 400;">${n}</span>
+                    </h2>
+                    <p style="font-size: 14px; color: ${a?`#9ca3af`:`#4b5563`}; margin: 0; max-width: 580px; line-height: 1.5;">${r}</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid ${a?`rgba(255,255,255,0.2)`:`#e5e7eb`}; background: ${a?`rgba(255,255,255,0.06)`:`#ffffff`}; display: flex; align-items: center; justify-content: center; color: ${a?`#fff`:`#1f2937`}; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">‹</div>
+                    <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid ${a?`rgba(255,255,255,0.2)`:`#e5e7eb`}; background: ${a?`rgba(255,255,255,0.06)`:`#ffffff`}; display: flex; align-items: center; justify-content: center; color: ${a?`#fff`:`#1f2937`}; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">›</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 20px; overflow-x: hidden; padding-bottom: 10px;">
+                ${c}
+            </div>
+            
+            <p style="text-align: center; margin-top: 15px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #CA9A2E; font-weight: 600;">
+                ✦ Interactive Alpine.js Slider with Smooth Navigation will load live on the frontend ✦
+            </p>
+        </div>
+    `}$.DomComponents.addType(`activities-slider`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-activities-slider-block`)?{type:`activities-slider`}:!1,model:{defaults:{tagName:`div`,droppable:!1,highlightable:!0,attributes:{class:`safaris-activities-slider-block`,"data-activities":`all`,"data-heading":`Signature Activities & Experiences`,"data-heading-accent":`In The Wild`,"data-subheading":`Discover the heart of the wilderness through handpicked safari activities, guided by expert local trackers.`,"data-theme":`light`,"data-autoplay":`true`,"data-limit":`12`},traits:[{type:`text`,name:`data-heading`,label:`Main Heading`,value:`Signature Activities & Experiences`},{type:`text`,name:`data-heading-accent`,label:`Accent Heading (Italic)`,value:`In The Wild`},{type:`text`,name:`data-subheading`,label:`Subheading Description`,value:`Discover the heart of the wilderness through handpicked safari activities, guided by expert local trackers.`},{type:`ordered-multiselect`,name:`data-activities`,label:`Activities (Select & Order)`,options:MO()},{type:`select`,name:`data-theme`,label:`Color Theme`,options:[{value:`light`,name:`Clean White (Default)`},{value:`dark`,name:`Safari Night (Dark)`}]},{type:`select`,name:`data-autoplay`,label:`Autoplay Slider`,options:[{value:`true`,name:`Enabled`},{value:`false`,name:`Disabled`}]},{type:`number`,name:`data-limit`,label:`Item Limit (If All)`,min:1,max:50,value:12}]},init(){this.on(`change:attributes:data-activities change:attributes:data-heading change:attributes:data-heading-accent change:attributes:data-subheading change:attributes:data-theme change:attributes:data-autoplay change:attributes:data-limit`,this.updateCanvasHtml),this.updateCanvasHtml()},updateCanvasHtml(){let e=this.getAttributes();this.set(`content`,NO(e))}}}),DO.add(`safaris-activities-slider`,{label:`🏕️ Activities Slider`,category:window.__(`Safaris Blocks`),attributes:{class:`fa-solid fa-person-hiking`},content:`
+<section class="safaris-activities-slider-section py-20 bg-white text-gray-900 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div data-gjs-type="activities-slider" class="safaris-activities-slider-block" data-activities="all" data-heading="Signature Activities & Experiences" data-heading-accent="In The Wild" data-subheading="Discover the heart of the wilderness through handpicked safari activities, guided by expert local trackers." data-theme="light" data-autoplay="true" data-limit="12">
+      ${NO({"data-activities":`all`,"data-heading":`Signature Activities & Experiences`,"data-heading-accent":`In The Wild`,"data-subheading":`Discover the heart of the wilderness through handpicked safari activities, guided by expert local trackers.`,"data-theme":`light`,"data-autoplay":`true`,"data-limit":`12`})}
+    </div>
+  </div>
 </section>`}),DO.add(`safaris-start-planning`,{label:`📋 Start Planning`,category:window.__(`Safaris Blocks`),content:`
 <section class="request-section py-20 bg-[#faf8f5] dark:bg-[#121c15] text-gray-800 dark:text-gray-100 relative overflow-hidden" id="contact" data-gjs-type="default">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 request-inner">
@@ -2202,7 +2250,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                   <h3 class="text-lg font-bold text-gray-900 font-brand">Quick Nav (Posts)</h3>
                   <p class="text-xs text-gray-500 mt-2">Category: <span class="font-bold text-brand-primary">${e}</span> | Target: <span class="font-bold text-brand-primary">${t}</span></p>
                </div>
-            `)}}}),window.CURRENT_LOCALE=`en`,window.switchLocale=async function(e){e!==window.CURRENT_LOCALE&&confirm(`Switch editing language to ${e.toUpperCase()}? Make sure you have saved any changes to ${window.CURRENT_LOCALE.toUpperCase()} first.`)&&(window.CURRENT_LOCALE=e,document.querySelectorAll(`.lang-tab-btn`).forEach(t=>{let n=t.getAttribute(`data-locale`)===e;t.classList.toggle(`active`,n),t.style.background=n?`#455537`:`transparent`,t.style.color=n?`#fff`:`#94a3b8`}),NO(`Loading ${e.toUpperCase()} translation...`,`success`),await MO(e))};async function MO(e=window.CURRENT_LOCALE){try{let t=await(await fetch(`/admin/api/${window.RECORD_TYPE}/${window.RECORD_ID}/content?locale=${e}&t=${Date.now()}`,{headers:{"X-CSRF-TOKEN":window.CSRF_TOKEN,Accept:`application/json`}})).json();t.builder_data&&t.builder_data.components&&(!Array.isArray(t.builder_data.components)||t.builder_data.components.length>0)?($.setComponents(t.builder_data.components),t.builder_data.styles&&$.setStyle(t.builder_data.styles)):t.builder_html?$.setComponents(t.builder_html):$.setComponents(``)}catch(e){console.warn(`No existing content to load:`,e)}}MO(),window.setDevice=function(e){$.setDevice({desktop:`Desktop`,tablet:`Tablet`,mobile:`Mobile portrait`}[e]||`Desktop`),document.querySelectorAll(`.device-btn`).forEach(e=>e.classList.remove(`active`)),document.getElementById(`btn-${e}`)?.classList.add(`active`)},window.previewPage=function(){$.runCommand(`preview`)},window.savePage=async function(){let e=document.getElementById(`save-btn`);e.disabled=!0;let t=e.innerHTML;e.innerHTML=`<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;try{let e=$.getHtml(),t=$.getCss(),n=$.getComponents().toJSON(),r=$.getStyle().toJSON(),i=`<style>${t}</style>${e}`,a=JSON.stringify({components:n,styles:r});(await(await fetch(`/admin/api/${window.RECORD_TYPE}/${window.RECORD_ID}/content?locale=${window.CURRENT_LOCALE}`,{method:`POST`,headers:{"Content-Type":`application/json`,"X-CSRF-TOKEN":window.CSRF_TOKEN,Accept:`application/json`},body:JSON.stringify({html_base64:btoa(unescape(encodeURIComponent(i))),data_base64:btoa(unescape(encodeURIComponent(a)))})})).json()).success?NO(`✓ Saved (${window.CURRENT_LOCALE.toUpperCase()}) successfully!`,`success`):NO(`✗ Save failed. Try again.`,`error`)}catch(e){NO(`✗ Network error. Try again.`,`error`),console.error(e)}finally{e.disabled=!1,e.innerHTML=t}};function NO(e,t=`success`){let n=document.getElementById(`status-toast`);document.getElementById(`toast-msg`).textContent=e,n.className=t,setTimeout(()=>{n.className=``},3500)}DO.add(`reviews-block`,{label:`⭐ Reviews Block`,category:window.__(`Safaris Blocks`),content:`<!-- REVIEWS -->
+            `)}}}),window.CURRENT_LOCALE=`en`,window.switchLocale=async function(e){e!==window.CURRENT_LOCALE&&confirm(`Switch editing language to ${e.toUpperCase()}? Make sure you have saved any changes to ${window.CURRENT_LOCALE.toUpperCase()} first.`)&&(window.CURRENT_LOCALE=e,document.querySelectorAll(`.lang-tab-btn`).forEach(t=>{let n=t.getAttribute(`data-locale`)===e;t.classList.toggle(`active`,n),t.style.background=n?`#455537`:`transparent`,t.style.color=n?`#fff`:`#94a3b8`}),FO(`Loading ${e.toUpperCase()} translation...`,`success`),await PO(e))};async function PO(e=window.CURRENT_LOCALE){try{let t=await(await fetch(`/admin/api/${window.RECORD_TYPE}/${window.RECORD_ID}/content?locale=${e}&t=${Date.now()}`,{headers:{"X-CSRF-TOKEN":window.CSRF_TOKEN,Accept:`application/json`}})).json();t.builder_data&&t.builder_data.components&&(!Array.isArray(t.builder_data.components)||t.builder_data.components.length>0)?($.setComponents(t.builder_data.components),t.builder_data.styles&&$.setStyle(t.builder_data.styles)):t.builder_html?$.setComponents(t.builder_html):$.setComponents(``)}catch(e){console.warn(`No existing content to load:`,e)}}PO(),window.setDevice=function(e){$.setDevice({desktop:`Desktop`,tablet:`Tablet`,mobile:`Mobile portrait`}[e]||`Desktop`),document.querySelectorAll(`.device-btn`).forEach(e=>e.classList.remove(`active`)),document.getElementById(`btn-${e}`)?.classList.add(`active`)},window.previewPage=function(){$.runCommand(`preview`)},window.savePage=async function(){let e=document.getElementById(`save-btn`);e.disabled=!0;let t=e.innerHTML;e.innerHTML=`<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;try{let e=$.getHtml(),t=$.getCss(),n=$.getComponents().toJSON(),r=$.getStyle().toJSON(),i=`<style>${t}</style>${e}`,a=JSON.stringify({components:n,styles:r});(await(await fetch(`/admin/api/${window.RECORD_TYPE}/${window.RECORD_ID}/content?locale=${window.CURRENT_LOCALE}`,{method:`POST`,headers:{"Content-Type":`application/json`,"X-CSRF-TOKEN":window.CSRF_TOKEN,Accept:`application/json`},body:JSON.stringify({html_base64:btoa(unescape(encodeURIComponent(i))),data_base64:btoa(unescape(encodeURIComponent(a)))})})).json()).success?FO(`✓ Saved (${window.CURRENT_LOCALE.toUpperCase()}) successfully!`,`success`):FO(`✗ Save failed. Try again.`,`error`)}catch(e){FO(`✗ Network error. Try again.`,`error`),console.error(e)}finally{e.disabled=!1,e.innerHTML=t}};function FO(e,t=`success`){let n=document.getElementById(`status-toast`);document.getElementById(`toast-msg`).textContent=e,n.className=t,setTimeout(()=>{n.className=``},3500)}DO.add(`reviews-block`,{label:`⭐ Reviews Block`,category:window.__(`Safaris Blocks`),content:`<!-- REVIEWS -->
 <section class="reviews-section" id="reviews">
   <div class="reviews-inner">
     <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem;">
@@ -2367,7 +2415,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
     </form>
     <p style="font-size:12px; color:rgba(255,255,255,0.35); margin-top:1rem;">No spam, ever. Unsubscribe anytime.</p>
   </div>
-</section>`,attributes:{class:`fa-solid fa-envelope-open-text`}});var PO=`padding: 14px 18px; text-align: left; color: #CA9A2E; font-family: 'Playfair Display', Georgia, serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border: none;`,FO=`padding: 14px 18px; color: #2E1F12; font-family: 'Lora', Georgia, serif; font-size: 15px;`,IO=`padding: 14px 18px; color: #4A3728; font-family: 'Lora', Georgia, serif; font-size: 15px;`;DO.add(`safaris-table`,{label:`📋 Table`,category:window.__(`Safaris Blocks`),attributes:{class:`fa-solid fa-table`},content:`
+</section>`,attributes:{class:`fa-solid fa-envelope-open-text`}});var IO=`padding: 14px 18px; text-align: left; color: #CA9A2E; font-family: 'Playfair Display', Georgia, serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border: none;`,LO=`padding: 14px 18px; color: #2E1F12; font-family: 'Lora', Georgia, serif; font-size: 15px;`,RO=`padding: 14px 18px; color: #4A3728; font-family: 'Lora', Georgia, serif; font-size: 15px;`;DO.add(`safaris-table`,{label:`📋 Table`,category:window.__(`Safaris Blocks`),attributes:{class:`fa-solid fa-table`},content:`
 <section data-gjs-name="Table Section" style="padding: 60px 20px; background: #fff;">
   <div data-gjs-name="Table Container" style="max-width: 900px; margin: 0 auto;">
     <h2 data-gjs-type="text" style="font-family: 'Playfair Display', Georgia, serif; font-size: 25px; font-weight: 700; color: #2E1F12; margin-bottom: 1.5rem;">Table Heading</h2>
@@ -2375,36 +2423,36 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
       <table style="width: 100%; border-collapse: collapse; font-family: 'Lora', Georgia, serif; font-size: 15px; background: #fff;">
         <thead>
           <tr style="background: #2E1F12;">
-            <th style="${PO}"><div data-gjs-type="text">Column 1</div></th>
-            <th style="${PO}"><div data-gjs-type="text">Column 2</div></th>
-            <th style="${PO}"><div data-gjs-type="text">Column 3</div></th>
-            <th style="${PO}"><div data-gjs-type="text">Column 4</div></th>
+            <th style="${IO}"><div data-gjs-type="text">Column 1</div></th>
+            <th style="${IO}"><div data-gjs-type="text">Column 2</div></th>
+            <th style="${IO}"><div data-gjs-type="text">Column 3</div></th>
+            <th style="${IO}"><div data-gjs-type="text">Column 4</div></th>
           </tr>
         </thead>
         <tbody>
           <tr style="border-bottom: 1px solid #EEE5D4;">
-            <td style="${FO}"><div data-gjs-type="text">Row 1, Cell 1</div></td>
-            <td style="${IO}"><div data-gjs-type="text">Row 1, Cell 2</div></td>
-            <td style="${IO}"><div data-gjs-type="text">Row 1, Cell 3</div></td>
-            <td style="${IO}"><div data-gjs-type="text">Row 1, Cell 4</div></td>
+            <td style="${LO}"><div data-gjs-type="text">Row 1, Cell 1</div></td>
+            <td style="${RO}"><div data-gjs-type="text">Row 1, Cell 2</div></td>
+            <td style="${RO}"><div data-gjs-type="text">Row 1, Cell 3</div></td>
+            <td style="${RO}"><div data-gjs-type="text">Row 1, Cell 4</div></td>
           </tr>
           <tr style="border-bottom: 1px solid #EEE5D4; background: #FAF6EF;">
-            <td style="${FO}"><div data-gjs-type="text">Row 2, Cell 1</div></td>
-            <td style="${IO}"><div data-gjs-type="text">Row 2, Cell 2</div></td>
-            <td style="${IO}"><div data-gjs-type="text">Row 2, Cell 3</div></td>
-            <td style="${IO}"><div data-gjs-type="text">Row 2, Cell 4</div></td>
+            <td style="${LO}"><div data-gjs-type="text">Row 2, Cell 1</div></td>
+            <td style="${RO}"><div data-gjs-type="text">Row 2, Cell 2</div></td>
+            <td style="${RO}"><div data-gjs-type="text">Row 2, Cell 3</div></td>
+            <td style="${RO}"><div data-gjs-type="text">Row 2, Cell 4</div></td>
           </tr>
           <tr style="border-bottom: 1px solid #EEE5D4;">
-            <td style="${FO}"><div data-gjs-type="text">Row 3, Cell 1</div></td>
-            <td style="${IO}"><div data-gjs-type="text">Row 3, Cell 2</div></td>
-            <td style="${IO}"><div data-gjs-type="text">Row 3, Cell 3</div></td>
-            <td style="${IO}"><div data-gjs-type="text">Row 3, Cell 4</div></td>
+            <td style="${LO}"><div data-gjs-type="text">Row 3, Cell 1</div></td>
+            <td style="${RO}"><div data-gjs-type="text">Row 3, Cell 2</div></td>
+            <td style="${RO}"><div data-gjs-type="text">Row 3, Cell 3</div></td>
+            <td style="${RO}"><div data-gjs-type="text">Row 3, Cell 4</div></td>
           </tr>
           <tr style="background: #FAF6EF;">
-            <td style="${FO}"><div data-gjs-type="text">Row 4, Cell 1</div></td>
-            <td style="${IO}"><div data-gjs-type="text">Row 4, Cell 2</div></td>
-            <td style="${IO}"><div data-gjs-type="text">Row 4, Cell 3</div></td>
-            <td style="${IO}"><div data-gjs-type="text">Row 4, Cell 4</div></td>
+            <td style="${LO}"><div data-gjs-type="text">Row 4, Cell 1</div></td>
+            <td style="${RO}"><div data-gjs-type="text">Row 4, Cell 2</div></td>
+            <td style="${RO}"><div data-gjs-type="text">Row 4, Cell 3</div></td>
+            <td style="${RO}"><div data-gjs-type="text">Row 4, Cell 4</div></td>
           </tr>
         </tbody>
       </table>

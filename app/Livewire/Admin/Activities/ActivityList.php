@@ -7,16 +7,18 @@ use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use App\Models\Activity;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Traits\HasReports;
+use App\Traits\InteractsWithMediaUploads;
 
 #[Layout('admin::layouts.app')]
 #[Title('Activities')]
 class ActivityList extends Component
 {
-    use WithPagination, HasReports, AuthorizesRequests, \App\Traits\HasLocaleTranslations;
+    use WithPagination, WithFileUploads, HasReports, AuthorizesRequests, \App\Traits\HasLocaleTranslations, InteractsWithMediaUploads;
 
     #[Url(history: true)]
     public $search = '';
@@ -30,6 +32,8 @@ class ActivityList extends Component
     public $activity_id;
     public $slug;
     public $is_active = true;
+    public $image;
+    public $existingImage;
 
     public $isEdit = false;
     public $showModal = false;
@@ -57,6 +61,8 @@ class ActivityList extends Component
         $this->initLocaleTranslations();
         $this->slug = '';
         $this->is_active = true;
+        $this->image = null;
+        $this->existingImage = null;
         $this->isEdit = false;
     }
 
@@ -76,6 +82,8 @@ class ActivityList extends Component
         $this->loadTranslationsFromModel($activity, ['name', 'description']);
         $this->slug = $activity->slug;
         $this->is_active = $activity->is_active;
+        $this->existingImage = $activity->image;
+        $this->image = null;
         $this->isEdit = true;
         $this->showModal = true;
     }
@@ -87,8 +95,20 @@ class ActivityList extends Component
             'names.en' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:activities,slug,' . $this->activity_id,
             'is_active' => 'boolean',
+            'image' => $this->imageRule('image', 2048),
         ], ['names.en.required' => 'The English name is required.']);
-        $data = ['slug' => $this->slug, 'is_active' => $this->is_active];
+
+        $data = [
+            'slug' => $this->slug,
+            'is_active' => $this->is_active,
+        ];
+
+        if ($this->image) {
+            $data['image'] = $this->saveImageField($this->image, 'activities');
+        } elseif (empty($this->existingImage)) {
+            $data['image'] = null;
+        }
+
         if ($this->isEdit) {
             $a = Activity::find($this->activity_id);
             $a->fill($data);

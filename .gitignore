@@ -9,4 +9,5 @@
 /.htaccess
 /public/hot
 /vendor
+vendor.zip
 scratch/

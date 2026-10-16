@@ -391,6 +391,7 @@
     window.COUNTRIES = @json($countries ?? []);
     window.POST_CATEGORIES = @json($postCategories ?? []);
     window.TOUR_COUNTRIES = @json($tourCountries ?? []);
+    window.ACTIVITIES = @json($activities ?? []);
     window.APP_CSS_URL = '{{ Vite::asset('resources/css/app.css') }}';
 
     // Editor Translations Dictionary
@@ -407,7 +408,8 @@
         'All Countries': '{{ __("All Countries") }}',
         'All Group Categories': '{{ __("All Group Categories") }}',
         'All Tags': '{{ __("All Tags") }}',
-        'All Routes': '{{ __("All Routes") }}'
+        'All Routes': '{{ __("All Routes") }}',
+        'All Activities': '{{ __("All Activities") }}'
     };
 
     // Global JS translation helper

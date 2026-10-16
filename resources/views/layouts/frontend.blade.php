@@ -53,7 +53,7 @@
     @livewireStyles
 </head>
 
-<body class="frontend-body bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased font-lora">
+<body class="frontend-body bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased font-lora overflow-x-hidden">
 
     @hasSection('header')
         @yield('header')
@@ -61,7 +61,7 @@
     <!-- Navbar Wrapper to share state between nav and fixed drawer -->
     <header x-data="{ mobileMenuOpen: false, isSticky: false, navScrollY: 0 }"
         @scroll.window="isSticky = (window.pageYOffset > 150); navScrollY = window.pageYOffset" 
-        class="top-0 z-50 w-full transition-all duration-300 relative bg-white shadow-xl">
+        class="top-0 z-[120] w-full transition-all duration-300 relative bg-white shadow-xl">
 
         <!-- Top Bar Area (Logo + Top Menu Content) -->
         <div class="relative w-full bg-white h-[40px]">
@@ -182,8 +182,8 @@
         </div>
 
         <!-- Nav Bar Area -->
-        <nav class="hidden lg:block w-full h-[40px] bg-white border-y border-gray-100 relative shadow-sm"
-             :class="isSticky ? 'fixed top-0 left-0 right-0 shadow-2xl z-[100] animate-nav-slide-down' : ''">
+        <nav class="hidden lg:block w-full h-[40px] bg-white border-y border-gray-100 relative z-[130] shadow-sm"
+             :class="isSticky ? 'fixed top-0 left-0 right-0 shadow-2xl z-[150] animate-nav-slide-down' : ''">
             <div class="mx-auto max-w-7xl h-full flex items-center justify-between relative">
                 
                 <!-- Desktop Logo Area -->
@@ -209,24 +209,28 @@
                     </div>
                 </div>
 
-                <div class="flex items-center h-full relative z-0">
+                <div class="flex items-center h-full relative z-10">
                     @if($headerMenu->count() > 0)
                         @foreach($headerMenu as $index => $item)
-                            <div class="h-full relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                            <div class="h-full relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @focusin="open = true" @focusout="open = false">
                                 <!-- Tab Link -->
-                                <a href="{{ $item->resolved_url }}" @if($item->is_external) target="_blank" rel="noopener noreferrer" @endif
+                                <a href="{{ $item->resolved_url }}" 
+                                    @if($item->is_mega_menu || $item->children->count() > 0) @click.prevent="open = !open" @endif
+                                    @if($item->is_external) target="_blank" rel="noopener noreferrer" @endif
                                     class="relative z-10 flex items-center justify-center px-8 h-full text-[11px] font-bold tracking-[0.1em] uppercase transition-colors whitespace-nowrap {{ $index === 0 ? 'text-black' : 'text-gray-500 group-hover:text-black' }}">
                                     {{ __($item->label) }}
-                                    @if($item->children->count() > 0)
-                                        <x-icon name="chevron-down" class="w-3 h-3 ml-2 opacity-50 group-hover:opacity-100" />
+                                    @if($item->is_mega_menu || $item->children->count() > 0)
+                                        <x-icon name="chevron-down" class="w-3 h-3 ml-2 opacity-50 group-hover:opacity-100 transition-transform duration-200" x-bind:class="open ? 'rotate-180 opacity-100 text-[#7d834a]' : ''" />
                                     @endif
                                 </a>
                                 
                                 <!-- Slant Background -->
                                 <div class="absolute inset-0 bg-transparent transform -skew-x-[20deg] border-r border-gray-200 transition-colors group-hover:bg-gray-50 -z-10 {{ $index === 0 ? 'bg-gray-100' : '' }}"></div>
 
-                                <!-- Dropdown Menu -->
-                                @if($item->children->count() > 0)
+                                <!-- Dropdown / Mega Menu -->
+                                @if($item->is_mega_menu)
+                                    <x-frontend.mega-menu :item="$item" />
+                                @elseif($item->children->count() > 0)
                                     <div x-show="open" x-transition:enter="transition ease-out duration-200"
                                         x-transition:enter-start="opacity-0 translate-y-2"
                                         x-transition:enter-end="opacity-100 translate-y-0"
@@ -361,7 +365,118 @@
                     <nav class="px-4 py-4">
                         @if($headerMenu->count() > 0)
                             @foreach($headerMenu as $index => $item)
-                                @if($item->children->count() > 0)
+                                @if($item->is_mega_menu)
+                                    {{-- Mega Menu Mobile Accordion --}}
+                                    @php
+                                        $mColumns = $item->getMegaMenuColumns();
+                                    @endphp
+                                    <div x-data="{ open: false }" class="mb-1">
+                                        <div class="flex items-center rounded-[6px] overflow-hidden transition-all duration-200"
+                                            style="border: 1px solid rgba(201,168,76,0.0);"
+                                            x-bind:style="open ? 'border-color: rgba(201,168,76,0.18); background: rgba(201,168,76,0.05)' : ''">
+                                            <a href="{{ $item->resolved_url }}"
+                                                @if($item->is_external) target="_blank" rel="noopener noreferrer" @endif
+                                                @click="mobileMenuOpen = false"
+                                                class="flex-1 flex items-center gap-3 px-4 py-[14px] group">
+                                                <span class="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-200"
+                                                    x-bind:style="open ? 'background:#fbb158' : 'background:rgba(201,168,76,0.4)'"></span>
+                                                <span class="text-[15px] font-medium tracking-[0.06em] uppercase transition-colors duration-200"
+                                                    style="font-family: 'Lora', Georgia, serif;"
+                                                    x-bind:style="open ? 'color:#fbb158' : 'color:rgba(255,255,255,0.85)'">
+                                                    {{ __($item->label) }}
+                                                </span>
+                                            </a>
+                                            <button @click="open = !open" type="button"
+                                                class="flex items-center justify-center w-10 h-[50px] flex-shrink-0 focus:outline-none transition-colors duration-200">
+                                                <svg class="w-4 h-4 transition-transform duration-300"
+                                                    x-bind:style="open ? 'transform:rotate(180deg); color:#fbb158' : 'color:rgba(255,255,255,0.85)'"
+                                                    fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+
+                                        {{-- Sub-menu for Mega Menu --}}
+                                        <div x-show="open"
+                                            x-transition:enter="transition ease-out duration-200"
+                                            x-transition:enter-start="opacity-0 -translate-y-1"
+                                            x-transition:enter-end="opacity-100 translate-y-0"
+                                            x-transition:leave="transition ease-in duration-150"
+                                            x-transition:leave-start="opacity-100 translate-y-0"
+                                            x-transition:leave-end="opacity-0 -translate-y-1"
+                                            class="ml-4 mb-2 p-3 rounded-b-[6px] space-y-4 bg-white/5"
+                                            style="display:none; border-left: 2px solid rgba(201,168,76,0.3);">
+                                            
+                                            @foreach($mColumns as $mColIdx => $mCol)
+                                                @php $mcType = $mCol['type'] ?? 'links'; @endphp
+
+                                                @if($mcType === 'links')
+                                                    <div class="{{ $mColIdx > 0 ? 'border-t border-white/10 pt-3' : '' }}">
+                                                        @if(!empty($mCol['title']))
+                                                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#fbb158] block mb-2">{{ $mCol['title'] }}</span>
+                                                        @endif
+                                                        <div class="space-y-1.5">
+                                                            @foreach($mCol['items'] ?? [] as $mRoute)
+                                                                @php
+                                                                    $mRUrl = $mRoute['url'] ?? '#';
+                                                                    if ($mRUrl !== '#' && !str_starts_with($mRUrl, 'http') && !str_starts_with($mRUrl, '/') && !str_starts_with($mRUrl, '#')) {
+                                                                        $mRUrl = url($mRUrl);
+                                                                    }
+                                                                @endphp
+                                                                <a href="{{ $mRUrl }}" @click="mobileMenuOpen = false" class="flex items-center justify-between py-1 text-[13px] text-gray-300 hover:text-white">
+                                                                    <span class="flex items-center gap-1.5">
+                                                                        <span class="text-xs text-[#fbb158]">→</span>
+                                                                        <span>{{ $mRoute['label'] ?? '' }}</span>
+                                                                    </span>
+                                                                    @if(!empty($mRoute['badge']))
+                                                                        <span class="bg-[#343a1a] text-[#c0d65b] text-[9px] font-bold px-1.5 py-0.5 rounded uppercase">{{ $mRoute['badge'] }}</span>
+                                                                    @endif
+                                                                </a>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+
+                                                @elseif($mcType === 'media_list')
+                                                    <div class="{{ $mColIdx > 0 ? 'border-t border-white/10 pt-3' : '' }}">
+                                                        @if(!empty($mCol['title']))
+                                                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#fbb158] block mb-2">{{ $mCol['title'] }}</span>
+                                                        @endif
+                                                        <div class="space-y-2">
+                                                            @foreach($mCol['items'] ?? [] as $mTrek)
+                                                                @php
+                                                                    $mTUrl = $mTrek['url'] ?? '#';
+                                                                    if ($mTUrl !== '#' && !str_starts_with($mTUrl, 'http') && !str_starts_with($mTUrl, '/') && !str_starts_with($mTUrl, '#')) {
+                                                                        $mTUrl = url($mTUrl);
+                                                                    }
+                                                                @endphp
+                                                                <a href="{{ $mTUrl }}" @click="mobileMenuOpen = false" class="flex items-center gap-2.5 p-1 rounded hover:bg-white/5">
+                                                                    <img src="{{ $mTrek['image'] ?? asset('images/mega-menu/mount-meru.jpg') }}" class="w-10 h-8 rounded object-cover flex-shrink-0">
+                                                                    <div class="min-w-0">
+                                                                        <span class="text-[12px] font-medium text-white block leading-tight truncate">{{ $mTrek['title'] ?? '' }}</span>
+                                                                        @if(!empty($mTrek['subtitle']))
+                                                                            <span class="text-[10px] text-gray-400 block truncate">{{ $mTrek['subtitle'] }}</span>
+                                                                        @endif
+                                                                    </div>
+                                                                </a>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+
+                                                @elseif($mcType === 'promo')
+                                                    <div class="{{ $mColIdx > 0 ? 'border-t border-white/10 pt-3' : '' }}">
+                                                        <a href="{{ url($mCol['btn_url'] ?? '#') }}" @click="mobileMenuOpen = false" class="block p-2.5 rounded bg-[#7d834a]/30 border border-[#7d834a]/50 text-center">
+                                                            <span class="text-[12px] font-bold text-white block mb-1.5">{{ $mCol['title'] ?? '' }}</span>
+                                                            @if(!empty($mCol['btn_text']))
+                                                                <span class="inline-block px-3 py-1 bg-[#c69752] text-white text-[11px] font-bold rounded">» {{ $mCol['btn_text'] }}</span>
+                                                            @endif
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+
+                                        </div>
+                                    </div>
+                                @elseif($item->children->count() > 0)
                                     {{-- Parent with children --}}
                                     <div x-data="{ open: false }" class="mb-1">
                                         <div class="flex items-center rounded-[6px] overflow-hidden transition-all duration-200"
@@ -578,7 +693,7 @@
                             </div>
                         @endif
                     </a>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">{{ __('Your premier partner for unforgettable African safaris, Kilimanjaro treks, and Zanzibar escapes.') }}</p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">{{ __('Fargin Safaris offers various travel experiences that highlight Tanzania’s rich culture, diverse wildlife, and stunning landscapes.') }}</p>
                 </div>
 
                 <!-- Company Links -->

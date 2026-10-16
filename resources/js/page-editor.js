@@ -2213,6 +2213,216 @@ bm.add('safaris-group-tours-dynamic', {
 </section>`,
 });
 
+// ── Activities Slider Component & Block ──────────────────────────────────────
+function getActivityMultiselectOptions() {
+    const list = window.ACTIVITIES || [];
+    return [
+        { value: 'all', name: window.__('All Activities') },
+        ...list.map(a => {
+            let name = a.name;
+            if (typeof name === 'object' && name !== null) {
+                name = name.en || Object.values(name)[0] || 'Activity';
+            }
+            return { value: String(a.id), name: String(name) };
+        })
+    ];
+}
+
+function buildActivitiesSliderPreviewHtml(attrs) {
+    const heading = attrs['data-heading'] || 'Signature Activities & Experiences';
+    const headingAccent = attrs['data-heading-accent'] || 'In The Wild';
+    const subheading = attrs['data-subheading'] || 'Discover the heart of the wilderness through handpicked safari activities, guided by expert local trackers.';
+    const rawActivities = attrs['data-activities'] || 'all';
+    const isDark = (attrs['data-theme'] || 'light') === 'dark';
+
+    const allActivities = window.ACTIVITIES || [];
+    let selectedList = [];
+
+    if (rawActivities === 'all' || !rawActivities) {
+        selectedList = allActivities.slice(0, 6);
+    } else {
+        const ids = rawActivities.split(',').map(s => s.trim()).filter(Boolean);
+        const map = new Map();
+        allActivities.forEach(a => map.set(String(a.id), a));
+        ids.forEach(id => {
+            if (map.has(id)) selectedList.push(map.get(id));
+        });
+        if (selectedList.length === 0) {
+            selectedList = allActivities.slice(0, 6);
+        }
+    }
+
+    const cardsHtml = selectedList.map((item, idx) => {
+        let title = item.name;
+        if (typeof title === 'object' && title !== null) {
+            title = title.en || Object.values(title)[0] || 'Safari Experience';
+        }
+
+        let desc = item.description || '';
+        if (typeof desc === 'object' && desc !== null) {
+            desc = desc.en || Object.values(desc)[0] || '';
+        }
+        desc = desc.replace(/<[^>]*>?/gm, '').trim();
+        if (desc.length > 130) desc = desc.substring(0, 130) + '...';
+
+        let imgUrl = item.image || '';
+        if (imgUrl && !imgUrl.startsWith('http')) {
+            imgUrl = '/storage/' + imgUrl.replace(/^\/?storage\//, '');
+        }
+        if (!imgUrl) {
+            imgUrl = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80';
+        }
+
+        return `
+            <div style="flex: 0 0 320px; height: 460px; position: relative; border-radius: 20px; overflow: hidden; background: #000; border: 1px solid rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: flex-end; padding: 24px;">
+                <img src="${imgUrl}" alt="${title}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.9;" />
+                <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.2) 100%);"></div>
+                
+                <div style="position: absolute; top: 18px; right: 18px; z-index: 2;">
+                    <span style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.4); color: #fff; border: 1px solid rgba(255,255,255,0.25);">→</span>
+                </div>
+
+                <div style="position: relative; z-index: 2;">
+                    <div style="width: 32px; height: 2px; background: #CA9A2E; border-radius: 2px; margin-bottom: 10px;"></div>
+                    <h3 style="font-size: 1.25rem; font-weight: 700; color: #fff; line-height: 1.2; margin: 0 0 8px 0; font-family: Playfair Display, serif;">${title}</h3>
+                    <p style="font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.85); margin: 0; font-family: Lora, serif;">${desc || 'Authentic wilderness encounter curated by expert local safari guides.'}</p>
+                    <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 11px; font-weight: 700; color: #CA9A2E; text-transform: uppercase; letter-spacing: 0.05em;">Explore Details →</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    return `
+        <div style="padding: 10px 0; font-family: sans-serif; pointer-events: none; background: ${isDark ? '#0d1611' : '#ffffff'};">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; gap: 20px;">
+                <div>
+                    <h2 style="font-size: 2.1rem; font-weight: 800; color: ${isDark ? '#fff' : '#111827'}; margin: 0 0 10px 0; line-height: 1.15; font-family: Playfair Display, serif;">
+                        ${heading} <span style="font-family: Cormorant Garamond, serif; font-style: italic; color: #CA9A2E; font-weight: 400;">${headingAccent}</span>
+                    </h2>
+                    <p style="font-size: 14px; color: ${isDark ? '#9ca3af' : '#4b5563'}; margin: 0; max-width: 580px; line-height: 1.5;">${subheading}</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid ${isDark ? 'rgba(255,255,255,0.2)' : '#e5e7eb'}; background: ${isDark ? 'rgba(255,255,255,0.06)' : '#ffffff'}; display: flex; align-items: center; justify-content: center; color: ${isDark ? '#fff' : '#1f2937'}; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">‹</div>
+                    <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid ${isDark ? 'rgba(255,255,255,0.2)' : '#e5e7eb'}; background: ${isDark ? 'rgba(255,255,255,0.06)' : '#ffffff'}; display: flex; align-items: center; justify-content: center; color: ${isDark ? '#fff' : '#1f2937'}; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">›</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 20px; overflow-x: hidden; padding-bottom: 10px;">
+                ${cardsHtml}
+            </div>
+            
+            <p style="text-align: center; margin-top: 15px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #CA9A2E; font-weight: 600;">
+                ✦ Interactive Alpine.js Slider with Smooth Navigation will load live on the frontend ✦
+            </p>
+        </div>
+    `;
+}
+
+editor.DomComponents.addType('activities-slider', {
+    isComponent: el => (el && el.classList && el.classList.contains('safaris-activities-slider-block')) ? { type: 'activities-slider' } : false,
+    model: {
+        defaults: {
+            tagName: 'div',
+            droppable: false,
+            highlightable: true,
+            attributes: {
+                class: 'safaris-activities-slider-block',
+                'data-activities': 'all',
+                'data-heading': 'Signature Activities & Experiences',
+                'data-heading-accent': 'In The Wild',
+                'data-subheading': 'Discover the heart of the wilderness through handpicked safari activities, guided by expert local trackers.',
+                'data-theme': 'light',
+                'data-autoplay': 'true',
+                'data-limit': '12'
+            },
+            traits: [
+                {
+                    type: 'text',
+                    name: 'data-heading',
+                    label: 'Main Heading',
+                    value: 'Signature Activities & Experiences'
+                },
+                {
+                    type: 'text',
+                    name: 'data-heading-accent',
+                    label: 'Accent Heading (Italic)',
+                    value: 'In The Wild'
+                },
+                {
+                    type: 'text',
+                    name: 'data-subheading',
+                    label: 'Subheading Description',
+                    value: 'Discover the heart of the wilderness through handpicked safari activities, guided by expert local trackers.'
+                },
+                {
+                    type: 'ordered-multiselect',
+                    name: 'data-activities',
+                    label: 'Activities (Select & Order)',
+                    options: getActivityMultiselectOptions()
+                },
+                {
+                    type: 'select',
+                    name: 'data-theme',
+                    label: 'Color Theme',
+                    options: [
+                        { value: 'light', name: 'Clean White (Default)' },
+                        { value: 'dark', name: 'Safari Night (Dark)' }
+                    ]
+                },
+                {
+                    type: 'select',
+                    name: 'data-autoplay',
+                    label: 'Autoplay Slider',
+                    options: [
+                        { value: 'true', name: 'Enabled' },
+                        { value: 'false', name: 'Disabled' }
+                    ]
+                },
+                {
+                    type: 'number',
+                    name: 'data-limit',
+                    label: 'Item Limit (If All)',
+                    min: 1,
+                    max: 50,
+                    value: 12
+                }
+            ]
+        },
+        init() {
+            this.on('change:attributes:data-activities change:attributes:data-heading change:attributes:data-heading-accent change:attributes:data-subheading change:attributes:data-theme change:attributes:data-autoplay change:attributes:data-limit', this.updateCanvasHtml);
+            this.updateCanvasHtml();
+        },
+        updateCanvasHtml() {
+            const attrs = this.getAttributes();
+            this.set('content', buildActivitiesSliderPreviewHtml(attrs));
+        }
+    }
+});
+
+bm.add('safaris-activities-slider', {
+    label: '🏕️ Activities Slider',
+    category: window.__('Safaris Blocks'),
+    attributes: { class: 'fa-solid fa-person-hiking' },
+    content: `
+<section class="safaris-activities-slider-section py-20 bg-white text-gray-900 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div data-gjs-type="activities-slider" class="safaris-activities-slider-block" data-activities="all" data-heading="Signature Activities & Experiences" data-heading-accent="In The Wild" data-subheading="Discover the heart of the wilderness through handpicked safari activities, guided by expert local trackers." data-theme="light" data-autoplay="true" data-limit="12">
+      ${buildActivitiesSliderPreviewHtml({
+          'data-activities': 'all',
+          'data-heading': 'Signature Activities & Experiences',
+          'data-heading-accent': 'In The Wild',
+          'data-subheading': 'Discover the heart of the wilderness through handpicked safari activities, guided by expert local trackers.',
+          'data-theme': 'light',
+          'data-autoplay': 'true',
+          'data-limit': '12'
+      })}
+    </div>
+  </div>
+</section>`,
+});
+
 bm.add('safaris-start-planning', {
     label: '📋 Start Planning',
     category: window.__('Safaris Blocks'),

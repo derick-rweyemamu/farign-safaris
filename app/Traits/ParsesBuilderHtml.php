@@ -342,6 +342,50 @@ trait ParsesBuilderHtml
             $replaceNode($node, $rendered);
         }
 
+        // 4.5 Parse Activities Slider Block
+        foreach ($xpath->query('//div[contains(@class, "safaris-activities-slider-block")] | //section[contains(@class, "safaris-activities-slider-block")]') as $node) {
+            $activityIds = $node->getAttribute('data-activities') ?: 'all';
+            $heading = $node->getAttribute('data-heading') ?: null;
+            $headingAccent = $node->getAttribute('data-heading-accent') ?: null;
+            $subheading = $node->getAttribute('data-subheading') ?: null;
+            $theme = $node->getAttribute('data-theme') ?: 'light';
+            $autoplay = $node->getAttribute('data-autoplay') !== 'false';
+            $limit = (int) ($node->getAttribute('data-limit') ?: 12);
+
+            $rendered = \Illuminate\Support\Facades\Blade::render(
+                '@livewire("frontend.activities-slider-block", [
+                    "activityIds" => $activityIds,
+                    "heading" => $heading,
+                    "headingAccent" => $headingAccent,
+                    "subheading" => $subheading,
+                    "theme" => $theme,
+                    "autoplay" => $autoplay,
+                    "limit" => $limit
+                ])',
+                [
+                    'activityIds' => $activityIds,
+                    'heading' => $heading,
+                    'headingAccent' => $headingAccent,
+                    'subheading' => $subheading,
+                    'theme' => $theme,
+                    'autoplay' => $autoplay,
+                    'limit' => $limit
+                ]
+            );
+            // If this node is wrapped inside an outer builder section (e.g. safaris-activities-slider-section), replace the outer section
+            $targetNode = $node;
+            $curr = $node->parentNode;
+            while ($curr && $curr instanceof \DOMElement && $curr->nodeName !== 'body' && $curr->nodeName !== '#document') {
+                if ($curr->nodeName === 'section' && str_contains($curr->getAttribute('class') ?? '', 'safaris-activities-slider-section')) {
+                    $targetNode = $curr;
+                    break;
+                }
+                $curr = $curr->parentNode;
+            }
+
+            $replaceNode($targetNode, $rendered);
+        }
+
         // 5. Parse Dynamic Tour Types Selects
         foreach ($xpath->query('//select[contains(@class, "dynamic-tour-types")]') as $node) {
             // Remove existing dummy options

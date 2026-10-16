@@ -59,6 +59,7 @@
             <table class="data-table">
                 <thead>
                     <tr>
+                        <th class="w-14">{{ __('Image') }}</th>
                         <th>{{ __('Name') }}</th>
                         <th>{{ __('Slug') }}</th>
                         <th>{{ __('Description') }}</th>
@@ -71,6 +72,15 @@
                 <tbody>
                     @forelse($activities as $activity)
                         <tr wire:key="activity-{{ $activity->id }}" class="animate-fade-in">
+                            <td>
+                                <div class="w-10 h-10 rounded-[3px] overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center border border-gray-100 dark:border-gray-700">
+                                    @if($activity->image)
+                                        <img src="{{ str_starts_with($activity->image, 'http') ? $activity->image : asset('storage/' . $activity->image) }}" alt="{{ $activity->name }}" class="w-full h-full object-cover">
+                                    @else
+                                        <x-icon name="photo" class="w-5 h-5 text-gray-400" />
+                                    @endif
+                                </div>
+                            </td>
                             <td class="font-semibold text-gray-800 dark:text-gray-100">
                                 {{ $activity->name }}
                             </td>
@@ -114,7 +124,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="py-16 text-center">
+                            <td colspan="6" class="py-16 text-center">
                                 <x-icon name="clipboard-list"
                                     class="w-12 h-12 text-gray-300 dark:text-gray-700 mx-auto mb-3" />
                                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -154,6 +164,19 @@
                             :activeLocaleTab="$activeLocaleTab"
                             namePlaceholder="e.g. Balloon Safari Over Serengeti"
                             descPlaceholder="Activity description..." />
+
+                        <!-- Image Upload / Library Picker -->
+                        <div>
+                            <x-admin.image-upload
+                                :image="$image"
+                                :existing="$existingImage"
+                                label="{{ __('Activity Image') }}"
+                                id="activity_image_input"
+                                model="image"
+                                uploadFolder="activities"
+                                clearAction="$set('image', null); $set('existingImage', '')"
+                            />
+                        </div>
 
                         {{-- Slug --}}
                         <div>

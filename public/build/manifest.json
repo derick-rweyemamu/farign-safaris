@@ -4,7 +4,7 @@
     "name": "module.esm"
   },
   "resources/css/app.css": {
-    "file": "assets/app-CcpWOy4D.css",
+    "file": "assets/app-Bc42Jjii.css",
     "name": "app",
     "names": [
       "app.css"
@@ -22,7 +22,7 @@
     ]
   },
   "resources/js/page-editor.js": {
-    "file": "assets/page-editor-DVkZzeMd.js",
+    "file": "assets/page-editor-BIpv_hAw.js",
     "name": "page-editor",
     "src": "resources/js/page-editor.js",
     "isEntry": true,
@@ -31,7 +31,7 @@
     ]
   },
   "resources/themes/admin/assets/css/app.css": {
-    "file": "assets/app-0y6I_4L2.css",
+    "file": "assets/app-B4qIGU0C.css",
     "name": "app",
     "names": [
       "app.css"
@@ -49,7 +49,7 @@
     ]
   },
   "resources/themes/frontend/assets/css/app.css": {
-    "file": "assets/app-DHhy7iFR.css",
+    "file": "assets/app-BQ6R29v0.css",
     "name": "app",
     "names": [
       "app.css"

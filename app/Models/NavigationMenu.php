@@ -21,13 +21,15 @@ class NavigationMenu extends Model
         'is_external',
         'is_active',
         'is_mega_menu',
+        'mega_menu_data',
     ];
 
     protected $casts = [
-        'is_external'  => 'boolean',
-        'is_active'    => 'boolean',
-        'is_mega_menu' => 'boolean',
-        'sort_order'   => 'integer',
+        'is_external'    => 'boolean',
+        'is_active'      => 'boolean',
+        'is_mega_menu'   => 'boolean',
+        'mega_menu_data' => 'array',
+        'sort_order'     => 'integer',
     ];
 
     /** Location labels for display in admin */
@@ -85,6 +87,55 @@ class NavigationMenu extends Model
         }
         
         return $url;
+    }
+
+    /**
+     * Get normalized mega menu columns array.
+     */
+    public function getMegaMenuColumns(): array
+    {
+        $data = $this->mega_menu_data ?? [];
+
+        if (isset($data['columns']) && is_array($data['columns'])) {
+            return $data['columns'];
+        }
+
+        // Migrate / fallback from legacy flat format
+        $columns = [];
+
+        // Col 1: Links / Routes
+        if (!empty($data['col1_items']) || !empty($data['col1_title'])) {
+            $columns[] = [
+                'type'     => 'links',
+                'title'    => $data['col1_title'] ?? 'Mount Kilimanjaro',
+                'items'    => $data['col1_items'] ?? [],
+                'btn_text' => $data['col1_btn_text'] ?? 'View All Packages',
+                'btn_url'  => $data['col1_btn_url'] ?? '/tours',
+            ];
+        }
+
+        // Col 2: Media List / Treks
+        if (!empty($data['col2_items'])) {
+            $columns[] = [
+                'type'  => 'media_list',
+                'title' => 'Featured Treks',
+                'items' => $data['col2_items'] ?? [],
+            ];
+        }
+
+        // Col 3: Promo Card
+        if (!empty($data['col3_title']) || !empty($data['col3_image'])) {
+            $columns[] = [
+                'type'     => 'promo',
+                'title'    => $data['col3_title'] ?? 'Conquer the Roof of Africa',
+                'image'    => $data['col3_image'] ?? '/images/mega-menu/kilimanjaro-summit.jpg',
+                'btn_text' => $data['col3_btn_text'] ?? 'Explore the Heights',
+                'btn_url'  => $data['col3_btn_url'] ?? '/kilimanjaro',
+                'bg_color' => $data['col3_bg_color'] ?? '#7d834a',
+            ];
+        }
+
+        return $columns;
     }
 }
 
