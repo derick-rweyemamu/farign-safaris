@@ -123,40 +123,6 @@
                         @endif
                     </div>
 
-                    {{-- Language Switcher --}}
-                    @php
-                        $currentLocale = app()->getLocale();
-                        $supportedLocales = config('locales.supported', []);
-                        $currentLocaleData = $supportedLocales[$currentLocale] ?? ['label' => 'EN', 'flag_img' => 'gb.png'];
-                    @endphp
-                    <div class="relative ml-2 h-full flex items-center" 
-                         x-data="{ langOpen: false }" 
-                         @click.away="langOpen = false">
-                        <div class="pl-6 border-l border-gray-200 flex items-center">
-                            <button type="button" @click="langOpen = !langOpen"
-                                class="flex items-center gap-2 text-gray-600 hover:text-black font-bold tracking-[0.1em] uppercase transition-colors text-[12px]">
-                                @if(isset($currentLocaleData['flag_img']))
-                                    <img src="{{ asset('storage/flags/' . $currentLocaleData['flag_img']) }}" alt="{{ $currentLocale }}" class="w-4 h-3 object-cover opacity-80 shadow-sm">
-                                @endif
-                                <span>{{ $currentLocaleData['label'] ?? strtoupper($currentLocale) }}</span>
-                                <x-icon name="chevron-down" class="w-3 h-3 opacity-50"
-                                    x-bind:class="langOpen ? 'rotate-180' : ''" />
-                            </button>
-                        </div>
-                        <div x-show="langOpen" x-transition
-                            class="absolute top-full right-0 mt-0 min-w-[140px] bg-white border border-gray-100 shadow-xl z-50">
-                            @foreach($supportedLocales as $code => $localeData)
-                                <a href="{{ route('locale.switch', ['locale' => $code]) }}"
-                                    class="flex items-center gap-3 px-4 py-3 font-bold tracking-wider uppercase transition-all text-[11px] {{ $code === $currentLocale ? 'text-black bg-gray-100' : 'text-gray-500 hover:text-black hover:bg-gray-50' }}">
-                                    @if(isset($localeData['flag_img']))
-                                        <img src="{{ asset('storage/flags/' . $localeData['flag_img']) }}" alt="{{ $localeData['label'] }}" class="w-4 h-3 object-cover opacity-80 shadow-sm">
-                                    @endif
-                                    <span>{{ $localeData['label'] ?? strtoupper($code) }}</span>
-                                </a>
-                            @endforeach
-                        </div>
-                    </div>
-
                     <!-- CTA Button -->
                     @if(!empty($companySetting?->whatsapp_number))
                         <div class="ml-4">
@@ -308,44 +274,6 @@
                     </a>
 
                     <div class="flex items-center gap-2.5">
-                        {{-- Mobile Header Language Switcher --}}
-                        @php
-                            $currentLocale = app()->getLocale();
-                            $supportedLocales = config('locales.supported', []);
-                            $currentLocaleData = $supportedLocales[$currentLocale] ?? ['label' => 'ENGLISH', 'flag_img' => 'gb.png'];
-                        @endphp
-                        <div class="relative" x-data="{ mLangOpen: false }" @click.away="mLangOpen = false">
-                            <button type="button" @click="mLangOpen = !mLangOpen"
-                                class="flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] border border-[#fbb158]/25 text-white/85 hover:text-[#fbb158] font-semibold tracking-[0.05em] uppercase transition-all shadow-sm"
-                                style="background: rgba(201,168,76,0.08); font-size: 11px !important; line-height: 1;">
-                                @if(isset($currentLocaleData['flag_img']))
-                                    <img src="{{ asset('storage/flags/' . $currentLocaleData['flag_img']) }}" alt="{{ $currentLocale }}" class="w-4 h-3 rounded-[2px] object-cover shadow-2xs">
-                                @endif
-                                <span style="font-size: 11px !important;">{{ $currentLocaleData['label'] ?? strtoupper($currentLocale) }}</span>
-                                <x-icon name="chevron-down" class="w-2.5 h-2.5 opacity-60 transition-transform duration-200"
-                                    x-bind:class="mLangOpen ? 'rotate-180 text-[#fbb158]' : ''" />
-                            </button>
-                            <div x-show="mLangOpen" x-transition:enter="transition ease-out duration-150"
-                                x-transition:enter-start="opacity-0 translate-y-1"
-                                x-transition:enter-end="opacity-100 translate-y-0"
-                                class="absolute right-0 top-[125%] min-w-[145px] bg-[#1e140a]/98 border border-[#fbb158]/25 rounded-[4px] shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-[9999] overflow-hidden"
-                                style="display: none; padding-top: 0 !important; padding-bottom: 0 !important;">
-                                @foreach($supportedLocales as $code => $localeData)
-                                    <a href="{{ route('locale.switch', ['locale' => $code]) }}"
-                                        class="flex items-center gap-2.5 px-3 py-2 font-semibold tracking-wider uppercase transition-all {{ $code === $currentLocale ? 'text-[#fbb158] bg-[#fbb158]/10 font-bold' : 'text-white/80 hover:text-[#fbb158] hover:bg-[#fbb158]/5' }}"
-                                        style="font-size: 11px !important; line-height: 1;">
-                                        @if(isset($localeData['flag_img']))
-                                            <img src="{{ asset('storage/flags/' . $localeData['flag_img']) }}" alt="{{ $localeData['label'] }}" class="w-4 h-3 rounded-[2px] object-cover shrink-0 shadow-2xs">
-                                        @endif
-                                        <span style="font-size: 11px !important;">{{ $localeData['label'] ?? strtoupper($code) }}</span>
-                                        @if($code === $currentLocale)
-                                            <x-icon name="check" class="w-3.5 h-3.5 text-[#fbb158] ml-auto shrink-0" />
-                                        @endif
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
-
                         {{-- Close button --}}
                         <button type="button" @click="mobileMenuOpen = false"
                             class="flex items-center justify-center w-9 h-9 rounded-full transition-all duration-200 focus:outline-none"
