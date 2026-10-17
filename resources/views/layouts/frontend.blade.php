@@ -16,13 +16,10 @@
         href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Indie+Flower&family=Instrument+Sans:wght@400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <!-- Theme persistence script -->
+    <!-- Disable dark mode on frontend (Always use Light mode) -->
     <script>
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        document.documentElement.classList.remove('dark');
+        window.__IS_FRONTEND__ = true;
     </script>
 
     <!-- Styles / Scripts -->
@@ -53,7 +50,7 @@
     @livewireStyles
 </head>
 
-<body class="frontend-body bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased font-lora overflow-x-hidden">
+<body class="frontend-body bg-white text-gray-900 antialiased font-lora overflow-x-hidden">
 
     @hasSection('header')
         @yield('header')
@@ -833,7 +830,7 @@
         <!-- Hover / Active Pill Tooltip -->
         <a href="https://wa.me/{{ $waClean }}?text={{ $waMessage }}"
             target="_blank" rel="noopener noreferrer"
-            class="wa-tooltip hidden sm:inline-flex items-center gap-2 mr-3 px-4 py-2 bg-white dark:bg-[#152018] text-gray-800 dark:text-gray-100 text-xs font-semibold rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.14)] border border-stone-200/80 dark:border-white/10 opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 pointer-events-auto hover:bg-stone-50 dark:hover:bg-[#1a281e]"
+            class="wa-tooltip hidden sm:inline-flex items-center gap-2 mr-3 px-4 py-2 bg-white text-gray-800 text-xs font-semibold rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.14)] border border-stone-200/80 opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 pointer-events-auto hover:bg-stone-50"
             style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
             <span class="w-2 h-2 rounded-full bg-[#25D366] animate-pulse"></span>
             <span>{{ __('Chat with us on WhatsApp') }}</span>
@@ -856,7 +853,7 @@
                 </svg>
 
                 <!-- Small Online Status Badge -->
-                <span class="absolute top-1 right-1 w-3.5 h-3.5 bg-emerald-400 border-2 border-white dark:border-[#121c15] rounded-full"></span>
+                <span class="absolute top-1 right-1 w-3.5 h-3.5 bg-emerald-400 border-2 border-white rounded-full"></span>
             </a>
         </div>
     </aside>

@@ -18,13 +18,10 @@
         href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Indie+Flower&family=Instrument+Sans:wght@400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <!-- Theme persistence script -->
+    <!-- Disable dark mode on frontend (Always use Light mode) -->
     <script>
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        document.documentElement.classList.remove('dark');
+        window.__IS_FRONTEND__ = true;
     </script>
 
     <!-- Styles / Scripts -->
@@ -52,7 +49,7 @@
     @livewireStyles
 </head>
 
-<body class="frontend-body bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased font-lora">
+<body class="frontend-body bg-white text-gray-900 antialiased font-lora">
 
     <!-- Navbar Wrapper to share state between nav and fixed drawer -->
     <header x-data="{ mobileMenuOpen: false, isSticky: false, navScrollY: 0 }"

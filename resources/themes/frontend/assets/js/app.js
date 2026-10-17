@@ -34,17 +34,30 @@ document.addEventListener('livewire:init', () => {
     Alpine.store('theme', {
         dark: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches),
 
+        isFrontend() {
+            return window.__IS_FRONTEND__ === true || document.body?.classList.contains('frontend-body');
+        },
+
         toggle() {
+            if (this.isFrontend()) return;
             this.dark = !this.dark;
             localStorage.setItem('theme', this.dark ? 'dark' : 'light');
             this.apply();
         },
 
         apply() {
+            if (this.isFrontend()) {
+                document.documentElement.classList.remove('dark');
+                return;
+            }
             document.documentElement.classList.toggle('dark', this.dark);
         },
 
         init() {
+            if (this.isFrontend()) {
+                document.documentElement.classList.remove('dark');
+                return;
+            }
             this.apply();
         }
     });

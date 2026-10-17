@@ -4,7 +4,7 @@
     "name": "module.esm"
   },
   "resources/css/app.css": {
-    "file": "assets/app-CyPJbkgi.css",
+    "file": "assets/app-Cdj_B8rX.css",
     "name": "app",
     "names": [
       "app.css"
@@ -13,7 +13,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-Bhc6pHOQ.js",
+    "file": "assets/app-BuZt_z0w.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -31,7 +31,7 @@
     ]
   },
   "resources/themes/admin/assets/css/app.css": {
-    "file": "assets/app-CpRSUFYf.css",
+    "file": "assets/app-heOWvIH7.css",
     "name": "app",
     "names": [
       "app.css"
@@ -49,7 +49,7 @@
     ]
   },
   "resources/themes/frontend/assets/css/app.css": {
-    "file": "assets/app-CjN4KZAb.css",
+    "file": "assets/app-DaZ1irXl.css",
     "name": "app",
     "names": [
       "app.css"
@@ -58,7 +58,7 @@
     "isEntry": true
   },
   "resources/themes/frontend/assets/js/app.js": {
-    "file": "assets/app-BpZ8Cb2z.js",
+    "file": "assets/app-BaNbaLmd.js",
     "name": "app",
     "src": "resources/themes/frontend/assets/js/app.js",
     "isEntry": true,
