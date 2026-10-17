@@ -137,5 +137,70 @@ class NavigationMenu extends Model
 
         return $columns;
     }
+
+    /**
+     * Check if this menu item or any of its children matches the current request URL.
+     */
+    public function isCurrentActive(): bool
+    {
+        try {
+            $currentUrl = url()->current();
+            $targetUrl = $this->resolved_url;
+
+            if ($targetUrl && $targetUrl !== '#' && $targetUrl !== 'javascript:void(0);' && $targetUrl !== 'javascript:void(0)') {
+                $cleanCurrent = rtrim($currentUrl, '/');
+                $cleanTarget = rtrim($targetUrl, '/');
+
+                if ($cleanCurrent === $cleanTarget) {
+                    return true;
+                }
+
+                $rootUrl = rtrim(url('/'), '/');
+                if ($cleanTarget !== $rootUrl && str_starts_with($cleanCurrent, $cleanTarget . '/')) {
+                    return true;
+                }
+            }
+
+            // Check children
+            if ($this->relationLoaded('children')) {
+                foreach ($this->children as $child) {
+                    if ($child->isCurrentActive()) {
+                        return true;
+                    }
+                }
+            } elseif ($this->children()->exists()) {
+                foreach ($this->children as $child) {
+                    if ($child->isCurrentActive()) {
+                        return true;
+                    }
+                }
+            }
+
+            // Check mega menu links
+            if ($this->is_mega_menu && !empty($this->mega_menu_data)) {
+                $cols = $this->getMegaMenuColumns();
+                foreach ($cols as $col) {
+                    if (!empty($col['btn_url'])) {
+                        $bUrl = rtrim(url($col['btn_url']), '/');
+                        if (rtrim($currentUrl, '/') === $bUrl) {
+                            return true;
+                        }
+                    }
+                    foreach ($col['items'] ?? [] as $mItem) {
+                        if (!empty($mItem['url'])) {
+                            $mUrl = rtrim(url($mItem['url']), '/');
+                            if (rtrim($currentUrl, '/') === $mUrl) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            return false;
+        }
+
+        return false;
+    }
 }
 

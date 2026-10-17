@@ -138,17 +138,25 @@
                             @if($headerMenu->count() > 0)
                                 {{-- Dynamic menu from DB --}}
                                 @foreach($headerMenu as $item)
+                                    @php
+                                        $hasChildren = $item->is_mega_menu || $item->children->count() > 0;
+                                        $hasRealUrl = !empty($item->resolved_url) && $item->resolved_url !== '#' && $item->resolved_url !== 'javascript:void(0);' && $item->resolved_url !== 'javascript:void(0)';
+                                        $isActive = $item->isCurrentActive();
+                                    @endphp
                                     @if($item->is_mega_menu)
                                         <div class="relative group h-full flex items-center" x-data="{ open: false }"
                                             @mouseenter="open = true" @mouseleave="open = false">
-                                            <a href="{{ $item->resolved_url }}" @if($item->is_external) target="_blank"
-                                            rel="noopener noreferrer" @endif
-                                                class="flex h-full items-center gap-1 text-white/80 hover:text-[#fbb158] px-4 text-[12px] font-medium tracking-[0.08em] uppercase transition-colors whitespace-nowrap"
+                                            <a href="{{ $hasRealUrl ? $item->resolved_url : 'javascript:void(0);' }}"
+                                                @if(!$hasRealUrl) @click.prevent="open = !open" @endif
+                                                @if($item->is_external && $hasRealUrl) target="_blank" rel="noopener noreferrer" @endif
+                                                class="flex h-full items-center gap-1 {{ $isActive ? 'text-[#fbb158] font-bold border-b-2 border-[#fbb158]' : 'text-white/80 hover:text-[#fbb158]' }} px-4 text-[12px] font-medium tracking-[0.08em] uppercase transition-colors whitespace-nowrap"
                                                 style="font-family: 'Lora', Georgia, serif;">
-                                                {{ $item->label }}
-                                                <x-icon name="chevron-down"
-                                                    class="w-[9px] h-[9px] mt-px opacity-50 transition-transform duration-200"
-                                                    x-bind:class="open ? 'rotate-180 opacity-100 text-[#fbb158]' : ''" />
+                                                <span>{{ $item->label }}</span>
+                                                <button type="button" @click.stop.prevent="open = !open" class="p-1 focus:outline-none" aria-label="Toggle {{ $item->label }} submenu">
+                                                    <x-icon name="chevron-down"
+                                                        class="w-[9px] h-[9px] mt-px opacity-50 transition-transform duration-200"
+                                                        x-bind:class="open ? 'rotate-180 opacity-100 text-[#fbb158]' : ''" />
+                                                </button>
                                             </a>
                                             <x-frontend.mega-menu :item="$item" />
                                         </div>
@@ -156,14 +164,17 @@
                                         {{-- ── STANDARD DROPDOWN ITEM ──────────────────────────────────── --}}
                                         <div class="relative group h-full flex items-center" x-data="{ open: false }"
                                             @mouseenter="open = true" @mouseleave="open = false">
-                                            <a href="{{ $item->resolved_url }}" @if($item->is_external) target="_blank"
-                                            rel="noopener noreferrer" @endif
-                                                class="flex h-full items-center gap-1 text-white/80 hover:text-[#fbb158] px-4 text-[12px] font-medium tracking-[0.08em] uppercase transition-colors whitespace-nowrap"
+                                            <a href="{{ $hasRealUrl ? $item->resolved_url : 'javascript:void(0);' }}"
+                                                @if(!$hasRealUrl) @click.prevent="open = !open" @endif
+                                                @if($item->is_external && $hasRealUrl) target="_blank" rel="noopener noreferrer" @endif
+                                                class="flex h-full items-center gap-1 {{ $isActive ? 'text-[#fbb158] font-bold border-b-2 border-[#fbb158]' : 'text-white/80 hover:text-[#fbb158]' }} px-4 text-[12px] font-medium tracking-[0.08em] uppercase transition-colors whitespace-nowrap"
                                                 style="font-family: 'Lora', Georgia, serif;">
-                                                {{ $item->label }}
-                                                <x-icon name="chevron-down"
-                                                    class="w-[9px] h-[9px] mt-px opacity-50 transition-transform duration-200"
-                                                    x-bind:class="open ? 'rotate-180 opacity-100 text-[#fbb158]' : ''" />
+                                                <span>{{ $item->label }}</span>
+                                                <button type="button" @click.stop.prevent="open = !open" class="p-1 focus:outline-none" aria-label="Toggle {{ $item->label }} submenu">
+                                                    <x-icon name="chevron-down"
+                                                        class="w-[9px] h-[9px] mt-px opacity-50 transition-transform duration-200"
+                                                        x-bind:class="open ? 'rotate-180 opacity-100 text-[#fbb158]' : ''" />
+                                                </button>
                                             </a>
                                             <!-- Dropdown Menu -->
                                             <div x-show="open" x-transition:enter="transition ease-out duration-200"
@@ -176,10 +187,13 @@
                                                 style="display: none;">
                                                 <ul class="flex flex-col">
                                                     @foreach($item->children as $child)
+                                                        @php
+                                                            $isChildActive = $child->isCurrentActive();
+                                                        @endphp
                                                         <li>
                                                             <a href="{{ $child->resolved_url }}" @if($child->is_external)
                                                             target="_blank" rel="noopener noreferrer" @endif
-                                                                class="block py-[9px] px-[1.4rem] text-white/70 text-[12.5px] font-light tracking-[0.03em] border-l-2 border-transparent transition-all duration-150 hover:text-[#fbb158] hover:pl-[1.8rem] hover:border-l-[#fbb158] hover:bg-[#fbb158]/5"
+                                                                class="block py-[9px] px-[1.4rem] {{ $isChildActive ? 'text-[#fbb158] font-semibold border-l-[#fbb158] bg-[#fbb158]/10' : 'text-white/70 hover:text-[#fbb158] hover:border-l-[#fbb158] hover:bg-[#fbb158]/5' }} text-[12.5px] font-light tracking-[0.03em] border-l-2 border-transparent transition-all duration-150 hover:pl-[1.8rem]"
                                                                 style="font-family: 'Lora', Georgia, serif;">
                                                                 {{ $child->label }}
                                                             </a>
@@ -193,7 +207,7 @@
                                         <div class="h-full flex items-center">
                                             <a href="{{ $item->resolved_url }}" @if($item->is_external) target="_blank"
                                             rel="noopener noreferrer" @endif
-                                                class="flex h-full items-center text-white/80 hover:text-[#fbb158] px-4 text-[12px] font-medium tracking-[0.08em] uppercase transition-colors whitespace-nowrap"
+                                                class="flex h-full items-center {{ $isActive ? 'text-[#fbb158] font-bold border-b-2 border-[#fbb158]' : 'text-white/80 hover:text-[#fbb158]' }} px-4 text-[12px] font-medium tracking-[0.08em] uppercase transition-colors whitespace-nowrap"
                                                 style="font-family: 'Lora', Georgia, serif;">
                                                 {{ $item->label }}
                                             </a>
@@ -292,27 +306,38 @@
                     <nav class="px-4 py-4">
                         @if($headerMenu->count() > 0)
                             @foreach($headerMenu as $index => $item)
-                                @if($item->children->count() > 0)
+                                @php
+                                    $hasChildren = $item->children->count() > 0;
+                                    $hasRealUrl = !empty($item->resolved_url) && $item->resolved_url !== '#' && $item->resolved_url !== 'javascript:void(0);' && $item->resolved_url !== 'javascript:void(0)';
+                                    $isActive = $item->isCurrentActive();
+                                @endphp
+                                @if($hasChildren)
                                     {{-- Parent with children --}}
                                     <div x-data="{ open: false }" class="mb-1">
                                         <div class="flex items-center rounded-[6px] overflow-hidden transition-all duration-200"
                                             style="border: 1px solid rgba(201,168,76,0.0);"
-                                            x-bind:style="open ? 'border-color: rgba(201,168,76,0.18); background: rgba(201,168,76,0.05)' : ''">
-                                            <a href="{{ $item->resolved_url }}" @if($item->is_external) target="_blank"
-                                            rel="noopener noreferrer" @endif @click="mobileMenuOpen = false"
+                                            x-bind:style="open || {{ $isActive ? 'true' : 'false' }} ? 'border-color: rgba(201,168,76,0.18); background: rgba(201,168,76,0.05)' : ''">
+                                            <a href="{{ $hasRealUrl ? $item->resolved_url : 'javascript:void(0);' }}"
+                                                @if($hasRealUrl)
+                                                    @if($item->is_external) target="_blank" rel="noopener noreferrer" @endif
+                                                    @click="mobileMenuOpen = false"
+                                                @else
+                                                    @click="open = !open"
+                                                @endif
                                                 class="flex-1 flex items-center gap-3 px-4 py-[14px] group">
                                                 {{-- Gold dot accent --}}
                                                 <span class="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-200"
-                                                    x-bind:style="open ? 'background:#fbb158' : 'background:rgba(201,168,76,0.4)'"></span>
+                                                    x-bind:style="open || {{ $isActive ? 'true' : 'false' }} ? 'background:#fbb158' : 'background:rgba(201,168,76,0.4)'"></span>
                                                 <span
                                                     class="text-[15px] font-medium tracking-[0.06em] uppercase transition-colors duration-200"
                                                     style="font-family: 'Lora', Georgia, serif;"
-                                                    x-bind:style="open ? 'color:#fbb158' : 'color:rgba(255,255,255,0.85)'">
+                                                    x-bind:style="open || {{ $isActive ? 'true' : 'false' }} ? 'color:#fbb158; font-weight:700;' : 'color:rgba(255,255,255,0.85)'">
                                                     {{ $item->label }}
                                                 </span>
                                             </a>
                                             <button @click="open = !open" type="button"
-                                                class="flex items-center justify-center w-10 h-[50px] flex-shrink-0 focus:outline-none transition-colors duration-200">
+                                                class="flex items-center justify-center w-10 h-[50px] flex-shrink-0 focus:outline-none transition-colors duration-200"
+                                                aria-label="Toggle {{ $item->label }} submenu">
                                                 <svg class="w-4 h-4 transition-transform duration-300"
                                                     x-bind:style="open ? 'transform:rotate(180deg); color:#fbb158' : 'color:rgba(255,255,255,0.85)'"
                                                     fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -331,19 +356,22 @@
                                             class="ml-4 mb-1 rounded-b-[6px] overflow-hidden"
                                             style="display:none; border-left: 2px solid rgba(201,168,76,0.3);">
                                             @foreach($item->children as $child)
+                                                @php
+                                                    $isChildActive = $child->isCurrentActive();
+                                                @endphp
                                                 <a href="{{ $child->resolved_url }}" @if($child->is_external) target="_blank"
                                                 rel="noopener noreferrer" @endif @click="mobileMenuOpen = false"
                                                     class="flex items-center gap-3 pl-4 pr-4 py-3 transition-all duration-150 group"
-                                                    style="border-bottom: 1px solid rgba(201,168,76,0.06);"
+                                                    style="border-bottom: 1px solid rgba(201,168,76,0.06); background: {{ $isChildActive ? 'rgba(255,255,255,0.08)' : 'transparent' }};"
                                                     onmouseover="this.style.background='rgba(201,168,76,0.06)'; this.querySelector('span.sub-label').style.color='#fbb158'"
-                                                    onmouseout="this.style.background='transparent'; this.querySelector('span.sub-label').style.color='rgba(255,255,255,0.55)'">
-                                                    <svg class="w-2.5 h-2.5 flex-shrink-0" style="color:rgba(201,168,76,0.5)"
+                                                    onmouseout="this.style.background='{{ $isChildActive ? 'rgba(255,255,255,0.08)' : 'transparent' }}'; this.querySelector('span.sub-label').style.color='{{ $isChildActive ? '#fbb158' : 'rgba(255,255,255,0.55)' }}'">
+                                                    <svg class="w-2.5 h-2.5 flex-shrink-0" style="color:{{ $isChildActive ? '#fbb158' : 'rgba(201,168,76,0.5)' }}"
                                                         fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                                     </svg>
                                                     <span
                                                         class="sub-label text-[13px] tracking-[0.04em] font-light transition-colors duration-150"
-                                                        style="font-family: 'Lora', Georgia, serif; color: rgba(255,255,255,0.55);">
+                                                        style="font-family: 'Lora', Georgia, serif; color: {{ $isChildActive ? '#fbb158; font-weight:600;' : 'rgba(255,255,255,0.55)' }};">
                                                         {{ $child->label }}
                                                     </span>
                                                 </a>
@@ -355,14 +383,14 @@
                                     <a href="{{ $item->resolved_url }}" @if($item->is_external) target="_blank"
                                     rel="noopener noreferrer" @endif @click="mobileMenuOpen = false"
                                         class="flex items-center gap-3 px-4 py-[14px] mb-1 rounded-[6px] transition-all duration-200"
-                                        style="border: 1px solid rgba(201,168,76,0.0);"
+                                        style="border: 1px solid {{ $isActive ? 'rgba(201,168,76,0.25)' : 'rgba(201,168,76,0.0)' }}; background: {{ $isActive ? 'rgba(201,168,76,0.08)' : 'transparent' }};"
                                         onmouseover="this.style.borderColor='rgba(201,168,76,0.18)'; this.style.background='rgba(201,168,76,0.05)'; this.querySelector('span.nav-label').style.color='#fbb158'; this.querySelector('span.nav-dot').style.background='#fbb158'"
-                                        onmouseout="this.style.borderColor='rgba(201,168,76,0.0)'; this.style.background='transparent'; this.querySelector('span.nav-label').style.color='rgba(255,255,255,0.85)'; this.querySelector('span.nav-dot').style.background='rgba(201,168,76,0.4)'">
+                                        onmouseout="this.style.borderColor='{{ $isActive ? 'rgba(201,168,76,0.25)' : 'rgba(201,168,76,0.0)' }}'; this.style.background='{{ $isActive ? 'rgba(201,168,76,0.08)' : 'transparent' }}'; this.querySelector('span.nav-label').style.color='{{ $isActive ? '#fbb158' : 'rgba(255,255,255,0.85)' }}'; this.querySelector('span.nav-dot').style.background='{{ $isActive ? '#fbb158' : 'rgba(201,168,76,0.4)' }}'">
                                         <span class="nav-dot w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-200"
-                                            style="background: rgba(201,168,76,0.4);"></span>
+                                            style="background: {{ $isActive ? '#fbb158' : 'rgba(201,168,76,0.4)' }};"></span>
                                         <span
                                             class="nav-label text-[15px] font-medium tracking-[0.06em] uppercase transition-colors duration-200"
-                                            style="color: rgba(255,255,255,0.85); font-family: 'Lora', Georgia, serif;">
+                                            style="color: {{ $isActive ? '#fbb158; font-weight:700;' : 'rgba(255,255,255,0.85)' }}; font-family: 'Lora', Georgia, serif;">
                                             {{ $item->label }}
                                         </span>
                                     </a>
