@@ -33,13 +33,13 @@ class AppServiceProvider extends ServiceProvider
         // The DecodeLivewirePayload middleware decodes base64-encoded payloads from the client
         // to bypass WAF body inspection.
         Livewire::setUpdateRoute(function ($handle) {
-            return Route::post('/app/data/update', $handle)
+            return Route::post('/livewire-data/update', $handle)
                 ->middleware(['web', \App\Http\Middleware\DecodeLivewirePayload::class]);
         });
 
         // Use a URL without a .js extension so Apache/Nginx don't treat it as a static file and return 404
         Livewire::setScriptRoute(function ($handle) {
-            return Route::get('/app/livewire-assets', $handle);
+            return Route::get('/livewire-data/assets', $handle);
         });
 
         // Register Google Translate Blade Directives

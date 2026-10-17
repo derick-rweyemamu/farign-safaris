@@ -5,7 +5,7 @@
 <script>
     (function() {
         const _originalFetch = window.fetch;
-        const livewireUpdatePath = '/app/data/update';
+        const livewireUpdatePath = '/livewire-data/update';
 
         window.fetch = function(input, init) {
             try {
