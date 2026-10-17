@@ -210,16 +210,16 @@
                                         x-transition:leave="transition ease-in duration-150"
                                         x-transition:leave-start="opacity-100 translate-y-0"
                                         x-transition:leave-end="opacity-0 translate-y-2"
-                                        class="absolute left-4 top-full mt-0 min-w-[220px] bg-white border-t-2 border-[#fbb158] shadow-xl z-50 transform -skew-x-[20deg]"
+                                        class="absolute left-4 top-full mt-0 min-w-[220px] max-w-[320px] bg-white border-t-2 border-[#fbb158] shadow-xl z-50 transform -skew-x-[20deg]"
                                         style="display: none;">
-                                        <ul class="flex flex-col transform skew-x-[20deg] py-2">
+                                        <ul class="flex flex-col transform skew-x-[20deg] py-2 w-full">
                                             @foreach($item->children as $child)
                                                 @php
                                                     $isChildActive = $child->isCurrentActive();
                                                 @endphp
-                                                <li>
+                                                <li class="w-full">
                                                     <a href="{{ $child->resolved_url }}" @if($child->is_external) target="_blank" rel="noopener noreferrer" @endif
-                                                        class="block py-3 px-6 text-[11px] font-bold tracking-[0.1em] uppercase transition-colors border-l-2 {{ $isChildActive ? 'text-black font-extrabold bg-gray-50 border-l-[#fbb158]' : 'text-gray-600 hover:text-black hover:bg-gray-50 border-transparent hover:border-l-[#fbb158]' }}">
+                                                        class="block py-3 px-6 text-[11px] font-bold tracking-[0.1em] uppercase transition-colors border-l-2 break-words whitespace-normal leading-normal {{ $isChildActive ? 'text-black font-extrabold bg-gray-50 border-l-[#fbb158]' : 'text-gray-600 hover:text-black hover:bg-gray-50 border-transparent hover:border-l-[#fbb158]' }}">
                                                         {{ $child->label }}
                                                     </a>
                                                 </li>

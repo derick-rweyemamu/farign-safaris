@@ -183,17 +183,17 @@
                                                 x-transition:leave="transition ease-in duration-150"
                                                 x-transition:leave-start="opacity-100 translate-y-0"
                                                 x-transition:leave-end="opacity-0 translate-y-2"
-                                                class="absolute left-0 top-[100%] min-w-[220px] bg-[#140c05]/97 border border-[#fbb158]/15 border-t-2 border-t-[#fbb158] rounded-b-[4px] py-0 shadow-[0_12px_40px_rgba(0,0,0,0.4)] z-50"
+                                                class="absolute left-0 top-[100%] min-w-[220px] max-w-[320px] bg-[#140c05]/97 border border-[#fbb158]/15 border-t-2 border-t-[#fbb158] rounded-b-[4px] py-0 shadow-[0_12px_40px_rgba(0,0,0,0.4)] z-50"
                                                 style="display: none;">
-                                                <ul class="flex flex-col">
+                                                <ul class="flex flex-col w-full">
                                                     @foreach($item->children as $child)
                                                         @php
                                                             $isChildActive = $child->isCurrentActive();
                                                         @endphp
-                                                        <li>
+                                                        <li class="w-full">
                                                             <a href="{{ $child->resolved_url }}" @if($child->is_external)
                                                             target="_blank" rel="noopener noreferrer" @endif
-                                                                class="block py-[9px] px-[1.4rem] {{ $isChildActive ? 'text-[#fbb158] font-semibold border-l-[#fbb158] bg-[#fbb158]/10' : 'text-white/70 hover:text-[#fbb158] hover:border-l-[#fbb158] hover:bg-[#fbb158]/5' }} text-[12.5px] font-light tracking-[0.03em] border-l-2 border-transparent transition-all duration-150 hover:pl-[1.8rem]"
+                                                                class="block py-[9px] px-[1.4rem] {{ $isChildActive ? 'text-[#fbb158] font-semibold border-l-[#fbb158] bg-[#fbb158]/10' : 'text-white/70 hover:text-[#fbb158] hover:border-l-[#fbb158] hover:bg-[#fbb158]/5' }} text-[12.5px] font-light tracking-[0.03em] border-l-2 border-transparent transition-all duration-150 hover:pl-[1.8rem] break-words whitespace-normal leading-normal"
                                                                 style="font-family: 'Lora', Georgia, serif;">
                                                                 {{ $child->label }}
                                                             </a>

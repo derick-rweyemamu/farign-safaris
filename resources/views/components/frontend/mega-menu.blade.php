@@ -47,36 +47,42 @@
         @endif
 
     {{-- ══ DYNAMIC CONTENT GRID ══ --}}
-    <div class="px-8 py-7 grid {{ $gridClass }} gap-7 items-start">
+    <div class="px-8 py-7 grid {{ $gridClass }} gap-7 items-start w-full">
         @foreach($columns as $col)
             @php $colType = $col['type'] ?? 'links'; @endphp
 
             @if($colType === 'links')
                 {{-- Column: Link / Route List --}}
-                <div class="flex flex-col justify-between pr-1">
-                    <div>
+                <div class="flex flex-col justify-between pr-1 min-w-0 w-full overflow-hidden">
+                    <div class="w-full min-w-0">
                         @if(!empty($col['title']))
-                            <h4 class="text-[18px] font-bold text-gray-900 mb-4 tracking-tight" style="font-family: 'Playfair Display', Georgia, serif;">
+                            <h4 class="text-[18px] font-bold text-gray-900 mb-4 tracking-tight truncate" style="font-family: 'Playfair Display', Georgia, serif;">
                                 {{ $col['title'] }}
                             </h4>
                         @endif
-                        <ul class="divide-y divide-gray-100">
+                        <ul class="divide-y divide-gray-100 w-full min-w-0">
                             @foreach($col['items'] ?? [] as $route)
                                 @php
                                     $routeUrl = $route['url'] ?? '#';
                                     if ($routeUrl !== '#' && !str_starts_with($routeUrl, 'http') && !str_starts_with($routeUrl, '/') && !str_starts_with($routeUrl, '#')) {
                                         $routeUrl = url($routeUrl);
                                     }
+                                    $routeLabel = trim($route['label'] ?? '');
+                                    $routeBadge = trim($route['badge'] ?? '');
+                                    $hasLabel = !empty($routeLabel);
+                                    $hasBadge = !empty($routeBadge);
                                 @endphp
-                                <li class="py-2">
-                                    <a href="{{ $routeUrl }}" class="group/item flex items-center justify-between gap-1 text-[12.5px] text-gray-800 hover:text-[#7d834a] transition-colors leading-snug">
-                                        <span class="flex items-center gap-1.5">
-                                            <span class="text-gray-400 group-hover/item:text-[#7d834a] transition-transform duration-200 group-hover/item:translate-x-0.5 font-bold">→</span>
-                                            <span class="font-medium tracking-tight">{{ $route['label'] ?? '' }}</span>
+                                <li class="py-2.5 w-full min-w-0">
+                                    <a href="{{ $routeUrl }}" class="group/item flex items-start justify-between gap-2 text-[12.5px] text-gray-800 hover:text-[#7d834a] transition-colors leading-snug w-full min-w-0">
+                                        <span class="flex items-start gap-1.5 flex-1 min-w-0">
+                                            <span class="text-gray-400 group-hover/item:text-[#7d834a] transition-transform duration-200 group-hover/item:translate-x-0.5 font-bold mt-0.5 flex-shrink-0">→</span>
+                                            @if($hasLabel)
+                                                <span class="font-medium tracking-tight break-words text-gray-800 group-hover/item:text-[#7d834a] min-w-0">{{ $routeLabel }}</span>
+                                            @endif
                                         </span>
-                                        @if(!empty($route['badge']))
-                                            <span class="inline-block bg-[#333a18] text-white text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded leading-none shadow-xs ml-1 flex-shrink-0">
-                                                {{ $route['badge'] }}
+                                        @if($hasBadge)
+                                            <span class="inline-block bg-[#333a18] text-white text-[9.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded leading-tight shadow-xs {{ $hasLabel ? 'max-w-[50%]' : 'flex-1 max-w-full' }} whitespace-normal break-words text-center flex-shrink-0">
+                                                {{ $routeBadge }}
                                             </span>
                                         @endif
                                     </a>
@@ -86,11 +92,11 @@
                     </div>
 
                     @if(!empty($col['btn_text']))
-                        <div class="mt-5">
+                        <div class="mt-5 w-full min-w-0">
                             <a href="{{ url($col['btn_url'] ?? '#') }}"
-                               class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#838a53] hover:bg-[#727944] text-white text-[13px] font-bold tracking-wide rounded-[3px] shadow-sm transition-all duration-200">
-                                <span class="text-[14px] font-bold leading-none">»</span>
-                                <span>{{ $col['btn_text'] }}</span>
+                               class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#838a53] hover:bg-[#727944] text-white text-[13px] font-bold tracking-wide rounded-[3px] shadow-sm transition-all duration-200 max-w-full truncate">
+                                <span class="text-[14px] font-bold leading-none flex-shrink-0">»</span>
+                                <span class="truncate">{{ $col['btn_text'] }}</span>
                             </a>
                         </div>
                     @endif
@@ -98,9 +104,9 @@
 
             @elseif($colType === 'media_list')
                 {{-- Column: Media Thumbnail Cards --}}
-                <div class="flex flex-col justify-center space-y-4 px-1">
+                <div class="flex flex-col justify-center space-y-4 px-1 min-w-0 w-full overflow-hidden">
                     @if(!empty($col['title']))
-                        <h4 class="text-[18px] font-bold text-gray-900 mb-1 tracking-tight" style="font-family: 'Playfair Display', Georgia, serif;">
+                        <h4 class="text-[18px] font-bold text-gray-900 mb-1 tracking-tight truncate" style="font-family: 'Playfair Display', Georgia, serif;">
                             {{ $col['title'] }}
                         </h4>
                     @endif
@@ -115,16 +121,16 @@
                                 $mImg = asset('storage/' . $mImg);
                             }
                         @endphp
-                        <a href="{{ $mUrl }}" class="group/trek flex items-center gap-3.5 p-1 rounded-md hover:bg-gray-50/80 transition-all duration-200">
+                        <a href="{{ $mUrl }}" class="group/trek flex items-center gap-3.5 p-1 rounded-md hover:bg-gray-50/80 transition-all duration-200 w-full min-w-0 overflow-hidden">
                             <div class="w-[72px] h-[52px] rounded-[6px] overflow-hidden flex-shrink-0 shadow-sm border border-gray-100 bg-gray-100">
                                 <img src="{{ $mImg }}" alt="{{ $mediaItem['title'] ?? '' }}" class="w-full h-full object-cover group-hover/trek:scale-105 transition-transform duration-300">
                             </div>
-                            <div class="flex-1 min-w-0">
-                                <h5 class="text-[14px] font-bold text-gray-900 group-hover/trek:text-[#7d834a] transition-colors leading-tight">
+                            <div class="flex-1 min-w-0 overflow-hidden">
+                                <h5 class="text-[14px] font-bold text-gray-900 group-hover/trek:text-[#7d834a] transition-colors leading-tight break-words">
                                     {{ $mediaItem['title'] ?? '' }}
                                 </h5>
                                 @if(!empty($mediaItem['subtitle']))
-                                    <p class="text-[12px] text-gray-500 mt-1 leading-snug">
+                                    <p class="text-[12px] text-gray-500 mt-1 leading-snug break-words">
                                         {{ $mediaItem['subtitle'] }}
                                     </p>
                                 @endif
@@ -139,8 +145,8 @@
                     $pImg = !empty($col['image']) ? (str_starts_with($col['image'], 'http') || str_starts_with($col['image'], '/') ? $col['image'] : asset('storage/' . $col['image'])) : asset('images/mega-menu/kilimanjaro-summit.jpg');
                     $pBg = $col['bg_color'] ?? '#7d834a';
                 @endphp
-                <div>
-                    <div class="p-4 rounded-[4px] shadow-sm text-white flex flex-col justify-between"
+                <div class="min-w-0 w-full overflow-hidden">
+                    <div class="p-4 rounded-[4px] shadow-sm text-white flex flex-col justify-between w-full min-w-0"
                          style="background-color: {{ $pBg }}; min-height: 295px;">
                         
                         {{-- Promo Image --}}
@@ -149,19 +155,19 @@
                         </div>
 
                         {{-- Promo Heading --}}
-                        <div class="mb-3">
-                            <h5 class="text-[16px] font-semibold text-white tracking-wide leading-snug font-serif" style="font-family: 'Playfair Display', Georgia, serif;">
+                        <div class="mb-3 min-w-0">
+                            <h5 class="text-[16px] font-semibold text-white tracking-wide leading-snug font-serif break-words" style="font-family: 'Playfair Display', Georgia, serif;">
                                 {{ $col['title'] ?? '' }}
                             </h5>
                         </div>
 
                         {{-- Promo Button --}}
                         @if(!empty($col['btn_text']))
-                            <div>
+                            <div class="w-full min-w-0">
                                 <a href="{{ url($col['btn_url'] ?? '#') }}"
-                                   class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-[#c69752] hover:bg-[#b58742] text-white text-[12px] font-bold tracking-wider rounded-[3px] shadow transition-all duration-200 text-center">
-                                    <span class="text-[14px] font-bold leading-none">»</span>
-                                    <span>{{ $col['btn_text'] }}</span>
+                                   class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-[#c69752] hover:bg-[#b58742] text-white text-[12px] font-bold tracking-wider rounded-[3px] shadow transition-all duration-200 text-center truncate">
+                                    <span class="text-[14px] font-bold leading-none flex-shrink-0">»</span>
+                                    <span class="truncate">{{ $col['btn_text'] }}</span>
                                 </a>
                             </div>
                         @endif
