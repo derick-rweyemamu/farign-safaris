@@ -63,7 +63,7 @@ body.frontend-body h4,
 body.frontend-body h5,
 body.frontend-body h6 {
   font-family: "Playfair Display", Georgia, serif;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 /* Ensure any HTML injected by text editors (p, span, div) inside headings inherit the heading's font size and family */
@@ -1146,15 +1146,9 @@ h6,
 .hero-bg {
   position: absolute !important;
   inset: 0 !important;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(15, 10, 5, 0.55) 0%,
-      rgba(15, 10, 5, 0.3) 50%,
-      rgba(15, 10, 5, 0.75) 100%
-    ),
-    url("https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1800&q=80")
-      center/cover no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
   animation: slowZoom 18s ease-in-out infinite alternate !important;
   z-index: 1 !important;
 }
@@ -2905,3 +2899,73 @@ section.hero h1.hero-tge-title i,
 #floating-whatsapp .wa-btn:active {
   transform: scale(0.95) !important;
 }
+
+/* ==========================================================================
+   Wonders of Tanzania Slider Section
+   ========================================================================== */
+.wonders-slider-section {
+  background-color: #141814 !important;
+  color: #ffffff !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.wonders-track {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.wonders-track::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.wonders-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.wonders-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.7);
+}
+
+.wonders-nav-dot {
+  display: inline-block;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.wonders-nav-dot:hover {
+  background-color: rgba(255, 255, 255, 0.45);
+}
+
+.wonders-nav-dot.active {
+  width: 32px !important;
+  background-color: #ea963e !important;
+}
+
+.wonders-prev-btn,
+.wonders-next-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+.wonders-prev-btn svg,
+.wonders-next-btn svg {
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  pointer-events: none !important;
+}
+
+

@@ -280,3 +280,67 @@ document.addEventListener('click', function (e) {
     _accFrontendObserver.observe(document.body, { childList: true, subtree: true });
 })();
 // ── END Safaris Accordion ─────────────────────────────────────────────────────
+
+// ── Safaris Wonders of Tanzania Slider ─────────────────────────────────────────
+(function () {
+    document.addEventListener('click', function(e) {
+        const prev = e.target.closest('.wonders-prev-btn');
+        if (prev) {
+            e.preventDefault();
+            const s = prev.closest('.wonders-slider-section');
+            const t = s ? s.querySelector('.wonders-track') : null;
+            const c = t ? t.querySelector('.wonders-card') : null;
+            const w = c ? (c.offsetWidth + 24) : 340;
+            if (t) t.scrollBy({ left: -w, behavior: 'smooth' });
+            return;
+        }
+        const next = e.target.closest('.wonders-next-btn');
+        if (next) {
+            e.preventDefault();
+            const s = next.closest('.wonders-slider-section');
+            const t = s ? s.querySelector('.wonders-track') : null;
+            const c = t ? t.querySelector('.wonders-card') : null;
+            const w = c ? (c.offsetWidth + 24) : 340;
+            if (t) {
+                if (t.scrollLeft + t.clientWidth >= t.scrollWidth - 30) t.scrollTo({ left: 0, behavior: 'smooth' });
+                else t.scrollBy({ left: w, behavior: 'smooth' });
+            }
+            return;
+        }
+        const dot = e.target.closest('.wonders-nav-dot');
+        if (dot) {
+            e.preventDefault();
+            const s = dot.closest('.wonders-slider-section');
+            const t = s ? s.querySelector('.wonders-track') : null;
+            const c = t ? t.querySelector('.wonders-card') : null;
+            const w = c ? (c.offsetWidth + 24) : 340;
+            const idx = parseInt(dot.getAttribute('data-slide-index') || '0', 10);
+            if (t) t.scrollTo({ left: idx * w, behavior: 'smooth' });
+            return;
+        }
+    });
+
+    document.addEventListener('scroll', function(e) {
+        const track = e.target;
+        if (track && track.classList && track.classList.contains('wonders-track')) {
+            const s = track.closest('.wonders-slider-section');
+            if (!s) return;
+            const c = track.querySelector('.wonders-card');
+            const w = c ? (c.offsetWidth + 24) : 340;
+            const idx = Math.min(5, Math.max(0, Math.round(track.scrollLeft / w)));
+            s.querySelectorAll('.wonders-nav-dot').forEach((d, i) => {
+                if (i === idx) {
+                    d.classList.add('active');
+                    d.style.width = '32px';
+                    d.style.backgroundColor = '#ea963e';
+                } else {
+                    d.classList.remove('active');
+                    d.style.width = '8px';
+                    d.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                }
+            });
+        }
+    }, true);
+})();
+// ── END Safaris Wonders of Tanzania Slider ─────────────────────────────────────
+

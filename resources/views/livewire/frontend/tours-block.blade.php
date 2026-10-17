@@ -74,27 +74,6 @@
                          wire:target="setActiveCountry">
                         
                         @if(isset($activeCountry) && $activeCountry)
-                            <!-- Hero Banner Card (Top Featured) -->
-                            <div class="relative rounded-2xl overflow-hidden min-h-[340px] sm:min-h-[400px] md:min-h-[440px] shadow-2xl border border-[#223a2a] group mb-8 bg-[#142319]">
-                                <!-- Hero Image -->
-                                <img src="{{ $activeMeta['hero_image'] ?? 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&q=80' }}" 
-                                     alt="{{ $activeCountry->name }}" 
-                                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                                
-                                <!-- Dark Gradient & Lighting Overlay -->
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#0c1610] via-[#0c1610]/40 to-black/15"></div>
-
-                                <!-- Text Overlay Inside Hero -->
-                                <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-10 z-10">
-                                    <h3 class="text-4xl sm:text-5xl font-serif font-normal text-white mb-3 tracking-tight drop-shadow-md">
-                                        {{ $activeCountry->name }}
-                                    </h3>
-                                    <p class="text-sm sm:text-base text-gray-200/95 leading-relaxed max-w-xl drop-shadow">
-                                        {{ $activeMeta['description'] ?? '' }}
-                                    </p>
-                                </div>
-                            </div>
-
                             <!-- FEATURED JOURNEYS -->
                             <div>
                                 <div class="flex items-center justify-between mb-4">

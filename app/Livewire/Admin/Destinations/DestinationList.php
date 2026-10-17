@@ -14,6 +14,7 @@ use App\Models\Country;
 use App\Models\Activity;
 use App\Models\Animal;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Traits\HasReports;
 
@@ -285,7 +286,12 @@ class DestinationList extends Component
             'city_id'                          => 'required|exists:cities,id',
             'name'                             => 'required|string|max:255',
             'tagline'                          => 'nullable|string|max:255',
-            'slug'                             => 'required|string|max:255|unique:destinations,slug,' . $this->destination_id,
+            'slug'                             => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('destinations', 'slug')->ignore($this->destination_id)->whereNull('deleted_at'),
+            ],
             'description'                      => 'nullable|string',
             'is_active'                        => 'boolean',
             'is_featured'                      => 'boolean',
@@ -391,7 +397,10 @@ class DestinationList extends Component
     public function deleteDestination(): void
     {
         $this->authorize('delete destinations');
-        Destination::findOrFail($this->deletingId)->delete();
+        $destination = Destination::findOrFail($this->deletingId);
+        // Rename slug on delete so it never blocks creating a destination with the same slug
+        $destination->update(['slug' => $destination->slug . '-deleted-' . time()]);
+        $destination->delete();
         $this->dispatch('notify', message: __('Destination deleted successfully!'), type: 'success');
         $this->showDeleteModal = false;
         $this->deletingId = null;

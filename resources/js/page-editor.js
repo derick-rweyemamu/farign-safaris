@@ -802,6 +802,8 @@ editor.Traits.addType('media_picker', {
             const target = trait.target || editor.getSelected();
             if (target && target.addAttributes) {
                 target.addAttributes({ [traitName]: val });
+                target.trigger && target.trigger('change:attributes', target);
+                target.trigger && target.trigger('change:attributes:' + traitName, target, val);
             }
         };
 
@@ -839,7 +841,12 @@ editor.Traits.addType('media_picker', {
     },
     onUpdate({ elInput, trait }) {
         const input = elInput.querySelector('.trait-input');
-        if (input) input.value = trait.get('value') || '';
+        if (input) {
+            const target = trait.target || editor.getSelected();
+            const traitName = trait.get('name') || '';
+            const val = trait.get('value') || (target && target.getAttributes && target.getAttributes()[traitName]) || '';
+            input.value = val;
+        }
     }
 });
 
@@ -1005,7 +1012,7 @@ editor.DomComponents.addType('safaris-hero-component', {
             `
         },
         init() {
-            this.on('change:attributes:data-bg-type change:attributes:data-bg-image change:attributes:data-bg-video change:attributes:data-bg-video-url change:attributes:data-overlay-opacity', this.updateBackground);
+            this.on('change:attributes change:attributes:data-bg-type change:attributes:data-bg-image change:attributes:data-bg-video change:attributes:data-bg-video-url change:attributes:data-overlay-opacity', this.updateBackground);
 
             setTimeout(() => {
                 const attrs = this.getAttributes() || {};
@@ -1013,7 +1020,7 @@ editor.DomComponents.addType('safaris-hero-component', {
                     const bgEl = (this.find && this.find('.hero-bg')[0]);
                     if (bgEl) {
                         const style = bgEl.getStyle() || {};
-                        const bgImg = style['background-image'] || '';
+                        const bgImg = style['background-image'] || (bgEl.getAttributes && bgEl.getAttributes().style) || '';
                         const match = bgImg.match(/url\(['"]?(.*?)['"]?\)/);
                         if (match && match[1]) {
                             this.addAttributes({ 'data-bg-image': match[1] });
@@ -1029,7 +1036,7 @@ editor.DomComponents.addType('safaris-hero-component', {
             const bgImage = attrs['data-bg-image'] || '';
             const bgVideo = attrs['data-bg-video'] || '';
             const bgVideoUrl = attrs['data-bg-video-url'] || '';
-            const overlayOpacity = attrs['data-overlay-opacity'] || '0.4';
+            const overlayOpacity = attrs['data-overlay-opacity'] !== undefined ? attrs['data-overlay-opacity'] : '0.4';
 
             let bgContainer = (this.find && this.find('.hero-bg-container')[0]) ||
                               this.components().models.find(m => m.getClasses && m.getClasses().includes('hero-bg-container'));
@@ -1050,17 +1057,14 @@ editor.DomComponents.addType('safaris-hero-component', {
             if (!bgContainer) return;
             bgContainer.addStyle({ overflow: 'hidden', position: 'absolute', top: '0', left: '0', width: '100%', height: '100%', 'z-index': '1' });
 
-            let comps = [];
-
             const isVideoMode = bgType === 'video_url' || bgType === 'video_upload' || (!bgImage && (bgVideoUrl || bgVideo));
 
             if (isVideoMode) {
                 const url = bgType === 'video_upload' ? (bgVideo || bgVideoUrl) : (bgVideoUrl || bgVideo);
-
-                // Robust YouTube ID Extractor
                 const ytMatch = url ? url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|live\/|watch\?v=|\&v=)([^#\&\?]*).*/) : null;
                 const ytId = (ytMatch && ytMatch[2].length === 11) ? ytMatch[2] : null;
 
+                let comps = [];
                 if (ytId) {
                     comps = [
                         {
@@ -1094,12 +1098,12 @@ editor.DomComponents.addType('safaris-hero-component', {
                                 'z-index': '2'
                             },
                             attributes: {
-                                class: 'hero-bg-overlay'
+                                class: 'hero-bg-overlay',
+                                style: `position: absolute; inset: 0; background: rgba(0,0,0,${overlayOpacity}); z-index: 2;`
                             }
                         }
                     ];
                 } else if (url) {
-                    // Standard MP4 Video
                     comps = [
                         {
                             tagName: 'video',
@@ -1140,20 +1144,46 @@ editor.DomComponents.addType('safaris-hero-component', {
                                 'z-index': '2'
                             },
                             attributes: {
-                                class: 'hero-bg-overlay'
+                                class: 'hero-bg-overlay',
+                                style: `position: absolute; inset: 0; background: rgba(0,0,0,${overlayOpacity}); z-index: 2;`
                             }
                         }
                     ];
                 }
-            }
-
-            if (comps.length === 0) {
+                if (comps.length > 0) {
+                    bgContainer.components(comps);
+                }
+            } else {
                 const finalImg = bgImage || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80';
-                comps = [
-                    {
+                
+                // Clear any videos
+                const vids = (bgContainer.find && bgContainer.find('video, iframe, .yt-hero-wrapper')) || [];
+                vids.forEach(v => v.remove && v.remove());
+
+                let heroBgComp = (bgContainer.find && bgContainer.find('.hero-bg')[0]);
+                const bgStyleStr = `background-image: url('${finalImg}') !important; background-size: cover; background-position: center; width: 100%; height: 100%; position: absolute; inset: 0; z-index: 1;`;
+
+                if (heroBgComp) {
+                    heroBgComp.addAttributes({ style: bgStyleStr });
+                    heroBgComp.setStyle({
+                        'background-image': `url('${finalImg}') !important`,
+                        'background-size': 'cover',
+                        'background-position': 'center',
+                        'width': '100%',
+                        'height': '100%',
+                        'position': 'absolute',
+                        'inset': '0',
+                        'z-index': '1'
+                    });
+                } else {
+                    bgContainer.components().add({
                         tagName: 'div',
+                        attributes: {
+                            class: 'hero-bg',
+                            style: bgStyleStr
+                        },
                         style: {
-                            'background-image': `url('${finalImg}')`,
+                            'background-image': `url('${finalImg}') !important`,
                             'background-size': 'cover',
                             'background-position': 'center',
                             'width': '100%',
@@ -1161,27 +1191,139 @@ editor.DomComponents.addType('safaris-hero-component', {
                             'position': 'absolute',
                             'inset': '0',
                             'z-index': '1'
-                        },
-                        attributes: {
-                            class: 'hero-bg'
                         }
-                    },
-                    {
+                    }, { at: 0 });
+                }
+
+                // Overlay
+                let overlayComp = (bgContainer.find && bgContainer.find('.hero-bg-overlay')[0]);
+                const overlayStyleStr = `position: absolute; inset: 0; background: rgba(0,0,0,${overlayOpacity}); z-index: 2;`;
+                if (overlayComp) {
+                    overlayComp.addAttributes({ style: overlayStyleStr });
+                    overlayComp.setStyle({
+                        'position': 'absolute',
+                        'inset': '0',
+                        'background': `rgba(0,0,0,${overlayOpacity})`,
+                        'z-index': '2'
+                    });
+                } else {
+                    bgContainer.components().add({
                         tagName: 'div',
+                        attributes: {
+                            class: 'hero-bg-overlay',
+                            style: overlayStyleStr
+                        },
                         style: {
                             'position': 'absolute',
                             'inset': '0',
                             'background': `rgba(0,0,0,${overlayOpacity})`,
                             'z-index': '2'
-                        },
-                        attributes: {
-                            class: 'hero-bg-overlay'
                         }
-                    }
-                ];
+                    });
+                }
+            }
+        }
+    },
+    view: {
+        init() {
+            this.listenTo(this.model, 'change:attributes', this.renderBackground);
+        },
+        onRender() {
+            this.renderBackground();
+        },
+        renderBackground() {
+            if (!this.el) return;
+            const attrs = this.model.getAttributes() || {};
+            const bgType = attrs['data-bg-type'] || 'image';
+            const bgImage = attrs['data-bg-image'] || '';
+            const bgVideo = attrs['data-bg-video'] || '';
+            const bgVideoUrl = attrs['data-bg-video-url'] || '';
+            const overlayOpacity = attrs['data-overlay-opacity'] !== undefined ? attrs['data-overlay-opacity'] : '0.4';
+
+            const isVideoMode = bgType === 'video_url' || bgType === 'video_upload' || (!bgImage && (bgVideoUrl || bgVideo));
+
+            let bgContainer = this.el.querySelector('.hero-bg-container');
+            if (!bgContainer) {
+                const existingBg = this.el.querySelector('.hero-bg');
+                if (existingBg && existingBg.parentElement) {
+                    bgContainer = existingBg.parentElement;
+                }
             }
 
-            bgContainer.components(comps);
+            if (!bgContainer) return;
+
+            if (!isVideoMode) {
+                const finalImg = bgImage || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80';
+                
+                // Remove iframe/video if in DOM
+                const videoEls = bgContainer.querySelectorAll('video, iframe, .yt-hero-wrapper, .hero-bg-video');
+                videoEls.forEach(v => v.remove());
+
+                let bgEl = bgContainer.querySelector('.hero-bg');
+                if (!bgEl) {
+                    bgEl = document.createElement('div');
+                    bgEl.className = 'hero-bg';
+                    bgContainer.prepend(bgEl);
+                }
+                bgEl.style.setProperty('background-image', `url("${finalImg}")`, 'important');
+                bgEl.style.setProperty('background-size', 'cover', 'important');
+                bgEl.style.setProperty('background-position', 'center', 'important');
+                bgEl.style.setProperty('position', 'absolute', 'important');
+                bgEl.style.setProperty('inset', '0', 'important');
+                bgEl.style.setProperty('width', '100%', 'important');
+                bgEl.style.setProperty('height', '100%', 'important');
+                bgEl.style.setProperty('z-index', '1', 'important');
+
+                let overlayEl = bgContainer.querySelector('.hero-bg-overlay');
+                if (!overlayEl) {
+                    overlayEl = document.createElement('div');
+                    overlayEl.className = 'hero-bg-overlay';
+                    bgContainer.appendChild(overlayEl);
+                }
+                overlayEl.style.setProperty('position', 'absolute', 'important');
+                overlayEl.style.setProperty('inset', '0', 'important');
+                overlayEl.style.setProperty('background', `rgba(0, 0, 0, ${overlayOpacity})`, 'important');
+                overlayEl.style.setProperty('z-index', '2', 'important');
+            } else {
+                // Video mode in DOM
+                const url = bgType === 'video_upload' ? (bgVideo || bgVideoUrl) : (bgVideoUrl || bgVideo);
+                const ytMatch = url ? url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|live\/|watch\?v=|\&v=)([^#\&\?]*).*/) : null;
+                const ytId = (ytMatch && ytMatch[2].length === 11) ? ytMatch[2] : null;
+
+                const oldVids = bgContainer.querySelectorAll('video, iframe, .yt-hero-wrapper, .hero-bg-video');
+                oldVids.forEach(v => v.remove());
+
+                if (ytId) {
+                    let iframe = document.createElement('iframe');
+                    iframe.className = 'hero-bg-video';
+                    iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&loop=1&mute=1&controls=0&playlist=${ytId}&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3`;
+                    iframe.setAttribute('frameborder', '0');
+                    iframe.setAttribute('allow', 'autoplay; fullscreen');
+                    iframe.style.cssText = 'position: absolute; top: 50%; left: 50%; width: max(100vw, calc(100vh * (16 / 9))); height: max(100vh, calc(100vw * (9 / 16))); transform: translate(-50%, -50%) scale(1.25); pointer-events: none; min-width: 100vw; min-height: 100vh; border: none; z-index: 1;';
+                    bgContainer.prepend(iframe);
+                } else if (url) {
+                    let video = document.createElement('video');
+                    video.className = 'hero-bg-video';
+                    video.autoplay = true;
+                    video.loop = true;
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.src = url;
+                    video.style.cssText = 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 1;';
+                    bgContainer.prepend(video);
+                }
+
+                let overlayEl = bgContainer.querySelector('.hero-bg-overlay');
+                if (!overlayEl) {
+                    overlayEl = document.createElement('div');
+                    overlayEl.className = 'hero-bg-overlay';
+                    bgContainer.appendChild(overlayEl);
+                }
+                overlayEl.style.setProperty('position', 'absolute', 'important');
+                overlayEl.style.setProperty('inset', '0', 'important');
+                overlayEl.style.setProperty('background', `rgba(0, 0, 0, ${overlayOpacity})`, 'important');
+                overlayEl.style.setProperty('z-index', '2', 'important');
+            }
         }
     }
 });
@@ -1642,6 +1784,13 @@ editor.on('component:selected', (component) => {
             editor.select(target);
             return;
         }
+
+        if (isHero) {
+            const heroView = target.getView ? target.getView() : null;
+            if (heroView && typeof heroView.renderBackground === 'function') {
+                heroView.renderBackground();
+            }
+        }
         
         try {
             const pn = editor.Panels;
@@ -1890,16 +2039,7 @@ const buildToursListingPreviewHtml = (attrs, activeIdx = 0) => {
 
                 <!-- Right Column Preview -->
                 <div>
-                    <div style="position: relative; border-radius: 14px; overflow: hidden; height: 320px; background: #142319; border: 1px solid #223a2a; margin-bottom: 24px;">
-                        <img src="${activeImage}" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.88;" />
-                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, #0c1610 0%, rgba(12,22,16,0.4) 60%, transparent 100%);"></div>
-                        <div style="position: absolute; bottom: 20px; left: 24px; right: 24px;">
-                            <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 34px; font-weight: 500; color: #fff; margin-bottom: 6px;">${activeCountry}</div>
-                            <div style="font-size: 13px; color: #d1ded4; line-height: 1.5;">${activeDesc}</div>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #1e3024;">
                         <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: #CA9A2E; text-transform: uppercase;">FEATURED JOURNEYS (${activeCountry})</span>
                         <span style="font-size: 12px; color: #8fa593;">Live Tours from Database &rarr;</span>
                     </div>
@@ -2498,105 +2638,152 @@ bm.add('safaris-start-planning', {
 });
 
 bm.add('safaris-wonders-tanzania', {
-    label: ' Wonders of Tanzania',
+    label: 'Wonders of Tanzania Slider',
     category: window.__('Safaris Blocks'),
+    media: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px; margin: 0 auto; color: #CA9A2E;"><rect x="2" y="3" width="20" height="18" rx="2"></rect><circle cx="8" cy="9" r="2"></circle><path d="m21 15-5-5L5 21"></path></svg>`,
     content: `
-<section class="py-24 bg-white dark:bg-[#0e1611] text-gray-900 dark:text-gray-100 relative overflow-hidden" data-gjs-type="default">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+<section class="wonders-slider-section py-20 lg:py-28 bg-[#141814] text-white relative overflow-hidden" data-gjs-type="default">
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
       
-      <!-- Left Column: Heading & Description -->
-      <div class="lg:col-span-5 sticky top-24">
-        <h2 class="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-gray-900 dark:text-white leading-[1.1] tracking-tight mb-8" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-          Let us be your<br>guide to the<br><span style="color: #c05621;">wonders</span> of<br>Tanzania
-        </h2>
-        <p class="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed font-light mb-8" data-gjs-type="text">
-          Fargin Safaris is a tour operator specializing exclusively in Tanzania adventures, offering a variety of travel experiences that highlight the rich culture, diverse wildlife, and stunning landscapes of Tanzania.
-        </p>
+      <!-- Left Column: Heading, Description & Slider Controls -->
+      <div class="lg:col-span-5 xl:col-span-4 flex flex-col justify-center z-10">
+        <div>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-[1.15] tracking-tight mb-6" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+            Let us be your guide<br>to the wonders of<br>Tanzania
+          </h2>
+          <p class="text-sm sm:text-base text-[#a2ad9e] leading-relaxed mb-8 sm:mb-10 font-light max-w-md" data-gjs-type="text">
+            Fargin Safaris is a tour operator specializing exclusively in Tanzania adventures would focus on offering a variety of travel experiences that highlight the rich culture, diverse wildlife, and stunning landscapes of Tanzania.
+          </p>
+        </div>
+
+        <!-- Slider Navigation Controls -->
+        <div class="flex items-center gap-3 select-none">
+          <!-- Previous Button -->
+          <div role="button" tabindex="0"
+            class="wonders-prev-btn w-11 h-11 rounded-full border border-white/20 bg-white/5 hover:bg-[#ea963e] hover:border-[#ea963e] hover:text-black flex items-center justify-center text-white transition-all duration-300 cursor-pointer shadow-sm select-none"
+            aria-label="Previous Slide">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; min-width: 20px; min-height: 20px; display: block; pointer-events: none;">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </div>
+
+          <!-- Next Button -->
+          <div role="button" tabindex="0"
+            class="wonders-next-btn w-11 h-11 rounded-full border border-white/20 bg-white/5 hover:bg-[#ea963e] hover:border-[#ea963e] hover:text-black flex items-center justify-center text-white transition-all duration-300 cursor-pointer shadow-sm select-none"
+            aria-label="Next Slide">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; min-width: 20px; min-height: 20px; display: block; pointer-events: none;">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+
+          <!-- Pagination Indicator Dots -->
+          <div class="wonders-dots-container flex items-center gap-2 ml-4">
+            <span role="button" tabindex="0" data-slide-index="0" class="wonders-nav-dot wonders-dot-0 active transition-all duration-300 rounded-full cursor-pointer inline-block" style="width: 32px; height: 8px; background-color: #ea963e;" aria-label="Go to slide 1"></span>
+            <span role="button" tabindex="0" data-slide-index="1" class="wonders-nav-dot wonders-dot-1 transition-all duration-300 rounded-full cursor-pointer inline-block" style="width: 8px; height: 8px; background-color: rgba(255,255,255,0.2);" aria-label="Go to slide 2"></span>
+            <span role="button" tabindex="0" data-slide-index="2" class="wonders-nav-dot wonders-dot-2 transition-all duration-300 rounded-full cursor-pointer inline-block" style="width: 8px; height: 8px; background-color: rgba(255,255,255,0.2);" aria-label="Go to slide 3"></span>
+            <span role="button" tabindex="0" data-slide-index="3" class="wonders-nav-dot wonders-dot-3 transition-all duration-300 rounded-full cursor-pointer inline-block" style="width: 8px; height: 8px; background-color: rgba(255,255,255,0.2);" aria-label="Go to slide 4"></span>
+            <span role="button" tabindex="0" data-slide-index="4" class="wonders-nav-dot wonders-dot-4 transition-all duration-300 rounded-full cursor-pointer inline-block" style="width: 8px; height: 8px; background-color: rgba(255,255,255,0.2);" aria-label="Go to slide 5"></span>
+            <span role="button" tabindex="0" data-slide-index="5" class="wonders-nav-dot wonders-dot-5 transition-all duration-300 rounded-full cursor-pointer inline-block" style="width: 8px; height: 8px; background-color: rgba(255,255,255,0.2);" aria-label="Go to slide 6"></span>
+          </div>
+        </div>
       </div>
 
-      <!-- Right Column: 01 to 06 Numbered List -->
-      <div class="lg:col-span-7 divide-y divide-stone-200 dark:divide-white/10 border-t border-b border-stone-200 dark:border-white/10">
-        
-        <!-- 01 -->
-        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
-          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">01</span>
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-              Tailor-Made Tanzania Safaris
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
-              Customized, private safari experiences tailored to individual preferences or group sizes.
-            </p>
-          </div>
-        </div>
+      <!-- Right Column: Card Slider Track -->
+      <div class="lg:col-span-7 xl:col-span-8 relative min-w-0">
+        <div x-ref="track"
+          @scroll="onScroll()"
+          onscroll="var s=this.closest('.wonders-slider-section'); if(!s) return; var c=this.querySelector('.wonders-card'); var w=c?(c.offsetWidth+24):340; var idx=Math.min(5, Math.max(0, Math.round(this.scrollLeft/w))); var dots=s.querySelectorAll('.wonders-nav-dot'); dots.forEach(function(d, i){ if(i===idx){ d.style.width='32px'; d.style.backgroundColor='#ea963e'; } else { d.style.width='8px'; d.style.backgroundColor='rgba(255,255,255,0.2)'; } });"
+          class="wonders-track flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0"
+          style="scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;">
 
-        <!-- 02 -->
-        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
-          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">02</span>
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-              Authentic Cultural Encounters
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
-              Visit traditional villages and learn about their customs: Maasai villages, Chagga and Hadzabe tribes.
-            </p>
+          <!-- Card 1 -->
+          <div class="wonders-card w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start h-[470px] sm:h-[520px] rounded-2xl overflow-hidden relative group select-none shadow-xl border border-white/10 bg-[#1e231d]">
+            <img src="/images/wonders/Tailor-Made-Tanzania-Safaris.webp" alt="Tailor-Made Tanzania Safaris" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-gjs-type="image">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
+            <div class="relative z-10 flex flex-col justify-end h-full p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug drop-shadow" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+                Tailor-Made Tanzania Safaris
+              </h3>
+              <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow" data-gjs-type="text">
+                Customized, private safari experiences tailored to individual preferences or group sizes.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- 03 -->
-        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
-          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">03</span>
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-              Conquer the Roof of Africa
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
-              Guided treks to the summit of Mount Kilimanjaro, the highest peak in Africa.
-            </p>
+          <!-- Card 2 -->
+          <div class="wonders-card w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start h-[470px] sm:h-[520px] rounded-2xl overflow-hidden relative group select-none shadow-xl border border-white/10 bg-[#1e231d]">
+            <img src="/images/wonders/Authentic-Cultural-Encounters.webp" alt="Authentic Cultural Encounters" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-gjs-type="image">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
+            <div class="relative z-10 flex flex-col justify-end h-full p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug drop-shadow" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+                Authentic Cultural Encounters
+              </h3>
+              <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow" data-gjs-type="text">
+                Visit traditional villages, learning about their customs (Maasai Villages, Chagga and Hadzabe Tribes)
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- 04 -->
-        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
-          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">04</span>
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-              Tropical Escapes — Zanzibar
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
-              Beach holidays in Zanzibar, including Stone Town, spice farms and Mafia Island.
-            </p>
+          <!-- Card 3 -->
+          <div class="wonders-card w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start h-[470px] sm:h-[520px] rounded-2xl overflow-hidden relative group select-none shadow-xl border border-white/10 bg-[#1e231d]">
+            <img src="/images/wonders/Conquer-the-Roof-of-Africa.webp" alt="Conquer the Roof of Africa" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-gjs-type="image">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
+            <div class="relative z-10 flex flex-col justify-end h-full p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug drop-shadow" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+                Conquer the Roof of Africa
+              </h3>
+              <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow" data-gjs-type="text">
+                Organize guided treks to the summit of Mount Kilimanjaro, the highest peak in Africa
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- 05 -->
-        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
-          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">05</span>
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-              Luxury &amp; Wilderness Camping
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
-              Accommodation in high-end lodges and tented camps in prime wildlife areas.
-            </p>
+          <!-- Card 4 -->
+          <div class="wonders-card w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start h-[470px] sm:h-[520px] rounded-2xl overflow-hidden relative group select-none shadow-xl border border-white/10 bg-[#1e231d]">
+            <img src="/images/wonders/Tropical-Escapes-Zanzibar.webp" alt="Tropical Escapes - Zanzibar" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-gjs-type="image">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
+            <div class="relative z-10 flex flex-col justify-end h-full p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug drop-shadow" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+                Tropical Escapes - Zanzibar
+              </h3>
+              <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow" data-gjs-type="text">
+                Curate beach holidays in Zanzibar, including visits to Stone Town, spice farms and Mafia Islands.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- 06 -->
-        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
-          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">06</span>
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-              Ultimate Outdoor Adventures
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
-              Explore the iconic Serengeti National Park, Ngorongoro Crater, Tarangire and Lake Manyara.
-            </p>
+          <!-- Card 5 -->
+          <div class="wonders-card w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start h-[470px] sm:h-[520px] rounded-2xl overflow-hidden relative group select-none shadow-xl border border-white/10 bg-[#1e231d]">
+            <img src="/images/wonders/Luxury-Wilderness-Camping.webp" alt="Luxury &amp; Wilderness Camping" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-gjs-type="image">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
+            <div class="relative z-10 flex flex-col justify-end h-full p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug drop-shadow" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+                Luxury &amp; Wilderness Camping
+              </h3>
+              <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow" data-gjs-type="text">
+                Provide accommodation in high-end lodges and tented camps in prime wildlife areas.
+              </p>
+            </div>
           </div>
-        </div>
 
+          <!-- Card 6 -->
+          <div class="wonders-card w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start h-[470px] sm:h-[520px] rounded-2xl overflow-hidden relative group select-none shadow-xl border border-white/10 bg-[#1e231d]">
+            <img src="/images/wonders/Ultimate-Outdoor-Adventures.webp" alt="Ultimate Outdoor Adventures" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-gjs-type="image">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
+            <div class="relative z-10 flex flex-col justify-end h-full p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug drop-shadow" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+                Ultimate Outdoor Adventures
+              </h3>
+              <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow" data-gjs-type="text">
+                Explore the iconic Serengeti National Park, Ngorongoro Crater, Tarangire and Lake Manyara
+              </p>
+            </div>
+          </div>
+
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -3077,15 +3264,15 @@ bm.add('safaris-contact-section', {
             <div class="flex flex-wrap gap-4 text-sm">
               <label class="inline-flex items-center gap-2 cursor-pointer px-4 py-2 rounded-lg bg-stone-100 dark:bg-white/10 hover:bg-[#CA9A2E]/10 transition">
                 <input type="radio" name="contact_pref" value="email" checked class="text-[#CA9A2E] focus:ring-[#CA9A2E]">
-                <span class="text-gray-800 dark:text-gray-200 font-medium">✉️ Email</span>
+                <span class="text-gray-800 dark:text-gray-200 font-medium"> Email</span>
               </label>
               <label class="inline-flex items-center gap-2 cursor-pointer px-4 py-2 rounded-lg bg-stone-100 dark:bg-white/10 hover:bg-[#CA9A2E]/10 transition">
                 <input type="radio" name="contact_pref" value="phone" class="text-[#CA9A2E] focus:ring-[#CA9A2E]">
-                <span class="text-gray-800 dark:text-gray-200 font-medium">📞 Phone</span>
+                <span class="text-gray-800 dark:text-gray-200 font-medium"> Phone</span>
               </label>
               <label class="inline-flex items-center gap-2 cursor-pointer px-4 py-2 rounded-lg bg-stone-100 dark:bg-white/10 hover:bg-[#CA9A2E]/10 transition">
                 <input type="radio" name="contact_pref" value="whatsapp" class="text-[#CA9A2E] focus:ring-[#CA9A2E]">
-                <span class="text-gray-800 dark:text-gray-200 font-medium">💬 WhatsApp</span>
+                <span class="text-gray-800 dark:text-gray-200 font-medium"> WhatsApp</span>
               </label>
             </div>
           </div>
@@ -4185,6 +4372,93 @@ editor.DomComponents.addType('safaris-about-block', {
         }
     }
 });
+
+// Register Wonders of Tanzania Slider Component
+editor.DomComponents.addType('wonders-slider-section', {
+    isComponent: el => (el && el.classList && el.classList.contains('wonders-slider-section')) ? { type: 'wonders-slider-section' } : false,
+    model: {
+        defaults: {
+            tagName: 'section',
+            droppable: true,
+            attributes: { class: 'wonders-slider-section' }
+        }
+    }
+});
+
+// Canvas interactive handlers for Wonders Slider
+editor.on('load', () => {
+    const bindCanvasWonders = () => {
+        try {
+            const canvasDoc = editor.Canvas.getDocument();
+            if (!canvasDoc || canvasDoc._wondersBound) return;
+            canvasDoc._wondersBound = true;
+
+            canvasDoc.addEventListener('click', function(e) {
+                const prev = e.target.closest('.wonders-prev-btn');
+                if (prev) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const s = prev.closest('.wonders-slider-section');
+                    const t = s ? s.querySelector('.wonders-track') : null;
+                    const c = t ? t.querySelector('.wonders-card') : null;
+                    const w = c ? (c.offsetWidth + 24) : 340;
+                    if (t) t.scrollBy({ left: -w, behavior: 'smooth' });
+                    return;
+                }
+                const next = e.target.closest('.wonders-next-btn');
+                if (next) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const s = next.closest('.wonders-slider-section');
+                    const t = s ? s.querySelector('.wonders-track') : null;
+                    const c = t ? t.querySelector('.wonders-card') : null;
+                    const w = c ? (c.offsetWidth + 24) : 340;
+                    if (t) {
+                        if (t.scrollLeft + t.clientWidth >= t.scrollWidth - 30) t.scrollTo({ left: 0, behavior: 'smooth' });
+                        else t.scrollBy({ left: w, behavior: 'smooth' });
+                    }
+                    return;
+                }
+                const dot = e.target.closest('.wonders-nav-dot');
+                if (dot) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const s = dot.closest('.wonders-slider-section');
+                    const t = s ? s.querySelector('.wonders-track') : null;
+                    const c = t ? t.querySelector('.wonders-card') : null;
+                    const w = c ? (c.offsetWidth + 24) : 340;
+                    const idx = parseInt(dot.getAttribute('data-slide-index') || '0', 10);
+                    if (t) t.scrollTo({ left: idx * w, behavior: 'smooth' });
+                    return;
+                }
+            }, true);
+
+            canvasDoc.addEventListener('scroll', function(e) {
+                const track = e.target;
+                if (track && track.classList && track.classList.contains('wonders-track')) {
+                    const s = track.closest('.wonders-slider-section');
+                    if (!s) return;
+                    const c = track.querySelector('.wonders-card');
+                    const w = c ? (c.offsetWidth + 24) : 340;
+                    const idx = Math.min(5, Math.max(0, Math.round(track.scrollLeft / w)));
+                    s.querySelectorAll('.wonders-nav-dot').forEach((d, i) => {
+                        if (i === idx) {
+                            d.style.width = '32px';
+                            d.style.backgroundColor = '#ea963e';
+                        } else {
+                            d.style.width = '8px';
+                            d.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                        }
+                    });
+                }
+            }, true);
+        } catch (_) {}
+    };
+
+    bindCanvasWonders();
+    editor.on('canvas:load', bindCanvasWonders);
+});
+
 
 
 

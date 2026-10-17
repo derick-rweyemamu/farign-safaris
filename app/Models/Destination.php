@@ -107,8 +107,7 @@ class Destination extends Model implements HasMedia
 
     public function tours(): BelongsToMany
     {
-        return $this->belongsToMany(Tour::class, 'tour_itineraries', 'location', 'tour_id', 'name', 'id')
-                    ->distinct();
+        return $this->belongsToMany(Tour::class, 'destination_tour');
     }
     public function attractions(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

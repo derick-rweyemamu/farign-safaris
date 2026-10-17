@@ -1138,7 +1138,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                     <i class="fa fa-folder-open"></i> Browse
                 </button>
             </div>
-        `;let i=t.querySelector(`.trait-input`),a=t.querySelector(`.trait-btn`),o=t=>{i.value=t,e.set(`value`,t);let r=e.target||$.getSelected();r&&r.addAttributes&&r.addAttributes({[n]:t})};return i.addEventListener(`change`,()=>o(i.value)),i.addEventListener(`input`,()=>o(i.value)),a.addEventListener(`click`,()=>{let e=`media_picker_`+Math.random().toString(36).substring(2,9),t=n=>{let r=Array.isArray(n.detail)?n.detail[0]:n.detail;if(r&&r.callbackId===e){let e=r.url;e&&o(e),window.removeEventListener(`media-picker-chosen`,t)}};window.addEventListener(`media-picker-chosen`,t),window.Livewire?window.Livewire.dispatch(`open-media-picker`,{callbackId:e,filterType:r?`video`:`image`,multiple:!1}):window.dispatchEvent(new CustomEvent(`open-media-picker`,{detail:{callbackId:e,filterType:r?`video`:`image`,multiple:!1}}))}),t},onUpdate({elInput:e,trait:t}){let n=e.querySelector(`.trait-input`);n&&(n.value=t.get(`value`)||``)}}),$.DomComponents.addType(`explore-card`,{model:{defaults:{tagName:`a`,attributes:{class:`explore-card`,href:`#`},traits:[{type:`text`,name:`href`,label:`Link URL`},{type:`media_picker`,name:`img-src`,label:`Background Image`}]},init(){this.on(`change:attributes:img-src`,this.updateImage),setTimeout(()=>{let e=this.components().models.find(e=>e.get(`tagName`)===`img`);if(e&&!this.getAttributes()[`img-src`]){let t=e.getAttributes().src;t&&this.addAttributes({"img-src":t})}},50)},updateImage(){let e=this.getAttributes()[`img-src`];if(e){let t=this.components().models.find(e=>e.get(`tagName`)===`img`);t&&t.setAttributes({src:e})}}}}),$.DomComponents.addType(`safaris-hero-component`,{isComponent(e){return!e||!e.classList?!1:e.classList.contains(`hero`)&&(e.tagName===`SECTION`||e.id===`home`||e.getAttribute&&e.getAttribute(`data-gjs-type`)===`safaris-hero-component`)?{type:`safaris-hero-component`}:!1},model:{defaults:{tagName:`section`,name:`Hero Section`,droppable:!0,attributes:{class:`hero`,id:`home`,"data-gjs-type":`safaris-hero-component`,"data-bg-type":`image`,"data-bg-image":`https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80`,"data-bg-video":``,"data-bg-video-url":``,"data-overlay-opacity":`0.4`},traits:[{type:`select`,name:`data-bg-type`,label:`Background Type`,options:[{value:`image`,name:`Background Image`},{value:`video_url`,name:`Video URL (YouTube / MP4)`},{value:`video_upload`,name:`Uploaded Video (Media Library)`}]},{type:`media_picker`,name:`data-bg-image`,label:`Background Image`},{type:`text`,name:`data-bg-video-url`,label:`Video URL (YouTube or MP4)`,placeholder:`https://www.youtube.com/watch?v=... or .mp4`},{type:`media_picker`,name:`data-bg-video`,label:`Uploaded Video (MP4)`},{type:`select`,name:`data-overlay-opacity`,label:`Dark Overlay`,options:[{value:`0`,name:`None (0%)`},{value:`0.2`,name:`Light (20%)`},{value:`0.4`,name:`Standard (40%)`},{value:`0.6`,name:`Dark (60%)`},{value:`0.8`,name:`Heavy (80%)`}]}],components:`
+        `;let i=t.querySelector(`.trait-input`),a=t.querySelector(`.trait-btn`),o=t=>{i.value=t,e.set(`value`,t);let r=e.target||$.getSelected();r&&r.addAttributes&&(r.addAttributes({[n]:t}),r.trigger&&r.trigger(`change:attributes`,r),r.trigger&&r.trigger(`change:attributes:`+n,r,t))};return i.addEventListener(`change`,()=>o(i.value)),i.addEventListener(`input`,()=>o(i.value)),a.addEventListener(`click`,()=>{let e=`media_picker_`+Math.random().toString(36).substring(2,9),t=n=>{let r=Array.isArray(n.detail)?n.detail[0]:n.detail;if(r&&r.callbackId===e){let e=r.url;e&&o(e),window.removeEventListener(`media-picker-chosen`,t)}};window.addEventListener(`media-picker-chosen`,t),window.Livewire?window.Livewire.dispatch(`open-media-picker`,{callbackId:e,filterType:r?`video`:`image`,multiple:!1}):window.dispatchEvent(new CustomEvent(`open-media-picker`,{detail:{callbackId:e,filterType:r?`video`:`image`,multiple:!1}}))}),t},onUpdate({elInput:e,trait:t}){let n=e.querySelector(`.trait-input`);if(n){let e=t.target||$.getSelected(),r=t.get(`name`)||``;n.value=t.get(`value`)||e&&e.getAttributes&&e.getAttributes()[r]||``}}}),$.DomComponents.addType(`explore-card`,{model:{defaults:{tagName:`a`,attributes:{class:`explore-card`,href:`#`},traits:[{type:`text`,name:`href`,label:`Link URL`},{type:`media_picker`,name:`img-src`,label:`Background Image`}]},init(){this.on(`change:attributes:img-src`,this.updateImage),setTimeout(()=>{let e=this.components().models.find(e=>e.get(`tagName`)===`img`);if(e&&!this.getAttributes()[`img-src`]){let t=e.getAttributes().src;t&&this.addAttributes({"img-src":t})}},50)},updateImage(){let e=this.getAttributes()[`img-src`];if(e){let t=this.components().models.find(e=>e.get(`tagName`)===`img`);t&&t.setAttributes({src:e})}}}}),$.DomComponents.addType(`safaris-hero-component`,{isComponent(e){return!e||!e.classList?!1:e.classList.contains(`hero`)&&(e.tagName===`SECTION`||e.id===`home`||e.getAttribute&&e.getAttribute(`data-gjs-type`)===`safaris-hero-component`)?{type:`safaris-hero-component`}:!1},model:{defaults:{tagName:`section`,name:`Hero Section`,droppable:!0,attributes:{class:`hero`,id:`home`,"data-gjs-type":`safaris-hero-component`,"data-bg-type":`image`,"data-bg-image":`https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80`,"data-bg-video":``,"data-bg-video-url":``,"data-overlay-opacity":`0.4`},traits:[{type:`select`,name:`data-bg-type`,label:`Background Type`,options:[{value:`image`,name:`Background Image`},{value:`video_url`,name:`Video URL (YouTube / MP4)`},{value:`video_upload`,name:`Uploaded Video (Media Library)`}]},{type:`media_picker`,name:`data-bg-image`,label:`Background Image`},{type:`text`,name:`data-bg-video-url`,label:`Video URL (YouTube or MP4)`,placeholder:`https://www.youtube.com/watch?v=... or .mp4`},{type:`media_picker`,name:`data-bg-video`,label:`Uploaded Video (MP4)`},{type:`select`,name:`data-overlay-opacity`,label:`Dark Overlay`,options:[{value:`0`,name:`None (0%)`},{value:`0.2`,name:`Light (20%)`},{value:`0.4`,name:`Standard (40%)`},{value:`0.6`,name:`Dark (60%)`},{value:`0.8`,name:`Heavy (80%)`}]}],components:`
                 <div class="hero-bg-container" data-gjs-locked="true" data-gjs-selectable="false" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
                     <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80')"></div>
                 </div>
@@ -1185,7 +1185,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                         </div>
                     </div>
                 </div>
-            `},init(){this.on(`change:attributes:data-bg-type change:attributes:data-bg-image change:attributes:data-bg-video change:attributes:data-bg-video-url change:attributes:data-overlay-opacity`,this.updateBackground),setTimeout(()=>{if(!(this.getAttributes()||{})[`data-bg-image`]){let e=this.find&&this.find(`.hero-bg`)[0];if(e){let t=((e.getStyle()||{})[`background-image`]||``).match(/url\(['"]?(.*?)['"]?\)/);t&&t[1]&&this.addAttributes({"data-bg-image":t[1]})}}this.updateBackground()},80)},updateBackground(){let e=this.getAttributes()||{},t=e[`data-bg-type`]||`image`,n=e[`data-bg-image`]||``,r=e[`data-bg-video`]||``,i=e[`data-bg-video-url`]||``,a=e[`data-overlay-opacity`]||`0.4`,o=this.find&&this.find(`.hero-bg-container`)[0]||this.components().models.find(e=>e.getClasses&&e.getClasses().includes(`hero-bg-container`));if(!o){let e=this.find&&this.find(`.hero-bg`)[0];o=e&&e.parent&&e.parent()?e.parent():this.components().add({tagName:`div`,attributes:{class:`hero-bg-container`,"data-gjs-locked":`true`,"data-gjs-selectable":`false`},style:{position:`absolute`,top:`0`,left:`0`,width:`100%`,height:`100%`,"z-index":`1`,overflow:`hidden`}},{at:0})}if(!o)return;o.addStyle({overflow:`hidden`,position:`absolute`,top:`0`,left:`0`,width:`100%`,height:`100%`,"z-index":`1`});let s=[];if(t===`video_url`||t===`video_upload`||!n&&(i||r)){let e=t===`video_upload`?r||i:i||r,n=e?e.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|live\/|watch\?v=|\&v=)([^#\&\?]*).*/):null,o=n&&n[2].length===11?n[2]:null;o?s=[{tagName:`iframe`,style:{position:`absolute`,top:`50%`,left:`50%`,width:`max(100vw, calc(100vh * (16 / 9)))`,height:`max(100vh, calc(100vw * (9 / 16)))`,transform:`translate(-50%, -50%) scale(1.25)`,"pointer-events":`none`,"min-width":`100vw`,"min-height":`100vh`,border:`none`,"z-index":`1`},attributes:{class:`hero-bg-video`,src:`https://www.youtube.com/embed/${o}?autoplay=1&loop=1&mute=1&controls=0&playlist=${o}&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3`,frameborder:`0`,allow:`autoplay; fullscreen`}},{tagName:`div`,style:{position:`absolute`,inset:`0`,background:`rgba(0,0,0,${a})`,"z-index":`2`},attributes:{class:`hero-bg-overlay`}}]:e&&(s=[{tagName:`video`,style:{position:`absolute`,top:`0`,left:`0`,width:`100%`,height:`100%`,"object-fit":`cover`,"pointer-events":`none`,"z-index":`1`},attributes:{class:`hero-bg-video`,autoplay:`autoplay`,loop:`loop`,muted:`muted`,playsinline:`playsinline`,src:e},components:[{tagName:`source`,attributes:{src:e,type:`video/mp4`}}]},{tagName:`div`,style:{position:`absolute`,inset:`0`,background:`rgba(0,0,0,${a})`,"z-index":`2`},attributes:{class:`hero-bg-overlay`}}])}s.length===0&&(s=[{tagName:`div`,style:{"background-image":`url('${n||`https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80`}')`,"background-size":`cover`,"background-position":`center`,width:`100%`,height:`100%`,position:`absolute`,inset:`0`,"z-index":`1`},attributes:{class:`hero-bg`}},{tagName:`div`,style:{position:`absolute`,inset:`0`,background:`rgba(0,0,0,${a})`,"z-index":`2`},attributes:{class:`hero-bg-overlay`}}]),o.components(s)}}}),$.DomComponents.addType(`safaris-kili-calculator-block`,{model:{defaults:{tagName:`div`,attributes:{class:`safaris-kili-calculator-block`,"data-title":`Kilimanjaro Success Rate Calculator`,"data-subtitle":`Estimate your summit success probability based on acclimatization and route profiles.`,"data-image":``,"data-badge":`Mount Kilimanjaro (5,895m)`,"data-heading":`Conquer the Roof of Africa`,"data-description":`Choosing the right route duration and acclimatization strategy can raise your summit success rate from 60% to over 95%.`}}}});var OO=$.TraitManager||$.Traits;OO&&typeof OO.addType==`function`&&OO.addType(`multiselect`,{createInput({trait:e}){let t=document.createElement(`div`);t.className=`gjs-multiselect-container`,t.style.cssText=`width: 100%; box-sizing: border-box;`;let n=document.createElement(`input`);n.type=`text`,n.placeholder=`🔍 Search country...`,n.className=`gjs-multiselect-search`,n.style.cssText=`width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid #334155; border-radius: 4px; color: #cbd5e1; font-size: 11px; padding: 6px 8px; margin-bottom: 6px; outline: none;`,t.appendChild(n);let r=document.createElement(`div`);return r.className=`gjs-multiselect-wrap`,r.style.cssText=`width: 100%; max-height: 200px; overflow-y: auto; background: #0f172a; border: 1px solid #334155; border-radius: 4px; padding: 6px; box-sizing: border-box;`,(e.get(`options`)||[]).forEach(e=>{let t=document.createElement(`label`);t.className=`gjs-multiselect-item`,t.setAttribute(`data-label`,(e.name||``).toLowerCase()),t.style.cssText=`display: flex; align-items: center; gap: 8px; font-size: 12px; color: #cbd5e1; cursor: pointer; padding: 4px; user-select: none; border-radius: 3px; margin-bottom: 2px;`,t.onmouseover=()=>t.style.background=`#1e293b`,t.onmouseout=()=>t.style.background=`transparent`;let n=document.createElement(`input`);n.type=`checkbox`,n.value=e.value,n.className=`gjs-multiselect-checkbox`,n.style.cssText=`cursor: pointer; accent-color: #455537; width: 15px; height: 15px;`;let i=document.createElement(`span`);i.textContent=e.name,t.appendChild(n),t.appendChild(i),r.appendChild(t)}),n.addEventListener(`input`,e=>{let t=(e.target.value||``).toLowerCase().trim();r.querySelectorAll(`.gjs-multiselect-item`).forEach(e=>{let n=e.getAttribute(`data-label`)||``;e.style.display=!t||n.includes(t)?`flex`:`none`})}),t.appendChild(r),t},onUpdate({elInput:e,component:t,trait:n}){let r=(t.getAttributes()[n.get(`name`)]||`all`).split(`,`).map(e=>e.trim());e.querySelectorAll(`input[type="checkbox"]`).forEach(e=>{e.checked=r.includes(e.value)})},onEvent({elInput:e,component:t,trait:n}){let r=e.querySelectorAll(`input[type="checkbox"]:checked`),i=Array.from(r).map(e=>e.value),a=i.join(`,`);(!a||i.includes(`all`))&&(a=i.includes(`all`)&&i.length>1?i.filter(e=>e!==`all`).join(`,`):`all`),t.addAttributes({[n.get(`name`)]:a}),t.view&&typeof t.view.renderView==`function`&&t.view.renderView()}}),(()=>{let e={createInput({trait:e,component:t}){let n=document.createElement(`div`);n.className=`gjs-ordered-multiselect-container`,n.style.cssText=`width: 100%; box-sizing: border-box; font-family: sans-serif;`;let r=e.get(`options`)||[],i=()=>e.target||t||$.getSelected&&$.getSelected(),a=(()=>{let t=i(),n=(t?t.getAttributes()[e.get(`name`)]:e.get(`value`))||`all`;return n===`all`||!n.trim()?[`all`]:n.split(`,`).map(e=>e.trim()).filter(Boolean)})(),o=document.createElement(`div`);o.style.cssText=`background: #0b1322; border: 1px solid #1e293b; border-radius: 6px; padding: 8px; margin-bottom: 8px;`;let s=document.createElement(`div`);s.style.cssText=`display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 11px;`,o.appendChild(s);let c=document.createElement(`div`);c.style.cssText=`display: flex; flex-direction: column; gap: 4px; max-height: 160px; overflow-y: auto;`,o.appendChild(c),n.appendChild(o);let l=document.createElement(`input`);l.type=`text`,l.placeholder=`🔍 Search country to add...`,l.className=`gjs-ordered-multiselect-search`,l.style.cssText=`width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid #334155; border-radius: 4px; color: #cbd5e1; font-size: 11px; padding: 6px 8px; margin-bottom: 6px; outline: none;`,n.appendChild(l);let u=document.createElement(`div`);u.className=`gjs-ordered-multiselect-wrap`,u.style.cssText=`width: 100%; max-height: 180px; overflow-y: auto; background: #0f172a; border: 1px solid #334155; border-radius: 4px; padding: 6px; box-sizing: border-box;`,n.appendChild(u);let d={},f={};r.forEach(e=>{let t=document.createElement(`label`);t.className=`gjs-multiselect-item`,t.setAttribute(`data-label`,(e.name||``).toLowerCase()),t.style.cssText=`display: flex; align-items: center; gap: 8px; font-size: 12px; color: #cbd5e1; cursor: pointer; padding: 4px 6px; user-select: none; border-radius: 4px; margin-bottom: 2px; transition: background 0.15s;`,t.onmouseover=()=>t.style.background=`#1e293b`,t.onmouseout=()=>t.style.background=`transparent`;let n=document.createElement(`input`);n.type=`checkbox`,n.value=e.value,n.className=`gjs-multiselect-checkbox`,n.style.cssText=`cursor: pointer; accent-color: #455537; width: 14px; height: 14px; margin: 0;`,d[e.value]=n;let r=document.createElement(`span`);r.style.cssText=`flex: 1;`,r.textContent=e.name;let i=document.createElement(`span`);i.style.cssText=`font-size: 10px; font-weight: 700; color: #CA9A2E; background: rgba(202,154,46,0.15); padding: 1px 5px; border-radius: 3px; display: none;`,f[e.value]=i,t.appendChild(n),t.appendChild(r),t.appendChild(i),u.appendChild(t),n.addEventListener(`change`,()=>{e.value===`all`?a=[`all`]:(a=a.filter(e=>e!==`all`),n.checked?a.includes(e.value)||a.push(e.value):(a=a.filter(t=>t!==e.value),a.length===0&&(a=[`all`]))),p(!0)})}),l.addEventListener(`input`,e=>{let t=(e.target.value||``).toLowerCase().trim();u.querySelectorAll(`.gjs-multiselect-item`).forEach(e=>{let n=e.getAttribute(`data-label`)||``;e.style.display=!t||n.includes(t)?`flex`:`none`})});let p=(t=!0)=>{let n=a.join(`,`);(!n||a.includes(`all`))&&(n=`all`,a=[`all`]),e.set(`value`,n);let o=i();if(o){o.addAttributes({[e.get(`name`)]:n}),t&&o.view&&typeof o.view.renderView==`function`&&o.view.renderView();try{$.trigger(`change:canvas`)}catch{}}r.forEach(e=>{let t=d[e.value],r=f[e.value];if(t)if(n===`all`)t.checked=e.value===`all`,r&&(r.style.display=`none`);else{let n=a.indexOf(e.value);t.checked=n!==-1,r&&(n===-1?r.style.display=`none`:(r.textContent=`#${n+1}`,r.style.display=`inline-block`))}}),m()},m=()=>{if(c.innerHTML=``,a.length===0||a.includes(`all`)){s.innerHTML=`
+            `},init(){this.on(`change:attributes change:attributes:data-bg-type change:attributes:data-bg-image change:attributes:data-bg-video change:attributes:data-bg-video-url change:attributes:data-overlay-opacity`,this.updateBackground),setTimeout(()=>{if(!(this.getAttributes()||{})[`data-bg-image`]){let e=this.find&&this.find(`.hero-bg`)[0];if(e){let t=((e.getStyle()||{})[`background-image`]||e.getAttributes&&e.getAttributes().style||``).match(/url\(['"]?(.*?)['"]?\)/);t&&t[1]&&this.addAttributes({"data-bg-image":t[1]})}}this.updateBackground()},80)},updateBackground(){let e=this.getAttributes()||{},t=e[`data-bg-type`]||`image`,n=e[`data-bg-image`]||``,r=e[`data-bg-video`]||``,i=e[`data-bg-video-url`]||``,a=e[`data-overlay-opacity`]===void 0?`0.4`:e[`data-overlay-opacity`],o=this.find&&this.find(`.hero-bg-container`)[0]||this.components().models.find(e=>e.getClasses&&e.getClasses().includes(`hero-bg-container`));if(!o){let e=this.find&&this.find(`.hero-bg`)[0];o=e&&e.parent&&e.parent()?e.parent():this.components().add({tagName:`div`,attributes:{class:`hero-bg-container`,"data-gjs-locked":`true`,"data-gjs-selectable":`false`},style:{position:`absolute`,top:`0`,left:`0`,width:`100%`,height:`100%`,"z-index":`1`,overflow:`hidden`}},{at:0})}if(o)if(o.addStyle({overflow:`hidden`,position:`absolute`,top:`0`,left:`0`,width:`100%`,height:`100%`,"z-index":`1`}),t===`video_url`||t===`video_upload`||!n&&(i||r)){let e=t===`video_upload`?r||i:i||r,n=e?e.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|live\/|watch\?v=|\&v=)([^#\&\?]*).*/):null,s=n&&n[2].length===11?n[2]:null,c=[];s?c=[{tagName:`iframe`,style:{position:`absolute`,top:`50%`,left:`50%`,width:`max(100vw, calc(100vh * (16 / 9)))`,height:`max(100vh, calc(100vw * (9 / 16)))`,transform:`translate(-50%, -50%) scale(1.25)`,"pointer-events":`none`,"min-width":`100vw`,"min-height":`100vh`,border:`none`,"z-index":`1`},attributes:{class:`hero-bg-video`,src:`https://www.youtube.com/embed/${s}?autoplay=1&loop=1&mute=1&controls=0&playlist=${s}&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3`,frameborder:`0`,allow:`autoplay; fullscreen`}},{tagName:`div`,style:{position:`absolute`,inset:`0`,background:`rgba(0,0,0,${a})`,"z-index":`2`},attributes:{class:`hero-bg-overlay`,style:`position: absolute; inset: 0; background: rgba(0,0,0,${a}); z-index: 2;`}}]:e&&(c=[{tagName:`video`,style:{position:`absolute`,top:`0`,left:`0`,width:`100%`,height:`100%`,"object-fit":`cover`,"pointer-events":`none`,"z-index":`1`},attributes:{class:`hero-bg-video`,autoplay:`autoplay`,loop:`loop`,muted:`muted`,playsinline:`playsinline`,src:e},components:[{tagName:`source`,attributes:{src:e,type:`video/mp4`}}]},{tagName:`div`,style:{position:`absolute`,inset:`0`,background:`rgba(0,0,0,${a})`,"z-index":`2`},attributes:{class:`hero-bg-overlay`,style:`position: absolute; inset: 0; background: rgba(0,0,0,${a}); z-index: 2;`}}]),c.length>0&&o.components(c)}else{let e=n||`https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80`;(o.find&&o.find(`video, iframe, .yt-hero-wrapper`)||[]).forEach(e=>e.remove&&e.remove());let t=o.find&&o.find(`.hero-bg`)[0],r=`background-image: url('${e}') !important; background-size: cover; background-position: center; width: 100%; height: 100%; position: absolute; inset: 0; z-index: 1;`;t?(t.addAttributes({style:r}),t.setStyle({"background-image":`url('${e}') !important`,"background-size":`cover`,"background-position":`center`,width:`100%`,height:`100%`,position:`absolute`,inset:`0`,"z-index":`1`})):o.components().add({tagName:`div`,attributes:{class:`hero-bg`,style:r},style:{"background-image":`url('${e}') !important`,"background-size":`cover`,"background-position":`center`,width:`100%`,height:`100%`,position:`absolute`,inset:`0`,"z-index":`1`}},{at:0});let i=o.find&&o.find(`.hero-bg-overlay`)[0],s=`position: absolute; inset: 0; background: rgba(0,0,0,${a}); z-index: 2;`;i?(i.addAttributes({style:s}),i.setStyle({position:`absolute`,inset:`0`,background:`rgba(0,0,0,${a})`,"z-index":`2`})):o.components().add({tagName:`div`,attributes:{class:`hero-bg-overlay`,style:s},style:{position:`absolute`,inset:`0`,background:`rgba(0,0,0,${a})`,"z-index":`2`}})}}},view:{init(){this.listenTo(this.model,`change:attributes`,this.renderBackground)},onRender(){this.renderBackground()},renderBackground(){if(!this.el)return;let e=this.model.getAttributes()||{},t=e[`data-bg-type`]||`image`,n=e[`data-bg-image`]||``,r=e[`data-bg-video`]||``,i=e[`data-bg-video-url`]||``,a=e[`data-overlay-opacity`]===void 0?`0.4`:e[`data-overlay-opacity`],o=t===`video_url`||t===`video_upload`||!n&&(i||r),s=this.el.querySelector(`.hero-bg-container`);if(!s){let e=this.el.querySelector(`.hero-bg`);e&&e.parentElement&&(s=e.parentElement)}if(s)if(o){let e=t===`video_upload`?r||i:i||r,n=e?e.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|live\/|watch\?v=|\&v=)([^#\&\?]*).*/):null,o=n&&n[2].length===11?n[2]:null;if(s.querySelectorAll(`video, iframe, .yt-hero-wrapper, .hero-bg-video`).forEach(e=>e.remove()),o){let e=document.createElement(`iframe`);e.className=`hero-bg-video`,e.src=`https://www.youtube.com/embed/${o}?autoplay=1&loop=1&mute=1&controls=0&playlist=${o}&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3`,e.setAttribute(`frameborder`,`0`),e.setAttribute(`allow`,`autoplay; fullscreen`),e.style.cssText=`position: absolute; top: 50%; left: 50%; width: max(100vw, calc(100vh * (16 / 9))); height: max(100vh, calc(100vw * (9 / 16))); transform: translate(-50%, -50%) scale(1.25); pointer-events: none; min-width: 100vw; min-height: 100vh; border: none; z-index: 1;`,s.prepend(e)}else if(e){let t=document.createElement(`video`);t.className=`hero-bg-video`,t.autoplay=!0,t.loop=!0,t.muted=!0,t.playsInline=!0,t.src=e,t.style.cssText=`position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 1;`,s.prepend(t)}let c=s.querySelector(`.hero-bg-overlay`);c||(c=document.createElement(`div`),c.className=`hero-bg-overlay`,s.appendChild(c)),c.style.setProperty(`position`,`absolute`,`important`),c.style.setProperty(`inset`,`0`,`important`),c.style.setProperty(`background`,`rgba(0, 0, 0, ${a})`,`important`),c.style.setProperty(`z-index`,`2`,`important`)}else{let e=n||`https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80`;s.querySelectorAll(`video, iframe, .yt-hero-wrapper, .hero-bg-video`).forEach(e=>e.remove());let t=s.querySelector(`.hero-bg`);t||(t=document.createElement(`div`),t.className=`hero-bg`,s.prepend(t)),t.style.setProperty(`background-image`,`url("${e}")`,`important`),t.style.setProperty(`background-size`,`cover`,`important`),t.style.setProperty(`background-position`,`center`,`important`),t.style.setProperty(`position`,`absolute`,`important`),t.style.setProperty(`inset`,`0`,`important`),t.style.setProperty(`width`,`100%`,`important`),t.style.setProperty(`height`,`100%`,`important`),t.style.setProperty(`z-index`,`1`,`important`);let r=s.querySelector(`.hero-bg-overlay`);r||(r=document.createElement(`div`),r.className=`hero-bg-overlay`,s.appendChild(r)),r.style.setProperty(`position`,`absolute`,`important`),r.style.setProperty(`inset`,`0`,`important`),r.style.setProperty(`background`,`rgba(0, 0, 0, ${a})`,`important`),r.style.setProperty(`z-index`,`2`,`important`)}}}}),$.DomComponents.addType(`safaris-kili-calculator-block`,{model:{defaults:{tagName:`div`,attributes:{class:`safaris-kili-calculator-block`,"data-title":`Kilimanjaro Success Rate Calculator`,"data-subtitle":`Estimate your summit success probability based on acclimatization and route profiles.`,"data-image":``,"data-badge":`Mount Kilimanjaro (5,895m)`,"data-heading":`Conquer the Roof of Africa`,"data-description":`Choosing the right route duration and acclimatization strategy can raise your summit success rate from 60% to over 95%.`}}}});var OO=$.TraitManager||$.Traits;OO&&typeof OO.addType==`function`&&OO.addType(`multiselect`,{createInput({trait:e}){let t=document.createElement(`div`);t.className=`gjs-multiselect-container`,t.style.cssText=`width: 100%; box-sizing: border-box;`;let n=document.createElement(`input`);n.type=`text`,n.placeholder=`🔍 Search country...`,n.className=`gjs-multiselect-search`,n.style.cssText=`width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid #334155; border-radius: 4px; color: #cbd5e1; font-size: 11px; padding: 6px 8px; margin-bottom: 6px; outline: none;`,t.appendChild(n);let r=document.createElement(`div`);return r.className=`gjs-multiselect-wrap`,r.style.cssText=`width: 100%; max-height: 200px; overflow-y: auto; background: #0f172a; border: 1px solid #334155; border-radius: 4px; padding: 6px; box-sizing: border-box;`,(e.get(`options`)||[]).forEach(e=>{let t=document.createElement(`label`);t.className=`gjs-multiselect-item`,t.setAttribute(`data-label`,(e.name||``).toLowerCase()),t.style.cssText=`display: flex; align-items: center; gap: 8px; font-size: 12px; color: #cbd5e1; cursor: pointer; padding: 4px; user-select: none; border-radius: 3px; margin-bottom: 2px;`,t.onmouseover=()=>t.style.background=`#1e293b`,t.onmouseout=()=>t.style.background=`transparent`;let n=document.createElement(`input`);n.type=`checkbox`,n.value=e.value,n.className=`gjs-multiselect-checkbox`,n.style.cssText=`cursor: pointer; accent-color: #455537; width: 15px; height: 15px;`;let i=document.createElement(`span`);i.textContent=e.name,t.appendChild(n),t.appendChild(i),r.appendChild(t)}),n.addEventListener(`input`,e=>{let t=(e.target.value||``).toLowerCase().trim();r.querySelectorAll(`.gjs-multiselect-item`).forEach(e=>{let n=e.getAttribute(`data-label`)||``;e.style.display=!t||n.includes(t)?`flex`:`none`})}),t.appendChild(r),t},onUpdate({elInput:e,component:t,trait:n}){let r=(t.getAttributes()[n.get(`name`)]||`all`).split(`,`).map(e=>e.trim());e.querySelectorAll(`input[type="checkbox"]`).forEach(e=>{e.checked=r.includes(e.value)})},onEvent({elInput:e,component:t,trait:n}){let r=e.querySelectorAll(`input[type="checkbox"]:checked`),i=Array.from(r).map(e=>e.value),a=i.join(`,`);(!a||i.includes(`all`))&&(a=i.includes(`all`)&&i.length>1?i.filter(e=>e!==`all`).join(`,`):`all`),t.addAttributes({[n.get(`name`)]:a}),t.view&&typeof t.view.renderView==`function`&&t.view.renderView()}}),(()=>{let e={createInput({trait:e,component:t}){let n=document.createElement(`div`);n.className=`gjs-ordered-multiselect-container`,n.style.cssText=`width: 100%; box-sizing: border-box; font-family: sans-serif;`;let r=e.get(`options`)||[],i=()=>e.target||t||$.getSelected&&$.getSelected(),a=(()=>{let t=i(),n=(t?t.getAttributes()[e.get(`name`)]:e.get(`value`))||`all`;return n===`all`||!n.trim()?[`all`]:n.split(`,`).map(e=>e.trim()).filter(Boolean)})(),o=document.createElement(`div`);o.style.cssText=`background: #0b1322; border: 1px solid #1e293b; border-radius: 6px; padding: 8px; margin-bottom: 8px;`;let s=document.createElement(`div`);s.style.cssText=`display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 11px;`,o.appendChild(s);let c=document.createElement(`div`);c.style.cssText=`display: flex; flex-direction: column; gap: 4px; max-height: 160px; overflow-y: auto;`,o.appendChild(c),n.appendChild(o);let l=document.createElement(`input`);l.type=`text`,l.placeholder=`🔍 Search country to add...`,l.className=`gjs-ordered-multiselect-search`,l.style.cssText=`width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid #334155; border-radius: 4px; color: #cbd5e1; font-size: 11px; padding: 6px 8px; margin-bottom: 6px; outline: none;`,n.appendChild(l);let u=document.createElement(`div`);u.className=`gjs-ordered-multiselect-wrap`,u.style.cssText=`width: 100%; max-height: 180px; overflow-y: auto; background: #0f172a; border: 1px solid #334155; border-radius: 4px; padding: 6px; box-sizing: border-box;`,n.appendChild(u);let d={},f={};r.forEach(e=>{let t=document.createElement(`label`);t.className=`gjs-multiselect-item`,t.setAttribute(`data-label`,(e.name||``).toLowerCase()),t.style.cssText=`display: flex; align-items: center; gap: 8px; font-size: 12px; color: #cbd5e1; cursor: pointer; padding: 4px 6px; user-select: none; border-radius: 4px; margin-bottom: 2px; transition: background 0.15s;`,t.onmouseover=()=>t.style.background=`#1e293b`,t.onmouseout=()=>t.style.background=`transparent`;let n=document.createElement(`input`);n.type=`checkbox`,n.value=e.value,n.className=`gjs-multiselect-checkbox`,n.style.cssText=`cursor: pointer; accent-color: #455537; width: 14px; height: 14px; margin: 0;`,d[e.value]=n;let r=document.createElement(`span`);r.style.cssText=`flex: 1;`,r.textContent=e.name;let i=document.createElement(`span`);i.style.cssText=`font-size: 10px; font-weight: 700; color: #CA9A2E; background: rgba(202,154,46,0.15); padding: 1px 5px; border-radius: 3px; display: none;`,f[e.value]=i,t.appendChild(n),t.appendChild(r),t.appendChild(i),u.appendChild(t),n.addEventListener(`change`,()=>{e.value===`all`?a=[`all`]:(a=a.filter(e=>e!==`all`),n.checked?a.includes(e.value)||a.push(e.value):(a=a.filter(t=>t!==e.value),a.length===0&&(a=[`all`]))),p(!0)})}),l.addEventListener(`input`,e=>{let t=(e.target.value||``).toLowerCase().trim();u.querySelectorAll(`.gjs-multiselect-item`).forEach(e=>{let n=e.getAttribute(`data-label`)||``;e.style.display=!t||n.includes(t)?`flex`:`none`})});let p=(t=!0)=>{let n=a.join(`,`);(!n||a.includes(`all`))&&(n=`all`,a=[`all`]),e.set(`value`,n);let o=i();if(o){o.addAttributes({[e.get(`name`)]:n}),t&&o.view&&typeof o.view.renderView==`function`&&o.view.renderView();try{$.trigger(`change:canvas`)}catch{}}r.forEach(e=>{let t=d[e.value],r=f[e.value];if(t)if(n===`all`)t.checked=e.value===`all`,r&&(r.style.display=`none`);else{let n=a.indexOf(e.value);t.checked=n!==-1,r&&(n===-1?r.style.display=`none`:(r.textContent=`#${n+1}`,r.style.display=`inline-block`))}}),m()},m=()=>{if(c.innerHTML=``,a.length===0||a.includes(`all`)){s.innerHTML=`
                         <span style="font-weight: 700; color: #8fa593; letter-spacing: 0.05em; text-transform: uppercase;">
                             Active Order: Auto
                         </span>
@@ -1215,7 +1215,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                             <button type="button" class="btn-down" style="width: 20px; height: 20px; border-radius: 3px; border: 1px solid #334155; background: ${s?`#1e293b`:`#334155`}; color: ${s?`#475569`:`#e2e8f0`}; cursor: ${s?`default`:`pointer`}; font-size: 10px; display: flex; align-items: center; justify-content: center; padding: 0;" ${s?`disabled`:``} title="Move Down">↓</button>
                             <button type="button" class="btn-remove" style="width: 20px; height: 20px; border-radius: 3px; border: 1px solid rgba(239,68,68,0.25); background: rgba(239,68,68,0.12); color: #f87171; cursor: pointer; font-size: 10px; display: flex; align-items: center; justify-content: center; padding: 0; margin-left: 2px;" title="Remove">✕</button>
                         </div>
-                    `;let u=l.querySelector(`.btn-up`),d=l.querySelector(`.btn-down`),f=l.querySelector(`.btn-remove`);!o&&u&&u.addEventListener(`click`,e=>{e.preventDefault(),e.stopPropagation();let t=a[n];a[n]=a[n-1],a[n-1]=t,p(!0)}),!s&&d&&d.addEventListener(`click`,e=>{e.preventDefault(),e.stopPropagation();let t=a[n];a[n]=a[n+1],a[n+1]=t,p(!0)}),f&&f.addEventListener(`click`,t=>{t.preventDefault(),t.stopPropagation(),a=a.filter(t=>t!==e),a.length===0&&(a=[`all`]),p(!0)}),l.addEventListener(`dragstart`,e=>{t=n,e.dataTransfer.effectAllowed=`move`,l.style.opacity=`0.5`}),l.addEventListener(`dragend`,()=>{l.style.opacity=`1`}),l.addEventListener(`dragover`,e=>{e.preventDefault(),e.dataTransfer.dropEffect=`move`,l.style.borderColor=`#CA9A2E`}),l.addEventListener(`dragleave`,()=>{l.style.borderColor=`#334155`}),l.addEventListener(`drop`,e=>{if(e.preventDefault(),l.style.borderColor=`#334155`,t!==null&&t!==n){let e=a.splice(t,1)[0];a.splice(n,0,e),p(!0)}}),c.appendChild(l)})};return p(!1),n},onUpdate({elInput:e,component:t,trait:n}){let r=(t?t.getAttributes()[n.get(`name`)]:n.get(`value`))||`all`,i=r===`all`||!r.trim()?[`all`]:r.split(`,`).map(e=>e.trim()).filter(Boolean);e.querySelectorAll(`.gjs-multiselect-checkbox`).forEach(e=>{i.includes(`all`)?e.checked=e.value===`all`:e.checked=i.includes(e.value)})}};$.Traits&&typeof $.Traits.addType==`function`&&$.Traits.addType(`ordered-multiselect`,e);let t=$.TraitManager||$.Traits;t&&typeof t.addType==`function`&&t.addType(`ordered-multiselect`,e)})(),$.on(`component:selected`,e=>{if(!e)return;let t=e.get?e.get(`type`):null,n=e.getClasses?e.getClasses():[],r=e;if(t!==`tours-listing`&&!n.includes(`tours-listing`)){let t=null;if(typeof e.closest==`function`&&(t=e.closest(`.tours-listing`)||e.closest(`[data-gjs-type="tours-listing"]`)),!t&&typeof e.find==`function`){let n=e.find(`.tours-listing`);n&&n.length&&(t=n[0])}t&&(r=t)}let i=r&&(r.get(`type`)===`tours-listing`||r.getClasses&&r.getClasses().includes(`tours-listing`)),a=r&&(r.get(`type`)===`safaris-hero-component`||r.getClasses&&r.getClasses().includes(`hero`));if(i||a){if(r!==e){$.select(r);return}try{let e=$.Panels,t=e?e.getButton(`views`,`open-tm`):null;t?t.set(`active`,!0):$.runCommand(`open-tm`)}catch{try{$.runCommand(`open-tm`)}catch{}}}});var kO=()=>{let e=[...window.TOUR_COUNTRIES||window.COUNTRIES||[]].sort((e,t)=>{let n=(t.destinations_count||0)+(t.tours_count||0)-((e.destinations_count||0)+(e.tours_count||0));if(n!==0)return n;let r=typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name,i=typeof t.name==`object`?t.name.en||Object.values(t.name)[0]:t.name;return(r||``).localeCompare(i||``)}),t=[{value:`all`,name:`🌍 All Countries (Auto)`}];return e.forEach(e=>{let n=typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name,r=[];e.destinations_count&&r.push(`${e.destinations_count} dest`),e.tours_count&&r.push(`${e.tours_count} tours`);let i=r.length?` (${r.join(`, `)})`:``;t.push({value:e.id.toString(),name:`${n}${i}`})}),t},AO=e=>{let t=window.TOUR_COUNTRIES||window.COUNTRIES||[];if(e&&e!==`all`){let n=e.split(`,`).map(e=>e.trim()).filter(Boolean),r=[];if(n.forEach(e=>{let n=t.find(t=>t.id.toString()===e);if(n){let e=typeof n.name==`object`?n.name.en||Object.values(n.name)[0]:n.name;r.push({id:n.id,name:e,meta:n})}}),r.length>0)return r}let n=t.filter(e=>(e.destinations_count||0)>0||(e.tours_count||0)>0),r=n.length?n:t.filter(e=>{let t=typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name;return[`Tanzania`,`Kenya`,`Uganda`,`Rwanda`,`Zanzibar`].includes(t)});return(r.length?r:t).slice(0,5).map(e=>({id:e.id,name:typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name,meta:e}))},jO=(e,t=0)=>{let n=e&&e[`data-country`]||`all`,r=e&&e[`data-layout`]||`auto`,i=e&&e[`data-heading`]||``,a=e&&e[`data-heading-accent`]||``,o=e&&e[`data-subheading`]||`Choose a destination to explore Africa's iconic safaris and signature experiences`,s=e&&e[`data-limit`]||`4`,c=AO(n),l=Math.max(0,Math.min(t,c.length-1)),u=c[l]||{id:90,name:`Tanzania`,meta:{}},d=u.name,f=u.meta||{};f.tagline||`${d}`;let p=f.description||`Explore extraordinary landscapes, wildlife reserves, and signature safari journeys across ${d}.`,m=f.image||`https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80`,h=f.tours&&f.tours.length?f.tours:[{name:`7-Day ${d} Wildlife & Safari Explorer`,days:7,price:`$2,850`,image:m},{name:`5-Day Best of ${d} Signature Journey`,days:5,price:`$2,100`,image:m}],g=i||(c.length===1?c[0].name:c.length+` Destinations.`),_=a||(c.length===1?`Signature Safaris.`:`One Journey.`),v=`
+                    `;let u=l.querySelector(`.btn-up`),d=l.querySelector(`.btn-down`),f=l.querySelector(`.btn-remove`);!o&&u&&u.addEventListener(`click`,e=>{e.preventDefault(),e.stopPropagation();let t=a[n];a[n]=a[n-1],a[n-1]=t,p(!0)}),!s&&d&&d.addEventListener(`click`,e=>{e.preventDefault(),e.stopPropagation();let t=a[n];a[n]=a[n+1],a[n+1]=t,p(!0)}),f&&f.addEventListener(`click`,t=>{t.preventDefault(),t.stopPropagation(),a=a.filter(t=>t!==e),a.length===0&&(a=[`all`]),p(!0)}),l.addEventListener(`dragstart`,e=>{t=n,e.dataTransfer.effectAllowed=`move`,l.style.opacity=`0.5`}),l.addEventListener(`dragend`,()=>{l.style.opacity=`1`}),l.addEventListener(`dragover`,e=>{e.preventDefault(),e.dataTransfer.dropEffect=`move`,l.style.borderColor=`#CA9A2E`}),l.addEventListener(`dragleave`,()=>{l.style.borderColor=`#334155`}),l.addEventListener(`drop`,e=>{if(e.preventDefault(),l.style.borderColor=`#334155`,t!==null&&t!==n){let e=a.splice(t,1)[0];a.splice(n,0,e),p(!0)}}),c.appendChild(l)})};return p(!1),n},onUpdate({elInput:e,component:t,trait:n}){let r=(t?t.getAttributes()[n.get(`name`)]:n.get(`value`))||`all`,i=r===`all`||!r.trim()?[`all`]:r.split(`,`).map(e=>e.trim()).filter(Boolean);e.querySelectorAll(`.gjs-multiselect-checkbox`).forEach(e=>{i.includes(`all`)?e.checked=e.value===`all`:e.checked=i.includes(e.value)})}};$.Traits&&typeof $.Traits.addType==`function`&&$.Traits.addType(`ordered-multiselect`,e);let t=$.TraitManager||$.Traits;t&&typeof t.addType==`function`&&t.addType(`ordered-multiselect`,e)})(),$.on(`component:selected`,e=>{if(!e)return;let t=e.get?e.get(`type`):null,n=e.getClasses?e.getClasses():[],r=e;if(t!==`tours-listing`&&!n.includes(`tours-listing`)){let t=null;if(typeof e.closest==`function`&&(t=e.closest(`.tours-listing`)||e.closest(`[data-gjs-type="tours-listing"]`)),!t&&typeof e.find==`function`){let n=e.find(`.tours-listing`);n&&n.length&&(t=n[0])}t&&(r=t)}let i=r&&(r.get(`type`)===`tours-listing`||r.getClasses&&r.getClasses().includes(`tours-listing`)),a=r&&(r.get(`type`)===`safaris-hero-component`||r.getClasses&&r.getClasses().includes(`hero`));if(i||a){if(r!==e){$.select(r);return}if(a){let e=r.getView?r.getView():null;e&&typeof e.renderBackground==`function`&&e.renderBackground()}try{let e=$.Panels,t=e?e.getButton(`views`,`open-tm`):null;t?t.set(`active`,!0):$.runCommand(`open-tm`)}catch{try{$.runCommand(`open-tm`)}catch{}}}});var kO=()=>{let e=[...window.TOUR_COUNTRIES||window.COUNTRIES||[]].sort((e,t)=>{let n=(t.destinations_count||0)+(t.tours_count||0)-((e.destinations_count||0)+(e.tours_count||0));if(n!==0)return n;let r=typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name,i=typeof t.name==`object`?t.name.en||Object.values(t.name)[0]:t.name;return(r||``).localeCompare(i||``)}),t=[{value:`all`,name:`🌍 All Countries (Auto)`}];return e.forEach(e=>{let n=typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name,r=[];e.destinations_count&&r.push(`${e.destinations_count} dest`),e.tours_count&&r.push(`${e.tours_count} tours`);let i=r.length?` (${r.join(`, `)})`:``;t.push({value:e.id.toString(),name:`${n}${i}`})}),t},AO=e=>{let t=window.TOUR_COUNTRIES||window.COUNTRIES||[];if(e&&e!==`all`){let n=e.split(`,`).map(e=>e.trim()).filter(Boolean),r=[];if(n.forEach(e=>{let n=t.find(t=>t.id.toString()===e);if(n){let e=typeof n.name==`object`?n.name.en||Object.values(n.name)[0]:n.name;r.push({id:n.id,name:e,meta:n})}}),r.length>0)return r}let n=t.filter(e=>(e.destinations_count||0)>0||(e.tours_count||0)>0),r=n.length?n:t.filter(e=>{let t=typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name;return[`Tanzania`,`Kenya`,`Uganda`,`Rwanda`,`Zanzibar`].includes(t)});return(r.length?r:t).slice(0,5).map(e=>({id:e.id,name:typeof e.name==`object`?e.name.en||Object.values(e.name)[0]:e.name,meta:e}))},jO=(e,t=0)=>{let n=e&&e[`data-country`]||`all`,r=e&&e[`data-layout`]||`auto`,i=e&&e[`data-heading`]||``,a=e&&e[`data-heading-accent`]||``,o=e&&e[`data-subheading`]||`Choose a destination to explore Africa's iconic safaris and signature experiences`,s=e&&e[`data-limit`]||`4`,c=AO(n),l=Math.max(0,Math.min(t,c.length-1)),u=c[l]||{id:90,name:`Tanzania`,meta:{}},d=u.name,f=u.meta||{};f.tagline||`${d}`,f.description||`${d}`;let p=f.image||`https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80`,m=f.tours&&f.tours.length?f.tours:[{name:`7-Day ${d} Wildlife & Safari Explorer`,days:7,price:`$2,850`,image:p},{name:`5-Day Best of ${d} Signature Journey`,days:5,price:`$2,100`,image:p}],h=i||(c.length===1?c[0].name:c.length+` Destinations.`),g=a||(c.length===1?`Signature Safaris.`:`One Journey.`),_=`
         <div style="background: linear-gradient(135deg, #1b281f, #0d1611); border: 1px solid #455537; border-radius: 8px; padding: 12px 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-family: sans-serif; gap: 12px; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                 <span style="background: #455537; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;">🌍 DYNAMIC TOURS SHOWCASE</span>
@@ -1231,7 +1231,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
         </div>
     `;if(r===`grid`)return`
             <div style="color: #e8eee9; padding: 10px; font-family: sans-serif; position: relative; min-height: 200px;">
-                ${v}
+                ${_}
                 <div style="text-align: center; margin-bottom: 32px;">
                     <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                         <span style="width: 28px; height: 2px; background: #CA9A2E; display: inline-block;"></span>
@@ -1239,10 +1239,10 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                     </div>
                     <div style="margin: 0 0 10px;">
                         <h2 class="js-edit-heading" data-bind-trait="data-heading" contenteditable="true" title="Click to edit heading" style="display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-size: 38px; color: #fff; margin: 0; cursor: text; outline: none; border-bottom: 1px dashed rgba(202,154,46,0.3);">
-                            ${g}
+                            ${h}
                         </h2>
                         <em class="js-edit-accent" data-bind-trait="data-heading-accent" contenteditable="true" title="Click to edit accent" style="display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-size: 34px; font-style: italic; color: #CA9A2E; cursor: text; outline: none; border-bottom: 1px dashed rgba(202,154,46,0.3); margin-left: 8px;">
-                            ${_}
+                            ${g}
                         </em>
                     </div>
                     <p class="js-edit-subheading" data-bind-trait="data-subheading" contenteditable="true" title="Click to edit description" style="font-size: 15px; color: #8fa593; max-width: 600px; margin: 0 auto; cursor: text; outline: none; border-bottom: 1px dashed rgba(255,255,255,0.15);">
@@ -1250,10 +1250,10 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                     </p>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
-                    ${h.slice(0,Math.min(3,parseInt(s,10)||3)).map(e=>{let t=e.name||e.title,n=e.days?typeof e.days==`string`&&e.days.includes(`Day`)?e.days:`${e.days} Days`:`7 Days`,r=e.price?typeof e.price==`string`&&e.price.includes(`$`)?e.price:`$${Number(e.price).toLocaleString()}`:`$2,400`;return`
+                    ${m.slice(0,Math.min(3,parseInt(s,10)||3)).map(e=>{let t=e.name||e.title,n=e.days?typeof e.days==`string`&&e.days.includes(`Day`)?e.days:`${e.days} Days`:`7 Days`,r=e.price?typeof e.price==`string`&&e.price.includes(`$`)?e.price:`$${Number(e.price).toLocaleString()}`:`$2,400`;return`
                         <div style="background: #142319; border: 1px solid #213829; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
                             <div style="height: 180px; position: relative;">
-                                <img src="${e.image||e.img||m}" style="width: 100%; height: 100%; object-fit: cover;" />
+                                <img src="${e.image||e.img||p}" style="width: 100%; height: 100%; object-fit: cover;" />
                                 <span style="position: absolute; top: 12px; right: 12px; background: rgba(13,22,17,0.85); color: #CA9A2E; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px;">${n}</span>
                             </div>
                             <div style="padding: 18px;">
@@ -1268,7 +1268,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                         `}).join(``)}
                 </div>
             </div>
-        `;let y=``;c.forEach((e,t)=>{let n=String(t+1).padStart(2,`0`),r=t===l,i=e.meta&&e.meta.tagline||`${e.name} Safaris & Adventures`,a=t===0,o=t===c.length-1;y+=`
+        `;let v=``;c.forEach((e,t)=>{let n=String(t+1).padStart(2,`0`),r=t===l,i=e.meta&&e.meta.tagline||`${e.name} Safaris & Adventures`,a=t===0,o=t===c.length-1;v+=`
             <div class="js-tour-tab" data-country-idx="${t}" style="padding: 14px 18px; border-radius: 8px; margin-bottom: 8px; border: 1px solid ${r?`#2e4c36`:`rgba(255,255,255,0.06)`}; background: ${r?`#223829`:`transparent`}; display: flex; align-items: start; gap: 14px; position: relative; cursor: pointer; transition: all 0.2s ease;">
                 ${r?`<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #CA9A2E; border-top-left-radius: 8px; border-bottom-left-radius: 8px;"></div>`:``}
                 <span style="font-family: monospace; font-size: 13px; font-weight: 700; color: ${r?`#CA9A2E`:`#587360`}; padding-top: 2px;">${n}</span>
@@ -1283,10 +1283,10 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                 </div>
                 ${r?`<span style="color: #CA9A2E; font-size: 14px; align-self: center;">●</span>`:``}
             </div>
-        `});let b=h.map(e=>{let t=e.name||e.title,n=e.days?typeof e.days==`string`&&e.days.includes(`Day`)?e.days:`${e.days} Days`:`7 Days`,r=e.price?typeof e.price==`string`&&e.price.includes(`$`)?e.price:`$${Number(e.price).toLocaleString()}`:`$2,400`;return`
+        `});let y=m.map(e=>{let t=e.name||e.title,n=e.days?typeof e.days==`string`&&e.days.includes(`Day`)?e.days:`${e.days} Days`:`7 Days`,r=e.price?typeof e.price==`string`&&e.price.includes(`$`)?e.price:`$${Number(e.price).toLocaleString()}`:`$2,400`;return`
         <div style="background: #142319; border: 1px solid #213829; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 10px;">
             <div style="width: 70px; height: 50px; border-radius: 6px; background: #223829; overflow: hidden; flex-shrink: 0;">
-                <img src="${e.image||e.img||m}" style="width: 100%; height: 100%; object-fit: cover;" />
+                <img src="${e.image||e.img||p}" style="width: 100%; height: 100%; object-fit: cover;" />
             </div>
             <div style="flex: 1;">
                 <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 15px; font-weight: 600; color: #fff;">${t}</div>
@@ -1299,7 +1299,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
         </div>
         `}).join(``);return`
         <div style="color: #e8eee9; padding: 10px; font-family: sans-serif; position: relative; min-height: 300px;">
-            ${v}
+            ${_}
             
             <div style="display: grid; grid-template-columns: 5fr 7fr; gap: 36px; align-items: start;">
                 <!-- Left Column -->
@@ -1310,38 +1310,29 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                     </div>
                     <div style="margin-bottom: 12px;">
                         <h2 class="js-edit-heading" data-bind-trait="data-heading" contenteditable="true" title="Click to edit heading" style="font-family: 'Playfair Display', Georgia, serif; font-size: 38px; font-weight: normal; line-height: 1.15; color: #fff; margin: 0; cursor: text; outline: none; border-bottom: 1px dashed rgba(202,154,46,0.3); display: inline-block;">
-                            ${g}
+                            ${h}
                         </h2>
                         <div class="js-edit-accent" data-bind-trait="data-heading-accent" contenteditable="true" title="Click to edit accent" style="font-family: 'Playfair Display', Georgia, serif; font-size: 34px; font-style: italic; color: #CA9A2E; cursor: text; outline: none; border-bottom: 1px dashed rgba(202,154,46,0.3); display: inline-block; margin-top: 4px;">
-                            ${_}
+                            ${g}
                         </div>
                     </div>
                     <p class="js-edit-subheading" data-bind-trait="data-subheading" contenteditable="true" title="Click to edit description" style="font-size: 14px; color: #8fa593; line-height: 1.6; margin-bottom: 24px; max-width: 400px; cursor: text; outline: none; border-bottom: 1px dashed rgba(255,255,255,0.15);">
                         ${o}
                     </p>
                     <div style="border-top: 1px solid #1c2e22; padding-top: 12px;">
-                        ${y}
+                        ${v}
                     </div>
                 </div>
 
                 <!-- Right Column Preview -->
                 <div>
-                    <div style="position: relative; border-radius: 14px; overflow: hidden; height: 320px; background: #142319; border: 1px solid #223a2a; margin-bottom: 24px;">
-                        <img src="${m}" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.88;" />
-                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, #0c1610 0%, rgba(12,22,16,0.4) 60%, transparent 100%);"></div>
-                        <div style="position: absolute; bottom: 20px; left: 24px; right: 24px;">
-                            <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 34px; font-weight: 500; color: #fff; margin-bottom: 6px;">${d}</div>
-                            <div style="font-size: 13px; color: #d1ded4; line-height: 1.5;">${p}</div>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #1e3024;">
                         <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: #CA9A2E; text-transform: uppercase;">FEATURED JOURNEYS (${d})</span>
                         <span style="font-size: 12px; color: #8fa593;">Live Tours from Database &rarr;</span>
                     </div>
 
                     <div>
-                        ${b}
+                        ${y}
                     </div>
 
                     <!-- Bottom Pagination Arrows -->
@@ -1508,103 +1499,149 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
     </form>
   </div>
 </section>
-    `}),DO.add(`safaris-wonders-tanzania`,{label:` Wonders of Tanzania`,category:window.__(`Safaris Blocks`),content:`
-<section class="py-24 bg-white dark:bg-[#0e1611] text-gray-900 dark:text-gray-100 relative overflow-hidden" data-gjs-type="default">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+    `}),DO.add(`safaris-wonders-tanzania`,{label:`Wonders of Tanzania Slider`,category:window.__(`Safaris Blocks`),media:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px; margin: 0 auto; color: #CA9A2E;"><rect x="2" y="3" width="20" height="18" rx="2"></rect><circle cx="8" cy="9" r="2"></circle><path d="m21 15-5-5L5 21"></path></svg>`,content:`
+<section class="wonders-slider-section py-20 lg:py-28 bg-[#141814] text-white relative overflow-hidden" data-gjs-type="default">
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
       
-      <!-- Left Column: Heading & Description -->
-      <div class="lg:col-span-5 sticky top-24">
-        <h2 class="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-gray-900 dark:text-white leading-[1.1] tracking-tight mb-8" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-          Let us be your<br>guide to the<br><span style="color: #c05621;">wonders</span> of<br>Tanzania
-        </h2>
-        <p class="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed font-light mb-8" data-gjs-type="text">
-          Fargin Safaris is a tour operator specializing exclusively in Tanzania adventures, offering a variety of travel experiences that highlight the rich culture, diverse wildlife, and stunning landscapes of Tanzania.
-        </p>
+      <!-- Left Column: Heading, Description & Slider Controls -->
+      <div class="lg:col-span-5 xl:col-span-4 flex flex-col justify-center z-10">
+        <div>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-[1.15] tracking-tight mb-6" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+            Let us be your guide<br>to the wonders of<br>Tanzania
+          </h2>
+          <p class="text-sm sm:text-base text-[#a2ad9e] leading-relaxed mb-8 sm:mb-10 font-light max-w-md" data-gjs-type="text">
+            Fargin Safaris is a tour operator specializing exclusively in Tanzania adventures would focus on offering a variety of travel experiences that highlight the rich culture, diverse wildlife, and stunning landscapes of Tanzania.
+          </p>
+        </div>
+
+        <!-- Slider Navigation Controls -->
+        <div class="flex items-center gap-3 select-none">
+          <!-- Previous Button -->
+          <div role="button" tabindex="0"
+            class="wonders-prev-btn w-11 h-11 rounded-full border border-white/20 bg-white/5 hover:bg-[#ea963e] hover:border-[#ea963e] hover:text-black flex items-center justify-center text-white transition-all duration-300 cursor-pointer shadow-sm select-none"
+            aria-label="Previous Slide">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; min-width: 20px; min-height: 20px; display: block; pointer-events: none;">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </div>
+
+          <!-- Next Button -->
+          <div role="button" tabindex="0"
+            class="wonders-next-btn w-11 h-11 rounded-full border border-white/20 bg-white/5 hover:bg-[#ea963e] hover:border-[#ea963e] hover:text-black flex items-center justify-center text-white transition-all duration-300 cursor-pointer shadow-sm select-none"
+            aria-label="Next Slide">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; min-width: 20px; min-height: 20px; display: block; pointer-events: none;">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+
+          <!-- Pagination Indicator Dots -->
+          <div class="wonders-dots-container flex items-center gap-2 ml-4">
+            <span role="button" tabindex="0" data-slide-index="0" class="wonders-nav-dot wonders-dot-0 active transition-all duration-300 rounded-full cursor-pointer inline-block" style="width: 32px; height: 8px; background-color: #ea963e;" aria-label="Go to slide 1"></span>
+            <span role="button" tabindex="0" data-slide-index="1" class="wonders-nav-dot wonders-dot-1 transition-all duration-300 rounded-full cursor-pointer inline-block" style="width: 8px; height: 8px; background-color: rgba(255,255,255,0.2);" aria-label="Go to slide 2"></span>
+            <span role="button" tabindex="0" data-slide-index="2" class="wonders-nav-dot wonders-dot-2 transition-all duration-300 rounded-full cursor-pointer inline-block" style="width: 8px; height: 8px; background-color: rgba(255,255,255,0.2);" aria-label="Go to slide 3"></span>
+            <span role="button" tabindex="0" data-slide-index="3" class="wonders-nav-dot wonders-dot-3 transition-all duration-300 rounded-full cursor-pointer inline-block" style="width: 8px; height: 8px; background-color: rgba(255,255,255,0.2);" aria-label="Go to slide 4"></span>
+            <span role="button" tabindex="0" data-slide-index="4" class="wonders-nav-dot wonders-dot-4 transition-all duration-300 rounded-full cursor-pointer inline-block" style="width: 8px; height: 8px; background-color: rgba(255,255,255,0.2);" aria-label="Go to slide 5"></span>
+            <span role="button" tabindex="0" data-slide-index="5" class="wonders-nav-dot wonders-dot-5 transition-all duration-300 rounded-full cursor-pointer inline-block" style="width: 8px; height: 8px; background-color: rgba(255,255,255,0.2);" aria-label="Go to slide 6"></span>
+          </div>
+        </div>
       </div>
 
-      <!-- Right Column: 01 to 06 Numbered List -->
-      <div class="lg:col-span-7 divide-y divide-stone-200 dark:divide-white/10 border-t border-b border-stone-200 dark:border-white/10">
-        
-        <!-- 01 -->
-        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
-          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">01</span>
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-              Tailor-Made Tanzania Safaris
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
-              Customized, private safari experiences tailored to individual preferences or group sizes.
-            </p>
-          </div>
-        </div>
+      <!-- Right Column: Card Slider Track -->
+      <div class="lg:col-span-7 xl:col-span-8 relative min-w-0">
+        <div x-ref="track"
+          @scroll="onScroll()"
+          onscroll="var s=this.closest('.wonders-slider-section'); if(!s) return; var c=this.querySelector('.wonders-card'); var w=c?(c.offsetWidth+24):340; var idx=Math.min(5, Math.max(0, Math.round(this.scrollLeft/w))); var dots=s.querySelectorAll('.wonders-nav-dot'); dots.forEach(function(d, i){ if(i===idx){ d.style.width='32px'; d.style.backgroundColor='#ea963e'; } else { d.style.width='8px'; d.style.backgroundColor='rgba(255,255,255,0.2)'; } });"
+          class="wonders-track flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0"
+          style="scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;">
 
-        <!-- 02 -->
-        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
-          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">02</span>
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-              Authentic Cultural Encounters
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
-              Visit traditional villages and learn about their customs: Maasai villages, Chagga and Hadzabe tribes.
-            </p>
+          <!-- Card 1 -->
+          <div class="wonders-card w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start h-[470px] sm:h-[520px] rounded-2xl overflow-hidden relative group select-none shadow-xl border border-white/10 bg-[#1e231d]">
+            <img src="/images/wonders/Tailor-Made-Tanzania-Safaris.webp" alt="Tailor-Made Tanzania Safaris" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-gjs-type="image">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
+            <div class="relative z-10 flex flex-col justify-end h-full p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug drop-shadow" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+                Tailor-Made Tanzania Safaris
+              </h3>
+              <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow" data-gjs-type="text">
+                Customized, private safari experiences tailored to individual preferences or group sizes.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- 03 -->
-        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
-          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">03</span>
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-              Conquer the Roof of Africa
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
-              Guided treks to the summit of Mount Kilimanjaro, the highest peak in Africa.
-            </p>
+          <!-- Card 2 -->
+          <div class="wonders-card w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start h-[470px] sm:h-[520px] rounded-2xl overflow-hidden relative group select-none shadow-xl border border-white/10 bg-[#1e231d]">
+            <img src="/images/wonders/Authentic-Cultural-Encounters.webp" alt="Authentic Cultural Encounters" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-gjs-type="image">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
+            <div class="relative z-10 flex flex-col justify-end h-full p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug drop-shadow" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+                Authentic Cultural Encounters
+              </h3>
+              <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow" data-gjs-type="text">
+                Visit traditional villages, learning about their customs (Maasai Villages, Chagga and Hadzabe Tribes)
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- 04 -->
-        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
-          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">04</span>
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-              Tropical Escapes — Zanzibar
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
-              Beach holidays in Zanzibar, including Stone Town, spice farms and Mafia Island.
-            </p>
+          <!-- Card 3 -->
+          <div class="wonders-card w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start h-[470px] sm:h-[520px] rounded-2xl overflow-hidden relative group select-none shadow-xl border border-white/10 bg-[#1e231d]">
+            <img src="/images/wonders/Conquer-the-Roof-of-Africa.webp" alt="Conquer the Roof of Africa" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-gjs-type="image">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
+            <div class="relative z-10 flex flex-col justify-end h-full p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug drop-shadow" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+                Conquer the Roof of Africa
+              </h3>
+              <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow" data-gjs-type="text">
+                Organize guided treks to the summit of Mount Kilimanjaro, the highest peak in Africa
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- 05 -->
-        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
-          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">05</span>
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-              Luxury &amp; Wilderness Camping
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
-              Accommodation in high-end lodges and tented camps in prime wildlife areas.
-            </p>
+          <!-- Card 4 -->
+          <div class="wonders-card w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start h-[470px] sm:h-[520px] rounded-2xl overflow-hidden relative group select-none shadow-xl border border-white/10 bg-[#1e231d]">
+            <img src="/images/wonders/Tropical-Escapes-Zanzibar.webp" alt="Tropical Escapes - Zanzibar" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-gjs-type="image">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
+            <div class="relative z-10 flex flex-col justify-end h-full p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug drop-shadow" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+                Tropical Escapes - Zanzibar
+              </h3>
+              <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow" data-gjs-type="text">
+                Curate beach holidays in Zanzibar, including visits to Stone Town, spice farms and Mafia Islands.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <!-- 06 -->
-        <div class="py-6 flex items-start gap-6 group hover:bg-stone-50/50 dark:hover:bg-white/[0.02] transition px-2 rounded-xl">
-          <span class="text-lg font-bold text-[#ea963e] shrink-0 w-8" data-gjs-type="text">06</span>
-          <div>
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1.5" style="font-family: 'Baskervville', 'Playfair Display', Georgia, serif;" data-gjs-type="text">
-              Ultimate Outdoor Adventures
-            </h3>
-            <p class="text-sm text-gray-600 dark:text-gray-400 font-light leading-relaxed" data-gjs-type="text">
-              Explore the iconic Serengeti National Park, Ngorongoro Crater, Tarangire and Lake Manyara.
-            </p>
+          <!-- Card 5 -->
+          <div class="wonders-card w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start h-[470px] sm:h-[520px] rounded-2xl overflow-hidden relative group select-none shadow-xl border border-white/10 bg-[#1e231d]">
+            <img src="/images/wonders/Luxury-Wilderness-Camping.webp" alt="Luxury &amp; Wilderness Camping" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-gjs-type="image">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
+            <div class="relative z-10 flex flex-col justify-end h-full p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug drop-shadow" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+                Luxury &amp; Wilderness Camping
+              </h3>
+              <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow" data-gjs-type="text">
+                Provide accommodation in high-end lodges and tented camps in prime wildlife areas.
+              </p>
+            </div>
           </div>
-        </div>
 
+          <!-- Card 6 -->
+          <div class="wonders-card w-[290px] sm:w-[320px] md:w-[350px] shrink-0 snap-start h-[470px] sm:h-[520px] rounded-2xl overflow-hidden relative group select-none shadow-xl border border-white/10 bg-[#1e231d]">
+            <img src="/images/wonders/Ultimate-Outdoor-Adventures.webp" alt="Ultimate Outdoor Adventures" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-gjs-type="image">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
+            <div class="relative z-10 flex flex-col justify-end h-full p-6 sm:p-7">
+              <h3 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug drop-shadow" style="font-family: 'Playfair Display', 'Baskervville', Georgia, serif;" data-gjs-type="text">
+                Ultimate Outdoor Adventures
+              </h3>
+              <p class="text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow" data-gjs-type="text">
+                Explore the iconic Serengeti National Park, Ngorongoro Crater, Tarangire and Lake Manyara
+              </p>
+            </div>
+          </div>
+
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -2025,15 +2062,15 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
             <div class="flex flex-wrap gap-4 text-sm">
               <label class="inline-flex items-center gap-2 cursor-pointer px-4 py-2 rounded-lg bg-stone-100 dark:bg-white/10 hover:bg-[#CA9A2E]/10 transition">
                 <input type="radio" name="contact_pref" value="email" checked class="text-[#CA9A2E] focus:ring-[#CA9A2E]">
-                <span class="text-gray-800 dark:text-gray-200 font-medium">✉️ Email</span>
+                <span class="text-gray-800 dark:text-gray-200 font-medium"> Email</span>
               </label>
               <label class="inline-flex items-center gap-2 cursor-pointer px-4 py-2 rounded-lg bg-stone-100 dark:bg-white/10 hover:bg-[#CA9A2E]/10 transition">
                 <input type="radio" name="contact_pref" value="phone" class="text-[#CA9A2E] focus:ring-[#CA9A2E]">
-                <span class="text-gray-800 dark:text-gray-200 font-medium">📞 Phone</span>
+                <span class="text-gray-800 dark:text-gray-200 font-medium"> Phone</span>
               </label>
               <label class="inline-flex items-center gap-2 cursor-pointer px-4 py-2 rounded-lg bg-stone-100 dark:bg-white/10 hover:bg-[#CA9A2E]/10 transition">
                 <input type="radio" name="contact_pref" value="whatsapp" class="text-[#CA9A2E] focus:ring-[#CA9A2E]">
-                <span class="text-gray-800 dark:text-gray-200 font-medium">💬 WhatsApp</span>
+                <span class="text-gray-800 dark:text-gray-200 font-medium"> WhatsApp</span>
               </label>
             </div>
           </div>
@@ -2659,4 +2696,4 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
       </div>
     </div>
   </section>
-</div>`}),$.DomComponents.addType(`safaris-zanzibar-page-block`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-zanzibar-page-block`)?{type:`safaris-zanzibar-page-block`}:!1,model:{defaults:{tagName:`div`,attributes:{class:`safaris-zanzibar-page-block`}}}}),$.DomComponents.addType(`safaris-page-header-block`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-page-header-block`)?{type:`safaris-page-header-block`}:!1,model:{defaults:{tagName:`section`,attributes:{class:`safaris-page-header-block`}}}}),$.DomComponents.addType(`safaris-kili-calculator-block`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-kili-calculator-block`)?{type:`safaris-kili-calculator-block`}:!1,model:{defaults:{tagName:`div`,attributes:{class:`safaris-kili-calculator-block`}}}}),$.DomComponents.addType(`safaris-about-block`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-about-block`)?{type:`safaris-about-block`}:!1,model:{defaults:{tagName:`section`,attributes:{class:`safaris-about-block`}}}});
+</div>`}),$.DomComponents.addType(`safaris-zanzibar-page-block`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-zanzibar-page-block`)?{type:`safaris-zanzibar-page-block`}:!1,model:{defaults:{tagName:`div`,attributes:{class:`safaris-zanzibar-page-block`}}}}),$.DomComponents.addType(`safaris-page-header-block`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-page-header-block`)?{type:`safaris-page-header-block`}:!1,model:{defaults:{tagName:`section`,attributes:{class:`safaris-page-header-block`}}}}),$.DomComponents.addType(`safaris-kili-calculator-block`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-kili-calculator-block`)?{type:`safaris-kili-calculator-block`}:!1,model:{defaults:{tagName:`div`,attributes:{class:`safaris-kili-calculator-block`}}}}),$.DomComponents.addType(`safaris-about-block`,{isComponent:e=>e&&e.classList&&e.classList.contains(`safaris-about-block`)?{type:`safaris-about-block`}:!1,model:{defaults:{tagName:`section`,attributes:{class:`safaris-about-block`}}}}),$.DomComponents.addType(`wonders-slider-section`,{isComponent:e=>e&&e.classList&&e.classList.contains(`wonders-slider-section`)?{type:`wonders-slider-section`}:!1,model:{defaults:{tagName:`section`,droppable:!0,attributes:{class:`wonders-slider-section`}}}}),$.on(`load`,()=>{let e=()=>{try{let e=$.Canvas.getDocument();if(!e||e._wondersBound)return;e._wondersBound=!0,e.addEventListener(`click`,function(e){let t=e.target.closest(`.wonders-prev-btn`);if(t){e.preventDefault(),e.stopPropagation();let n=t.closest(`.wonders-slider-section`),r=n?n.querySelector(`.wonders-track`):null,i=r?r.querySelector(`.wonders-card`):null,a=i?i.offsetWidth+24:340;r&&r.scrollBy({left:-a,behavior:`smooth`});return}let n=e.target.closest(`.wonders-next-btn`);if(n){e.preventDefault(),e.stopPropagation();let t=n.closest(`.wonders-slider-section`),r=t?t.querySelector(`.wonders-track`):null,i=r?r.querySelector(`.wonders-card`):null,a=i?i.offsetWidth+24:340;r&&(r.scrollLeft+r.clientWidth>=r.scrollWidth-30?r.scrollTo({left:0,behavior:`smooth`}):r.scrollBy({left:a,behavior:`smooth`}));return}let r=e.target.closest(`.wonders-nav-dot`);if(r){e.preventDefault(),e.stopPropagation();let t=r.closest(`.wonders-slider-section`),n=t?t.querySelector(`.wonders-track`):null,i=n?n.querySelector(`.wonders-card`):null,a=i?i.offsetWidth+24:340,o=parseInt(r.getAttribute(`data-slide-index`)||`0`,10);n&&n.scrollTo({left:o*a,behavior:`smooth`});return}},!0),e.addEventListener(`scroll`,function(e){let t=e.target;if(t&&t.classList&&t.classList.contains(`wonders-track`)){let e=t.closest(`.wonders-slider-section`);if(!e)return;let n=t.querySelector(`.wonders-card`),r=n?n.offsetWidth+24:340,i=Math.min(5,Math.max(0,Math.round(t.scrollLeft/r)));e.querySelectorAll(`.wonders-nav-dot`).forEach((e,t)=>{t===i?(e.style.width=`32px`,e.style.backgroundColor=`#ea963e`):(e.style.width=`8px`,e.style.backgroundColor=`rgba(255, 255, 255, 0.2)`)})}},!0)}catch{}};e(),$.on(`canvas:load`,e)});

@@ -2478,7 +2478,6 @@ body.frontend-body {
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
-  background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1800&q=80');
   animation: slowZoom 18s ease-in-out infinite alternate !important;
   z-index: 1 !important;
 }

@@ -5,26 +5,25 @@
 @section('content')
 
     <div x-data="{ 
-        activeTab: 'overview',
-        isSticky: false,
-        checkSticky() {
-            const overlay = document.getElementById('tour-tab-overlay');
-            if (overlay) {
-                const rect = overlay.getBoundingClientRect();
-                this.isSticky = rect.top <= 0;
-            }
-        }
-    }" x-init="checkSticky()" @scroll.window="checkSticky()" class="flex flex-col">
+                                            activeTab: 'overview',
+                                            isSticky: false,
+                                            checkSticky() {
+                                                const overlay = document.getElementById('tour-tab-overlay');
+                                                if (overlay) {
+                                                    const rect = overlay.getBoundingClientRect();
+                                                    this.isSticky = rect.top <= 0;
+                                                }
+                                            }
+                                        }" x-init="checkSticky()" @scroll.window="checkSticky()" class="flex flex-col">
 
         {{-- ── 1. TOUR HERO HEADER BANNER ──────────────────────────────────────── --}}
         <div id="tour-hero"
             class="relative w-full min-h-[580px] md:min-h-[640px] bg-gray-900 bg-cover bg-center flex flex-col justify-between"
             style="background-image: url('{{ $tour->featured_image ? Storage::url($tour->featured_image) : asset('images/default-tour.jpg') }}')">
 
-            {{-- Dark overlays for deep cinematic contrast --}}
-            <div class="absolute inset-0 bg-gray-950/45"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-900/40 to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-gray-950/70 to-transparent"></div>
+            {{-- Soft luminous overlays keeping the hero image vibrant and clearly visible --}}
+            <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-black/35"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent"></div>
 
             {{-- 1. Breadcrumbs at Top of the Header --}}
             <div class="relative z-20 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8">
@@ -50,20 +49,20 @@
 
                     {{-- Page Title Stay in the Middle --}}
                     <h1
-                        class="text-2xl sm:text-2xl md:text-3xl lg:text-[38px] font-bold font-brand leading-tight tracking-wide text-white">
+                        class="text-2xl sm:text-2xl md:text-3xl lg:text-[38px] font-brand leading-tight tracking-wide text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
                         {{ $tour->name }}
                     </h1>
 
                     {{-- Meta Badges --}}
-                    <div class="flex flex-wrap items-center gap-3 text-sm font-medium text-gray-200 pt-2">
+                    <div class="flex flex-wrap items-center gap-3 text-sm font-medium text-gray-100 pt-2">
                         <span
-                            class="flex items-center bg-white/10 px-4 py-2 rounded-[3px] backdrop-blur-sm border border-white/10">
+                            class="flex items-center bg-black/35 px-4 py-2 rounded-[3px] backdrop-blur-md border border-white/15 shadow-sm">
                             <x-icon name="clock" class="w-4 h-4 mr-2 text-brand-primary" />
                             {{ $tour->duration_days }} Days / {{ $tour->duration_nights }} Nights
                         </span>
                         @if($tour->destinations && $tour->destinations->count())
                             <span
-                                class="flex items-center bg-white/10 px-4 py-2 rounded-[3px] backdrop-blur-sm border border-white/10">
+                                class="flex items-center bg-black/35 px-4 py-2 rounded-[3px] backdrop-blur-md border border-white/15 shadow-sm">
                                 <x-icon name="map-pin" class="w-4 h-4 mr-2 text-brand-primary" />
                                 {{ $tour->destinations->count() }}
                                 Destination{{ $tour->destinations->count() !== 1 ? 's' : '' }}
@@ -71,7 +70,7 @@
                         @endif
                         @if($tour->difficulty)
                             <span
-                                class="flex items-center bg-white/10 px-4 py-2 rounded-[3px] backdrop-blur-sm border border-white/10">
+                                class="flex items-center bg-black/35 px-4 py-2 rounded-[3px] backdrop-blur-md border border-white/15 shadow-sm">
                                 <x-icon name="trending-up" class="w-4 h-4 mr-2 text-brand-primary" />
                                 {{ $tour->difficulty }}
                             </span>
@@ -252,7 +251,8 @@
                             x-transition:enter-start="opacity-0 translate-y-2"
                             x-transition:enter-end="opacity-100 translate-y-0" class="w-full space-y-10">
                             <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 font-brand">
-                                {{ __('Tour Overview') }}</h2>
+                                {{ __('Tour Overview') }}
+                            </h2>
 
                             <div
                                 class="prose max-w-none text-gray-600 dark:text-gray-300 prose-headings:font-brand prose-a:text-brand-primary hover:prose-a:text-brand-primary-hover overflow-x-auto w-full font-lora text-base leading-relaxed">
@@ -448,7 +448,8 @@
                                         </div>
                                         <div>
                                             <h4 class="font-bold text-gray-900 dark:text-white text-sm">
-                                                {{ __('Tour Class') }}</h4>
+                                                {{ __('Tour Class') }}
+                                            </h4>
                                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5"><span
                                                     class="font-semibold text-gray-800 dark:text-gray-200">{{ $tourClass }}:</span>
                                                 Hand-picked lodges and camps.</p>
@@ -463,7 +464,8 @@
                                         </div>
                                         <div>
                                             <h4 class="font-bold text-gray-900 dark:text-white text-sm">
-                                                {{ __('Group Type') }}</h4>
+                                                {{ __('Group Type') }}
+                                            </h4>
                                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5"><span
                                                     class="font-semibold text-gray-800 dark:text-gray-200">Shared/Private:</span>
                                                 Max {{ $tour->max_guests ?? 6 }} people per vehicle.</p>
@@ -478,7 +480,8 @@
                                         </div>
                                         <div>
                                             <h4 class="font-bold text-gray-900 dark:text-white text-sm">
-                                                {{ __('Start Day') }}</h4>
+                                                {{ __('Start Day') }}
+                                            </h4>
                                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5"><span
                                                     class="font-semibold text-gray-800 dark:text-gray-200">Daily:</span>
                                                 Flexible departures upon reservation.</p>
@@ -493,7 +496,8 @@
                                         </div>
                                         <div>
                                             <h4 class="font-bold text-gray-900 dark:text-white text-sm">
-                                                {{ __('Minimum Age') }}</h4>
+                                                {{ __('Minimum Age') }}
+                                            </h4>
                                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5"><span
                                                     class="font-semibold text-gray-800 dark:text-gray-200">Min
                                                     {{ $tour->min_age ?? 5 }} Years:</span> Families warmly welcomed.</p>
@@ -518,15 +522,16 @@
                                 <div
                                     class="relative pl-6 md:pl-10 border-l border-dashed border-gray-300 dark:border-gray-800 ml-4 space-y-12 pb-6">
                                     @foreach($tour->itineraries as $index => $day)
-                                        <div class="relative flex flex-col md:flex-row md:items-start gap-6 md:gap-8">
+                                        <div class="relative flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
                                             {{-- Timeline Node --}}
                                             <div
-                                                class="absolute -left-[32px] md:-left-[48px] top-6 md:top-8 w-4 h-4 rounded-sm border-2 border-brand-primary bg-white dark:bg-gray-950 shadow-sm flex items-center justify-center z-10">
+                                                class="absolute -left-[32px] md:-left-[48px] top-6 md:top-1/2 md:-translate-y-1/2 w-4 h-4 rounded-sm border-2 border-brand-primary bg-white dark:bg-gray-950 shadow-sm flex items-center justify-center z-10">
                                                 <span class="w-1.5 h-1.5 rounded-sm bg-brand-primary"></span>
                                             </div>
 
                                             {{-- Left: Square Image --}}
-                                            <div class="w-full md:w-1/3 lg:w-1/4 flex-shrink-0 order-2 md:order-1 mt-4 md:mt-0">
+                                            <div
+                                                class="w-full md:w-1/3 lg:w-1/4 flex-shrink-0 order-2 md:order-1 mt-4 md:mt-0 md:self-center">
                                                 <div
                                                     class="w-full aspect-square rounded-[3px] overflow-hidden shadow-sm group border border-gray-150 dark:border-gray-800 bg-gray-100 dark:bg-gray-900">
                                                     @if($day->featured_image)
@@ -546,7 +551,7 @@
                                             </div>
 
                                             {{-- Right: Day Content --}}
-                                            <div class="flex-1 space-y-4 order-1 md:order-2">
+                                            <div class="flex-1 space-y-4 order-1 md:order-2 md:self-center">
                                                 <div>
                                                     <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-primary">
                                                         DAY {{ $day->day_number ?? ($index + 1) }}
@@ -603,7 +608,8 @@
                                 <div
                                     class="p-8 bg-gray-50 dark:bg-gray-900/50 border border-dashed border-gray-300 dark:border-gray-800 rounded-[3px] text-center">
                                     <p class="text-gray-500 italic">
-                                        {{ __('Detailed day-by-day itineraries are being finalized.') }}</p>
+                                        {{ __('Detailed day-by-day itineraries are being finalized.') }}
+                                    </p>
                                 </div>
                             @endif
                         </div><!-- /itinerary panel -->
@@ -615,7 +621,8 @@
                             x-transition:enter-end="opacity-100 translate-y-0" class="w-full space-y-10"
                             style="display: none;">
                             <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 font-brand">
-                                {{ __('Tour Rates & Pricing') }}</h2>
+                                {{ __('Tour Rates & Pricing') }}
+                            </h2>
 
                             <div class="prose max-w-none text-gray-600 dark:text-gray-300 font-lora">
                                 <p>Below are our group rates per person based on the number of guests traveling together.
@@ -632,7 +639,8 @@
                                             class="border-b border-gray-200/80 dark:border-gray-800 bg-gray-50/80 dark:bg-gray-950/80">
                                             <th
                                                 class="py-4 px-4 font-bold text-gray-900 dark:text-gray-100 border-r border-gray-200/80 dark:border-gray-800">
-                                                {{ __('Solo') }}</th>
+                                                {{ __('Solo') }}
+                                            </th>
                                             <th
                                                 class="py-4 px-4 font-bold text-gray-900 dark:text-gray-100 border-r border-gray-200/80 dark:border-gray-800">
                                                 2 People</th>
@@ -690,10 +698,12 @@
                                 <p><strong>Per Person Pricing:</strong> All rates listed are in USD per person sharing
                                     double/twin accommodation.</p>
                                 <p><strong>Solo Travel:</strong> Solo travelers can join; requires a minimum of
-                                    {{ $tour->min_guests ?? 2 }} people to operate.</p>
+                                    {{ $tour->min_guests ?? 2 }} people to operate.
+                                </p>
                                 <p><strong>Age Requirements:</strong> Children under
                                     {{ $tour->children_free_under_age ?? 6 }} travel free; discounted entrance applies for
-                                    older children.</p>
+                                    older children.
+                                </p>
                             </div>
                         </div><!-- /rates panel -->
 
@@ -704,7 +714,8 @@
                             x-transition:enter-end="opacity-100 translate-y-0" class="w-full space-y-10"
                             style="display: none;">
                             <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 font-brand">
-                                {{ __('What\'s Included & Excluded') }}</h2>
+                                {{ __('What\'s Included & Excluded') }}
+                            </h2>
 
                             <div class="space-y-8 w-full">
                                 {{-- Included --}}
@@ -779,7 +790,8 @@
                                     <div class="relative z-10">
                                         <div
                                             class="text-[10px] font-bold uppercase tracking-widest text-brand-primary mb-2">
-                                            {{ __('Price From') }}</div>
+                                            {{ __('Price From') }}
+                                        </div>
                                         <div class="flex items-baseline justify-center mb-1">
                                             <span class="text-2xl font-bold text-brand-primary mr-1">$</span>
                                             <span
@@ -805,10 +817,9 @@
                                 class="bg-white dark:bg-gray-900 rounded-[3px] p-4 text-center border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col items-center">
                                 <x-icon name="device-phone-mobile" class="w-7 h-7 text-brand-primary mb-2" />
                                 <span
-                                    class="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wide">24/7
-                                    Expert Support</span>
-                                <span class="text-[11px] text-gray-400 mt-1">Direct assistance from our on-ground
-                                    team</span>
+                                    class="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wide">{{ __('24/7 Support')}}</span>
+                                <span
+                                    class="text-[11px] text-gray-400 mt-1">{{ __('Direct assistance from our team')}}</span>
                             </div>
                         </div>
                     </div><!-- /right sidebar -->

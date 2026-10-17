@@ -523,6 +523,7 @@ trait ParsesBuilderHtml
             $bgImage = $node->getAttribute('data-bg-image') ?: '';
             $bgVideo = $node->getAttribute('data-bg-video') ?: '';
             $bgVideoUrl = $node->getAttribute('data-bg-video-url') ?: '';
+            $overlayOpacity = $node->hasAttribute('data-overlay-opacity') ? $node->getAttribute('data-overlay-opacity') : '0.4';
 
             $bgContainer = null;
             foreach ($xpath->query('.//div[contains(@class, "hero-bg-container")]', $node) as $child) {
@@ -539,13 +540,14 @@ trait ParsesBuilderHtml
 
                 $html = '';
                 
-                // Keep Fallback Image just in case
-                if ($bgImage) {
-                    $html .= '<div class="hero-bg" style="background-color: #4b5563; background-image: url(\'' . htmlspecialchars($bgImage) . '\'); background-size: cover; background-position: center; width: 100%; height: 100%; position: absolute; inset: 0; z-index: 0;"></div>';
-                }
+                // Final Background Image
+                $finalImg = $bgImage ?: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1920&q=80';
+                $html .= '<div class="hero-bg" style="background-color: #4b5563; background-image: url(\'' . htmlspecialchars($finalImg) . '\') !important; background-size: cover; background-position: center; width: 100%; height: 100%; position: absolute; inset: 0; z-index: 0;"></div>';
 
                 if ($bgType === 'image') {
-                    // Done
+                    if ((float)$overlayOpacity > 0) {
+                        $html .= '<div class="hero-bg-overlay" style="position: absolute; inset: 0; background: rgba(0,0,0,' . htmlspecialchars($overlayOpacity) . ') !important; z-index: 2;"></div>';
+                    }
                 } else if (($bgType === 'video_upload' && $bgVideo) || ($bgType === 'video_url' && $bgVideoUrl)) {
                     $url = $bgType === 'video_upload' ? $bgVideo : $bgVideoUrl;
                     
@@ -562,7 +564,9 @@ trait ParsesBuilderHtml
                         $html .= '<source src="' . htmlspecialchars($url) . '" type="video/mp4">';
                         $html .= '</video>';
                     }
-                    $html .= '<div class="hero-bg-overlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.4); z-index: 2;"></div>';
+                    if ((float)$overlayOpacity > 0) {
+                        $html .= '<div class="hero-bg-overlay" style="position: absolute; inset: 0; background: rgba(0,0,0,' . htmlspecialchars($overlayOpacity) . ') !important; z-index: 2;"></div>';
+                    }
                 }
 
                 $tempDom = new \DOMDocument();
