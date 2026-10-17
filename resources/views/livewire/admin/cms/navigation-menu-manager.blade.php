@@ -12,7 +12,7 @@
 
     <!-- Location Tabs -->
     <div class="flex items-center gap-1 bg-gray-100 dark:bg-gray-800/50 p-1 rounded-[3px] w-fit overflow-x-auto max-w-full flex-wrap">
-        @foreach($locations as $key => $label)
+        @foreach($locations as $key => $locTitle)
             <button wire:click="$set('activeLocation', '{{ $key }}')"
                 class="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-[3px] transition-all whitespace-nowrap
                     {{ $activeLocation === $key
@@ -23,7 +23,7 @@
                 @else
                     <x-icon name="link" class="w-4 h-4" />
                 @endif
-                {{ $label }}
+                {{ $locTitle }}
             </button>
         @endforeach
     </div>
@@ -200,7 +200,7 @@
     @if($showModal)
     <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
          x-data x-on:keydown.escape.window="$wire.set('showModal', false)">
-        <div class="bg-white dark:bg-gray-900 rounded-[3px] shadow-2xl w-full {{ $is_mega_menu ? 'max-w-5xl' : 'max-w-lg' }} max-h-[92vh] flex flex-col border border-gray-200 dark:border-gray-700"
+        <div class="bg-white dark:bg-gray-900 rounded-[3px] shadow-2xl w-full {{ $is_mega_menu ? 'max-w-6xl' : 'max-w-lg' }} max-h-[92vh] flex flex-col border border-gray-200 dark:border-gray-700"
              @click.outside="$wire.set('showModal', false)">
 
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800">
@@ -216,19 +216,25 @@
 
                 <!-- Location -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Location *</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{{ __('Menu Location *') }}</label>
                     <select wire:model="location" class="form-input">
-                        @foreach($locations as $key => $label)
-                            <option value="{{ $key }}">{{ $label }}</option>
+                        @foreach($locations as $key => $locTitle)
+                            <option value="{{ $key }}">{{ $locTitle }}</option>
                         @endforeach
                     </select>
                     @error('location') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
-                <!-- Label -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Display Label *</label>
-                    <input type="text" wire:model="label" class="form-input" placeholder="{{ __('e.g. About Us') }}">
+                <!-- Navigation Label -->
+                <div class="bg-indigo-50/70 dark:bg-indigo-950/30 p-3.5 rounded border border-indigo-200 dark:border-indigo-800/60 shadow-xs">
+                    <label class="block text-sm font-bold text-gray-900 dark:text-white mb-1.5 flex items-center justify-between">
+                        <span class="flex items-center gap-1.5 text-indigo-700 dark:text-indigo-400">
+                            <x-icon name="tag" class="w-4 h-4" />
+                            {{ __('Navigation Label *') }}
+                        </span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">{{ __('Text shown on website menu') }}</span>
+                    </label>
+                    <input type="text" wire:model="label" class="form-input text-sm py-2.5 w-full font-medium bg-white dark:bg-gray-800 border-indigo-300 dark:border-indigo-700 focus:ring-2 focus:ring-indigo-500/20" placeholder="{{ __('e.g. Tours, Kilimanjaro, About Us') }}" required>
                     @error('label') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
@@ -398,34 +404,60 @@
                                     <div class="space-y-3 flex-1">
                                         @if($cType === 'links')
                                             <div>
-                                                <label class="block text-[11px] text-gray-500 mb-0.5">{{ __('Section Heading') }}</label>
+                                                <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Section Heading') }}</label>
                                                 <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.title" class="form-input text-xs" placeholder="e.g. Mount Kilimanjaro">
                                             </div>
 
-                                            <div class="space-y-2">
+                                            <div class="space-y-2.5">
                                                 <div class="flex items-center justify-between">
-                                                    <label class="block text-[11px] text-gray-500">{{ __('Links') }}</label>
-                                                    <button type="button" wire:click="addColItem({{ $colIdx }})" class="text-[10px] text-indigo-600 hover:text-indigo-800 font-bold flex items-center gap-0.5">
-                                                        <x-icon name="plus" class="w-2.5 h-2.5" /> {{ __('Add Link') }}
+                                                    <label class="block text-xs font-bold text-gray-700 dark:text-gray-300">{{ __('Links List') }}</label>
+                                                    <button type="button" wire:click="addColItem({{ $colIdx }})" class="text-xs text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 font-bold flex items-center gap-1">
+                                                        <x-icon name="plus" class="w-3.5 h-3.5" /> {{ __('Add Link') }}
                                                     </button>
                                                 </div>
 
                                                 @foreach($col['items'] ?? [] as $rIdx => $rItem)
-                                                    <div class="p-2 bg-gray-50 dark:bg-gray-900 rounded border border-gray-100 dark:border-gray-800 space-y-1">
-                                                        <div class="flex items-center gap-1">
-                                                            <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $rIdx }}.label" class="form-input text-[11px] py-1 flex-1" placeholder="Label">
-                                                            <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $rIdx }}.badge" class="form-input text-[11px] py-1 w-16" placeholder="Badge">
-                                                            <button type="button" wire:click="removeColItem({{ $colIdx }}, {{ $rIdx }})" class="p-1 text-red-400 hover:text-red-600" title="{{ __('Remove') }}">
-                                                                <x-icon name="trash" class="w-3 h-3" />
+                                                    <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700 space-y-2 shadow-xs">
+                                                        <div class="flex items-center justify-between pb-1 border-b border-gray-200 dark:border-gray-800">
+                                                            <span class="text-[11px] font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                                                                <span class="w-4 h-4 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 flex items-center justify-center text-[10px] font-mono">
+                                                                    {{ $rIdx + 1 }}
+                                                                </span>
+                                                                {{ __('Navigation Item #') }}{{ $rIdx + 1 }}
+                                                            </span>
+                                                            <button type="button" wire:click="removeColItem({{ $colIdx }}, {{ $rIdx }})" class="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/30 rounded transition-colors" title="{{ __('Remove Link') }}">
+                                                                <x-icon name="trash" class="w-3.5 h-3.5" />
                                                             </button>
                                                         </div>
-                                                        <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $rIdx }}.url" class="form-input text-[10px] py-0.5 font-mono text-gray-500" placeholder="URL">
+
+                                                        <div>
+                                                            <label class="block text-[11px] font-bold text-indigo-700 dark:text-indigo-300 mb-1 flex items-center gap-1">
+                                                                <x-icon name="tag" class="w-3 h-3 text-indigo-600" />
+                                                                {{ __('Navigation Label *') }}
+                                                            </label>
+                                                            <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $rIdx }}.label" class="form-input text-xs py-1.5 w-full font-medium bg-white dark:bg-gray-800 border-indigo-200 dark:border-indigo-800" placeholder="{{ __('e.g. Marangu Route – 5 to 6 Days Hike') }}">
+                                                        </div>
+
+                                                        <div class="grid grid-cols-3 gap-2">
+                                                            <div class="col-span-2">
+                                                                <label class="block text-[10px] font-semibold text-gray-500 dark:text-gray-400 mb-0.5">
+                                                                    {{ __('Target URL') }}
+                                                                </label>
+                                                                <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $rIdx }}.url" class="form-input text-[11px] py-1 font-mono text-gray-600 dark:text-gray-400 w-full bg-white dark:bg-gray-800" placeholder="/kilimanjaro#marangu">
+                                                            </div>
+                                                            <div>
+                                                                <label class="block text-[10px] font-semibold text-gray-500 dark:text-gray-400 mb-0.5">
+                                                                    {{ __('Badge') }}
+                                                                </label>
+                                                                <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $rIdx }}.badge" class="form-input text-[11px] py-1 w-full bg-white dark:bg-gray-800" placeholder="New">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 @endforeach
                                             </div>
 
                                             <div class="pt-2 border-t border-gray-100 dark:border-gray-700">
-                                                <label class="block text-[11px] text-gray-500 mb-0.5">{{ __('Bottom Button (Label & URL)') }}</label>
+                                                <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Bottom Button (Label & URL)') }}</label>
                                                 <div class="grid grid-cols-2 gap-1.5">
                                                     <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.btn_text" class="form-input text-xs" placeholder="View All Packages">
                                                     <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.btn_url" class="form-input text-xs" placeholder="/tours">
@@ -434,55 +466,77 @@
 
                                         @elseif($cType === 'media_list')
                                             <div>
-                                                <label class="block text-[11px] text-gray-500 mb-0.5">{{ __('Section Heading (Optional)') }}</label>
+                                                <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Section Heading (Optional)') }}</label>
                                                 <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.title" class="form-input text-xs" placeholder="e.g. Featured Treks">
                                             </div>
 
-                                            <div class="space-y-2">
+                                            <div class="space-y-2.5">
                                                 <div class="flex items-center justify-between">
-                                                    <label class="block text-[11px] text-gray-500">{{ __('Thumbnail Items') }}</label>
-                                                    <button type="button" wire:click="addColItem({{ $colIdx }})" class="text-[10px] text-indigo-600 hover:text-indigo-800 font-bold flex items-center gap-0.5">
-                                                        <x-icon name="plus" class="w-2.5 h-2.5" /> {{ __('Add Card') }}
+                                                    <label class="block text-xs font-bold text-gray-700 dark:text-gray-300">{{ __('Thumbnail Cards') }}</label>
+                                                    <button type="button" wire:click="addColItem({{ $colIdx }})" class="text-xs text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 font-bold flex items-center gap-1">
+                                                        <x-icon name="plus" class="w-3.5 h-3.5" /> {{ __('Add Card') }}
                                                     </button>
                                                 </div>
 
                                                 @foreach($col['items'] ?? [] as $mIdx => $mItem)
-                                                    <div class="p-2 bg-gray-50 dark:bg-gray-900 rounded border border-gray-100 dark:border-gray-800 space-y-1">
-                                                        <div class="flex items-center justify-between">
-                                                            <span class="text-[10px] font-bold text-gray-400 uppercase">Item #{{ $mIdx + 1 }}</span>
-                                                            <button type="button" wire:click="removeColItem({{ $colIdx }}, {{ $mIdx }})" class="text-red-400 hover:text-red-600">
-                                                                <x-icon name="trash" class="w-3 h-3" />
+                                                    <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700 space-y-2 shadow-xs">
+                                                        <div class="flex items-center justify-between pb-1 border-b border-gray-200 dark:border-gray-800">
+                                                            <span class="text-[11px] font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                                                                <span class="w-4 h-4 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-[10px] font-mono">
+                                                                    {{ $mIdx + 1 }}
+                                                                </span>
+                                                                {{ __('Card #') }}{{ $mIdx + 1 }}
+                                                            </span>
+                                                            <button type="button" wire:click="removeColItem({{ $colIdx }}, {{ $mIdx }})" class="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/30 rounded" title="{{ __('Remove') }}">
+                                                                <x-icon name="trash" class="w-3.5 h-3.5" />
                                                             </button>
                                                         </div>
-                                                        <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $mIdx }}.title" class="form-input text-xs py-1" placeholder="Title">
-                                                        <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $mIdx }}.subtitle" class="form-input text-xs py-1" placeholder="Subtitle">
-                                                        <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $mIdx }}.image" class="form-input text-[10px] py-0.5 font-mono" placeholder="Image URL">
-                                                        <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $mIdx }}.url" class="form-input text-[10px] py-0.5 font-mono text-gray-500" placeholder="Target URL">
+                                                        <div>
+                                                            <label class="block text-[11px] font-bold text-emerald-700 dark:text-emerald-300 mb-1 flex items-center gap-1">
+                                                                <x-icon name="tag" class="w-3 h-3 text-emerald-600" />
+                                                                {{ __('Card Title / Navigation Label *') }}
+                                                            </label>
+                                                            <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $mIdx }}.title" class="form-input text-xs py-1.5 w-full font-medium bg-white dark:bg-gray-800 border-emerald-200 dark:border-emerald-800" placeholder="e.g. Safari Seronera">
+                                                        </div>
+                                                        <div>
+                                                            <label class="block text-[10px] font-semibold text-gray-500 mb-0.5">{{ __('Subtitle / Duration') }}</label>
+                                                            <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $mIdx }}.subtitle" class="form-input text-xs py-1 w-full bg-white dark:bg-gray-800" placeholder="e.g. 5 Days • Wildlife Trek">
+                                                        </div>
+                                                        <div class="grid grid-cols-2 gap-2">
+                                                            <div>
+                                                                <label class="block text-[10px] font-semibold text-gray-500 mb-0.5">{{ __('Image URL') }}</label>
+                                                                <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $mIdx }}.image" class="form-input text-[10px] py-1 font-mono w-full bg-white dark:bg-gray-800" placeholder="/images/...">
+                                                            </div>
+                                                            <div>
+                                                                <label class="block text-[10px] font-semibold text-gray-500 mb-0.5">{{ __('Target URL') }}</label>
+                                                                <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.items.{{ $mIdx }}.url" class="form-input text-[10px] py-1 font-mono w-full bg-white dark:bg-gray-800" placeholder="/safari">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 @endforeach
                                             </div>
 
                                         @elseif($cType === 'promo')
                                             <div>
-                                                <label class="block text-[11px] text-gray-500 mb-0.5">{{ __('Card Heading') }}</label>
-                                                <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.title" class="form-input text-xs" placeholder="Card Title">
+                                                <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Card Heading / Label') }}</label>
+                                                <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.title" class="form-input text-xs bg-white dark:bg-gray-800" placeholder="Card Title">
                                             </div>
                                             <div>
-                                                <label class="block text-[11px] text-gray-500 mb-0.5">{{ __('Promo Image URL') }}</label>
-                                                <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.image" class="form-input text-[10px] py-1 font-mono" placeholder="/images/mega-menu/...">
+                                                <label class="block text-[11px] font-semibold text-gray-500 mb-0.5">{{ __('Promo Image URL') }}</label>
+                                                <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.image" class="form-input text-[10px] py-1 font-mono bg-white dark:bg-gray-800" placeholder="/images/mega-menu/...">
                                             </div>
                                             <div>
-                                                <label class="block text-[11px] text-gray-500 mb-0.5">{{ __('CTA Button Text & URL') }}</label>
+                                                <label class="block text-[11px] font-semibold text-gray-500 mb-0.5">{{ __('CTA Button Text & URL') }}</label>
                                                 <div class="grid grid-cols-2 gap-1.5">
-                                                    <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.btn_text" class="form-input text-xs" placeholder="Explore">
-                                                    <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.btn_url" class="form-input text-xs" placeholder="/page">
+                                                    <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.btn_text" class="form-input text-xs bg-white dark:bg-gray-800" placeholder="Explore">
+                                                    <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.btn_url" class="form-input text-xs bg-white dark:bg-gray-800" placeholder="/page">
                                                 </div>
                                             </div>
                                             <div>
-                                                <label class="block text-[11px] text-gray-500 mb-0.5">{{ __('Card Background Color') }}</label>
+                                                <label class="block text-[11px] font-semibold text-gray-500 mb-0.5">{{ __('Card Background Color') }}</label>
                                                 <div class="flex items-center gap-2">
                                                     <input type="color" wire:model="mega_menu_data.columns.{{ $colIdx }}.bg_color" class="w-8 h-8 rounded border p-0 cursor-pointer">
-                                                    <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.bg_color" class="form-input text-xs font-mono flex-1" placeholder="#7d834a">
+                                                    <input type="text" wire:model="mega_menu_data.columns.{{ $colIdx }}.bg_color" class="form-input text-xs font-mono flex-1 bg-white dark:bg-gray-800" placeholder="#7d834a">
                                                 </div>
                                             </div>
                                         @endif
