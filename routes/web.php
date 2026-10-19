@@ -188,6 +188,17 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         $tourTags = \App\Models\TourTag::where('is_active', true)->orderBy('name', 'asc')->get(['name', 'slug']);
         $tourCountries = \App\Livewire\Frontend\ToursBlock::editorCountryData();
         $activities = \App\Models\Activity::where('is_active', true)->orderBy('name')->get(['id', 'name', 'slug', 'image', 'description']);
+        $trekkingTours = \App\Models\Tour::where('type', 'like', '%trek%')
+            ->orWhere('type', 'like', '%hik%')
+            ->orWhere('type', 'like', '%climb%')
+            ->orWhereHas('tourType', function ($tq) {
+                $tq->where('slug', 'trekking')
+                    ->orWhere('slug', 'hiking')
+                    ->orWhere('name', 'like', '%trek%')
+                    ->orWhere('name', 'like', '%hik%');
+            })
+            ->take(10)
+            ->get(['id', 'name', 'slug', 'featured_image', 'duration_days', 'adult_price']);
 
         return view('livewire.admin.cms.page-editor', [
             'record' => $record,
@@ -202,7 +213,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
             'countries' => $countries,
             'postCategories' => $postCategories,
             'tourCountries' => $tourCountries,
-            'activities' => $activities
+            'activities' => $activities,
+            'trekkingTours' => $trekkingTours
         ]);
     })->name('visual-editor');
 

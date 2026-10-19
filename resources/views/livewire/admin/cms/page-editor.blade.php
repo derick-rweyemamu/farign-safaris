@@ -392,6 +392,7 @@
     window.POST_CATEGORIES = @json($postCategories ?? []);
     window.TOUR_COUNTRIES = @json($tourCountries ?? []);
     window.ACTIVITIES = @json($activities ?? []);
+    window.TREKKING_TOURS = @json($trekkingTours ?? []);
     window.APP_CSS_URL = '{{ Vite::asset('resources/css/app.css') }}';
 
     // Editor Translations Dictionary

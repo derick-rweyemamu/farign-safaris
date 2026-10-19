@@ -2968,4 +2968,23 @@ section.hero h1.hero-tge-title i,
   pointer-events: none !important;
 }
 
+/* ── Safaris Trekking Slider Block ── */
+.safaris-trekking-slider-section {
+  position: relative;
+  background-color: #F8F9FA;
+}
+
+.trekking-cursive {
+  font-family: 'Alex Brush', 'Playfair Display', cursive, serif !important;
+}
+
+.trekking-no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+
+.trekking-no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
 

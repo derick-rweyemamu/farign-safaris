@@ -2563,6 +2563,285 @@ bm.add('safaris-activities-slider', {
 </section>`,
 });
 
+// ── Trekking Experience Slider Component & Block ────────────────────────────
+function buildTrekkingSliderPreviewHtml(attrs) {
+    const subheadingTag = attrs['data-subheading-tag'] || 'Trekking Experience';
+    const subheadingClass = attrs['data-subheading-class'] || 'text-[#4E8243] font-serif font-bold text-lg sm:text-xl tracking-tight';
+    const headingPrefix = attrs['data-heading-prefix'] || 'Package for';
+    const headingPrefixClass = attrs['data-heading-prefix-class'] || 'text-gray-900 font-extrabold';
+    const headingAccent = attrs['data-heading-accent'] || 'Mt.Kilimanjaro';
+    const headingAccentClass = attrs['data-heading-accent-class'] || 'text-[#8FA5B5] font-bold';
+    const headingSuffix = attrs['data-heading-suffix'] || 'Adventure';
+    const headingSuffixClass = attrs['data-heading-suffix-class'] || 'text-gray-900 font-extrabold';
+    const description = attrs['data-description'] || "Experience the thrill of Africa's highest peak with Mwangwi Safaris, guided by experts through stunning landscapes.";
+    const descriptionClass = attrs['data-description-class'] || 'text-gray-600 text-sm sm:text-base leading-relaxed font-normal max-w-lg';
+    const cursiveText = attrs['data-cursive-text'] || 'Trusted Partner for a Safe and Memorable Kilimanjaro Adventure';
+    const cursiveClass = attrs['data-cursive-class'] || 'text-2xl sm:text-3xl text-gray-600 tracking-wide select-none pt-2 mb-6';
+    const bgImage = attrs['data-bg-image'] || '/images/mega-menu/kilimanjaro-summit.jpg';
+
+    let tours = window.TREKKING_TOURS || [];
+    if (!tours || tours.length === 0) {
+        tours = [
+            { name: '7-Days Kilimanjaro Climbing - Machame Route', duration_days: 7, adult_price: 1910, featured_image: 'tours/7-day-kilimanjaro-climbing-kilimanjaro-machame-route.webp' },
+            { name: '6-Days Kilimanjaro Climbing - Machame Route', duration_days: 6, adult_price: 1642, featured_image: 'tours/6-day-kilimanjaro-climbing-kilimanjaro-machame-route.jpg' },
+            { name: '6-Days Kilimanjaro Climbing - Marangu Route', duration_days: 6, adult_price: 1583, featured_image: 'tours/6-day-kilimanjaro-climbing-kilimanjaro-rongai-route.jpg' },
+            { name: '8-Days Kilimanjaro Climbing - Lemosho Route', duration_days: 8, adult_price: 2623, featured_image: 'tours/8-day-kilimanjaro-climbing-kilimanjaro-lemosho-route.jpg' },
+        ];
+    }
+
+    const cardsHtml = tours.slice(0, 6).map(t => {
+        let title = t.name;
+        if (typeof title === 'object' && title !== null) {
+            title = title.en || Object.values(title)[0] || 'Kilimanjaro Trek';
+        }
+        let imgUrl = t.featured_image || '';
+        if (imgUrl && !imgUrl.startsWith('http') && !imgUrl.startsWith('/')) {
+            imgUrl = '/storage/' + imgUrl.replace(/^\/?storage\//, '');
+        }
+        if (!imgUrl) {
+            imgUrl = 'https://images.unsplash.com/photo-1589553460732-57ef51160601?auto=format&fit=crop&w=800&q=80';
+        }
+        const days = t.duration_days || 6;
+        const price = t.adult_price ? `$${Math.round(t.adult_price)}` : 'Inquire';
+
+        return `
+            <div style="flex: 0 0 270px; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.06); display: flex; flex-direction: column;">
+                <div style="height: 175px; position: relative; overflow: hidden; background: #e5e7eb;">
+                    <img src="${imgUrl}" alt="${title}" style="width: 100%; height: 100%; object-fit: cover;" />
+                </div>
+                <div style="padding: 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                    <h3 style="font-size: 14px; font-weight: 700; color: #1f2937; line-height: 1.35; margin: 0 0 12px 0; font-family: sans-serif; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 38px;">${title}</h3>
+                    <div>
+                        <div style="border-top: 1px solid #f3f4f6; margin-bottom: 12px;"></div>
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-size: 12px; color: #6b7280; font-family: sans-serif; display: flex; align-items: center; gap: 4px;">🕒 ${days} Days</span>
+                            <span style="font-size: 15px; font-weight: 700; color: #D97706; font-family: sans-serif;">${price}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    return `
+        <div class="safaris-trekking-slider-block safaris-trekking-slider-section safaris-trekking-preview-container" style="position: relative; padding: 40px 20px; font-family: sans-serif; background: #F8F9FA; border-radius: 12px; overflow: hidden;">
+            {{-- Background image taking strictly 40% from right --}}
+            <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 40%; background-image: url('${bgImage}'); background-size: cover; background-position: right top; opacity: 0.95;">
+                <div style="position: absolute; inset: 0; background: linear-gradient(90deg, #F8F9FA 0%, rgba(248, 249, 250, 0.6) 20%, transparent 60%);"></div>
+            </div>
+
+            <div style="position: relative; z-index: 2; display: grid; grid-template-columns: 380px 1fr; gap: 30px; align-items: center;">
+                <div>
+                    <span class="trekking-badge ${subheadingClass}" style="display: inline-block; margin-bottom: 10px;">${subheadingTag}</span>
+                    <h2 class="trekking-heading" style="font-size: 38px; line-height: 1.12; margin: 0 0 16px 0;">
+                        <span class="trekking-heading-prefix ${headingPrefixClass}" style="display: block;">${headingPrefix}</span>
+                        <span class="trekking-heading-accent ${headingAccentClass}" style="display: block;">${headingAccent}</span>
+                        <span class="trekking-heading-suffix ${headingSuffixClass}" style="display: block;">${headingSuffix}</span>
+                    </h2>
+                    <p class="trekking-desc ${descriptionClass}" style="margin: 0 0 16px 0;">${description}</p>
+                    <div class="trekking-cursive ${cursiveClass}" style="font-family: 'Alex Brush', cursive, Georgia, serif; font-size: 24px; font-style: italic; line-height: 1.3; margin-bottom: 24px;">${cursiveText}</div>
+                    
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <button type="button" 
+                                onclick="const t = this.closest('.safaris-trekking-preview-container, .safaris-trekking-slider-block, .safaris-trekking-slider-section, section')?.querySelector('.trekking-preview-track') || document.querySelector('.trekking-preview-track'); if(t) { const c = t.firstElementChild; const s = c ? c.offsetWidth + 18 : 280; if(t.scrollLeft <= 15) { t.scrollTo({ left: t.scrollWidth, behavior: 'smooth' }); } else { t.scrollBy({ left: -s, behavior: 'smooth' }); } }" 
+                                style="width: 44px; height: 44px; border-radius: 50%; border: 1px solid #d1d5db; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center; color: #374151; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.08); user-select: none; transition: all 0.2s;"
+                                aria-label="Previous Tour">
+                            <svg style="width: 16px; height: 16px; pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                        </button>
+                        <button type="button" 
+                                onclick="const t = this.closest('.safaris-trekking-preview-container, .safaris-trekking-slider-block, .safaris-trekking-slider-section, section')?.querySelector('.trekking-preview-track') || document.querySelector('.trekking-preview-track'); if(t) { const c = t.firstElementChild; const s = c ? c.offsetWidth + 18 : 280; const m = t.scrollWidth - t.clientWidth; if(t.scrollLeft >= m - 15) { t.scrollTo({ left: 0, behavior: 'smooth' }); } else { t.scrollBy({ left: s, behavior: 'smooth' }); } }" 
+                                style="width: 44px; height: 44px; border-radius: 50%; border: 1px solid #d1d5db; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center; color: #374151; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.08); user-select: none; transition: all 0.2s;"
+                                aria-label="Next Tour">
+                            <svg style="width: 16px; height: 16px; pointer-events: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="trekking-preview-track" style="display: flex; gap: 18px; overflow-x: auto; padding-bottom: 8px; scroll-behavior: smooth;">
+                    ${cardsHtml}
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 20px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #4E8243; font-weight: 700; position: relative; z-index: 2;">
+                ✦ Live Alpine.js Dynamic Trekking Slider will render dynamically on the frontend ✦
+            </p>
+        </div>
+    `;
+}
+
+editor.DomComponents.addType('trekking-slider', {
+    isComponent: el => (el && el.classList && el.classList.contains('safaris-trekking-slider-block')) ? { type: 'trekking-slider' } : false,
+    model: {
+        defaults: {
+            tagName: 'div',
+            droppable: false,
+            highlightable: true,
+            attributes: {
+                class: 'safaris-trekking-slider-block',
+                'data-tour-type': 'trekking',
+                'data-subheading-tag': 'Trekking Experience',
+                'data-subheading-class': 'text-[#4E8243] font-serif font-bold text-lg sm:text-xl tracking-tight',
+                'data-heading-prefix': 'Package for',
+                'data-heading-prefix-class': 'text-gray-900 font-extrabold',
+                'data-heading-accent': 'Mt.Kilimanjaro',
+                'data-heading-accent-class': 'text-[#8FA5B5] font-bold',
+                'data-heading-suffix': 'Adventure',
+                'data-heading-suffix-class': 'text-gray-900 font-extrabold',
+                'data-description': "Experience the thrill of Africa's highest peak with Mwangwi Safaris, guided by experts through stunning landscapes.",
+                'data-description-class': 'text-gray-600 text-sm sm:text-base leading-relaxed font-normal max-w-lg',
+                'data-cursive-text': 'Trusted Partner for a Safe and Memorable Kilimanjaro Adventure',
+                'data-cursive-class': 'text-2xl sm:text-3xl text-gray-600 tracking-wide select-none pt-2 mb-6',
+                'data-limit': '10',
+                'data-autoplay': 'true'
+            },
+            traits: [
+                {
+                    type: 'text',
+                    name: 'data-subheading-tag',
+                    label: 'Tagline / Subheading Text',
+                    value: 'Trekking Experience'
+                },
+                {
+                    type: 'text',
+                    name: 'data-subheading-class',
+                    label: 'Tagline Tailwind Classes',
+                    value: 'text-[#4E8243] font-serif font-bold text-lg sm:text-xl tracking-tight'
+                },
+                {
+                    type: 'text',
+                    name: 'data-heading-prefix',
+                    label: 'Heading Line 1 Text',
+                    value: 'Package for'
+                },
+                {
+                    type: 'text',
+                    name: 'data-heading-prefix-class',
+                    label: 'Heading Line 1 Tailwind Classes',
+                    value: 'text-gray-900 font-extrabold'
+                },
+                {
+                    type: 'text',
+                    name: 'data-heading-accent',
+                    label: 'Accent Heading (Line 2) Text',
+                    value: 'Mt.Kilimanjaro'
+                },
+                {
+                    type: 'text',
+                    name: 'data-heading-accent-class',
+                    label: 'Accent Heading Tailwind Classes',
+                    value: 'text-[#8FA5B5] font-bold'
+                },
+                {
+                    type: 'text',
+                    name: 'data-heading-suffix',
+                    label: 'Heading Line 3 Text',
+                    value: 'Adventure'
+                },
+                {
+                    type: 'text',
+                    name: 'data-heading-suffix-class',
+                    label: 'Heading Line 3 Tailwind Classes',
+                    value: 'text-gray-900 font-extrabold'
+                },
+                {
+                    type: 'textarea',
+                    name: 'data-description',
+                    label: 'Description Text',
+                    value: "Experience the thrill of Africa's highest peak with Mwangwi Safaris, guided by experts through stunning landscapes."
+                },
+                {
+                    type: 'text',
+                    name: 'data-description-class',
+                    label: 'Description Tailwind Classes',
+                    value: 'text-gray-600 text-sm sm:text-base leading-relaxed font-normal max-w-lg'
+                },
+                {
+                    type: 'text',
+                    name: 'data-cursive-text',
+                    label: 'Script / Cursive Line Text',
+                    value: 'Trusted Partner for a Safe and Memorable Kilimanjaro Adventure'
+                },
+                {
+                    type: 'text',
+                    name: 'data-cursive-class',
+                    label: 'Script Line Tailwind Classes',
+                    value: 'text-2xl sm:text-3xl text-gray-600 tracking-wide select-none pt-2 mb-6'
+                },
+                {
+                    type: 'select',
+                    name: 'data-tour-type',
+                    label: 'Tour Type Filter',
+                    options: [
+                        { value: 'trekking', name: 'Trekking / Mountain Climbing (Hiking)' },
+                        { value: 'hiking', name: 'Hiking Tours' },
+                        { value: 'safari', name: 'Safari Tours' },
+                        { value: 'all', name: 'All Tour Types' }
+                    ]
+                },
+                {
+                    type: 'number',
+                    name: 'data-limit',
+                    label: 'Max Tours Displayed',
+                    min: 1,
+                    max: 30,
+                    value: 10
+                },
+                {
+                    type: 'select',
+                    name: 'data-autoplay',
+                    label: 'Autoplay Slider',
+                    options: [
+                        { value: 'true', name: 'Enabled' },
+                        { value: 'false', name: 'Disabled' }
+                    ]
+                }
+            ]
+        },
+        init() {
+            this.on('change:attributes:data-tour-type change:attributes:data-subheading-tag change:attributes:data-subheading-class change:attributes:data-heading-prefix change:attributes:data-heading-prefix-class change:attributes:data-heading-accent change:attributes:data-heading-accent-class change:attributes:data-heading-suffix change:attributes:data-heading-suffix-class change:attributes:data-description change:attributes:data-description-class change:attributes:data-cursive-text change:attributes:data-cursive-class change:attributes:data-limit change:attributes:data-autoplay', this.updateCanvasHtml);
+            this.updateCanvasHtml();
+        },
+        updateCanvasHtml() {
+            const attrs = this.getAttributes();
+            this.set('content', buildTrekkingSliderPreviewHtml(attrs));
+        }
+    }
+});
+
+bm.add('safaris-trekking-slider', {
+    label: '🥾 Trekking Experience Slider',
+    category: window.__('Safaris Blocks'),
+    attributes: { class: 'fa-solid fa-mountain' },
+    content: `
+<section id="trekking" class="safaris-trekking-slider-section py-20 bg-[#F8F9FA] relative overflow-hidden">
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
+    <div data-gjs-type="trekking-slider" class="safaris-trekking-slider-block" data-tour-type="trekking" data-subheading-tag="Trekking Experience" data-subheading-class="text-[#4E8243] font-serif font-bold text-lg sm:text-xl tracking-tight" data-heading-prefix="Package for" data-heading-prefix-class="text-gray-900 font-extrabold" data-heading-accent="Mt.Kilimanjaro" data-heading-accent-class="text-[#8FA5B5] font-bold" data-heading-suffix="Adventure" data-heading-suffix-class="text-gray-900 font-extrabold" data-description="Experience the thrill of Africa's highest peak with Mwangwi Safaris, guided by experts through stunning landscapes." data-description-class="text-gray-600 text-sm sm:text-base leading-relaxed font-normal max-w-lg" data-cursive-text="Trusted Partner for a Safe and Memorable Kilimanjaro Adventure" data-cursive-class="text-2xl sm:text-3xl text-gray-600 tracking-wide select-none pt-2 mb-6" data-limit="10" data-autoplay="true">
+      ${buildTrekkingSliderPreviewHtml({
+          'data-tour-type': 'trekking',
+          'data-subheading-tag': 'Trekking Experience',
+          'data-subheading-class': 'text-[#4E8243] font-serif font-bold text-lg sm:text-xl tracking-tight',
+          'data-heading-prefix': 'Package for',
+          'data-heading-prefix-class': 'text-gray-900 font-extrabold',
+          'data-heading-accent': 'Mt.Kilimanjaro',
+          'data-heading-accent-class': 'text-[#8FA5B5] font-bold',
+          'data-heading-suffix': 'Adventure',
+          'data-heading-suffix-class': 'text-gray-900 font-extrabold',
+          'data-description': "Experience the thrill of Africa's highest peak with Mwangwi Safaris, guided by experts through stunning landscapes.",
+          'data-description-class': 'text-gray-600 text-sm sm:text-base leading-relaxed font-normal max-w-lg',
+          'data-cursive-text': 'Trusted Partner for a Safe and Memorable Kilimanjaro Adventure',
+          'data-cursive-class': 'text-2xl sm:text-3xl text-gray-600 tracking-wide select-none pt-2 mb-6',
+          'data-limit': '10',
+          'data-autoplay': 'true'
+      })}
+    </div>
+  </div>
+</section>`,
+});
+
 bm.add('safaris-start-planning', {
     label: '📋 Start Planning',
     category: window.__('Safaris Blocks'),

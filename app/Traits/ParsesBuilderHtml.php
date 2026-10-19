@@ -108,6 +108,9 @@ trait ParsesBuilderHtml
             }
 
 
+        // Convert Alpine shorthand @events (e.g. @click, @mouseenter) to XML-safe x-on: events so libxml DOMDocument does not strip them
+        $html = preg_replace('/(\s)@([a-zA-Z0-9_\.\:\-]+)=/', '$1x-on:$2=', $html ?? '');
+
         libxml_use_internal_errors(true);
         $dom = new \DOMDocument();
         // Wrap in a body tag with UTF-8 encoding to prevent formatting issues
@@ -118,12 +121,23 @@ trait ParsesBuilderHtml
 
         // Helper function to replace a node with rendered HTML
         $replaceNode = function($node, $renderedHtml) use ($dom) {
+            if (!$node || !$node->parentNode) {
+                return;
+            }
+            // Also protect Alpine @ directives inside rendered HTML before DOMDocument parsing
+            $renderedHtml = preg_replace('/(\s)@([a-zA-Z0-9_\.\:\-]+)=/', '$1x-on:$2=', $renderedHtml ?? '');
+
             $tempDom = new \DOMDocument();
             libxml_use_internal_errors(true);
             @$tempDom->loadHTML('<?xml encoding="utf-8" ?><body>' . $renderedHtml . '</body>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
             libxml_clear_errors();
             
-            $importedNode = $dom->importNode($tempDom->getElementsByTagName('body')->item(0), true);
+            $body = $tempDom->getElementsByTagName('body')->item(0);
+            if (!$body) {
+                return;
+            }
+
+            $importedNode = $dom->importNode($body, true);
             while ($importedNode->hasChildNodes()) {
                 $node->parentNode->insertBefore($importedNode->firstChild, $node);
             }
@@ -384,6 +398,151 @@ trait ParsesBuilderHtml
             }
 
             $replaceNode($targetNode, $rendered);
+        }
+
+        // 4.6 Parse Trekking Slider Block
+        $trekkingProcessed = false;
+        foreach ($xpath->query('//section[contains(@class, "safaris-trekking-slider-section")] | //section[@id="trekking"] | //div[contains(@class, "safaris-trekking-slider-block")] | //section[contains(@class, "safaris-trekking-slider-block")]') as $node) {
+            if ($trekkingProcessed || !$node || !$node->parentNode) {
+                continue;
+            }
+
+            $tourType = $node->getAttribute('data-tour-type') ?: 'trekking';
+            $bgImage = $node->getAttribute('data-bg-image') ?: null;
+            $limit = (int) ($node->getAttribute('data-limit') ?: 10);
+            $autoplay = $node->getAttribute('data-autoplay') !== 'false';
+
+            // Find outer section if wrapped
+            $targetNode = $node;
+            $curr = $node->parentNode;
+            while ($curr && $curr instanceof \DOMElement && $curr->nodeName !== 'body' && $curr->nodeName !== '#document') {
+                if ($curr->nodeName === 'section' && (str_contains($curr->getAttribute('class') ?? '', 'safaris-trekking-slider-section') || $curr->getAttribute('id') === 'trekking')) {
+                    $targetNode = $curr;
+                    break;
+                }
+                $curr = $curr->parentNode;
+            }
+            if (!$targetNode || !$targetNode->parentNode) {
+                continue;
+            }
+            $scope = $targetNode;
+
+            if (empty($bgImage) && preg_match('/background-image:\s*url\([\'"]?([^\'")]+)[\'"]?\)/i', $scope->getAttribute('style') . ' ' . $dom->saveHTML($scope), $bgMatches)) {
+                $bgImage = $bgMatches[1];
+            }
+
+            // 1. Subheading Tagline & Tailwind Classes
+            $subheadingTag = $node->getAttribute('data-subheading-tag');
+            $subheadingClass = $node->getAttribute('data-subheading-class');
+            $badgeNodes = $xpath->query('.//*[contains(@class, "trekking-badge")] | .//*[@id="its3b1"]', $scope);
+            if ($badgeNodes->length > 0) {
+                $rawText = trim($badgeNodes->item(0)->textContent);
+                if (!empty($rawText)) $subheadingTag = $rawText;
+                $rawClass = trim($badgeNodes->item(0)->getAttribute('class') ?? '');
+                if (!empty($rawClass)) $subheadingClass = $rawClass;
+            }
+            $subheadingTag = $subheadingTag ?: 'Trekking Experience';
+
+            // 2. Heading Prefix & Tailwind Classes (e.g. "Package for")
+            $headingPrefix = $node->getAttribute('data-heading-prefix');
+            $headingPrefixClass = $node->getAttribute('data-heading-prefix-class');
+            $prefixNodes = $xpath->query('.//*[contains(@class, "trekking-heading-prefix")] | .//*[@id="i392uh"]', $scope);
+            if ($prefixNodes->length > 0) {
+                $rawText = trim($prefixNodes->item(0)->textContent);
+                if (!empty($rawText)) $headingPrefix = $rawText;
+                $rawClass = trim($prefixNodes->item(0)->getAttribute('class') ?? '');
+                if (!empty($rawClass)) $headingPrefixClass = $rawClass;
+            }
+            $headingPrefix = $headingPrefix ?: 'Package for';
+
+            // 3. Heading Accent & Tailwind Classes (e.g. "Mt.Kilimanjaro")
+            $headingAccent = $node->getAttribute('data-heading-accent');
+            $headingAccentClass = $node->getAttribute('data-heading-accent-class');
+            $accentNodes = $xpath->query('.//*[contains(@class, "trekking-heading-accent")] | .//*[@id="iire5v"]', $scope);
+            if ($accentNodes->length > 0) {
+                $rawText = trim($accentNodes->item(0)->textContent);
+                if (!empty($rawText)) $headingAccent = $rawText;
+                $rawClass = trim($accentNodes->item(0)->getAttribute('class') ?? '');
+                if (!empty($rawClass)) $headingAccentClass = $rawClass;
+            }
+            $headingAccent = $headingAccent ?: 'Mt.Kilimanjaro';
+
+            // 4. Heading Suffix & Tailwind Classes (e.g. "Adventure")
+            $headingSuffix = $node->getAttribute('data-heading-suffix');
+            $headingSuffixClass = $node->getAttribute('data-heading-suffix-class');
+            $suffixNodes = $xpath->query('.//*[contains(@class, "trekking-heading-suffix")] | .//*[@id="ij3e7b"]', $scope);
+            if ($suffixNodes->length > 0) {
+                $rawText = trim($suffixNodes->item(0)->textContent);
+                if (!empty($rawText)) $headingSuffix = $rawText;
+                $rawClass = trim($suffixNodes->item(0)->getAttribute('class') ?? '');
+                if (!empty($rawClass)) $headingSuffixClass = $rawClass;
+            }
+            $headingSuffix = $headingSuffix ?: 'Adventure';
+
+            // 5. Description Paragraph & Tailwind Classes
+            $description = $node->getAttribute('data-description');
+            $descriptionClass = $node->getAttribute('data-description-class');
+            $descNodes = $xpath->query('.//*[contains(@class, "trekking-desc")] | .//*[@id="i5hhup"]', $scope);
+            if ($descNodes->length > 0) {
+                $rawText = trim($descNodes->item(0)->textContent);
+                if (!empty($rawText)) $description = $rawText;
+                $rawClass = trim($descNodes->item(0)->getAttribute('class') ?? '');
+                if (!empty($rawClass)) $descriptionClass = $rawClass;
+            }
+
+            // 6. Cursive Text & Tailwind Classes
+            $cursiveText = $node->getAttribute('data-cursive-text');
+            $cursiveClass = $node->getAttribute('data-cursive-class');
+            $cursiveNodes = $xpath->query('.//*[contains(@class, "trekking-cursive")] | .//*[@id="ik5thi"]', $scope);
+            if ($cursiveNodes->length > 0) {
+                $rawText = trim($cursiveNodes->item(0)->textContent);
+                if (!empty($rawText)) $cursiveText = $rawText;
+                $rawClass = trim($cursiveNodes->item(0)->getAttribute('class') ?? '');
+                if (!empty($rawClass)) $cursiveClass = $rawClass;
+            }
+            $cursiveText = $cursiveText ?: 'Trusted Partner for a Safe and Memorable Kilimanjaro Adventure';
+
+            $rendered = \Illuminate\Support\Facades\Blade::render(
+                '@livewire("frontend.trekking-slider-block", [
+                    "tourType" => $tourType,
+                    "subheadingTag" => $subheadingTag,
+                    "subheadingClass" => $subheadingClass,
+                    "headingPrefix" => $headingPrefix,
+                    "headingPrefixClass" => $headingPrefixClass,
+                    "headingAccent" => $headingAccent,
+                    "headingAccentClass" => $headingAccentClass,
+                    "headingSuffix" => $headingSuffix,
+                    "headingSuffixClass" => $headingSuffixClass,
+                    "description" => $description,
+                    "descriptionClass" => $descriptionClass,
+                    "cursiveText" => $cursiveText,
+                    "cursiveClass" => $cursiveClass,
+                    "bgImage" => $bgImage,
+                    "limit" => $limit,
+                    "autoplay" => $autoplay
+                ])',
+                [
+                    'tourType' => $tourType,
+                    'subheadingTag' => $subheadingTag,
+                    'subheadingClass' => $subheadingClass,
+                    'headingPrefix' => $headingPrefix,
+                    'headingPrefixClass' => $headingPrefixClass,
+                    'headingAccent' => $headingAccent,
+                    'headingAccentClass' => $headingAccentClass,
+                    'headingSuffix' => $headingSuffix,
+                    'headingSuffixClass' => $headingSuffixClass,
+                    'description' => $description,
+                    'descriptionClass' => $descriptionClass,
+                    'cursiveText' => $cursiveText,
+                    'cursiveClass' => $cursiveClass,
+                    'bgImage' => $bgImage,
+                    'limit' => $limit,
+                    'autoplay' => $autoplay
+                ]
+            );
+
+            $replaceNode($targetNode, $rendered);
+            $trekkingProcessed = true;
         }
 
         // 5. Parse Dynamic Tour Types Selects
