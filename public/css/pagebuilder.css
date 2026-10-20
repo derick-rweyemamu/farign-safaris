@@ -67,15 +67,24 @@ body.frontend-body h6 {
 }
 
 /* Ensure any HTML injected by text editors (p, span, div) inside headings inherit the heading's font size and family */
-body.frontend-body h1 *,
-body.frontend-body h2 *,
-body.frontend-body h3 *,
-body.frontend-body h4 *,
-body.frontend-body h5 *,
-body.frontend-body h6 * {
+body.frontend-body h1 *:not(.trekking-heading *),
+body.frontend-body h2 *:not(.trekking-heading *),
+body.frontend-body h3 *:not(.trekking-heading *),
+body.frontend-body h4 *:not(.trekking-heading *),
+body.frontend-body h5 *:not(.trekking-heading *),
+body.frontend-body h6 *:not(.trekking-heading *) {
   font-family: inherit !important;
   font-size: inherit !important;
   line-height: inherit !important;
+}
+
+/* Allow trekking heading spans to apply their own styles freely */
+.trekking-heading {
+  font-weight: 400;
+}
+.trekking-heading span {
+  font-size: inherit;
+  line-height: inherit;
 }
 
 /* Navbar styles */
@@ -2986,5 +2995,24 @@ section.hero h1.hero-tge-title i,
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
 }
+
+.trekking-heading,
+.safaris-trekking-slider-section .trekking-heading {
+  font-weight: 400 !important;
+}
+
+.trekking-heading span,
+.safaris-trekking-slider-section .trekking-heading span,
+.trekking-heading-prefix,
+.trekking-heading-accent,
+.trekking-heading-suffix {
+  font-weight: 400 !important;
+}
+
+.trekking-badge,
+.safaris-trekking-slider-section .trekking-badge {
+  font-weight: 400 !important;
+}
+
 
 

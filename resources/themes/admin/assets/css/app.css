@@ -2811,33 +2811,33 @@ section.hero iframe {
 ───────────────────────────────────────────────────────────────────────────── */
 
 /* Headings */
-.frontend-body h1:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body h2:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body h3:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body h4:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body h5:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body h6:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose h1:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose h2:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose h3:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose h4:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose h5:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose h6:not(.zanzibar-block *):not(.safaris-about-block *) {
+.frontend-body h1:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *),
+.frontend-body h2:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *),
+.frontend-body h3:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *),
+.frontend-body h4:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *),
+.frontend-body h5:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *),
+.frontend-body h6:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *),
+.frontend-body .prose h1:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *),
+.frontend-body .prose h2:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *),
+.frontend-body .prose h3:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *),
+.frontend-body .prose h4:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *),
+.frontend-body .prose h5:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *),
+.frontend-body .prose h6:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *) {
   font-family: 'Playfair Display', Georgia, serif !important;
 }
 
 /* Body text */
-.frontend-body p:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body ul:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body ol:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body li:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body span:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body td:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose p:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose ul:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose ol:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose li:not(.zanzibar-block *):not(.safaris-about-block *),
-.frontend-body .prose span:not(.zanzibar-block *):not(.safaris-about-block *) {
+.frontend-body p:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-desc *),
+.frontend-body ul:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body ol:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body li:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body span:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *):not(.trekking-badge *):not(.trekking-badge),
+.frontend-body td:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body .prose p:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body .prose ul:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body .prose ol:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body .prose li:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body .prose span:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *) {
   font-size: 15px !important;
   font-family: 'Lora', Georgia, serif !important;
 }
@@ -2859,4 +2859,22 @@ section.hero iframe {
   position: sticky !important;
   top: 60px !important;
   z-index: 40 !important;
+}
+
+/* Trekking Experience Unbolded Typography */
+.frontend-body .trekking-heading,
+.trekking-heading {
+  font-weight: 400 !important;
+}
+
+.frontend-body .trekking-heading span,
+.trekking-heading-prefix,
+.trekking-heading-accent,
+.trekking-heading-suffix {
+  font-weight: 400 !important;
+}
+
+.frontend-body .trekking-badge,
+.trekking-badge {
+  font-weight: 400 !important;
 }

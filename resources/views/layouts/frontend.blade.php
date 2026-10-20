@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', config('app.name', ' '))</title>
     @if(!empty($companySetting?->favicon))<link rel="icon" href="{{ Storage::url($companySetting->favicon) }}?v={{ file_exists(storage_path('app/public/' . $companySetting->favicon)) ? filemtime(storage_path('app/public/' . $companySetting->favicon)) : '1' }}">
@@ -263,7 +264,7 @@
                 x-transition:leave-start="translate-x-0"
                 x-transition:leave-end="-translate-x-full"
                 class="relative flex flex-col h-full w-full max-w-[320px] shadow-2xl overflow-hidden"
-                style="background: linear-gradient(165deg, #1a0e06 0%, #2E1F12 45%, #1a0e06 100%);">
+                style="background: #16271c;">
 
                 {{-- Gold top accent line --}}
                 <div class="h-[3px] w-full flex-shrink-0" style="background: linear-gradient(90deg, transparent, #fbb158 30%, #f0d080 60%, #fbb158 80%, transparent);"></div>
@@ -409,7 +410,7 @@
 
                                                 @elseif($mcType === 'promo')
                                                     <div class="{{ $mColIdx > 0 ? 'border-t border-white/10 pt-3' : '' }}">
-                                                        <a href="{{ url($mCol['btn_url'] ?? '#') }}" @click="mobileMenuOpen = false" class="block p-2.5 rounded bg-[#7d834a]/30 border border-[#7d834a]/50 text-center">
+                                                        <a href="{{ url($mCol['btn_url'] ?? '#') }}" @click="mobileMenuOpen = false" class="block p-2.5 rounded bg-[#fbb158]/10 border border-[#fbb158]/40 text-center">
                                                             <span class="text-[12px] font-bold text-white block mb-1.5">{{ $mCol['title'] ?? '' }}</span>
                                                             @if(!empty($mCol['btn_text']))
                                                                 <span class="inline-block px-3 py-1 bg-[#c69752] text-white text-[11px] font-bold rounded">» {{ $mCol['btn_text'] }}</span>
@@ -477,14 +478,14 @@
                                                     @if($child->is_external) target="_blank" rel="noopener noreferrer" @endif
                                                     @click="mobileMenuOpen = false"
                                                     class="flex items-center gap-3 pl-4 pr-4 py-3 transition-all duration-150 group"
-                                                    style="border-bottom: 1px solid rgba(201,168,76,0.06); background: {{ $isChildActive ? 'rgba(255,255,255,0.08)' : 'transparent' }};"
+                                                    style="border-bottom: 1px solid rgba(201,168,76,0.08); background: {{ $isChildActive ? 'rgba(255,255,255,0.08)' : 'transparent' }};"
                                                     onmouseover="this.style.background='rgba(201,168,76,0.06)'; this.querySelector('span.sub-label').style.color='#fbb158'"
-                                                    onmouseout="this.style.background='{{ $isChildActive ? 'rgba(255,255,255,0.08)' : 'transparent' }}'; this.querySelector('span.sub-label').style.color='{{ $isChildActive ? '#fbb158' : 'rgba(255,255,255,0.55)' }}'">
-                                                    <svg class="w-2.5 h-2.5 flex-shrink-0" style="color:{{ $isChildActive ? '#fbb158' : 'rgba(201,168,76,0.5)' }}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                                    onmouseout="this.style.background='{{ $isChildActive ? 'rgba(255,255,255,0.08)' : 'transparent' }}'; this.querySelector('span.sub-label').style.color='{{ $isChildActive ? '#fbb158' : 'rgba(255,255,255,0.6)' }}'">
+                                                    <svg class="w-2.5 h-2.5 flex-shrink-0" style="color:{{ $isChildActive ? '#fbb158' : 'rgba(201,168,76,0.6)' }}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                                                     </svg>
                                                     <span class="sub-label text-[13px] tracking-[0.04em] font-light transition-colors duration-150"
-                                                        style="font-family: 'Lora', Georgia, serif; color: {{ $isChildActive ? '#fbb158; font-weight:600;' : 'rgba(255,255,255,0.55)' }};">
+                                                        style="font-family: 'Lora', Georgia, serif; color: {{ $isChildActive ? '#fbb158; font-weight:600;' : 'rgba(255,255,255,0.6)' }};">
                                                         {{ $child->label }}
                                                     </span>
                                                 </a>
@@ -542,16 +543,16 @@
 
                 {{-- ── FOOTER — Contact & Socials ── --}}
                 <div class="flex-shrink-0 px-6 py-5" style="border-top: 1px solid rgba(201,168,76,0.15); background: rgba(0,0,0,0.2);">
-                    <p class="text-[11px] font-semibold tracking-[0.14em] uppercase mb-3" style="color: rgba(201,168,76,0.6); font-family: 'Lora', Georgia, serif;">{{ __('Get In Touch') }}</p>
+                    <p class="text-[11px] font-semibold tracking-[0.14em] uppercase mb-3" style="color: rgba(251,177,88,0.75); font-family: 'Lora', Georgia, serif;">{{ __('Get In Touch') }}</p>
                     <div class="space-y-2.5">
                         @if(!empty($companySetting?->phone))<a href="tel:{{ $companySetting->phone }}"
                                 class="flex items-center gap-2.5 group">
                                 <div class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2);">
                                     <x-icon name="phone" class="w-3.5 h-3.5 text-[#fbb158]" />
                                 </div>
-                                <span class="text-[13px] font-light transition-colors duration-150" style="color: rgba(255,255,255,0.65); font-family: 'Lora', Georgia, serif;"
+                                <span class="text-[13px] font-light transition-colors duration-150" style="color: rgba(255,255,255,0.7); font-family: 'Lora', Georgia, serif;"
                                     onmouseover="this.style.color='#fbb158'"
-                                    onmouseout="this.style.color='rgba(255,255,255,0.65)'">
+                                    onmouseout="this.style.color='rgba(255,255,255,0.7)'">
                                     {{ $companySetting->phone }}
                                 </span>
                             </a>
@@ -561,9 +562,9 @@
                                 <div class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2);">
                                     <x-icon name="envelope" class="w-3.5 h-3.5 text-[#fbb158]" />
                                 </div>
-                                <span class="text-[13px] font-light transition-colors duration-150 truncate" style="color: rgba(255,255,255,0.65); font-family: 'Lora', Georgia, serif;"
+                                <span class="text-[13px] font-light transition-colors duration-150 truncate" style="color: rgba(255,255,255,0.7); font-family: 'Lora', Georgia, serif;"
                                     onmouseover="this.style.color='#fbb158'"
-                                    onmouseout="this.style.color='rgba(255,255,255,0.65)'">
+                                    onmouseout="this.style.color='rgba(255,255,255,0.7)'">
                                     {{ $companySetting->email }}
                                 </span>
                             </a>

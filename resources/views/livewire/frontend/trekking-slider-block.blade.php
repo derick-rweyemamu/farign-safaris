@@ -112,7 +112,7 @@
         </div>
     </div>
 
-    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
             
             {{-- LEFT COLUMN: Headings & Brand Narrative (Editable with Tailwind Classes) --}}
@@ -120,25 +120,31 @@
                 
                 {{-- Green Subtitle Badge / Tagline --}}
                 <div class="mb-3">
-                    <span class="trekking-badge inline-block {{ $subheadingClass ?: 'text-[#4E8243] font-serif font-bold text-lg sm:text-xl tracking-tight' }}">
+                    <span class="trekking-badge inline-block {{ $subheadingClass ?: 'text-[#4E8243] font-serif font-normal text-lg sm:text-xl tracking-tight' }}"
+                          style="{{ \App\Livewire\Frontend\TrekkingSliderBlock::tailwindToStyles($subheadingClass ?: 'text-[#4E8243] font-serif font-normal text-lg sm:text-xl tracking-tight') }}">
                         {{ $subheadingTag }}
                     </span>
                 </div>
 
                 {{-- Stacked Main Headline --}}
-                <h2 class="trekking-heading text-3xl sm:text-4xl lg:text-[2.85rem] font-serif font-extrabold text-gray-900 leading-[1.12] mb-5 tracking-tight">
-                    <span class="trekking-heading-prefix block {{ $headingPrefixClass ?: 'text-gray-900 font-extrabold' }}">{{ $headingPrefix }}</span>
-                    <span class="trekking-heading-accent block {{ $headingAccentClass ?: 'text-[#8FA5B5] font-bold' }}">{{ $headingAccent }}</span>
-                    <span class="trekking-heading-suffix block {{ $headingSuffixClass ?: 'text-gray-900 font-extrabold' }}">{{ $headingSuffix }}</span>
+                <h2 class="trekking-heading text-3xl sm:text-4xl lg:text-[2.85rem] leading-[1.12] mb-5 tracking-tight font-serif font-normal" style="font-weight: 400;">
+                    <span class="trekking-heading-prefix block {{ $headingPrefixClass ?: 'text-gray-900 font-normal' }}"
+                          style="{{ \App\Livewire\Frontend\TrekkingSliderBlock::tailwindToStyles($headingPrefixClass ?: 'text-gray-900 font-normal') }}">{{ $headingPrefix }}</span>
+                    <span class="trekking-heading-accent block {{ $headingAccentClass ?: 'text-[#8FA5B5] font-normal' }}"
+                          style="{{ \App\Livewire\Frontend\TrekkingSliderBlock::tailwindToStyles($headingAccentClass ?: 'text-[#8FA5B5] font-normal') }}">{{ $headingAccent }}</span>
+                    <span class="trekking-heading-suffix block {{ $headingSuffixClass ?: 'text-gray-900 font-normal' }}"
+                          style="{{ \App\Livewire\Frontend\TrekkingSliderBlock::tailwindToStyles($headingSuffixClass ?: 'text-gray-900 font-normal') }}">{{ $headingSuffix }}</span>
                 </h2>
 
                 {{-- Description Paragraph --}}
-                <p class="trekking-desc {{ $descriptionClass ?: 'text-gray-600 text-sm sm:text-base leading-relaxed mb-6 font-normal max-w-lg' }}">
+                <p class="trekking-desc {{ $descriptionClass ?: 'text-gray-600 text-sm sm:text-base leading-relaxed mb-6 font-normal max-w-lg' }}"
+                   style="{{ \App\Livewire\Frontend\TrekkingSliderBlock::tailwindToStyles($descriptionClass ?: 'text-gray-600 text-sm sm:text-base leading-relaxed mb-6 font-normal max-w-lg') }}">
                     {{ $resolvedDescription }}
                 </p>
 
                 {{-- Elegant Calligraphy Script Line --}}
-                <div class="trekking-cursive {{ $cursiveClass ?: 'text-2xl sm:text-3xl text-gray-600 tracking-wide select-none pt-2 mb-6' }}" style="line-height: 1.3;">
+                <div class="trekking-cursive {{ $cursiveClass ?: 'text-2xl sm:text-3xl text-gray-600 tracking-wide select-none pt-2 mb-6' }}"
+                     style="line-height: 1.3; {{ \App\Livewire\Frontend\TrekkingSliderBlock::tailwindToStyles($cursiveClass ?: 'text-2xl sm:text-3xl text-gray-600 tracking-wide select-none pt-2 mb-6') }}">
                     {{ $cursiveText }}
                 </div>
 

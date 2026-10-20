@@ -32,11 +32,12 @@ try {
     // Canvas styles — inject JKI brand into the editor iframe
     canvas: {
         styles: [
-            'https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Indie+Flower&family=Instrument+Sans:wght@400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap',
+            'https://fonts.googleapis.com/css2?family=Alex+Brush&family=Baskervville:ital@0;1&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Indie+Flower&family=Instrument+Sans:wght@400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap',
             '/css/pagebuilder.css',
             window.APP_CSS_URL || ''
         ].filter(Boolean),
         scripts: [
+            'https://cdn.tailwindcss.com',
             '/js/tinymce/tinymce.min.js'
         ]
     },
@@ -2564,15 +2565,129 @@ bm.add('safaris-activities-slider', {
 });
 
 // ── Trekking Experience Slider Component & Block ────────────────────────────
+function parseTailwindToStyle(classStr) {
+    if (!classStr || typeof classStr !== 'string') return '';
+    const classes = classStr.trim().split(/\s+/);
+    const styles = {};
+
+    classes.forEach(cls => {
+        const baseCls = cls.replace(/^(?:sm|md|lg|xl|2xl):/, '');
+        
+        // 1. Arbitrary text color: text-[#...]
+        const hexColorMatch = baseCls.match(/^text-\[(#[0-9a-fA-F]{3,8}|rgba?\([^)]+\)|hsla?\([^)]+\))\]$/);
+        if (hexColorMatch) {
+            styles['color'] = hexColorMatch[1];
+            return;
+        }
+
+        // 2. Arbitrary bg color: bg-[#...]
+        const hexBgMatch = baseCls.match(/^bg-\[(#[0-9a-fA-F]{3,8}|rgba?\([^)]+\)|hsla?\([^)]+\))\]$/);
+        if (hexBgMatch) {
+            styles['background-color'] = hexBgMatch[1];
+            return;
+        }
+
+        // 3. Arbitrary font size: text-[24px]
+        const sizeMatch = baseCls.match(/^text-\[([0-9.]+(?:px|rem|em|%|pt))\]$/);
+        if (sizeMatch) {
+            styles['font-size'] = sizeMatch[1];
+            return;
+        }
+
+        // 4. Arbitrary letter spacing: tracking-[0.1em]
+        const trackMatch = baseCls.match(/^tracking-\[([0-9.-]+(?:em|px|rem))\]$/);
+        if (trackMatch) {
+            styles['letter-spacing'] = trackMatch[1];
+            return;
+        }
+
+        // 5. Arbitrary line height: leading-[1.2]
+        const leadMatch = baseCls.match(/^leading-\[([0-9.]+(?:rem|em|px|%)?)\]$/);
+        if (leadMatch) {
+            styles['line-height'] = leadMatch[1];
+            return;
+        }
+
+        // 6. Font Family
+        if (baseCls === 'font-serif') styles['font-family'] = "'Lora', Georgia, serif";
+        if (baseCls === 'font-sans') styles['font-family'] = "'Instrument Sans', 'Montserrat', -apple-system, sans-serif";
+        if (baseCls === 'font-mono') styles['font-family'] = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
+        if (baseCls === 'font-display' || baseCls === 'font-playfair') styles['font-family'] = "'Playfair Display', Georgia, serif";
+        if (baseCls === 'font-alex' || baseCls === 'font-cursive' || baseCls === 'trekking-cursive') styles['font-family'] = "'Alex Brush', cursive, Georgia, serif";
+        if (baseCls === 'font-montserrat') styles['font-family'] = "'Montserrat', sans-serif";
+
+        // 7. Font Weight
+        const weights = {
+            'font-thin': '100', 'font-extralight': '200', 'font-light': '300',
+            'font-normal': '400', 'font-medium': '500', 'font-semibold': '600',
+            'font-bold': '700', 'font-extrabold': '800', 'font-black': '900'
+        };
+        if (weights[baseCls]) styles['font-weight'] = weights[baseCls];
+
+        // 8. Standard Font Sizes
+        const sizes = {
+            'text-xs': '0.75rem', 'text-sm': '0.875rem', 'text-base': '1rem',
+            'text-lg': '1.125rem', 'text-xl': '1.25rem', 'text-2xl': '1.5rem',
+            'text-3xl': '1.875rem', 'text-4xl': '2.25rem', 'text-5xl': '3rem',
+            'text-6xl': '3.75rem', 'text-7xl': '4.5rem'
+        };
+        if (sizes[baseCls]) styles['font-size'] = sizes[baseCls];
+
+        // 9. Named Colors
+        const colors = {
+            'text-black': '#000000', 'text-white': '#ffffff', 'text-transparent': 'transparent',
+            'text-gray-50': '#f9fafb', 'text-gray-100': '#f3f4f6', 'text-gray-200': '#e5e7eb',
+            'text-gray-300': '#d1d5db', 'text-gray-400': '#9ca3af', 'text-gray-500': '#6b7280',
+            'text-gray-600': '#4b5563', 'text-gray-700': '#374151', 'text-gray-800': '#1f2937',
+            'text-gray-900': '#111827', 'text-gray-950': '#030712',
+            'text-red-500': '#ef4444', 'text-red-600': '#dc2626',
+            'text-amber-500': '#f59e0b', 'text-amber-600': '#d97706',
+            'text-yellow-500': '#eab308',
+            'text-emerald-500': '#10b981', 'text-emerald-600': '#059669', 'text-emerald-700': '#047857',
+            'text-green-600': '#16a34a', 'text-green-700': '#15803d',
+            'text-blue-500': '#3b82f6', 'text-blue-600': '#2563eb',
+            'text-gold': '#CA9A2E', 'text-brand-primary': '#455537'
+        };
+        if (colors[baseCls]) styles['color'] = colors[baseCls];
+
+        // 10. Letter Spacing (Tracking)
+        const trackings = {
+            'tracking-tighter': '-0.05em', 'tracking-tight': '-0.025em', 'tracking-normal': '0em',
+            'tracking-wide': '0.025em', 'tracking-wider': '0.05em', 'tracking-widest': '0.1em'
+        };
+        if (trackings[baseCls]) styles['letter-spacing'] = trackings[baseCls];
+
+        // 11. Text Transform & Style
+        if (baseCls === 'uppercase') styles['text-transform'] = 'uppercase';
+        if (baseCls === 'lowercase') styles['text-transform'] = 'lowercase';
+        if (baseCls === 'capitalize') styles['text-transform'] = 'capitalize';
+        if (baseCls === 'normal-case') styles['text-transform'] = 'none';
+        if (baseCls === 'italic') styles['font-style'] = 'italic';
+        if (baseCls === 'not-italic') styles['font-style'] = 'normal';
+        if (baseCls === 'text-left') styles['text-align'] = 'left';
+        if (baseCls === 'text-center') styles['text-align'] = 'center';
+        if (baseCls === 'text-right') styles['text-align'] = 'right';
+
+        // 12. Line Height (Leading)
+        const leadings = {
+            'leading-none': '1', 'leading-tight': '1.25', 'leading-snug': '1.375',
+            'leading-normal': '1.5', 'leading-relaxed': '1.625', 'leading-loose': '2'
+        };
+        if (leadings[baseCls]) styles['line-height'] = leadings[baseCls];
+    });
+
+    return Object.entries(styles).map(([prop, val]) => `${prop}: ${val};`).join(' ');
+}
+
 function buildTrekkingSliderPreviewHtml(attrs) {
     const subheadingTag = attrs['data-subheading-tag'] || 'Trekking Experience';
-    const subheadingClass = attrs['data-subheading-class'] || 'text-[#4E8243] font-serif font-bold text-lg sm:text-xl tracking-tight';
+    const subheadingClass = attrs['data-subheading-class'] || 'text-[#4E8243] font-serif font-normal text-lg sm:text-xl tracking-tight';
     const headingPrefix = attrs['data-heading-prefix'] || 'Package for';
-    const headingPrefixClass = attrs['data-heading-prefix-class'] || 'text-gray-900 font-extrabold';
+    const headingPrefixClass = attrs['data-heading-prefix-class'] || 'text-gray-900 font-normal';
     const headingAccent = attrs['data-heading-accent'] || 'Mt.Kilimanjaro';
-    const headingAccentClass = attrs['data-heading-accent-class'] || 'text-[#8FA5B5] font-bold';
+    const headingAccentClass = attrs['data-heading-accent-class'] || 'text-[#8FA5B5] font-normal';
     const headingSuffix = attrs['data-heading-suffix'] || 'Adventure';
-    const headingSuffixClass = attrs['data-heading-suffix-class'] || 'text-gray-900 font-extrabold';
+    const headingSuffixClass = attrs['data-heading-suffix-class'] || 'text-gray-900 font-normal';
     const description = attrs['data-description'] || "Experience the thrill of Africa's highest peak with Mwangwi Safaris, guided by experts through stunning landscapes.";
     const descriptionClass = attrs['data-description-class'] || 'text-gray-600 text-sm sm:text-base leading-relaxed font-normal max-w-lg';
     const cursiveText = attrs['data-cursive-text'] || 'Trusted Partner for a Safe and Memorable Kilimanjaro Adventure';
@@ -2632,14 +2747,14 @@ function buildTrekkingSliderPreviewHtml(attrs) {
 
             <div style="position: relative; z-index: 2; display: grid; grid-template-columns: 380px 1fr; gap: 30px; align-items: center;">
                 <div>
-                    <span class="trekking-badge ${subheadingClass}" style="display: inline-block; margin-bottom: 10px;">${subheadingTag}</span>
-                    <h2 class="trekking-heading" style="font-size: 38px; line-height: 1.12; margin: 0 0 16px 0;">
-                        <span class="trekking-heading-prefix ${headingPrefixClass}" style="display: block;">${headingPrefix}</span>
-                        <span class="trekking-heading-accent ${headingAccentClass}" style="display: block;">${headingAccent}</span>
-                        <span class="trekking-heading-suffix ${headingSuffixClass}" style="display: block;">${headingSuffix}</span>
+                    <span class="trekking-badge ${subheadingClass}" style="display: inline-block; margin-bottom: 10px; ${parseTailwindToStyle(subheadingClass)}">${subheadingTag}</span>
+                    <h2 class="trekking-heading" style="margin: 0 0 16px 0; line-height: 1.12; font-family: 'Lora', Georgia, serif; font-weight: 400;">
+                        <span class="trekking-heading-prefix ${headingPrefixClass}" style="display: block; font-size: 38px; ${parseTailwindToStyle(headingPrefixClass)}">${headingPrefix}</span>
+                        <span class="trekking-heading-accent ${headingAccentClass}" style="display: block; font-size: 38px; ${parseTailwindToStyle(headingAccentClass)}">${headingAccent}</span>
+                        <span class="trekking-heading-suffix ${headingSuffixClass}" style="display: block; font-size: 38px; ${parseTailwindToStyle(headingSuffixClass)}">${headingSuffix}</span>
                     </h2>
-                    <p class="trekking-desc ${descriptionClass}" style="margin: 0 0 16px 0;">${description}</p>
-                    <div class="trekking-cursive ${cursiveClass}" style="font-family: 'Alex Brush', cursive, Georgia, serif; font-size: 24px; font-style: italic; line-height: 1.3; margin-bottom: 24px;">${cursiveText}</div>
+                    <p class="trekking-desc ${descriptionClass}" style="margin: 0 0 16px 0; ${parseTailwindToStyle(descriptionClass)}">${description}</p>
+                    <div class="trekking-cursive ${cursiveClass}" style="font-family: 'Alex Brush', cursive, Georgia, serif; font-size: 24px; line-height: 1.3; margin-bottom: 24px; ${parseTailwindToStyle(cursiveClass)}">${cursiveText}</div>
                     
                     <div style="display: flex; gap: 12px; align-items: center;">
                         <button type="button" 
@@ -2684,13 +2799,13 @@ editor.DomComponents.addType('trekking-slider', {
                 class: 'safaris-trekking-slider-block',
                 'data-tour-type': 'trekking',
                 'data-subheading-tag': 'Trekking Experience',
-                'data-subheading-class': 'text-[#4E8243] font-serif font-bold text-lg sm:text-xl tracking-tight',
+                'data-subheading-class': 'text-[#4E8243] font-serif font-normal text-lg sm:text-xl tracking-tight',
                 'data-heading-prefix': 'Package for',
-                'data-heading-prefix-class': 'text-gray-900 font-extrabold',
+                'data-heading-prefix-class': 'text-gray-900 font-normal',
                 'data-heading-accent': 'Mt.Kilimanjaro',
-                'data-heading-accent-class': 'text-[#8FA5B5] font-bold',
+                'data-heading-accent-class': 'text-[#8FA5B5] font-normal',
                 'data-heading-suffix': 'Adventure',
-                'data-heading-suffix-class': 'text-gray-900 font-extrabold',
+                'data-heading-suffix-class': 'text-gray-900 font-normal',
                 'data-description': "Experience the thrill of Africa's highest peak with Mwangwi Safaris, guided by experts through stunning landscapes.",
                 'data-description-class': 'text-gray-600 text-sm sm:text-base leading-relaxed font-normal max-w-lg',
                 'data-cursive-text': 'Trusted Partner for a Safe and Memorable Kilimanjaro Adventure',
@@ -2709,7 +2824,7 @@ editor.DomComponents.addType('trekking-slider', {
                     type: 'text',
                     name: 'data-subheading-class',
                     label: 'Tagline Tailwind Classes',
-                    value: 'text-[#4E8243] font-serif font-bold text-lg sm:text-xl tracking-tight'
+                    value: 'text-[#4E8243] font-serif font-normal text-lg sm:text-xl tracking-tight'
                 },
                 {
                     type: 'text',
@@ -2721,7 +2836,7 @@ editor.DomComponents.addType('trekking-slider', {
                     type: 'text',
                     name: 'data-heading-prefix-class',
                     label: 'Heading Line 1 Tailwind Classes',
-                    value: 'text-gray-900 font-extrabold'
+                    value: 'text-gray-900 font-normal'
                 },
                 {
                     type: 'text',
@@ -2733,7 +2848,7 @@ editor.DomComponents.addType('trekking-slider', {
                     type: 'text',
                     name: 'data-heading-accent-class',
                     label: 'Accent Heading Tailwind Classes',
-                    value: 'text-[#8FA5B5] font-bold'
+                    value: 'text-[#8FA5B5] font-normal'
                 },
                 {
                     type: 'text',
@@ -2745,7 +2860,7 @@ editor.DomComponents.addType('trekking-slider', {
                     type: 'text',
                     name: 'data-heading-suffix-class',
                     label: 'Heading Line 3 Tailwind Classes',
-                    value: 'text-gray-900 font-extrabold'
+                    value: 'text-gray-900 font-normal'
                 },
                 {
                     type: 'textarea',
@@ -2818,18 +2933,18 @@ bm.add('safaris-trekking-slider', {
     attributes: { class: 'fa-solid fa-mountain' },
     content: `
 <section id="trekking" class="safaris-trekking-slider-section py-20 bg-[#F8F9FA] relative overflow-hidden">
-  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
-    <div data-gjs-type="trekking-slider" class="safaris-trekking-slider-block" data-tour-type="trekking" data-subheading-tag="Trekking Experience" data-subheading-class="text-[#4E8243] font-serif font-bold text-lg sm:text-xl tracking-tight" data-heading-prefix="Package for" data-heading-prefix-class="text-gray-900 font-extrabold" data-heading-accent="Mt.Kilimanjaro" data-heading-accent-class="text-[#8FA5B5] font-bold" data-heading-suffix="Adventure" data-heading-suffix-class="text-gray-900 font-extrabold" data-description="Experience the thrill of Africa's highest peak with Mwangwi Safaris, guided by experts through stunning landscapes." data-description-class="text-gray-600 text-sm sm:text-base leading-relaxed font-normal max-w-lg" data-cursive-text="Trusted Partner for a Safe and Memorable Kilimanjaro Adventure" data-cursive-class="text-2xl sm:text-3xl text-gray-600 tracking-wide select-none pt-2 mb-6" data-limit="10" data-autoplay="true">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div data-gjs-type="trekking-slider" class="safaris-trekking-slider-block" data-tour-type="trekking" data-subheading-tag="Trekking Experience" data-subheading-class="text-[#4E8243] font-serif font-normal text-lg sm:text-xl tracking-tight" data-heading-prefix="Package for" data-heading-prefix-class="text-gray-900 font-normal" data-heading-accent="Mt.Kilimanjaro" data-heading-accent-class="text-[#8FA5B5] font-normal" data-heading-suffix="Adventure" data-heading-suffix-class="text-gray-900 font-normal" data-description="Experience the thrill of Africa's highest peak with Mwangwi Safaris, guided by experts through stunning landscapes." data-description-class="text-gray-600 text-sm sm:text-base leading-relaxed font-normal max-w-lg" data-cursive-text="Trusted Partner for a Safe and Memorable Kilimanjaro Adventure" data-cursive-class="text-2xl sm:text-3xl text-gray-600 tracking-wide select-none pt-2 mb-6" data-limit="10" data-autoplay="true">
       ${buildTrekkingSliderPreviewHtml({
           'data-tour-type': 'trekking',
           'data-subheading-tag': 'Trekking Experience',
-          'data-subheading-class': 'text-[#4E8243] font-serif font-bold text-lg sm:text-xl tracking-tight',
+          'data-subheading-class': 'text-[#4E8243] font-serif font-normal text-lg sm:text-xl tracking-tight',
           'data-heading-prefix': 'Package for',
-          'data-heading-prefix-class': 'text-gray-900 font-extrabold',
+          'data-heading-prefix-class': 'text-gray-900 font-normal',
           'data-heading-accent': 'Mt.Kilimanjaro',
-          'data-heading-accent-class': 'text-[#8FA5B5] font-bold',
+          'data-heading-accent-class': 'text-[#8FA5B5] font-normal',
           'data-heading-suffix': 'Adventure',
-          'data-heading-suffix-class': 'text-gray-900 font-extrabold',
+          'data-heading-suffix-class': 'text-gray-900 font-normal',
           'data-description': "Experience the thrill of Africa's highest peak with Mwangwi Safaris, guided by experts through stunning landscapes.",
           'data-description-class': 'text-gray-600 text-sm sm:text-base leading-relaxed font-normal max-w-lg',
           'data-cursive-text': 'Trusted Partner for a Safe and Memorable Kilimanjaro Adventure',
@@ -2922,7 +3037,7 @@ bm.add('safaris-wonders-tanzania', {
     media: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px; margin: 0 auto; color: #CA9A2E;"><rect x="2" y="3" width="20" height="18" rx="2"></rect><circle cx="8" cy="9" r="2"></circle><path d="m21 15-5-5L5 21"></path></svg>`,
     content: `
 <section class="wonders-slider-section py-20 lg:py-28 bg-[#141814] text-white relative overflow-hidden" data-gjs-type="default">
-  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
       
       <!-- Left Column: Heading, Description & Slider Controls -->

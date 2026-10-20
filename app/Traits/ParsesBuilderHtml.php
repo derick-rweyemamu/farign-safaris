@@ -439,7 +439,8 @@ trait ParsesBuilderHtml
                 $rawText = trim($badgeNodes->item(0)->textContent);
                 if (!empty($rawText)) $subheadingTag = $rawText;
                 $rawClass = trim($badgeNodes->item(0)->getAttribute('class') ?? '');
-                if (!empty($rawClass)) $subheadingClass = $rawClass;
+                $cleanClass = trim(preg_replace('/\btrekking-badge\b/', '', $rawClass));
+                if (!empty($cleanClass)) $subheadingClass = $cleanClass;
             }
             $subheadingTag = $subheadingTag ?: 'Trekking Experience';
 
@@ -451,7 +452,8 @@ trait ParsesBuilderHtml
                 $rawText = trim($prefixNodes->item(0)->textContent);
                 if (!empty($rawText)) $headingPrefix = $rawText;
                 $rawClass = trim($prefixNodes->item(0)->getAttribute('class') ?? '');
-                if (!empty($rawClass)) $headingPrefixClass = $rawClass;
+                $cleanClass = trim(preg_replace('/\btrekking-heading-prefix\b/', '', $rawClass));
+                if (!empty($cleanClass)) $headingPrefixClass = $cleanClass;
             }
             $headingPrefix = $headingPrefix ?: 'Package for';
 
@@ -463,7 +465,8 @@ trait ParsesBuilderHtml
                 $rawText = trim($accentNodes->item(0)->textContent);
                 if (!empty($rawText)) $headingAccent = $rawText;
                 $rawClass = trim($accentNodes->item(0)->getAttribute('class') ?? '');
-                if (!empty($rawClass)) $headingAccentClass = $rawClass;
+                $cleanClass = trim(preg_replace('/\btrekking-heading-accent\b/', '', $rawClass));
+                if (!empty($cleanClass)) $headingAccentClass = $cleanClass;
             }
             $headingAccent = $headingAccent ?: 'Mt.Kilimanjaro';
 
@@ -475,7 +478,8 @@ trait ParsesBuilderHtml
                 $rawText = trim($suffixNodes->item(0)->textContent);
                 if (!empty($rawText)) $headingSuffix = $rawText;
                 $rawClass = trim($suffixNodes->item(0)->getAttribute('class') ?? '');
-                if (!empty($rawClass)) $headingSuffixClass = $rawClass;
+                $cleanClass = trim(preg_replace('/\btrekking-heading-suffix\b/', '', $rawClass));
+                if (!empty($cleanClass)) $headingSuffixClass = $cleanClass;
             }
             $headingSuffix = $headingSuffix ?: 'Adventure';
 
@@ -487,7 +491,8 @@ trait ParsesBuilderHtml
                 $rawText = trim($descNodes->item(0)->textContent);
                 if (!empty($rawText)) $description = $rawText;
                 $rawClass = trim($descNodes->item(0)->getAttribute('class') ?? '');
-                if (!empty($rawClass)) $descriptionClass = $rawClass;
+                $cleanClass = trim(preg_replace('/\btrekking-desc\b/', '', $rawClass));
+                if (!empty($cleanClass)) $descriptionClass = $cleanClass;
             }
 
             // 6. Cursive Text & Tailwind Classes
@@ -498,7 +503,8 @@ trait ParsesBuilderHtml
                 $rawText = trim($cursiveNodes->item(0)->textContent);
                 if (!empty($rawText)) $cursiveText = $rawText;
                 $rawClass = trim($cursiveNodes->item(0)->getAttribute('class') ?? '');
-                if (!empty($rawClass)) $cursiveClass = $rawClass;
+                $cleanClass = trim(preg_replace('/\btrekking-cursive\b/', '', $rawClass));
+                if (!empty($cleanClass)) $cursiveClass = $cleanClass;
             }
             $cursiveText = $cursiveText ?: 'Trusted Partner for a Safe and Memorable Kilimanjaro Adventure';
 
