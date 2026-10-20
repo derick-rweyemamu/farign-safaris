@@ -5,7 +5,6 @@ namespace App\Livewire\Admin\Financial;
 use App\Models\ProfitLoss;
 use App\Models\Expense;
 use App\Models\InvoiceExpense;
-use App\Models\Payroll;
 use App\Services\FinancialService;
 use App\Traits\HasReports;
 use Carbon\Carbon;
@@ -74,7 +73,6 @@ class ProfitLossReport extends Component
             'revenue' => (float)$base['revenue'] * $rate,
             'general_expenses' => (float)$base['general_expenses'] * $rate,
             'invoice_expenses' => (float)$base['invoice_expenses'] * $rate,
-            'payroll' => (float)$base['payroll'] * $rate,
             'total_expenses' => (float)$base['total_expenses'] * $rate,
             'net_profit' => (float)$base['net_profit'] * $rate,
             'base_revenue' => (float)$base['revenue'],
@@ -148,25 +146,12 @@ class ProfitLossReport extends Component
             ];
         }
 
-        if ($this->currentReportType === 'payroll') {
-            return [
-                'payment_date' => 'Payment Date',
-                'employee' => 'Employee',
-                'period' => 'Period',
-                'status' => 'Status',
-                'basic_salary' => 'Basic Salary',
-                'deductions' => 'Total Deductions',
-                'net_salary' => 'Net Salary',
-            ];
-        }
-
         if ($this->currentReportType === 'monthly_profit_loss') {
             return [
                 'period'            => 'Period',
                 'revenue'           => 'Revenue (' . $this->selectedCurrency . ')',
                 'general_expenses'  => 'General Expenses (' . $this->selectedCurrency . ')',
                 'invoice_expenses'  => 'Invoice Expenses (' . $this->selectedCurrency . ')',
-                'payroll'           => 'Payroll (' . $this->selectedCurrency . ')',
                 'total_expenses'    => 'Total Expenses (' . $this->selectedCurrency . ')',
                 'net_profit'        => 'Net Profit (' . $this->selectedCurrency . ')',
                 'profit_margin'     => 'Profit Margin (%)',
@@ -198,8 +183,7 @@ class ProfitLossReport extends Component
                 $revenue         = (float)$snap->total_revenue * $rate;
                 $genExp          = (float)$snap->total_general_expenses * $rate;
                 $invExp          = (float)$snap->total_invoice_expenses * $rate;
-                $payroll         = (float)$snap->total_payroll * $rate;
-                $totalExp        = $genExp + $invExp + $payroll;
+                $totalExp        = $genExp + $invExp;
                 $netProfit       = (float)$snap->net_profit * $rate;
                 $profitMargin    = $revenue > 0 ? round(($netProfit / $revenue) * 100, 2) : 0;
 
@@ -210,7 +194,6 @@ class ProfitLossReport extends Component
                         'revenue'          => number_format($revenue, 2),
                         'general_expenses' => number_format($genExp, 2),
                         'invoice_expenses' => number_format($invExp, 2),
-                        'payroll'          => number_format($payroll, 2),
                         'total_expenses'   => number_format($totalExp, 2),
                         'net_profit'       => number_format($netProfit, 2),
                         'profit_margin'    => $profitMargin . '%',
@@ -261,27 +244,6 @@ class ProfitLossReport extends Component
                         'amount' => $expense->amount,
                         'currency' => $expense->currency_code,
                         'base_amount' => number_format($expense->base_amount, 2),
-                        default => ''
-                    };
-                }
-                return $row;
-            };
-        } elseif ($this->currentReportType === 'payroll') {
-            $query = Payroll::with('employee')
-                ->whereBetween('payment_date', [$start, $end]);
-
-            $rowMapper = function($payroll) {
-                $row = [];
-                foreach ($this->selectedColumns as $col) {
-                    $period = date("M", mktime(0, 0, 0, $payroll->month, 10)) . ' ' . $payroll->year;
-                    $row[] = match($col) {
-                        'payment_date' => $payroll->payment_date ? $payroll->payment_date->format('Y-m-d') : '-',
-                        'employee' => $payroll->employee ? $payroll->employee->first_name . ' ' . $payroll->employee->last_name : '-',
-                        'period' => $period,
-                        'status' => ucfirst($payroll->status),
-                        'basic_salary' => number_format($payroll->basic_salary, 2),
-                        'deductions' => number_format($payroll->total_deductions, 2),
-                        'net_salary' => number_format($payroll->net_salary, 2),
                         default => ''
                     };
                 }

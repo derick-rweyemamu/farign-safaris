@@ -212,6 +212,7 @@ class RolesList extends Component
             'countries' => 'Countries',
             'cities' => 'Cities',
             'currencies' => 'Currencies',
+            'users' => 'Users',
         ];
 
         $key = strtolower(trim($group));

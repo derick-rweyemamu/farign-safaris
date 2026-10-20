@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\Invoice;
 use App\Models\Expense;
 use App\Models\InvoiceExpense;
-use App\Models\Payroll;
 use App\Models\ProfitLoss;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -32,18 +31,13 @@ class FinancialService
         $invoiceExpenses = InvoiceExpense::whereBetween('created_at', [$start, $end])
             ->sum('base_amount');
 
-        // Payroll: Sum of net_salary
-        $payroll = Payroll::whereBetween('payment_date', [$start->toDateString(), $end->toDateString()])
-            ->sum('net_salary');
-
-        $totalExpenses = (float)$generalExpenses + (float)$invoiceExpenses + (float)$payroll;
+        $totalExpenses = (float)$generalExpenses + (float)$invoiceExpenses;
         $netProfit = (float)$revenue - $totalExpenses;
 
         return [
             'revenue' => (float)$revenue,
             'general_expenses' => (float)$generalExpenses,
             'invoice_expenses' => (float)$invoiceExpenses,
-            'payroll' => (float)$payroll,
             'total_expenses' => $totalExpenses,
             'net_profit' => $netProfit,
         ];
@@ -65,7 +59,7 @@ class FinancialService
                 'total_revenue' => $data['revenue'],
                 'total_general_expenses' => $data['general_expenses'],
                 'total_invoice_expenses' => $data['invoice_expenses'],
-                'total_payroll' => $data['payroll'],
+                'total_payroll' => 0,
                 'net_profit' => $data['net_profit'],
             ]
         );

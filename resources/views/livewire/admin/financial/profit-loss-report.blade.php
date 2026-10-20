@@ -150,7 +150,6 @@
                 @php $types = [
                         ['label' => 'General Expenses', 'amount' => $reportData['general_expenses'], 'color' => 'bg-blue-500', 'type' => 'general_expenses'],
                         ['label' => 'Invoice Expenses', 'amount' => $reportData['invoice_expenses'], 'color' => 'bg-purple-500', 'type' => 'invoice_expenses'],
-                        ['label' => 'Payroll', 'amount' => $reportData['payroll'], 'color' => 'bg-amber-500', 'type' => 'payroll'],
                     ];
                     $total = array_sum(array_column($types, 'amount')) ?: 1;
                 @endphp
@@ -209,7 +208,7 @@
                                 </td>
                                 <td class="text-emerald-600 font-medium">{{ $currencySymbol }} {{ number_format($snap->total_revenue * $exchangeRate, 2) }}</td>
                                 <td class="text-red-600 font-medium">
-                                    {{ $currencySymbol }} {{ number_format(($snap->total_general_expenses + $snap->total_invoice_expenses + $snap->total_payroll) * $exchangeRate, 2) }}
+                                    {{ $currencySymbol }} {{ number_format(($snap->total_general_expenses + $snap->total_invoice_expenses) * $exchangeRate, 2) }}
                                 </td>
                                 <td class="text-right font-black {{ $snap->net_profit >= 0 ? 'text-emerald-600' : 'text-red-600' }}">
                                     {{ $currencySymbol }} {{ number_format($snap->net_profit * $exchangeRate, 2) }}

@@ -164,10 +164,6 @@
                     <td class="text-right">{{ $symbol }} {{ number_format($reportData['invoice_expenses'], 2) }}</td>
                 </tr>
                 <tr>
-                    <td style="padding-left: 24px;">{{ __('Payroll') }}</td>
-                    <td class="text-right">{{ $symbol }} {{ number_format($reportData['payroll'], 2) }}</td>
-                </tr>
-                <tr>
                     <td style="padding-left: 12px; font-weight: bold; border-top: 1px solid #ccc;">{{ __('Total Expenses') }}</td>
                     <td class="text-right" style="font-weight: bold; color: #dc2626; border-top: 1px solid #ccc;">{{ $symbol }} {{ number_format($reportData['total_expenses'], 2) }}</td>
                 </tr>

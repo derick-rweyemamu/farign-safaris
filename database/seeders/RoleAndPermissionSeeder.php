@@ -240,6 +240,14 @@ class RoleAndPermissionSeeder extends Seeder
             'delete cities',
         ];
 
+        // ─── User Management Permissions ───────────────────────────────────
+        $userPermissions = [
+            'view users',
+            'create users',
+            'edit users',
+            'delete users',
+            'reset user password',
+        ];
 
         // ─── Create all permissions ────────────────────────────────────────
         $allGroups = [
@@ -256,6 +264,7 @@ class RoleAndPermissionSeeder extends Seeder
             $itineraryPermissions,
             $cmsPermissions,
             $rolePermissions,
+            $userPermissions,
             $activityLogPermissions,
             $locationPermissions,
         ];

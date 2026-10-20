@@ -5,11 +5,12 @@
         [
             'label' => 'CRM',
             'icon' => 'funnel',
-            'permission' => ['view clients', 'view leads', 'view newsletters'],
+            'permission' => ['view clients', 'view leads', 'view newsletters', 'view users'],
             'children' => [
                 ['route' => 'crm.leads', 'label' => 'Leads', 'permission' => 'view leads',],
                 ['route' => 'crm.kanban', 'label' => 'Pipeline', 'permission' => 'view leads',],
                 ['route' => 'clients.index', 'label' => 'Clients', 'permission' => 'view clients',],
+                ['route' => 'users.index', 'label' => 'Users', 'permission' => 'view users',],
                 ['route' => 'crm.newsletters', 'label' => 'Newsletters', 'permission' => 'view newsletters',],
             ]
         ],
@@ -89,19 +90,6 @@
                 ['route' => 'hr.holidays.index', 'label' => 'Holidays', 'permission' => 'view holidays'],
                 ['route' => 'hr.leaves.index', 'label' => 'Leaves', 'permission' => 'view leaves'],
                 ['route' => 'hr.appraisals.index', 'label' => 'Appraisals', 'permission' => 'view employees'],
-            ]
-        ],
-
-        [
-            'label' => 'Payroll',
-            'icon' => 'calculator',
-            'permission' => 'view payroll',
-            'children' => [
-                ['route' => 'payroll.process.index', 'label' => 'Payroll Process', 'permission' => 'view payroll'],
-                ['route' => 'payroll.batches.index', 'label' => 'Payroll Batches', 'permission' => 'view payroll'],
-                ['route' => 'payroll.transaction-heads.index', 'label' => 'Transaction Heads', 'permission' => 'view payroll'],
-                ['route' => 'payroll.paye-bands', 'label' => 'PAYE Bands', 'permission' => 'view payroll'],
-                ['route' => 'payroll.pay-years.index', 'label' => 'Pay Years', 'permission' => 'view payroll'],
             ]
         ],
 

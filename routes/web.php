@@ -17,6 +17,7 @@ use App\Livewire\Admin\Cities\City;
 use App\Livewire\Admin\Products\ProductList;
 use App\Livewire\Admin\Products\ProductCategoryList;
 use App\Livewire\Admin\Clients\ClientsList;
+use App\Livewire\Admin\Users\UsersList;
 use App\Livewire\Admin\Estimations\EstimationsList;
 use App\Livewire\Admin\Invoices\InvoicesList;
 use App\Livewire\Admin\Invoices\InvoiceExpensesList;
@@ -69,6 +70,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     // CRM
     Route::get('/clients', ClientsList::class)->middleware('can:view clients')->name('clients.index');
+    Route::get('/users', UsersList::class)->middleware('can:view users')->name('users.index');
     Route::get('/crm/newsletters', \App\Livewire\Admin\Newsletters\NewsletterManager::class)->middleware('can:view newsletters')->name('crm.newsletters');
 
     // Estimations

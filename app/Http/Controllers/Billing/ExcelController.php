@@ -61,21 +61,5 @@ class ExcelController extends Controller
             "Invoice-Expenses-{$startDate->format('Y-m-d')}-to-{$endDate->format('Y-m-d')}.xlsx"
         );
     }
-
-    public function payroll(Request $request)
-    {
-        if (!auth()->user()->can('view profit loss')) {
-            abort(403);
-        }
-
-        $startDate = \Carbon\Carbon::parse($request->get('start_date', now()->startOfYear()->format('Y-m-d')));
-        $endDate = \Carbon\Carbon::parse($request->get('end_date', now()->endOfMonth()->format('Y-m-d')));
-
-        if (ob_get_length()) ob_end_clean();
-
-        return Excel::download(
-            new \App\Exports\PayrollExport($startDate, $endDate),
-            "Payroll-{$startDate->format('Y-m-d')}-to-{$endDate->format('Y-m-d')}.xlsx"
-        );
-    }
 }
+
