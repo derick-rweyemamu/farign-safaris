@@ -104,6 +104,7 @@
                 ['route' => 'cms.navigation.index', 'label' => 'Navigation', 'permission' => 'view pages',],
                 ['route' => 'cms.posts.index', 'label' => 'Posts', 'permission' => 'view posts',],
                 ['route' => 'cms.post-categories.index', 'label' => 'Post Categories', 'permission' => 'view posts',],
+                ['route' => 'cms.reviews.index', 'label' => 'Reviews', 'permission' => 'view pages',],
             ]
         ],
 

@@ -875,6 +875,69 @@ trait ParsesBuilderHtml
             }
         }
 
+        // 10. Parse Dynamic Reviews Block
+        $reviewsProcessed = false;
+        foreach ($xpath->query('//section[contains(@class, "safaris-reviews-section")] | //section[contains(@class, "reviews-section")] | //section[@id="reviews"] | //div[contains(@class, "safaris-reviews-block")]') as $node) {
+            if ($reviewsProcessed || !$node || !$node->parentNode) {
+                continue;
+            }
+
+            $platform = $node->getAttribute('data-platform') ?: 'all';
+            $mode = $node->getAttribute('data-mode') ?: 'all';
+            $limit = (int) ($node->getAttribute('data-limit') ?: 6);
+            $layout = $node->getAttribute('data-layout') ?: 'slider';
+            $subheading = $node->getAttribute('data-subheading') ?: 'What Travellers Say';
+            $heading = $node->getAttribute('data-heading') ?: 'Genuine Reviews From Our Guests';
+            $description = $node->getAttribute('data-description') ?: null;
+            $tripadvisorUrl = $node->getAttribute('data-tripadvisor-url') ?: 'https://www.tripadvisor.com/Attraction_Review-g297913-d33011633-Reviews-Fargin_Safaris-Arusha_Arusha_Region.html';
+            $googleUrl = $node->getAttribute('data-google-url') ?: 'https://www.google.com/search?q=Fargin+Safaris+reviews';
+            $safaribookingsUrl = $node->getAttribute('data-safaribookings-url') ?: 'https://www.safaribookings.com';
+            $showBadges = $node->getAttribute('data-show-badges') !== 'false';
+
+            // Find outer section if wrapped
+            $targetNode = $node;
+            $curr = $node->parentNode;
+            while ($curr && $curr instanceof \DOMElement && $curr->nodeName !== 'body' && $curr->nodeName !== '#document') {
+                if ($curr->nodeName === 'section' && (str_contains($curr->getAttribute('class') ?? '', 'safaris-reviews-section') || str_contains($curr->getAttribute('class') ?? '', 'reviews-section') || $curr->getAttribute('id') === 'reviews')) {
+                    $targetNode = $curr;
+                    break;
+                }
+                $curr = $curr->parentNode;
+            }
+
+            $rendered = \Illuminate\Support\Facades\Blade::render(
+                '@livewire("frontend.reviews-block", [
+                    "platform" => $platform,
+                    "mode" => $mode,
+                    "limit" => $limit,
+                    "layout" => $layout,
+                    "subheading" => $subheading,
+                    "heading" => $heading,
+                    "description" => $description,
+                    "tripadvisorUrl" => $tripadvisorUrl,
+                    "googleUrl" => $googleUrl,
+                    "safaribookingsUrl" => $safaribookingsUrl,
+                    "showBadges" => $showBadges
+                ])',
+                [
+                    'platform' => $platform,
+                    'mode' => $mode,
+                    'limit' => $limit,
+                    'layout' => $layout,
+                    'subheading' => $subheading,
+                    'heading' => $heading,
+                    'description' => $description,
+                    'tripadvisorUrl' => $tripadvisorUrl,
+                    'googleUrl' => $googleUrl,
+                    'safaribookingsUrl' => $safaribookingsUrl,
+                    'showBadges' => $showBadges,
+                ]
+            );
+
+            $replaceNode($targetNode, $rendered);
+            $reviewsProcessed = true;
+        }
+
         $htmlOut = $dom->saveHTML();
         $htmlOut = str_replace(['<?xml encoding="utf-8" ?><body>', '</body>'], '', $htmlOut);
         return trim($htmlOut);

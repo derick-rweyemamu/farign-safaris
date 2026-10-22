@@ -2357,128 +2357,50 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
                   <h3 class="text-lg font-bold text-gray-900 font-brand">Quick Nav (Posts)</h3>
                   <p class="text-xs text-gray-500 mt-2">Category: <span class="font-bold text-brand-primary">${e}</span> | Target: <span class="font-bold text-brand-primary">${t}</span></p>
                </div>
-            `)}}}),window.CURRENT_LOCALE=`en`,window.switchLocale=async function(e){e!==window.CURRENT_LOCALE&&confirm(`Switch editing language to ${e.toUpperCase()}? Make sure you have saved any changes to ${window.CURRENT_LOCALE.toUpperCase()} first.`)&&(window.CURRENT_LOCALE=e,document.querySelectorAll(`.lang-tab-btn`).forEach(t=>{let n=t.getAttribute(`data-locale`)===e;t.classList.toggle(`active`,n),t.style.background=n?`#455537`:`transparent`,t.style.color=n?`#fff`:`#94a3b8`}),LO(`Loading ${e.toUpperCase()} translation...`,`success`),await IO(e))};async function IO(e=window.CURRENT_LOCALE){try{let t=await(await fetch(`/admin/api/${window.RECORD_TYPE}/${window.RECORD_ID}/content?locale=${e}&t=${Date.now()}`,{headers:{"X-CSRF-TOKEN":window.CSRF_TOKEN,Accept:`application/json`}})).json();t.builder_data&&t.builder_data.components&&(!Array.isArray(t.builder_data.components)||t.builder_data.components.length>0)?($.setComponents(t.builder_data.components),t.builder_data.styles&&$.setStyle(t.builder_data.styles)):t.builder_html?$.setComponents(t.builder_html):$.setComponents(``)}catch(e){console.warn(`No existing content to load:`,e)}}IO(),window.setDevice=function(e){$.setDevice({desktop:`Desktop`,tablet:`Tablet`,mobile:`Mobile portrait`}[e]||`Desktop`),document.querySelectorAll(`.device-btn`).forEach(e=>e.classList.remove(`active`)),document.getElementById(`btn-${e}`)?.classList.add(`active`)},window.previewPage=function(){$.runCommand(`preview`)},window.savePage=async function(){let e=document.getElementById(`save-btn`);e.disabled=!0;let t=e.innerHTML;e.innerHTML=`<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;try{let e=$.getHtml(),t=$.getCss(),n=$.getComponents().toJSON(),r=$.getStyle().toJSON(),i=`<style>${t}</style>${e}`,a=JSON.stringify({components:n,styles:r});(await(await fetch(`/admin/api/${window.RECORD_TYPE}/${window.RECORD_ID}/content?locale=${window.CURRENT_LOCALE}`,{method:`POST`,headers:{"Content-Type":`application/json`,"X-CSRF-TOKEN":window.CSRF_TOKEN,Accept:`application/json`},body:JSON.stringify({html_base64:btoa(unescape(encodeURIComponent(i))),data_base64:btoa(unescape(encodeURIComponent(a)))})})).json()).success?LO(`✓ Saved (${window.CURRENT_LOCALE.toUpperCase()}) successfully!`,`success`):LO(`✗ Save failed. Try again.`,`error`)}catch(e){LO(`✗ Network error. Try again.`,`error`),console.error(e)}finally{e.disabled=!1,e.innerHTML=t}};function LO(e,t=`success`){let n=document.getElementById(`status-toast`);document.getElementById(`toast-msg`).textContent=e,n.className=t,setTimeout(()=>{n.className=``},3500)}DO.add(`reviews-block`,{label:`⭐ Reviews Block`,category:window.__(`Safaris Blocks`),content:`<!-- REVIEWS -->
-<section class="reviews-section" id="reviews">
-  <div class="reviews-inner">
-    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem;">
-      <div>
-        <div class="section-label">What Travellers Say</div>
-        <h2 class="section-title">Genuine Reviews From<br><em>Our Guests</em></h2>
-      </div>
-      <!-- Platform Score Badges -->
-      <div style="display: flex; gap: 1.2rem; flex-wrap: wrap;">
-        <!-- TripAdvisor Badge -->
-        <a href="https://www.tripadvisor.com/Attraction_Review-g293747-d8660687-Reviews-Safaris_Adventure-Arusha_Arusha_Region.html" target="_blank" style="text-decoration:none; display:flex; align-items:center; gap:10px; background:#fff; border:1.5px solid #00aa6c; border-radius: 3px; padding:10px 16px; box-shadow: 0 2px 12px rgba(0,170,108,0.10);">
-          <svg width="36" height="36" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="50" fill="#00AA6C"/>
-            <circle cx="50" cy="50" r="28" fill="white"/>
-            <circle cx="50" cy="50" r="16" fill="#00AA6C"/>
-            <circle cx="28" cy="50" r="12" fill="white" stroke="#00AA6C" stroke-width="4"/>
-            <circle cx="72" cy="50" r="12" fill="white" stroke="#00AA6C" stroke-width="4"/>
-            <circle cx="28" cy="50" r="5" fill="#00AA6C"/>
-            <circle cx="72" cy="50" r="5" fill="#00AA6C"/>
-          </svg>
-          <div>
-            <div style="font-size:11px; font-weight:600; color:#00aa6c; letter-spacing:0.04em; text-transform:uppercase;">TripAdvisor</div>
-            <div style="font-size:18px; font-weight:700; color:#1a1108; line-height:1.1;">5.0 <span style="font-size:13px; color:#00aa6c;">★★★★★</span></div>
-            <div style="font-size:11px; color:#666;">800+ reviews</div>
-          </div>
-        </a>
-        <!-- Google Badge -->
-        <a href="https://www.google.com/search?q=Safaris+Adventure+Tanzania" target="_blank" style="text-decoration:none; display:flex; align-items:center; gap:10px; background:#fff; border:1.5px solid #e0e0e0; border-radius: 3px; padding:10px 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
-          <svg width="36" height="36" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-            <path fill="none" d="M0 0h48v48H0z"/>
-          </svg>
-          <div>
-            <div style="font-size:11px; font-weight:600; color:#4285F4; letter-spacing:0.04em; text-transform:uppercase;">Google</div>
-            <div style="font-size:18px; font-weight:700; color:#1a1108; line-height:1.1;">4.9 <span style="font-size:13px; color:#fbbc05;">★★★★★</span></div>
-            <div style="font-size:11px; color:#666;">400+ reviews</div>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <div class="reviews-grid" style="margin-top: 2.5rem;">
-      <!-- TripAdvisor Review 1 -->
-      <div class="review-card">
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:0.8rem;">
-          <svg width="22" height="22" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="50" fill="#00AA6C"/>
-            <circle cx="50" cy="50" r="28" fill="white"/>
-            <circle cx="50" cy="50" r="16" fill="#00AA6C"/>
-            <circle cx="28" cy="50" r="12" fill="white" stroke="#00AA6C" stroke-width="4"/>
-            <circle cx="72" cy="50" r="12" fill="white" stroke="#00AA6C" stroke-width="4"/>
-            <circle cx="28" cy="50" r="5" fill="#00AA6C"/>
-            <circle cx="72" cy="50" r="5" fill="#00AA6C"/>
-          </svg>
-          <span style="font-size:12px; font-weight:600; color:#00aa6c; letter-spacing:0.03em;">TripAdvisor</span>
+            `)}}}),window.CURRENT_LOCALE=`en`,window.switchLocale=async function(e){e!==window.CURRENT_LOCALE&&confirm(`Switch editing language to ${e.toUpperCase()}? Make sure you have saved any changes to ${window.CURRENT_LOCALE.toUpperCase()} first.`)&&(window.CURRENT_LOCALE=e,document.querySelectorAll(`.lang-tab-btn`).forEach(t=>{let n=t.getAttribute(`data-locale`)===e;t.classList.toggle(`active`,n),t.style.background=n?`#455537`:`transparent`,t.style.color=n?`#fff`:`#94a3b8`}),LO(`Loading ${e.toUpperCase()} translation...`,`success`),await IO(e))};async function IO(e=window.CURRENT_LOCALE){try{let t=await(await fetch(`/admin/api/${window.RECORD_TYPE}/${window.RECORD_ID}/content?locale=${e}&t=${Date.now()}`,{headers:{"X-CSRF-TOKEN":window.CSRF_TOKEN,Accept:`application/json`}})).json();t.builder_data&&t.builder_data.components&&(!Array.isArray(t.builder_data.components)||t.builder_data.components.length>0)?($.setComponents(t.builder_data.components),t.builder_data.styles&&$.setStyle(t.builder_data.styles)):t.builder_html?$.setComponents(t.builder_html):$.setComponents(``)}catch(e){console.warn(`No existing content to load:`,e)}}IO(),window.setDevice=function(e){$.setDevice({desktop:`Desktop`,tablet:`Tablet`,mobile:`Mobile portrait`}[e]||`Desktop`),document.querySelectorAll(`.device-btn`).forEach(e=>e.classList.remove(`active`)),document.getElementById(`btn-${e}`)?.classList.add(`active`)},window.previewPage=function(){$.runCommand(`preview`)},window.savePage=async function(){let e=document.getElementById(`save-btn`);e.disabled=!0;let t=e.innerHTML;e.innerHTML=`<i class="fa-solid fa-spinner fa-spin"></i> Saving...`;try{let e=$.getHtml(),t=$.getCss(),n=$.getComponents().toJSON(),r=$.getStyle().toJSON(),i=`<style>${t}</style>${e}`,a=JSON.stringify({components:n,styles:r});(await(await fetch(`/admin/api/${window.RECORD_TYPE}/${window.RECORD_ID}/content?locale=${window.CURRENT_LOCALE}`,{method:`POST`,headers:{"Content-Type":`application/json`,"X-CSRF-TOKEN":window.CSRF_TOKEN,Accept:`application/json`},body:JSON.stringify({html_base64:btoa(unescape(encodeURIComponent(i))),data_base64:btoa(unescape(encodeURIComponent(a)))})})).json()).success?LO(`✓ Saved (${window.CURRENT_LOCALE.toUpperCase()}) successfully!`,`success`):LO(`✗ Save failed. Try again.`,`error`)}catch(e){LO(`✗ Network error. Try again.`,`error`),console.error(e)}finally{e.disabled=!1,e.innerHTML=t}};function LO(e,t=`success`){let n=document.getElementById(`status-toast`);document.getElementById(`toast-msg`).textContent=e,n.className=t,setTimeout(()=>{n.className=``},3500)}function RO(e={}){let t=e[`data-subheading`]===void 0?`What Travellers Say`:e[`data-subheading`],n=e[`data-heading`]||`Genuine Reviews From Our Guests`,r=e[`data-description`]||``,i=e[`data-platform`]||`all`,a=e[`data-mode`]||`all`,o=parseInt(e[`data-limit`]||6),s=e[`data-layout`]||`slider`;e[`data-show-badges`],e[`data-tripadvisor-url`],e[`data-google-url`];let c=window.PUBLISHED_REVIEWS||[];(!c||c.length===0)&&(c=[{author_name:`Ritta C`,rating:5,title:`15 Day East Africa Amazing Safari`,content:`We had a wonderful 15-day trip through Kenya, Tanzania, and Zanzibar with Fargin Safaris. From the beginning, everything was well organized, and the whole experience was smooth, enjoyable, and memorable.`,trip_type:`Couples`,platform:`tripadvisor`,is_featured:!0},{author_name:`Lauren R`,rating:5,title:`Unforgettable safari!`,content:`This safari was truly the trip of a lifetime. Traveling through Kenya and Tanzania. We were incredibly lucky to see all of the Big Five, plus an unbelievable number of animals along the way.`,trip_type:`Friends`,platform:`tripadvisor`,is_featured:!0},{author_name:`Jamie A`,author_location:`Australia`,rating:5,title:`Absolutely phenomenal`,content:`An unforgettable safari across Tanzania & Kenya – truly life-changing. From the moment our safari began, it was clear we were in the hands of absolute professionals who genuinely love what they do.`,trip_type:`Friends`,platform:`tripadvisor`,is_featured:!0}]);let l=c.filter(e=>!(i!==`all`&&e.platform!==i||a===`featured`&&!e.is_featured));l.length===0&&(l=c);let u=l.slice(0,o).map(e=>{let t=e.author_initials||(e.author_name?e.author_name.substring(0,2).toUpperCase():`G`),n=[e.author_location||``,e.trip_type||``].filter(Boolean).join(` · `),r=e.platform===`tripadvisor`;return`
+        <div style="background:#1c2e23; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:24px; display:flex; flex-direction:column; justify-content:space-between; min-width:${s===`slider`?`340px`:`auto`}; box-shadow:0 10px 25px rgba(0,0,0,0.3);">
+            <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                    ${r?`<div style="display:flex; align-items:center; gap:6px; background:rgba(0,170,108,0.15); border:1px solid rgba(0,170,108,0.3); color:#00AA6C; padding:3px 10px; border-radius:999px; font-size:11px; font-weight:bold;">
+                 <svg width="14" height="14" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#00AA6C"/><circle cx="50" cy="50" r="28" fill="white"/><circle cx="50" cy="50" r="16" fill="#00AA6C"/></svg>
+                 TripAdvisor
+               </div>`:`<div style="display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:3px 10px; border-radius:999px; font-size:11px; font-weight:bold;">
+                 Google
+               </div>`}
+                    ${r?`<span style="color:#00AA6C; font-size:14px; letter-spacing:2px;">●●●●●</span>`:`<span style="color:#FBBC05; font-size:14px;">★★★★★</span>`}
+                </div>
+                ${e.title?`<h3 style="font-size:16px; font-weight:bold; color:#fff; margin-bottom:8px; line-height:1.3;">"${e.title}"</h3>`:``}
+                <p style="font-size:13px; color:#d1d5db; line-height:1.6; margin-bottom:20px; font-weight:300;">${e.content}</p>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.1);">
+                <div style="width:38px; height:38px; border-radius:50%; background:rgba(78,130,67,0.3); border:1px solid rgba(78,130,67,0.5); color:#CA9A2E; font-weight:bold; font-size:13px; display:flex; align-items:center; justify-content:center;">
+                    ${t}
+                </div>
+                <div>
+                    <div style="font-size:14px; font-weight:bold; color:#fff;">${e.author_name}</div>
+                    <div style="font-size:11px; color:#9ca3af;">${n||`Verified Guest`}</div>
+                </div>
+            </div>
+        </div>`}).join(``);return`
+    <div style="font-family:'Inter', sans-serif;">
+        <div style="margin-bottom:32px;">
+            <div style="max-width:600px;">
+                ${t?`<div style="display:inline-block; padding:4px 12px; border-radius:999px; background:rgba(202,154,46,0.15); border:1px solid rgba(202,154,46,0.3); color:#CA9A2E; font-size:11px; font-weight:bold; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px;">★ ${t}</div>`:``}
+                <h2 style="font-size:32px; font-weight:900; color:#fff; line-height:1.2; margin:0;">${n}</h2>
+                ${r?`<p style="font-size:14px; color:#cbd5e1; margin-top:8px;">${r}</p>`:``}
+            </div>
         </div>
-        <div class="review-stars" style="color:#00aa6c;">★★★★★</div>
-        <p class="review-text">"An absolutely unforgettable honeymoon. The team handled everything — from the airport pickup to sunset game drives. Our guide Issa felt like family within minutes. Seeing the Big Five in Ngorongoro was pure magic."</p>
-        <div class="review-author">
-          <div class="review-avatar">MK</div>
-          <div><div class="review-name">Maria &amp; Karl</div><div class="review-loc">Germany · Safari + Zanzibar, 2025</div></div>
+        <div style="display:${s===`slider`?`flex`:`grid`}; ${s===`slider`?`gap:24px; overflow-x:auto; padding-bottom:16px;`:`grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:24px;`}">
+            ${u}
         </div>
-      </div>
-
-      <!-- Google Review -->
-      <div class="review-card">
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:0.8rem;">
-          <svg width="22" height="22" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-            <path fill="none" d="M0 0h48v48H0z"/>
-          </svg>
-          <span style="font-size:12px; font-weight:600; color:#4285F4; letter-spacing:0.03em;">Google</span>
-        </div>
-        <div class="review-stars" style="color:#fbbc05;">★★★★★</div>
-        <p class="review-text">"From the very first email, the service was outstanding. Our Kilimanjaro climb was tough but our guides kept spirits high the whole way. Summiting at dawn above the clouds is something I'll never forget."</p>
-        <div class="review-author">
-          <div class="review-avatar">JL</div>
-          <div><div class="review-name">James L.</div><div class="review-loc">United Kingdom · Kili Climb, 2025</div></div>
-        </div>
-      </div>
-
-      <!-- TripAdvisor Review 2 -->
-      <div class="review-card">
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:0.8rem;">
-          <svg width="22" height="22" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="50" fill="#00AA6C"/>
-            <circle cx="50" cy="50" r="28" fill="white"/>
-            <circle cx="50" cy="50" r="16" fill="#00AA6C"/>
-            <circle cx="28" cy="50" r="12" fill="white" stroke="#00AA6C" stroke-width="4"/>
-            <circle cx="72" cy="50" r="12" fill="white" stroke="#00AA6C" stroke-width="4"/>
-            <circle cx="28" cy="50" r="5" fill="#00AA6C"/>
-            <circle cx="72" cy="50" r="5" fill="#00AA6C"/>
-          </svg>
-          <span style="font-size:12px; font-weight:600; color:#00aa6c; letter-spacing:0.03em;">TripAdvisor</span>
-        </div>
-        <div class="review-stars" style="color:#00aa6c;">★★★★★</div>
-        <p class="review-text">"We traveled as a family of five with three kids. The team tailored every single detail — pace, lodges, activities. Our children saw lions, elephants, and a cheetah! This trip changed all of us."</p>
-        <div class="review-author">
-          <div class="review-avatar">SF</div>
-          <div><div class="review-name">Sarah F.</div><div class="review-loc">USA · Family Safari, 2024</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Review platform links -->
-    <div style="display:flex; gap:1rem; margin-top:2rem; flex-wrap:wrap;">
-      <a href="https://www.tripadvisor.com/Attraction_Review-g293747-d8660687-Reviews-Safaris_Adventure-Arusha_Arusha_Region.html" target="_blank" style="display:inline-flex; align-items:center; gap:6px; background:#00aa6c; color:#fff; padding:9px 18px; border-radius: 3px; font-size:12px; font-weight:500; text-decoration:none; letter-spacing:0.05em; text-transform:uppercase; transition:background 0.2s;" onmouseover="this.style.background='#009960'" onmouseout="this.style.background='#00aa6c'">
-        Read All TripAdvisor Reviews →
-      </a>
-      <a href="https://www.google.com/search?q=Safaris+Adventure+Tanzania+reviews" target="_blank" style="display:inline-flex; align-items:center; gap:6px; background:#4285F4; color:#fff; padding:9px 18px; border-radius: 3px; font-size:12px; font-weight:500; text-decoration:none; letter-spacing:0.05em; text-transform:uppercase; transition:background 0.2s;" onmouseover="this.style.background='#2b6de0'" onmouseout="this.style.background='#4285F4'">
-        Read All Google Reviews →
-      </a>
+    </div>`}$.DomComponents.addType(`reviews-block`,{isComponent:e=>e&&e.classList&&(e.classList.contains(`safaris-reviews-block`)||e.classList.contains(`reviews-section`))?{type:`reviews-block`}:!1,model:{defaults:{tagName:`div`,droppable:!1,highlightable:!0,attributes:{class:`safaris-reviews-block`,"data-subheading":`What Travellers Say`,"data-heading":`Genuine Reviews From Our Guests`,"data-description":``,"data-platform":`all`,"data-mode":`all`,"data-limit":`6`,"data-layout":`slider`,"data-show-badges":`true`,"data-tripadvisor-url":`https://www.tripadvisor.com/Attraction_Review-g297913-d33011633-Reviews-Fargin_Safaris-Arusha_Arusha_Region.html`,"data-google-url":`https://www.google.com/search?q=Fargin+Safaris+reviews`},traits:[{type:`text`,name:`data-subheading`,label:`Section Subheading / Tagline`,value:`What Travellers Say`},{type:`text`,name:`data-heading`,label:`Main Heading`,value:`Genuine Reviews From Our Guests`},{type:`textarea`,name:`data-description`,label:`Description Text`,value:``},{type:`select`,name:`data-platform`,label:`Platform Filter`,options:[{value:`all`,name:`All Platforms`},{value:`tripadvisor`,name:`TripAdvisor Only`},{value:`google`,name:`Google Only`},{value:`safari_bookings`,name:`SafariBookings Only`}]},{type:`select`,name:`data-mode`,label:`Display Mode`,options:[{value:`all`,name:`All Approved Reviews`},{value:`featured`,name:`Featured Reviews Only`}]},{type:`number`,name:`data-limit`,label:`Max Reviews to Show`,min:1,max:20,value:6},{type:`select`,name:`data-layout`,label:`Layout Style`,options:[{value:`slider`,name:`Interactive Slider / Carousel`},{value:`grid`,name:`3-Column Grid`}]},{type:`select`,name:`data-show-badges`,label:`Show Platform Badges`,options:[{value:`true`,name:`Enabled`},{value:`false`,name:`Disabled`}]},{type:`text`,name:`data-tripadvisor-url`,label:`TripAdvisor Profile Link`,value:`https://www.tripadvisor.com/Attraction_Review-g297913-d33011633-Reviews-Fargin_Safaris-Arusha_Arusha_Region.html`},{type:`text`,name:`data-google-url`,label:`Google Reviews Link`,value:`https://www.google.com/search?q=Fargin+Safaris+reviews`}]},init(){this.on(`change:attributes:data-subheading change:attributes:data-heading change:attributes:data-description change:attributes:data-platform change:attributes:data-mode change:attributes:data-limit change:attributes:data-layout change:attributes:data-show-badges change:attributes:data-tripadvisor-url change:attributes:data-google-url`,this.updateCanvasHtml),this.updateCanvasHtml()},updateCanvasHtml(){let e=this.getAttributes();this.set(`content`,RO(e))}}}),DO.add(`reviews-block`,{label:`⭐ Reviews Block`,category:window.__(`Safaris Blocks`),attributes:{class:`fa-solid fa-star`},content:`
+<section class="safaris-reviews-section relative py-16 sm:py-24 bg-[#16271c] text-white overflow-hidden" id="reviews">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div data-gjs-type="reviews-block" class="safaris-reviews-block" data-subheading="What Travellers Say" data-heading="Genuine Reviews From Our Guests" data-description="" data-platform="all" data-mode="all" data-limit="6" data-layout="slider" data-show-badges="true" data-tripadvisor-url="https://www.tripadvisor.com/Attraction_Review-g297913-d33011633-Reviews-Fargin_Safaris-Arusha_Arusha_Region.html" data-google-url="https://www.google.com/search?q=Fargin+Safaris+reviews">
+      ${RO({"data-subheading":`What Travellers Say`,"data-heading":`Genuine Reviews From Our Guests`,"data-description":``,"data-platform":`all`,"data-mode":`all`,"data-limit":`6`,"data-layout":`slider`,"data-show-badges":`true`,"data-tripadvisor-url":`https://www.tripadvisor.com/Attraction_Review-g297913-d33011633-Reviews-Fargin_Safaris-Arusha_Arusha_Region.html`,"data-google-url":`https://www.google.com/search?q=Fargin+Safaris+reviews`})}
     </div>
   </div>
-</section>`,attributes:{class:`fa-solid fa-star`}}),DO.add(`explore-block`,{label:`🔍 Discover More Block`,category:window.__(`Safaris Blocks`),content:`<section class="explore-section">
+</section>`}),DO.add(`explore-block`,{label:`🔍 Discover More Block`,category:window.__(`Safaris Blocks`),content:`<section class="explore-section">
   <div class="explore-inner">
     <div class="section-label">Discover More</div>
     <h2 class="section-title">Get <em>Inspired</em></h2>
@@ -2522,7 +2444,7 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
     </form>
     <p style="font-size:12px; color:rgba(255,255,255,0.35); margin-top:1rem;">No spam, ever. Unsubscribe anytime.</p>
   </div>
-</section>`,attributes:{class:`fa-solid fa-envelope-open-text`}});var RO=`padding: 14px 18px; text-align: left; color: #CA9A2E; font-family: 'Playfair Display', Georgia, serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border: none;`,zO=`padding: 14px 18px; color: #2E1F12; font-family: 'Lora', Georgia, serif; font-size: 15px;`,BO=`padding: 14px 18px; color: #4A3728; font-family: 'Lora', Georgia, serif; font-size: 15px;`;DO.add(`safaris-table`,{label:`📋 Table`,category:window.__(`Safaris Blocks`),attributes:{class:`fa-solid fa-table`},content:`
+</section>`,attributes:{class:`fa-solid fa-envelope-open-text`}});var zO=`padding: 14px 18px; text-align: left; color: #CA9A2E; font-family: 'Playfair Display', Georgia, serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border: none;`,BO=`padding: 14px 18px; color: #2E1F12; font-family: 'Lora', Georgia, serif; font-size: 15px;`,VO=`padding: 14px 18px; color: #4A3728; font-family: 'Lora', Georgia, serif; font-size: 15px;`;DO.add(`safaris-table`,{label:`📋 Table`,category:window.__(`Safaris Blocks`),attributes:{class:`fa-solid fa-table`},content:`
 <section data-gjs-name="Table Section" style="padding: 60px 20px; background: #fff;">
   <div data-gjs-name="Table Container" style="max-width: 900px; margin: 0 auto;">
     <h2 data-gjs-type="text" style="font-family: 'Playfair Display', Georgia, serif; font-size: 25px; font-weight: 700; color: #2E1F12; margin-bottom: 1.5rem;">Table Heading</h2>
@@ -2530,36 +2452,36 @@ Expecting `+S.join(`, `)+`, got '`+(this.terminals_[p]||p)+`'`:`Parse error on l
       <table style="width: 100%; border-collapse: collapse; font-family: 'Lora', Georgia, serif; font-size: 15px; background: #fff;">
         <thead>
           <tr style="background: #2E1F12;">
-            <th style="${RO}"><div data-gjs-type="text">Column 1</div></th>
-            <th style="${RO}"><div data-gjs-type="text">Column 2</div></th>
-            <th style="${RO}"><div data-gjs-type="text">Column 3</div></th>
-            <th style="${RO}"><div data-gjs-type="text">Column 4</div></th>
+            <th style="${zO}"><div data-gjs-type="text">Column 1</div></th>
+            <th style="${zO}"><div data-gjs-type="text">Column 2</div></th>
+            <th style="${zO}"><div data-gjs-type="text">Column 3</div></th>
+            <th style="${zO}"><div data-gjs-type="text">Column 4</div></th>
           </tr>
         </thead>
         <tbody>
           <tr style="border-bottom: 1px solid #EEE5D4;">
-            <td style="${zO}"><div data-gjs-type="text">Row 1, Cell 1</div></td>
-            <td style="${BO}"><div data-gjs-type="text">Row 1, Cell 2</div></td>
-            <td style="${BO}"><div data-gjs-type="text">Row 1, Cell 3</div></td>
-            <td style="${BO}"><div data-gjs-type="text">Row 1, Cell 4</div></td>
+            <td style="${BO}"><div data-gjs-type="text">Row 1, Cell 1</div></td>
+            <td style="${VO}"><div data-gjs-type="text">Row 1, Cell 2</div></td>
+            <td style="${VO}"><div data-gjs-type="text">Row 1, Cell 3</div></td>
+            <td style="${VO}"><div data-gjs-type="text">Row 1, Cell 4</div></td>
           </tr>
           <tr style="border-bottom: 1px solid #EEE5D4; background: #FAF6EF;">
-            <td style="${zO}"><div data-gjs-type="text">Row 2, Cell 1</div></td>
-            <td style="${BO}"><div data-gjs-type="text">Row 2, Cell 2</div></td>
-            <td style="${BO}"><div data-gjs-type="text">Row 2, Cell 3</div></td>
-            <td style="${BO}"><div data-gjs-type="text">Row 2, Cell 4</div></td>
+            <td style="${BO}"><div data-gjs-type="text">Row 2, Cell 1</div></td>
+            <td style="${VO}"><div data-gjs-type="text">Row 2, Cell 2</div></td>
+            <td style="${VO}"><div data-gjs-type="text">Row 2, Cell 3</div></td>
+            <td style="${VO}"><div data-gjs-type="text">Row 2, Cell 4</div></td>
           </tr>
           <tr style="border-bottom: 1px solid #EEE5D4;">
-            <td style="${zO}"><div data-gjs-type="text">Row 3, Cell 1</div></td>
-            <td style="${BO}"><div data-gjs-type="text">Row 3, Cell 2</div></td>
-            <td style="${BO}"><div data-gjs-type="text">Row 3, Cell 3</div></td>
-            <td style="${BO}"><div data-gjs-type="text">Row 3, Cell 4</div></td>
+            <td style="${BO}"><div data-gjs-type="text">Row 3, Cell 1</div></td>
+            <td style="${VO}"><div data-gjs-type="text">Row 3, Cell 2</div></td>
+            <td style="${VO}"><div data-gjs-type="text">Row 3, Cell 3</div></td>
+            <td style="${VO}"><div data-gjs-type="text">Row 3, Cell 4</div></td>
           </tr>
           <tr style="background: #FAF6EF;">
-            <td style="${zO}"><div data-gjs-type="text">Row 4, Cell 1</div></td>
-            <td style="${BO}"><div data-gjs-type="text">Row 4, Cell 2</div></td>
-            <td style="${BO}"><div data-gjs-type="text">Row 4, Cell 3</div></td>
-            <td style="${BO}"><div data-gjs-type="text">Row 4, Cell 4</div></td>
+            <td style="${BO}"><div data-gjs-type="text">Row 4, Cell 1</div></td>
+            <td style="${VO}"><div data-gjs-type="text">Row 4, Cell 2</div></td>
+            <td style="${VO}"><div data-gjs-type="text">Row 4, Cell 3</div></td>
+            <td style="${VO}"><div data-gjs-type="text">Row 4, Cell 4</div></td>
           </tr>
         </tbody>
       </table>

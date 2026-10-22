@@ -437,6 +437,7 @@
     }
 
     window.EDITOR_COUNTRIES_DATA = @json(\App\Models\Country::orderBy('name')->get(['id', 'name']));
+    window.PUBLISHED_REVIEWS = @json(\App\Models\Review::published()->orderBy('is_featured', 'desc')->orderBy('review_date', 'desc')->take(20)->get());
 </script>
 {{-- Load TinyMCE standalone (same source as rich-text component) BEFORE the GrapesJS bundle --}}
 <script src="{{ asset('js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>

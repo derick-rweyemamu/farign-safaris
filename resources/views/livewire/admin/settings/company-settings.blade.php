@@ -16,6 +16,7 @@
             ['key' => 'bank', 'label' => 'Bank Details', 'icon' => 'banknotes'],
             ['key' => 'financial', 'label' => 'Financial', 'icon' => 'receipt-percent'],
             ['key' => 'social', 'label' => 'Social Links', 'icon' => 'share'],
+            ['key' => 'reviews', 'label' => 'Review Links', 'icon' => 'star'],
             ['key' => 'security', 'label' => 'Security', 'icon' => 'shield-check'],
             ['key' => 'meta_leads', 'label' => 'Meta Lead Ads', 'icon' => 'globe-alt']
         ] as $tab)
@@ -748,6 +749,95 @@
                         <span wire:loading.remove wire:target="saveMetaLeads">{{ __('Save Meta Settings') }}</span>
                         <span wire:loading wire:target="saveMetaLeads">{{ __('Saving...') }}</span>
                     </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    @endif
+
+    <!-- Review Links Tab -->
+    @if($activeTab === 'reviews')
+    <div class="w-full">
+        <div class="bg-card rounded-[3px] p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 pb-4 border-b border-gray-100 dark:border-gray-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-[3px] bg-amber-500/10 text-amber-500 flex items-center justify-center">
+                        <x-icon name="star" class="w-5 h-5" />
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white">{{ __('Review Platform Links') }}</h3>
+                        <p class="text-xs text-gray-400">{{ __('Connect TripAdvisor, Google, and SafariBookings to pull reviews and show badges') }}</p>
+                    </div>
+                </div>
+
+                <a href="{{ route('admin.cms.reviews') }}" 
+                    class="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-[3px] bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <x-icon name="arrow-top-right-on-square" class="w-3.5 h-3.5" />
+                    {{ __('Open Reviews Manager') }}
+                </a>
+            </div>
+
+            <form wire:submit="saveReviewLinks" class="space-y-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- TripAdvisor -->
+                    <div class="sm:col-span-2 p-4 rounded-[3px] bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-[#00AA6C] flex items-center justify-center text-white text-[10px] font-black">TA</span>
+                            <label class="text-sm font-bold text-gray-900 dark:text-white">{{ __('TripAdvisor Listing URL') }}</label>
+                        </div>
+                        <input type="url" wire:model="tripadvisor_url" class="form-input" placeholder="https://www.tripadvisor.com/Attraction_Review-...">
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400">{{ __('Direct link to your TripAdvisor business listing for automated review imports and website badge.') }}</p>
+                        @error('tripadvisor_url') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <!-- SafariBookings -->
+                    <div class="sm:col-span-2 p-4 rounded-[3px] bg-amber-50/50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/40 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-amber-600 flex items-center justify-center text-white text-[10px] font-black">SB</span>
+                            <label class="text-sm font-bold text-gray-900 dark:text-white">{{ __('SafariBookings Operator Reviews URL') }}</label>
+                        </div>
+                        <input type="url" wire:model="safaribookings_url" class="form-input" placeholder="https://www.safaribookings.com/reviews/p... or https://www.safaribookings.com/operators/...">
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400">{{ __('Your SafariBookings reviews or operator profile link.') }}</p>
+                        @error('safaribookings_url') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <!-- Google Reviews -->
+                    <div class="sm:col-span-2 p-4 rounded-[3px] bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/40 space-y-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-[#4285F4] flex items-center justify-center text-white text-[10px] font-black">G</span>
+                            <label class="text-sm font-bold text-gray-900 dark:text-white">{{ __('Google Reviews / Maps Link') }}</label>
+                        </div>
+                        <input type="text" wire:model="google_reviews_url" class="form-input" placeholder="https://maps.app.goo.gl/... or https://www.google.com/maps/place/...">
+                        <p class="text-[11px] text-gray-500 dark:text-gray-400">{{ __('Share link from Google Maps or your Google Business profile.') }}</p>
+                        @error('google_reviews_url') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Google Place ID (Optional)') }}</label>
+                                <input type="text" wire:model="google_place_id" class="form-input text-xs" placeholder="e.g. ChIJ...">
+                                <p class="text-[10px] text-gray-400 mt-1">{{ __('Found in Google Maps Place ID Finder tool.') }}</p>
+                                @error('google_place_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">{{ __('Google Places API Key (Optional)') }}</label>
+                                <input type="password" wire:model="google_places_api_key" class="form-input text-xs" placeholder="AIzaSy...">
+                                <p class="text-[10px] text-gray-400 mt-1">{{ __('Allows 1-click official API review synchronization.') }}</p>
+                                @error('google_places_api_key') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end pt-4 border-t border-gray-100 dark:border-gray-800">
+                    @can('edit general settings')
+                    <button type="submit" class="btn-primary" wire:loading.attr="disabled" wire:target="saveReviewLinks">
+                        <x-icon name="check" class="w-4 h-4" wire:loading.remove wire:target="saveReviewLinks" />
+                        <x-icon name="arrow-path" class="w-4 h-4 animate-spin" wire:loading wire:target="saveReviewLinks" />
+                        <span wire:loading.remove wire:target="saveReviewLinks">{{ __('Save Review Links') }}</span>
+                        <span wire:loading wire:target="saveReviewLinks">{{ __('Saving...') }}</span>
+                    </button>
+                    @endcan
                 </div>
             </form>
         </div>

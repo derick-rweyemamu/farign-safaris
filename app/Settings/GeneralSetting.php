@@ -81,6 +81,13 @@ class GeneralSetting extends Settings
     public ?string $meta_page_access_token;
     public ?string $meta_webhook_verify_token;
 
+    // Review Platform Links & Scraping Settings
+    public ?string $tripadvisor_url;
+    public ?string $google_reviews_url;
+    public ?string $google_place_id;
+    public ?string $google_places_api_key;
+    public ?string $safaribookings_url;
+
     public static function group(): string
     {
         return 'Company';

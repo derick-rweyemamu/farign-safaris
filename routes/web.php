@@ -159,6 +159,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/cms/posts', PostsList::class)->middleware('can:view posts')->name('cms.posts.index');
     Route::get('/cms/post-categories', \App\Livewire\Admin\CMS\PostCategoryList::class)->middleware('can:view posts')->name('cms.post-categories.index');
     Route::get('/cms/navigation', NavigationMenuManager::class)->middleware('can:view pages')->name('cms.navigation.index');
+    Route::get('/cms/reviews', \App\Livewire\Admin\CMS\ReviewsList::class)->middleware('can:view pages')->name('cms.reviews.index');
 
     // Visual Editor (full-screen GrapesJS) - Support pages, posts, and destinations
     Route::get('/cms/{type}-editor/{id}', function ($type, $id, \App\Settings\GeneralSetting $settings) {

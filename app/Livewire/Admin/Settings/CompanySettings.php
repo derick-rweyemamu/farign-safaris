@@ -87,6 +87,13 @@ class CompanySettings extends Component
     public ?string $tiktok_url = '';
     public ?string $whatsapp_number = '';
 
+    // Review Platforms
+    public ?string $tripadvisor_url = '';
+    public ?string $google_reviews_url = '';
+    public ?string $google_place_id = '';
+    public ?string $google_places_api_key = '';
+    public ?string $safaribookings_url = '';
+
     // Security Settings
     public bool $force_2fa = false;
 
@@ -159,6 +166,13 @@ class CompanySettings extends Component
         $this->x_url = $settings->x_url;
         $this->tiktok_url = $settings->tiktok_url;
         $this->whatsapp_number = $settings->whatsapp_number;
+
+        // Review Platforms
+        $this->tripadvisor_url = $settings->tripadvisor_url;
+        $this->google_reviews_url = $settings->google_reviews_url;
+        $this->google_place_id = $settings->google_place_id;
+        $this->google_places_api_key = $settings->google_places_api_key;
+        $this->safaribookings_url = $settings->safaribookings_url;
 
         // Security Settings
         $this->force_2fa = $settings->force_2fa;
@@ -442,6 +456,30 @@ class CompanySettings extends Component
 
         ActivityLog::record('settings.meta_leads', "Meta Lead Ads settings updated");
         $this->dispatch('notify', message: __('Meta Lead Ads settings updated successfully!'), type: 'success');
+    }
+
+    public function saveReviewLinks(GeneralSetting $settings): void
+    {
+        $this->authorize('edit general settings');
+
+        $this->validate([
+            'tripadvisor_url' => 'nullable|url|max:255',
+            'google_reviews_url' => 'nullable|string|max:500',
+            'google_place_id' => 'nullable|string|max:100',
+            'google_places_api_key' => 'nullable|string|max:255',
+            'safaribookings_url' => 'nullable|url|max:255',
+        ]);
+
+        $settings->tripadvisor_url = $this->tripadvisor_url;
+        $settings->google_reviews_url = $this->google_reviews_url;
+        $settings->google_place_id = $this->google_place_id;
+        $settings->google_places_api_key = $this->google_places_api_key;
+        $settings->safaribookings_url = $this->safaribookings_url;
+
+        $settings->save();
+
+        ActivityLog::record('settings.reviews', "Review platform links updated");
+        $this->dispatch('notify', message: __('Review platform links updated successfully!'), type: 'success');
     }
 
     public function render()
