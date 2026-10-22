@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*');
         $middleware->validateCsrfTokens(except: [
             'webhooks/*',
+            'api/*',
         ]);
         $middleware->web(append: [
             \App\Http\Middleware\EnsureTwoFactorSetup::class,

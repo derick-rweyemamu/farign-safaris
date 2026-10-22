@@ -21,13 +21,15 @@ class SecurityHeaders
         // but typically security headers should be applied to all responses.
         if (method_exists($response, 'header')) {
             $response->header('X-Content-Type-Options', 'nosniff');
-            $response->header('X-Frame-Options', 'SAMEORIGIN');
-            $response->header('X-XSS-Protection', '1; mode=block');
-            $response->header('Referrer-Policy', 'strict-origin-when-cross-origin');
-            if ($request->isSecure()) {
-                $response->header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+            if ($request->is('api/*')) {
+                $response->header('Cross-Origin-Resource-Policy', 'cross-origin');
+                $response->header('Access-Control-Allow-Origin', '*');
+                $response->header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+                $response->header('Access-Control-Allow-Headers', 'Content-Type, X-Sync-Key, Authorization, X-Requested-With');
+            } else {
+                $response->header('X-Frame-Options', 'SAMEORIGIN');
+                $response->header('Cross-Origin-Resource-Policy', 'same-site');
             }
-            $response->header('Cross-Origin-Resource-Policy', 'same-site');
 
             // Baseline CSP. Allows self for everything, inline scripts and eval for Livewire/Alpine,
             // inline styles, and data URIs for images and fonts. Also allows https: and http: for images.

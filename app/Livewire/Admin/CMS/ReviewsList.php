@@ -108,7 +108,9 @@ class ReviewsList extends Component
     {
         $this->importMessage = null;
         $this->importMessageType = null;
-        if ($tab) {
+        if ($tab === 'tripadvisor' || empty($tab)) {
+            $this->importTab = 'browser_sync';
+        } else {
             $this->importTab = $tab;
         }
         $this->showImportModal = true;
@@ -361,6 +363,26 @@ class ReviewsList extends Component
         $this->is_featured = false;
     }
 
+    public function getBrowserSyncBookmarkletProperty(): string
+    {
+        $targetUrl = url('/api/reviews/sync-browser');
+        $syncKey = hash_hmac('sha256', 'review_sync', config('app.key'));
+
+        $js = "javascript:(function(){var o=document.getElementById('safari-erp-sync-overlay');if(o)o.remove();var b=document.createElement('div');b.id='safari-erp-sync-overlay';b.style.cssText='position:fixed;bottom:24px;right:24px;z-index:99999999;background:#0f172a;color:#f8fafc;padding:16px 20px;border-radius:12px;box-shadow:0 20px 40px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.15);font-family:system-ui,-apple-system,sans-serif;font-size:13px;max-width:380px;line-height:1.4;';b.innerHTML='<div style=\"display:flex;align-items:center;gap:8px;margin-bottom:6px;\"><span style=\"display:inline-block;width:8px;height:8px;border-radius:50%;background:#38bdf8;\"></span><strong style=\"font-size:14px;color:#fff;\">Safari ERP Review Sync</strong></div><div id=\"safari-erp-status\" style=\"color:#94a3b8;\">Scanning TripAdvisor reviews...</div>';document.body.appendChild(b);var s=function(h,c){var e=document.getElementById('safari-erp-status');if(e){e.innerHTML=h;if(c)e.style.color=c;}};try{document.querySelectorAll('button,span,a').forEach(function(x){if(x.innerText&&x.innerText.trim().toLowerCase()==='read more'){try{x.click();}catch(e){}}});var revs=[],seen={};document.querySelectorAll('script[type=\"application/ld+json\"]').forEach(function(sc){try{var d=JSON.parse(sc.textContent||'{}');var items=Array.isArray(d)?d:(d['@graph']?d['@graph']:[d]);items.forEach(function(it){var rl=it.review?(Array.isArray(it.review)?it.review:[it.review]):[];rl.forEach(function(r){var a=(r.author&&r.author.name)?r.author.name:'TripAdvisor Traveler';var bd=r.reviewBody||'';var t=r.name||'';var k=a+'::'+t.slice(0,20);if(bd&&!seen[k]){seen[k]=true;revs.push({author_name:a,rating:parseFloat((r.reviewRating&&r.reviewRating.ratingValue)?r.reviewRating.ratingValue:5.0),title:t,content:bd,review_date:r.datePublished||null,review_url:r.url||window.location.href,source_id:r.url&&r.url.match(/r(\\d+)/)?'ta_'+r.url.match(/r(\\d+)/)[1]:null});}});});}catch(e){}});var sels=['div[data-automation=\"reviewCard\"]','div[data-reviewid]','div[class*=\"review-container\"]','div.WAllg'];var cds=[];for(var i=0;i<sels.length;i++){var f=document.querySelectorAll(sels[i]);if(f.length>0){cds=Array.from(f);break;}}if(cds.length===0){document.querySelectorAll('svg[aria-label*=\"bubble\"],span[class*=\"bubble_\"]').forEach(function(bb){var p=bb.closest('div[class*=\"Card\"],div[class*=\"item\"]')||bb.parentElement.parentElement.parentElement;if(p&&cds.indexOf(p)===-1)cds.push(p);});}cds.forEach(function(c){try{var aEl=c.querySelector('a[href*=\"/Profile/\"],span[class*=\"yCeNX\"],a[class*=\"ui_header_link\"]');var a=aEl?aEl.innerText.trim():null;var bEl=c.querySelector('svg[aria-label*=\"bubbles\"],svg[title*=\"bubbles\"],span[class*=\"bubble_\"]');var rt=5.0;if(bEl){var ar=bEl.getAttribute('aria-label')||bEl.getAttribute('title')||'';var ma=ar.match(/([0-9.]+)\\s*of\\s*5/);if(ma)rt=parseFloat(ma[1]);else{var cl=bEl.getAttribute('class')||'';var mc=cl.match(/bubble_(\\d+)/);if(mc)rt=parseInt(mc[1],10)/10;}}var tEl=c.querySelector('a[href*=\"/ShowUserReviews\"] span,div[data-test-target=\"review-title\"],h3,span[class*=\"title\"]');var t=tEl?tEl.innerText.trim():'';var cEl=c.querySelector('span[data-test-target=\"review-text\"],div[data-test-target=\"review-body\"],span[class*=\"yCeNX\"] span,div[class*=\"biGQs\"] span');var bd=cEl?cEl.innerText.trim():'';if(!bd){var pe=c.querySelector('p');if(pe)bd=pe.innerText.trim();}var lEl=c.querySelector('a[href*=\"/ShowUserReviews\"]');var rUrl=lEl?lEl.href:window.location.href;var idM=(c.getAttribute('data-reviewid')||rUrl).match(/r?(\\d{8,12})/);var sId=idM?'ta_'+idM[1]:null;var txt=c.innerText||'';var dm=txt.match(/(?:Written|Date of experience:?)\\s*([A-Za-z]+ \\d{4}|\\d{1,2} [A-Za-z]+ \\d{4})/i);var ds=dm?dm[1]:null;if(a&&bd){var k=a+'::'+(t||bd.slice(0,20));if(!seen[k]){seen[k]=true;revs.push({source_id:sId,author_name:a,rating:rt,title:t,content:bd,review_date:ds,review_url:rUrl});}}}catch(e){}});if(revs.length===0){s('⚠️ No reviews found on this page. Please open your TripAdvisor listing page.','#f87171');setTimeout(function(){b.remove();},6000);return;}s('Found <strong>'+revs.length+' review(s)</strong>. Syncing to Safari ERP...','#38bdf8');fetch('{$targetUrl}',{method:'POST',mode:'cors',headers:{'Content-Type':'application/json','Accept':'application/json','X-Sync-Key':'{$syncKey}'},body:JSON.stringify({token:'{$syncKey}',platform:'tripadvisor',reviews:revs})}).then(function(r){return r.json();}).then(function(d){if(d.success){s('✅ <strong>Success!</strong> '+d.message,'#4ade80');}else{s('⚠️ '+(d.message||'Sync failed'),'#fbbf24');}setTimeout(function(){b.remove();},5000);}).catch(function(err){s('❌ Connection failed: '+err.message,'#f87171');setTimeout(function(){b.remove();},8000);});}catch(err){s('❌ Error: '+err.message,'#f87171');setTimeout(function(){b.remove();},6000);}})();";
+
+        return $js;
+    }
+
+    public function getSyncKeyProperty(): string
+    {
+        return hash_hmac('sha256', 'review_sync', config('app.key'));
+    }
+
+    public function getSyncUrlProperty(): string
+    {
+        return url('/api/reviews/sync-browser');
+    }
+
     public function render()
     {
         $query = Review::query()
@@ -393,6 +415,8 @@ class ReviewsList extends Component
         return view('livewire.admin.cms.reviews-list', [
             'reviews' => $reviews,
             'stats' => $stats,
+            'browserSyncBookmarklet' => $this->browserSyncBookmarklet,
+            'syncUrl' => $this->syncUrl,
         ]);
     }
 }
