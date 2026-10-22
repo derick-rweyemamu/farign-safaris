@@ -377,11 +377,11 @@
 
                 <!-- Navigation Tabs -->
                 <div class="flex border-b border-gray-200 dark:border-gray-700 gap-2 sm:gap-4 text-xs font-bold overflow-x-auto pb-0.5">
-                    <!-- 1-Click Browser Sync (Recommended) -->
-                    <button wire:click="$set('importTab', 'browser_sync')"
-                        class="pb-2.5 transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap {{ $importTab === 'browser_sync' ? 'border-emerald-600 text-emerald-600 dark:text-emerald-400' : 'border-transparent text-gray-400 hover:text-gray-600' }}">
-                        <x-icon name="sparkles" class="w-4 h-4 text-amber-500" />
-                        {{ __('1-Click Sync') }}
+                    <!-- Smart Paste (Primary & Recommended) -->
+                    <button wire:click="$set('importTab', 'paste')"
+                        class="pb-2.5 transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap {{ $importTab === 'paste' ? 'border-emerald-600 text-emerald-600 dark:text-emerald-400' : 'border-transparent text-gray-400 hover:text-gray-600' }}">
+                        <x-icon name="document-text" class="w-4 h-4 text-emerald-500" />
+                        {{ __('Smart Copy & Paste') }}
                         <span class="px-1.5 py-0.5 text-[9px] rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-bold uppercase tracking-wider">{{ __('Recommended') }}</span>
                     </button>
 
@@ -389,7 +389,7 @@
                     <button wire:click="$set('importTab', 'tripadvisor')"
                         class="pb-2.5 transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap {{ $importTab === 'tripadvisor' ? 'border-[#00AA6C] text-[#00AA6C]' : 'border-transparent text-gray-400 hover:text-gray-600' }}">
                         <span class="w-4 h-4 rounded-full bg-[#00AA6C] text-white text-[9px] flex items-center justify-center font-black">TA</span>
-                        {{ __('TripAdvisor (Direct Scrape)') }}
+                        {{ __('TripAdvisor URL') }}
                     </button>
 
                     <!-- Google -->
@@ -404,13 +404,6 @@
                         class="pb-2.5 transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap {{ $importTab === 'safari_bookings' ? 'border-amber-600 text-amber-600' : 'border-transparent text-gray-400 hover:text-gray-600' }}">
                         <span class="w-4 h-4 rounded-full bg-amber-600 text-white text-[9px] flex items-center justify-center font-black">SB</span>
                         {{ __('SafariBookings') }}
-                    </button>
-
-                    <!-- Smart Paste -->
-                    <button wire:click="$set('importTab', 'paste')"
-                        class="pb-2.5 transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap {{ $importTab === 'paste' ? 'border-emerald-600 text-emerald-600' : 'border-transparent text-gray-400 hover:text-gray-600' }}">
-                        <x-icon name="document-text" class="w-4 h-4" />
-                        {{ __('Smart Paste') }}
                     </button>
 
                     <!-- Platform Links -->
@@ -429,96 +422,7 @@
                     </div>
                 @endif
 
-                <!-- Tab 0: 1-Click Browser Sync (Recommended) -->
-                @if($importTab === 'browser_sync')
-                    <div class="space-y-4">
-                        <div class="p-3.5 bg-gradient-to-r from-emerald-500/10 via-[#00AA6C]/10 to-amber-500/10 rounded-[3px] border border-emerald-500/30 flex items-start gap-3">
-                            <span class="p-2 rounded-[3px] bg-emerald-600 text-white shrink-0 mt-0.5">
-                                <x-icon name="sparkles" class="w-4 h-4 text-amber-300" />
-                            </span>
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2">
-                                    <h4 class="text-xs font-bold text-gray-900 dark:text-white">{{ __('1-Click TripAdvisor Sync (No Cloudflare Block)') }}</h4>
-                                    <span class="px-1.5 py-0.5 text-[9px] font-bold rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 uppercase tracking-wider">{{ __('Zero Friction') }}</span>
-                                </div>
-                                <p class="text-[11px] text-gray-600 dark:text-gray-300 mt-0.5">
-                                    {{ __('Because TripAdvisor blocks direct server cURL requests via Cloudflare HTTP 403, this 1-click browser bookmark extracts reviews right inside your open browser tab and securely transmits them to your database.') }}
-                                </p>
-                            </div>
-                        </div>
 
-                        <!-- Draggable Bookmarklet Container -->
-                        <div class="p-5 bg-gray-50 dark:bg-gray-800/40 rounded-[3px] border border-gray-200 dark:border-gray-700 text-center space-y-3">
-                            <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">
-                                {{ __('Drag this button up to your browser bookmarks bar:') }}
-                            </p>
-
-                            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-                                <a href="{{ $browserSyncBookmarklet }}"
-                                   onclick="event.preventDefault(); alert('Please DRAG this button into your browser Bookmarks Bar (or click Copy Code below)!');"
-                                   class="inline-flex items-center gap-2 px-5 py-3 rounded-[3px] bg-gradient-to-r from-[#00AA6C] to-emerald-700 hover:from-[#00925d] hover:to-emerald-800 text-white font-bold text-xs shadow-md hover:shadow-lg cursor-grab active:cursor-grabbing transition-all select-none border border-emerald-400/40 group">
-                                    <x-icon name="bookmark" class="w-4 h-4 text-amber-300 group-hover:scale-110 transition-transform" />
-                                    <span>⭐ {{ __('Sync TripAdvisor to Safari ERP') }}</span>
-                                </a>
-
-                                <div x-data="{ copied: false }">
-                                    <button type="button"
-                                        @click="navigator.clipboard.writeText('{{ addslashes($browserSyncBookmarklet) }}'); copied = true; setTimeout(() => copied = false, 3500)"
-                                        class="inline-flex items-center gap-1.5 px-3.5 py-3 text-xs font-semibold rounded-[3px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-750 shadow-xs transition-all">
-                                        <x-icon name="clipboard-document" class="w-3.5 h-3.5 text-gray-400" />
-                                        <span x-text="copied ? '{{ __('Copied to Clipboard! ✓') }}' : '{{ __('Copy Bookmarklet Code') }}'"></span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <p class="text-[11px] text-gray-400">
-                                {{ __('Tip: If your bookmarks bar is hidden, press') }} <kbd class="px-1 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-[10px] font-mono">Ctrl + Shift + B</kbd> {{ __('(or Cmd + Shift + B on Mac) to show it.') }}
-                            </p>
-                        </div>
-
-                        <!-- 3 Step Guide -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
-                            <div class="p-3 bg-white dark:bg-card rounded-[3px] border border-gray-100 dark:border-gray-800 space-y-1">
-                                <span class="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-[10px] font-black flex items-center justify-center">1</span>
-                                <h5 class="text-xs font-bold text-gray-800 dark:text-gray-200">{{ __('Save Bookmark') }}</h5>
-                                <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Drag the green button into your browser bookmarks bar once.') }}</p>
-                            </div>
-                            <div class="p-3 bg-white dark:bg-card rounded-[3px] border border-gray-100 dark:border-gray-800 space-y-1">
-                                <span class="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-[10px] font-black flex items-center justify-center">2</span>
-                                <h5 class="text-xs font-bold text-gray-800 dark:text-gray-200">{{ __('Open TripAdvisor') }}</h5>
-                                <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Go to your TripAdvisor attraction or reviews page in Chrome/Edge.') }}</p>
-                            </div>
-                            <div class="p-3 bg-white dark:bg-card rounded-[3px] border border-gray-100 dark:border-gray-800 space-y-1">
-                                <span class="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-[10px] font-black flex items-center justify-center">3</span>
-                                <h5 class="text-xs font-bold text-gray-800 dark:text-gray-200">{{ __('Click Bookmark') }}</h5>
-                                <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">{{ __('Click the bookmark! Reviews sync instantly into Safari ERP.') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- Listing Quick Link -->
-                        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 bg-gray-50 dark:bg-gray-800/40 rounded-[3px] border border-gray-100 dark:border-gray-800 text-xs">
-                            <div class="flex items-center gap-2 truncate">
-                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                                <span class="text-gray-500 dark:text-gray-400 font-medium">{{ __('Target API Endpoint:') }}</span>
-                                <code class="text-[11px] text-gray-700 dark:text-gray-300 font-mono">{{ $syncUrl }}</code>
-                            </div>
-                            @if($tripadvisorUrl)
-                                <a href="{{ $tripadvisorUrl }}" target="_blank"
-                                    class="inline-flex items-center gap-1.5 text-xs font-bold text-[#00AA6C] hover:underline whitespace-nowrap">
-                                    <span>{{ __('Open TripAdvisor Page') }}</span>
-                                    <x-icon name="arrow-top-right-on-square" class="w-3.5 h-3.5" />
-                                </a>
-                            @endif
-                        </div>
-
-                        <div class="flex justify-end gap-3 pt-2">
-                            <button wire:click="$set('showImportModal', false)"
-                                class="px-4 py-2 text-xs font-semibold rounded-[3px] border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
-                                {{ __('Close') }}
-                            </button>
-                        </div>
-                    </div>
-                @endif
 
                 <!-- Tab 1: TripAdvisor URL Fetcher -->
                 @if($importTab === 'tripadvisor')
@@ -554,7 +458,7 @@
                                 <x-icon name="information-circle" class="w-4 h-4 text-[#00AA6C]" />
                                 {{ __('How it works & Cloudflare Notice:') }}
                             </p>
-                            <p>{{ __('Connects to TripAdvisor and parses structured data and review cards. If TripAdvisor triggers Cloudflare HTTP 403, simply switch to the') }} <button type="button" wire:click="$set('importTab', 'browser_sync')" class="text-emerald-600 dark:text-emerald-400 font-bold underline">{{ __('⭐ 1-Click Sync tab') }}</button> {{ __('to import reviews directly via your browser with zero blocks.') }}</p>
+                            <p>{{ __('Connects to TripAdvisor and parses structured data and review cards. If TripAdvisor triggers Cloudflare HTTP 403, simply switch to the') }} <button type="button" wire:click="$set('importTab', 'paste')" class="text-emerald-600 dark:text-emerald-400 font-bold underline">{{ __('Smart Copy & Paste tab') }}</button> {{ __('to import reviews instantly with zero blocks.') }}</p>
                         </div>
 
                         <div class="flex justify-end gap-3 pt-2">
@@ -701,7 +605,51 @@
                 <!-- Tab 4: Smart Paste / JSON / HTML -->
                 @if($importTab === 'paste')
                     <div class="space-y-4">
-                        <div class="grid grid-cols-2 gap-4">
+                        <!-- Instructions Banner -->
+                        <div class="p-3.5 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-blue-500/10 rounded-[3px] border border-emerald-500/30 flex items-start gap-3">
+                            <span class="p-2 rounded-[3px] bg-emerald-600 text-white shrink-0 mt-0.5">
+                                <x-icon name="document-text" class="w-4 h-4 text-emerald-100" />
+                            </span>
+                            <div class="flex-1 text-xs">
+                                <h4 class="font-bold text-gray-900 dark:text-white">{{ __('Smart Copy & Paste (100% Reliable on Localhost & Live Server)') }}</h4>
+                                <p class="text-gray-600 dark:text-gray-300 mt-1 leading-relaxed">
+                                    {{ __('Bypasses all Cloudflare bot protection and browser network security. Simply copy reviews from TripAdvisor, Google, or SafariBookings and paste them below.') }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 2 Simple Methods Guide -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="p-3 bg-white dark:bg-card rounded-[3px] border border-gray-150 dark:border-gray-800 space-y-1">
+                                <div class="flex items-center gap-1.5 font-bold text-xs text-gray-800 dark:text-gray-200">
+                                    <span class="w-4 h-4 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-[10px] flex items-center justify-center font-black">A</span>
+                                    <span>{{ __('Method A: Copy Normal Text') }}</span>
+                                </div>
+                                <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">
+                                    {{ __('Highlight any review on TripAdvisor or Google with your mouse, press Ctrl+C, paste below, and click Parse & Import.') }}
+                                </p>
+                            </div>
+
+                            <div class="p-3 bg-white dark:bg-card rounded-[3px] border border-gray-150 dark:border-gray-800 space-y-1" x-data="{ copiedSnippet: false }">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-1.5 font-bold text-xs text-gray-800 dark:text-gray-200">
+                                        <span class="w-4 h-4 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-[10px] flex items-center justify-center font-black">B</span>
+                                        <span>{{ __('Method B: 1-Click Copy All') }}</span>
+                                    </div>
+                                    <button type="button"
+                                        @click="navigator.clipboard.writeText('(function(){var revs=[];document.querySelectorAll(\'script[type=\x22application/ld+json\x22]\').forEach(function(s){try{var d=JSON.parse(s.textContent);(Array.isArray(d)?d:(d[\x27@graph\x27]||[d])).forEach(function(x){if(x.reviewBody||x[\x27@type\x27]===\x27Review\x27){revs.push({author_name:(x.author&&x.author.name)||\x27Traveler\x27,rating:(x.reviewRating&&x.reviewRating.ratingValue)||5,title:x.name||\x27\x27,content:x.reviewBody||\x27\x27,review_date:x.datePublished||null});}});}catch(e){}});document.querySelectorAll(\x27[class*=\x22bubble_\x22], svg[aria-label*=\x225\x22], svg[aria-label*=\x224\x22]\x27).forEach(function(r){var p=r.parentElement;for(var i=0;i<6;i++){if(!p)break;var t=p.innerText||\x27\x27;if(t.length>60&&t.includes(\x27Reviewed\x27)){var l=t.split(\x27\\n\x27).filter(function(x){return x.trim().length>0;});if(l.length>=2){revs.push({author_name:l[0],rating:5,title:l[1],content:l.slice(2).join(\x27\\n\x27)});}break;}p=p.parentElement;}});var text=JSON.stringify(revs,null,2);navigator.clipboard.writeText(text).then(function(){alert(\x27Copied \x27+revs.length+\x27 review(s) to clipboard! Now paste into Safari ERP.\x27);});})();'); copiedSnippet = true; setTimeout(() => copiedSnippet = false, 3000)"
+                                        class="text-[10px] font-bold text-blue-600 hover:text-blue-700 dark:text-blue-400 flex items-center gap-1">
+                                        <x-icon name="clipboard-document" class="w-3 h-3" />
+                                        <span x-text="copiedSnippet ? '{{ __('Copied!') }}' : '{{ __('Copy Grabber') }}'"></span>
+                                    </button>
+                                </div>
+                                <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">
+                                    {{ __('Click "Copy Grabber", paste it into TripAdvisor developer console (F12) to copy ALL reviews to clipboard at once.') }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
                                     {{ __('Platform to Assign') }}
@@ -714,18 +662,34 @@
                                     <option value="direct">Direct / Guestbook</option>
                                 </select>
                             </div>
+
+                            <div class="flex items-end justify-end" x-data>
+                                <button type="button"
+                                    @click="navigator.clipboard.readText().then(t => { $wire.set('pasteContent', t) })"
+                                    class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-[3px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-750 shadow-xs transition-all">
+                                    <x-icon name="clipboard" class="w-3.5 h-3.5 text-emerald-600" />
+                                    <span>{{ __('Paste from Clipboard') }}</span>
+                                </button>
+                            </div>
                         </div>
 
                         <div>
                             <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
-                                {{ __('Paste Reviews (Formatted Text, HTML snippet, or JSON)') }}
+                                {{ __('Paste Reviews Below') }}
                             </label>
-                            <textarea wire:model="pasteContent" rows="7"
-                                placeholder="{{ __('Paste your review snippets here. Example:&#10;John Smith&#10;5 stars&#10;2 weeks ago&#10;Amazing Serengeti safari with Fargin Safaris!') }}"
+                            <textarea wire:model="pasteContent" rows="8"
+                                placeholder="{{ __('Paste review text, HTML, or JSON here...') }}
+
+{{ __('Example:') }}
+John Smith
+5 stars
+15 Day East Africa Safari
+We had an incredible experience on our safari tour..."
                                 class="w-full px-3.5 py-2 text-xs font-mono bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-emerald-600"></textarea>
-                            <p class="text-[11px] text-gray-400 mt-1">
-                                {{ __('Universal smart parser recognizes star ratings (5/5, ★★★★★), dates, titles, and comments.') }}
-                            </p>
+                            <div class="flex items-center justify-between text-[11px] text-gray-400 mt-1">
+                                <span>{{ __('Recognizes reviewer names, star ratings (5/5, ★★★★★), dates, titles, and comments.') }}</span>
+                                <span>{{ __('Automatic duplicate prevention enabled') }}</span>
+                            </div>
                         </div>
 
                         <div class="flex justify-end gap-3 pt-2">

@@ -32,7 +32,7 @@ class ReviewsList extends Component
     public ?int $editingId = null;
 
     // Import Form & Platform Links
-    public string $importTab = 'tripadvisor'; // tripadvisor, google, safari_bookings, paste, links
+    public string $importTab = 'paste'; // paste, tripadvisor, google, safari_bookings, links
     public string $tripadvisorUrl = '';
     public string $googleUrl = '';
     public string $googlePlaceId = '';
@@ -108,11 +108,7 @@ class ReviewsList extends Component
     {
         $this->importMessage = null;
         $this->importMessageType = null;
-        if ($tab === 'tripadvisor' || empty($tab)) {
-            $this->importTab = 'browser_sync';
-        } else {
-            $this->importTab = $tab;
-        }
+        $this->importTab = $tab ?? 'paste';
         $this->showImportModal = true;
     }
 
@@ -363,28 +359,6 @@ class ReviewsList extends Component
         $this->is_featured = false;
     }
 
-    public function getBrowserSyncBookmarkletProperty(): string
-    {
-        $targetUrl = url('/api/reviews/sync-browser');
-        $syncKey = hash_hmac('sha256', 'review_sync', config('app.key'));
-
-        $template = <<<'JS'
-javascript:(function(){var o = document.getElementById('safari-erp-sync-overlay');if (o) o.remove();var b = document.createElement('div');b.id = 'safari-erp-sync-overlay';b.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99999999;background:#0f172a;color:#f8fafc;padding:16px 20px;border-radius:12px;box-shadow:0 20px 40px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.15);font-family:system-ui,-apple-system,sans-serif;font-size:13px;max-width:380px;line-height:1.4;';b.innerHTML = '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#38bdf8;"></span><strong style="font-size:14px;color:#fff;">Safari ERP Review Sync</strong></div><div id="safari-erp-status" style="color:#94a3b8;">Scanning TripAdvisor reviews...</div>';document.body.appendChild(b);var s = function(h, c) {var e = document.getElementById('safari-erp-status');if (e) { e.innerHTML = h; if (c) e.style.color = c; }};try {document.querySelectorAll('button, span, a').forEach(function(x) {if (x.innerText && x.innerText.trim().toLowerCase() === 'read more') {try { x.click(); } catch(e){}}});var revs = [];var seen = {};var addRev = function(r) {var a = (r.author_name || '').trim();var c = (r.content || '').trim();if (!a || !c || c.length < 15) return;var k = a.toLowerCase() + '::' + c.slice(0, 30).toLowerCase();if (!seen[k]) {seen[k] = true;revs.push({source_id: r.source_id || null,author_name: a,rating: parseFloat(r.rating || 5.0),title: (r.title || '').trim(),content: c,review_date: r.review_date || null,review_url: r.review_url || window.location.href});}};var parseRating = function(el) {if (!el) return 5.0;var b = el.matches && el.matches('svg, [class*="bubble_"]') ? el : el.querySelector('[class*="ui_bubble_rating"], [class*="bubble_"], svg[aria-label*="5"], svg[aria-label*="4"], svg[aria-label*="3"], svg[aria-label*="bubble"], svg[title*="5"], svg.UctUV');if (b) {var ar = b.getAttribute('aria-label') || b.getAttribute('title') || '';var ma = ar.match(/([0-9.]+)\s*of\s*5/);if (ma) return parseFloat(ma[1]);var cls = b.getAttribute('class') || '';var mc = cls.match(/bubble_(\d+)/);if (mc) return parseInt(mc[1], 10) / 10;}return 5.0;};var parseDate = function(txt) {var dm = (txt || '').match(/(?:Written|Reviewed|Date of experience:?|Visited)\s*([A-Za-z]+ \d{1,2},? \d{4}|\d{1,2} [A-Za-z]+ \d{4}|[A-Za-z]+ \d{4})/i);return dm ? dm[1] : null;};document.querySelectorAll('script[type="application/ld+json"]').forEach(function(sc) {try {var d = JSON.parse(sc.textContent || '{}');var items = Array.isArray(d) ? d : (d['@graph'] ? d['@graph'] : [d]);items.forEach(function(it) {if (it['@type'] === 'Review' || it.reviewBody) {var a = (it.author && (it.author.name || it.author)) ? (it.author.name || it.author) : 'TripAdvisor Traveler';var mId = it.url && it.url.match(/r(\d+)/) ? 'ta_' + it.url.match(/r(\d+)/)[1] : null;addRev({author_name: a,rating: it.reviewRating ? (it.reviewRating.ratingValue || 5.0) : 5.0,title: it.name || it.headline || '',content: it.reviewBody || it.description || '',review_date: it.datePublished || null,review_url: it.url || window.location.href,source_id: mId});}if (it.review) {var rl = Array.isArray(it.review) ? it.review : [it.review];rl.forEach(function(rv) {var a = (rv.author && (rv.author.name || rv.author)) ? (rv.author.name || rv.author) : 'TripAdvisor Traveler';var mId = rv.url && rv.url.match(/r(\d+)/) ? 'ta_' + rv.url.match(/r(\d+)/)[1] : null;addRev({author_name: a,rating: rv.reviewRating ? (rv.reviewRating.ratingValue || 5.0) : 5.0,title: rv.name || rv.headline || '',content: rv.reviewBody || '',review_date: rv.datePublished || null,review_url: rv.url || window.location.href,source_id: mId});});}});} catch(e){}});document.querySelectorAll('div[role="dialog"], div[aria-modal="true"], div[class*="modal"]').forEach(function(dlg) {try {var aEl = dlg.querySelector('div[class*="avatar"] + div span, [class*="username"], [data-test-target="review-author"], h4, span.yCeNX, strong');var a = aEl ? aEl.innerText.split('\n')[0].trim() : '';var tEl = dlg.querySelector('h1, h2, h3, [data-test-target="review-title"], [class*="title"]');var t = tEl ? tEl.innerText.trim() : '';var bEl = dlg.querySelector('div[data-test-target="review-body"], span[data-test-target="review-text"], div[class*="content"], div[class*="body"], p');var bd = bEl ? bEl.innerText.trim() : '';if (a && bd) {addRev({author_name: a,rating: parseRating(dlg),title: t,content: bd,review_date: parseDate(dlg.innerText),review_url: window.location.href});}} catch(e){}});var ratingNodes = document.querySelectorAll('[class*="ui_bubble_rating"], [class*="bubble_"], svg[aria-label*="5"], svg[aria-label*="4"], svg[aria-label*="bubble"], svg.UctUV');ratingNodes.forEach(function(rNode) {try {var curr = rNode.parentElement;var box = null;for (var l = 0; l < 7; l++) {if (!curr || curr === document.body) break;var txt = curr.innerText || '';if (txt.length > 50 && (txt.includes('Reviewed') || txt.includes('Written') || txt.includes('Visited') || txt.includes('Date of experience') || txt.includes('contribution'))) {box = curr;if (txt.length < 2500) break;}curr = curr.parentElement;}if (box) {var rawLines = box.innerText.split('\n').map(function(x){ return x.trim(); }).filter(function(x){ return x.length > 0; });var cleanLines = rawLines.filter(function(line) {var low = line.toLowerCase();if (low === 'helpful' || low.startsWith('helpful (') || low.startsWith('thank ') || low === 'share' || low === 'save') return false;if (low.includes('transparency report') || low.includes('subjective opinion') || low.startsWith('review of ')) return false;if (/^\d+\s*contribution/i.test(low) || /^\d+$/i.test(line)) return false;return true;});if (cleanLines.length >= 2) {var authorCandidate = cleanLines[0];if (authorCandidate.length <= 40 && !authorCandidate.startsWith('Reviewed')) {var titleCandidate = '';var bodyParts = [];var second = cleanLines[1];var isDateLine = /^(?:Reviewed|Written|Visited|Date)/i.test(second);var startIdx = 1;if (second && second.length < 90 && !isDateLine && cleanLines.length >= 3) {titleCandidate = second;startIdx = 2;}for (var idx = startIdx; idx < cleanLines.length; idx++) {if (!/^(?:Reviewed|Written|Visited|Date of experience)/i.test(cleanLines[idx])) {bodyParts.push(cleanLines[idx]);}}var bodyText = bodyParts.join('\n\n').trim();var revUrl = window.location.href;var linkEl = box.querySelector('a[href*="/ShowUserReviews"]');if (linkEl) revUrl = linkEl.href;var idMatch = revUrl.match(/r(\d{8,12})/);addRev({source_id: idMatch ? 'ta_' + idMatch[1] : null,author_name: authorCandidate,rating: parseRating(rNode),title: titleCandidate,content: bodyText,review_date: parseDate(box.innerText),review_url: revUrl});}}}} catch(e){}});if (revs.length === 0) {s('⚠️ No reviews found on this page. Please open your TripAdvisor review page or modal.', '#f87171');setTimeout(function(){ b.remove(); }, 6000);return;}s('Found <strong>' + revs.length + ' review(s)</strong>. Syncing...', '#38bdf8');var targetUrl = '__TARGET_URL__';var syncKey = '__SYNC_KEY__';var sendViaFormBridge = function(note) {s('🚀 ' + (note || 'Transmitting to Safari ERP...'), '#38bdf8');var form = document.createElement('form');form.method = 'POST';form.action = targetUrl;form.target = '_blank';var input = document.createElement('input');input.type = 'hidden';input.name = 'payload';input.value = JSON.stringify({ token: syncKey, platform: 'tripadvisor', reviews: revs });form.appendChild(input);document.body.appendChild(form);form.submit();setTimeout(function(){ form.remove(); }, 2000);s('✅ <strong>Sent!</strong> ' + revs.length + ' review(s) synced to Safari ERP.', '#4ade80');setTimeout(function(){ b.remove(); }, 6000);};var isMixed = (window.location.protocol === 'https:' && targetUrl.indexOf('http:') === 0);if (isMixed) {sendViaFormBridge('Syncing to Safari ERP localhost...');} else {fetch(targetUrl, {method: 'POST',mode: 'cors',headers: {'Content-Type': 'application/json','Accept': 'application/json','X-Sync-Key': syncKey},body: JSON.stringify({ token: syncKey, platform: 'tripadvisor', reviews: revs })}).then(function(r){ return r.json(); }).then(function(d){if (d.success) {s('✅ <strong>Success!</strong> ' + d.message, '#4ade80');} else {s('⚠️ ' + (d.message || 'Sync failed'), '#fbbf24');}setTimeout(function(){ b.remove(); }, 6000);}).catch(function(err){sendViaFormBridge('Retrying via backup bridge window...');});}} catch(err) {s('❌ Error: ' + err.message, '#f87171');setTimeout(function(){ b.remove(); }, 6000);}})();
-JS;
-
-        return str_replace(['__TARGET_URL__', '__SYNC_KEY__'], [$targetUrl, $syncKey], $template);
-    }
-
-    public function getSyncKeyProperty(): string
-    {
-        return hash_hmac('sha256', 'review_sync', config('app.key'));
-    }
-
-    public function getSyncUrlProperty(): string
-    {
-        return url('/api/reviews/sync-browser');
-    }
-
     public function render()
     {
         $query = Review::query()
@@ -417,8 +391,6 @@ JS;
         return view('livewire.admin.cms.reviews-list', [
             'reviews' => $reviews,
             'stats' => $stats,
-            'browserSyncBookmarklet' => $this->browserSyncBookmarklet,
-            'syncUrl' => $this->syncUrl,
         ]);
     }
 }

@@ -237,9 +237,6 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 Route::get('/webhooks/meta-leads', [\App\Http\Controllers\Api\MetaLeadWebhookController::class, 'verify'])->name('webhooks.meta-leads.verify');
 Route::post('/webhooks/meta-leads', [\App\Http\Controllers\Api\MetaLeadWebhookController::class, 'handle'])->name('webhooks.meta-leads.handle');
 
-// Review 1-Click Browser Sync API
-Route::match(['GET', 'POST', 'OPTIONS'], '/api/reviews/sync-browser', [\App\Http\Controllers\Api\ReviewSyncController::class, 'sync'])
-    ->name('api.reviews.sync-browser');
 
 
 // Frontend Routes
