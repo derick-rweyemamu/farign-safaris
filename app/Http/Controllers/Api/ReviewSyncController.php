@@ -59,11 +59,24 @@ class ReviewSyncController extends Controller
         $service = new ReviewImportService();
         $result = $service->importFromArray($reviews, $platform);
 
+        $imported = $result['imported'];
+        $skipped = $result['skipped'];
+
+        if ($imported > 0 && $skipped === 0) {
+            $msg = "Imported {$imported} new review(s) successfully!";
+        } elseif ($imported > 0 && $skipped > 0) {
+            $msg = "Imported {$imported} new review(s) and refreshed {$skipped} existing review(s).";
+        } elseif ($skipped > 0) {
+            $msg = "Synced! This review was already saved in your database (refreshed with latest details).";
+        } else {
+            $msg = "Processed " . count($reviews) . " review item(s).";
+        }
+
         return response()->json([
             'success' => true,
-            'message' => "Successfully processed " . count($reviews) . " review(s): {$result['imported']} newly added, {$result['skipped']} duplicates updated.",
-            'imported' => $result['imported'],
-            'skipped' => $result['skipped'],
+            'message' => $msg,
+            'imported' => $imported,
+            'skipped' => $skipped,
             'errors' => $result['errors'],
             'total_parsed' => count($reviews),
         ])
