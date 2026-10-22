@@ -44,14 +44,15 @@ class ReviewImportService
                 $reviewUrl = $item['review_url'] ?? $item['url'] ?? null;
                 $sourceId = $item['source_id'] ?? $this->extractSourceId($reviewUrl, $authorName, $reviewDate);
 
-                // Check for existing review
-                $query = Review::query();
+                // Check for existing review (match by source_id OR author + platform)
+                $query = Review::query()->where('platform', $platform);
                 if (!empty($sourceId)) {
-                    $query->where('source_id', $sourceId);
+                    $query->where(function ($q) use ($sourceId, $authorName) {
+                        $q->where('source_id', $sourceId)
+                          ->orWhere('author_name', $authorName);
+                    });
                 } else {
-                    $query->where('author_name', $authorName)
-                          ->where('platform', $platform)
-                          ->when($reviewDate, fn($q) => $q->whereDate('review_date', $reviewDate));
+                    $query->where('author_name', $authorName);
                 }
 
                 $existing = $query->first();
@@ -80,6 +81,22 @@ class ReviewImportService
                 ];
 
                 if ($existing) {
+                    // Enrich existing record with highest-quality details
+                    if (empty($data['title']) && !empty($existing->title)) {
+                        $data['title'] = $existing->title;
+                    }
+                    if (empty($data['source_id']) && !empty($existing->source_id)) {
+                        $data['source_id'] = $existing->source_id;
+                    }
+                    if (empty($data['review_date']) && !empty($existing->review_date)) {
+                        $data['review_date'] = $existing->review_date;
+                    }
+                    if (empty($data['trip_type']) && !empty($existing->trip_type)) {
+                        $data['trip_type'] = $existing->trip_type;
+                    }
+                    if (strlen($existing->content) > strlen($data['content'])) {
+                        $data['content'] = $existing->content;
+                    }
                     $existing->update($data);
                     $skipped++;
                 } else {
