@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Services\ReviewImportService;
+use App\Models\Review;
 use Illuminate\Database\Seeder;
 
 class ReviewSeeder extends Seeder
@@ -132,7 +132,14 @@ class ReviewSeeder extends Seeder
             ],
         ];
 
-        $service = new ReviewImportService();
-        $service->importFromArray($reviews, 'tripadvisor');
+        foreach ($reviews as $rev) {
+            Review::updateOrCreate(
+                [
+                    'author_name' => $rev['author_name'],
+                    'platform' => $rev['platform'] ?? 'tripadvisor',
+                ],
+                $rev
+            );
+        }
     }
 }

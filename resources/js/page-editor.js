@@ -4370,14 +4370,22 @@ function buildReviewsPreviewHtml(attrs = {}) {
         </div>`;
     }).join('');
 
+    const showAddReview = attrs['data-show-add-review'] !== 'false';
+
     return `
     <div style="font-family:'Inter', sans-serif;">
-        <div style="margin-bottom:32px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:32px; flex-wrap:wrap;">
             <div style="max-width:600px;">
                 ${subheading ? `<div style="display:inline-block; padding:4px 12px; border-radius:999px; background:rgba(202,154,46,0.15); border:1px solid rgba(202,154,46,0.3); color:#CA9A2E; font-size:11px; font-weight:bold; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px;">★ ${subheading}</div>` : ''}
                 <h2 style="font-size:32px; font-weight:900; color:#fff; line-height:1.2; margin:0;">${heading}</h2>
                 ${description ? `<p style="font-size:14px; color:#cbd5e1; margin-top:8px;">${description}</p>` : ''}
             </div>
+            ${showAddReview ? `
+            <div>
+                <span style="display:inline-flex; align-items:center; gap:6px; padding:10px 18px; border-radius:3px; background:#CA9A2E; color:#fff; font-size:13px; font-weight:bold; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+                    ✎ Write a Review
+                </span>
+            </div>` : ''}
         </div>
         <div style="display:${layout === 'slider' ? 'flex' : 'grid'}; ${layout === 'slider' ? 'gap:24px; overflow-x:auto; padding-bottom:16px;' : 'grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:24px;'}">
             ${cardsHtml}
@@ -4402,6 +4410,7 @@ editor.DomComponents.addType('reviews-block', {
                 'data-limit': '6',
                 'data-layout': 'slider',
                 'data-show-badges': 'true',
+                'data-show-add-review': 'true',
                 'data-tripadvisor-url': 'https://www.tripadvisor.com/Attraction_Review-g297913-d33011633-Reviews-Fargin_Safaris-Arusha_Arusha_Region.html',
                 'data-google-url': 'https://www.google.com/search?q=Fargin+Safaris+reviews'
             },
@@ -4471,6 +4480,15 @@ editor.DomComponents.addType('reviews-block', {
                     ]
                 },
                 {
+                    type: 'select',
+                    name: 'data-show-add-review',
+                    label: 'Show "Add Review" Button',
+                    options: [
+                        { value: 'true', name: 'Enabled' },
+                        { value: 'false', name: 'Disabled' }
+                    ]
+                },
+                {
                     type: 'text',
                     name: 'data-tripadvisor-url',
                     label: 'TripAdvisor Profile Link',
@@ -4485,7 +4503,7 @@ editor.DomComponents.addType('reviews-block', {
             ]
         },
         init() {
-            this.on('change:attributes:data-subheading change:attributes:data-heading change:attributes:data-description change:attributes:data-platform change:attributes:data-mode change:attributes:data-limit change:attributes:data-layout change:attributes:data-show-badges change:attributes:data-tripadvisor-url change:attributes:data-google-url', this.updateCanvasHtml);
+            this.on('change:attributes:data-subheading change:attributes:data-heading change:attributes:data-description change:attributes:data-platform change:attributes:data-mode change:attributes:data-limit change:attributes:data-layout change:attributes:data-show-badges change:attributes:data-show-add-review change:attributes:data-tripadvisor-url change:attributes:data-google-url', this.updateCanvasHtml);
             this.updateCanvasHtml();
         },
         updateCanvasHtml() {

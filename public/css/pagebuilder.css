@@ -46,10 +46,10 @@ body.frontend-body {
   overflow-x: hidden;
 }
 
-body.frontend-body p,
-body.frontend-body ul,
-body.frontend-body ol,
-body.frontend-body li,
+body.frontend-body p:not(header *):not(nav *):not(footer *),
+body.frontend-body ul:not(header *):not(nav *):not(footer *),
+body.frontend-body ol:not(header *):not(nav *):not(footer *),
+body.frontend-body li:not(header *):not(nav *):not(footer *),
 body.frontend-body td,
 body.frontend-body th {
   font-family: "Lora", Georgia, serif;

@@ -18,11 +18,6 @@
                 <x-icon name="link" class="w-4 h-4 text-amber-500" />
                 <span class="hidden sm:inline">{{ __('Platform Links') }}</span>
             </button>
-            <button wire:click="openImportModal()"
-                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-[3px] bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition-all">
-                <x-icon name="arrow-down-tray" class="w-4 h-4" />
-                {{ __('Pull / Import Reviews') }}
-            </button>
             <button wire:click="openCreateModal"
                 class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-[3px] bg-[#455537] hover:bg-[#354329] text-white shadow-sm transition-all">
                 <x-icon name="plus" class="w-4 h-4" />
@@ -70,45 +65,33 @@
         </div>
 
         <!-- TripAdvisor -->
-        <div class="bg-card rounded-[3px] p-4 border border-gray-100 dark:border-gray-800 shadow-sm cursor-pointer hover:border-[#00AA6C] transition-colors"
-            wire:click="openImportModal('tripadvisor')" title="{{ __('Click to fetch TripAdvisor reviews') }}">
+        <div class="bg-card rounded-[3px] p-4 border border-gray-100 dark:border-gray-800 shadow-sm">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-[#00AA6C] uppercase tracking-wider">{{ __('TripAdvisor') }}</span>
                 <span class="text-xs font-black text-[#00AA6C]">TA</span>
             </div>
             <p class="text-2xl font-black text-gray-900 dark:text-white mt-2">{{ $stats['tripadvisor'] }}</p>
-            <p class="text-xs text-gray-400 mt-0.5 flex items-center justify-between">
-                <span>{{ __('TripAdvisor') }}</span>
-                <span class="text-[#00AA6C] font-semibold text-[10px]">Fetch →</span>
-            </p>
+            <p class="text-xs text-gray-400 mt-0.5">{{ __('TripAdvisor') }}</p>
         </div>
 
         <!-- Google -->
-        <div class="bg-card rounded-[3px] p-4 border border-gray-100 dark:border-gray-800 shadow-sm cursor-pointer hover:border-[#4285F4] transition-colors"
-            wire:click="openImportModal('google')" title="{{ __('Click to fetch Google reviews') }}">
+        <div class="bg-card rounded-[3px] p-4 border border-gray-100 dark:border-gray-800 shadow-sm">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-[#4285F4] uppercase tracking-wider">{{ __('Google') }}</span>
                 <span class="text-xs font-black text-[#4285F4]">G</span>
             </div>
             <p class="text-2xl font-black text-gray-900 dark:text-white mt-2">{{ $stats['google'] }}</p>
-            <p class="text-xs text-gray-400 mt-0.5 flex items-center justify-between">
-                <span>{{ __('Google Reviews') }}</span>
-                <span class="text-[#4285F4] font-semibold text-[10px]">Fetch →</span>
-            </p>
+            <p class="text-xs text-gray-400 mt-0.5">{{ __('Google Reviews') }}</p>
         </div>
 
         <!-- SafariBookings -->
-        <div class="bg-card rounded-[3px] p-4 border border-gray-100 dark:border-gray-800 shadow-sm cursor-pointer hover:border-amber-600 transition-colors"
-            wire:click="openImportModal('safari_bookings')" title="{{ __('Click to fetch SafariBookings reviews') }}">
+        <div class="bg-card rounded-[3px] p-4 border border-gray-100 dark:border-gray-800 shadow-sm">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">{{ __('SafariBookings') }}</span>
                 <span class="text-xs font-black text-amber-600">SB</span>
             </div>
             <p class="text-2xl font-black text-gray-900 dark:text-white mt-2">{{ $stats['safari_bookings'] }}</p>
-            <p class="text-xs text-gray-400 mt-0.5 flex items-center justify-between">
-                <span>{{ __('SafariBookings') }}</span>
-                <span class="text-amber-600 font-semibold text-[10px]">Fetch →</span>
-            </p>
+            <p class="text-xs text-gray-400 mt-0.5">{{ __('SafariBookings') }}</p>
         </div>
 
         <!-- Average Rating -->
@@ -356,432 +339,85 @@
         @endif
     </div>
 
-    <!-- ── Import / Pull Reviews Modal ────────────────────────────────────── -->
-    @if($showImportModal)
+    <!-- ── Platform Links Modal ────────────────────────────────────────── -->
+    @if($showLinksModal)
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
-            <div class="bg-white dark:bg-card border border-gray-200 dark:border-gray-800 rounded-[3px] shadow-2xl max-w-2xl w-full p-6 space-y-5 animate-scaleIn max-h-[90vh] overflow-y-auto">
+            <div class="bg-white dark:bg-card border border-gray-200 dark:border-gray-800 rounded-[3px] shadow-2xl max-w-lg w-full p-6 space-y-4 animate-scaleIn">
                 <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
-                    <div class="flex items-center gap-2.5">
-                        <span class="p-2 rounded-[3px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600">
-                            <x-icon name="arrow-down-tray" class="w-5 h-5" />
-                        </span>
-                        <div>
-                            <h3 class="font-bold text-base text-gray-900 dark:text-white">{{ __('Pull / Synchronize Reviews') }}</h3>
-                            <p class="text-xs text-gray-400">{{ __('Fetch reviews directly from TripAdvisor, Google Reviews & SafariBookings') }}</p>
-                        </div>
+                    <div class="flex items-center gap-2">
+                        <x-icon name="link" class="w-5 h-5 text-amber-500" />
+                        <h3 class="font-bold text-base text-gray-900 dark:text-white">{{ __('Review Platform Links') }}</h3>
                     </div>
-                    <button wire:click="$set('showImportModal', false)" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                    <button wire:click="$set('showLinksModal', false)" class="text-gray-400 hover:text-gray-600">
                         <x-icon name="x-mark" class="w-5 h-5" />
                     </button>
                 </div>
 
-                <!-- Navigation Tabs -->
-                <div class="flex border-b border-gray-200 dark:border-gray-700 gap-2 sm:gap-4 text-xs font-bold overflow-x-auto pb-0.5">
-                    <!-- Smart Paste (Primary & Recommended) -->
-                    <button wire:click="$set('importTab', 'paste')"
-                        class="pb-2.5 transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap {{ $importTab === 'paste' ? 'border-emerald-600 text-emerald-600 dark:text-emerald-400' : 'border-transparent text-gray-400 hover:text-gray-600' }}">
-                        <x-icon name="document-text" class="w-4 h-4 text-emerald-500" />
-                        {{ __('Smart Copy & Paste') }}
-                        <span class="px-1.5 py-0.5 text-[9px] rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-bold uppercase tracking-wider">{{ __('Recommended') }}</span>
-                    </button>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                    {{ __('Save your profile links for TripAdvisor, Google Reviews, and SafariBookings to display badges across the website.') }}
+                </p>
 
-                    <!-- TripAdvisor Direct URL Fetcher -->
-                    <button wire:click="$set('importTab', 'tripadvisor')"
-                        class="pb-2.5 transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap {{ $importTab === 'tripadvisor' ? 'border-[#00AA6C] text-[#00AA6C]' : 'border-transparent text-gray-400 hover:text-gray-600' }}">
-                        <span class="w-4 h-4 rounded-full bg-[#00AA6C] text-white text-[9px] flex items-center justify-center font-black">TA</span>
-                        {{ __('TripAdvisor URL') }}
-                    </button>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1 flex items-center gap-1.5">
+                            <span class="w-3.5 h-3.5 rounded-full bg-[#00AA6C] text-white text-[8px] flex items-center justify-center font-bold">TA</span>
+                            {{ __('TripAdvisor Listing URL') }}
+                        </label>
+                        <input type="url" wire:model="tripadvisorUrl"
+                            class="w-full px-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white"
+                            placeholder="https://www.tripadvisor.com/Attraction_Review-..." />
+                        @error('tripadvisorUrl') <span class="text-red-500 text-[10px]">{{ $message }}</span> @enderror
+                    </div>
 
-                    <!-- Google -->
-                    <button wire:click="$set('importTab', 'google')"
-                        class="pb-2.5 transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap {{ $importTab === 'google' ? 'border-[#4285F4] text-[#4285F4]' : 'border-transparent text-gray-400 hover:text-gray-600' }}">
-                        <span class="w-4 h-4 rounded-full bg-[#4285F4] text-white text-[9px] flex items-center justify-center font-black">G</span>
-                        {{ __('Google Reviews') }}
-                    </button>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1 flex items-center gap-1.5">
+                            <span class="w-3.5 h-3.5 rounded-full bg-[#4285F4] text-white text-[8px] flex items-center justify-center font-bold">G</span>
+                            {{ __('Google Reviews / Maps URL') }}
+                        </label>
+                        <input type="text" wire:model="googleUrl"
+                            class="w-full px-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white"
+                            placeholder="https://maps.app.goo.gl/... or https://www.google.com/maps/place/..." />
+                        @error('googleUrl') <span class="text-red-500 text-[10px]">{{ $message }}</span> @enderror
+                    </div>
 
-                    <!-- SafariBookings -->
-                    <button wire:click="$set('importTab', 'safari_bookings')"
-                        class="pb-2.5 transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap {{ $importTab === 'safari_bookings' ? 'border-amber-600 text-amber-600' : 'border-transparent text-gray-400 hover:text-gray-600' }}">
-                        <span class="w-4 h-4 rounded-full bg-amber-600 text-white text-[9px] flex items-center justify-center font-black">SB</span>
-                        {{ __('SafariBookings') }}
-                    </button>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1 flex items-center gap-1.5">
+                            <span class="w-3.5 h-3.5 rounded-full bg-amber-600 text-white text-[8px] flex items-center justify-center font-bold">SB</span>
+                            {{ __('SafariBookings Reviews URL') }}
+                        </label>
+                        <input type="url" wire:model="safaribookingsUrl"
+                            class="w-full px-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white"
+                            placeholder="https://www.safaribookings.com/reviews/p... or https://www.safaribookings.com/operators/..." />
+                        @error('safaribookingsUrl') <span class="text-red-500 text-[10px]">{{ $message }}</span> @enderror
+                    </div>
 
-                    <!-- Platform Links -->
-                    <button wire:click="$set('importTab', 'links')"
-                        class="pb-2.5 transition-all border-b-2 flex items-center gap-1.5 whitespace-nowrap {{ $importTab === 'links' ? 'border-purple-600 text-purple-600' : 'border-transparent text-gray-400 hover:text-gray-600' }}">
-                        <x-icon name="link" class="w-4 h-4" />
-                        {{ __('Platform Links') }}
-                    </button>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                        <div>
+                            <label class="block text-[11px] font-semibold text-gray-600 dark:text-gray-400 mb-1">{{ __('Google Place ID (Optional)') }}</label>
+                            <input type="text" wire:model="googlePlaceId"
+                                class="w-full px-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white"
+                                placeholder="ChIJ..." />
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold text-gray-600 dark:text-gray-400 mb-1">{{ __('Google Places API Key (Optional)') }}</label>
+                            <input type="password" wire:model="googleApiKey"
+                                class="w-full px-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white"
+                                placeholder="AIzaSy..." />
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Feedback alert -->
-                @if($importMessage)
-                    <div class="p-3.5 rounded-[3px] text-xs font-medium flex items-start gap-2.5 {{ $importMessageType === 'success' ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800' : 'bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800' }}">
-                        <x-icon name="{{ $importMessageType === 'success' ? 'check-circle' : 'exclamation-circle' }}" class="w-4 h-4 flex-shrink-0 mt-0.5" />
-                        <div class="flex-1">{{ $importMessage }}</div>
-                    </div>
-                @endif
-
-
-
-                <!-- Tab 1: TripAdvisor URL Fetcher -->
-                @if($importTab === 'tripadvisor')
-                    <div class="space-y-4">
-                        <div class="p-3 bg-[#00AA6C]/10 rounded-[3px] border border-[#00AA6C]/20 flex items-center gap-3">
-                            <span class="w-8 h-8 rounded-full bg-[#00AA6C] text-white flex items-center justify-center font-black text-xs">TA</span>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-900 dark:text-white">{{ __('TripAdvisor Review Fetcher') }}</h4>
-                                <p class="text-[11px] text-gray-600 dark:text-gray-300">{{ __('Pulls traveler reviews, star ratings, dates, and tour details directly from your TripAdvisor listing.') }}</p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
-                                {{ __('TripAdvisor Listing URL') }}
-                            </label>
-                            <input type="url" wire:model="tripadvisorUrl"
-                                class="w-full px-3.5 py-2 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#00AA6C]"
-                                placeholder="https://www.tripadvisor.com/Attraction_Review-..." />
-                            <p class="text-[11px] text-gray-400 mt-1">
-                                {{ __('Enter your TripAdvisor attraction or tour listing URL.') }}
-                            </p>
-                            @error('tripadvisorUrl') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                        </div>
-
-                        <label class="flex items-center gap-2 cursor-pointer text-xs text-gray-600 dark:text-gray-300">
-                            <input type="checkbox" wire:model="saveAsDefault" class="rounded text-[#00AA6C] focus:ring-[#00AA6C]">
-                            <span>{{ __('Save as default TripAdvisor URL for website badges and future sync') }}</span>
-                        </label>
-
-                        <div class="p-3 bg-gray-50 dark:bg-gray-800/40 rounded-[3px] border border-gray-100 dark:border-gray-800 text-xs text-gray-500 dark:text-gray-400 space-y-1">
-                            <p class="font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
-                                <x-icon name="information-circle" class="w-4 h-4 text-[#00AA6C]" />
-                                {{ __('How it works & Cloudflare Notice:') }}
-                            </p>
-                            <p>{{ __('Connects to TripAdvisor and parses structured data and review cards. If TripAdvisor triggers Cloudflare HTTP 403, simply switch to the') }} <button type="button" wire:click="$set('importTab', 'paste')" class="text-emerald-600 dark:text-emerald-400 font-bold underline">{{ __('Smart Copy & Paste tab') }}</button> {{ __('to import reviews instantly with zero blocks.') }}</p>
-                        </div>
-
-                        <div class="flex justify-end gap-3 pt-2">
-                            <button wire:click="$set('showImportModal', false)"
-                                class="px-4 py-2 text-xs font-semibold rounded-[3px] border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
-                                {{ __('Close') }}
-                            </button>
-                            <button wire:click="executeScrape" wire:loading.attr="disabled"
-                                class="inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold rounded-[3px] bg-[#00AA6C] hover:bg-[#008f5a] text-white shadow-sm disabled:opacity-50">
-                                <span wire:loading wire:target="executeScrape" class="animate-spin">⌛</span>
-                                <x-icon wire:loading.remove wire:target="executeScrape" name="arrow-path" class="w-3.5 h-3.5" />
-                                {{ __('Fetch TripAdvisor Reviews') }}
-                            </button>
-                        </div>
-                    </div>
-                @endif
-
-                <!-- Tab 2: Google Reviews Fetcher -->
-                @if($importTab === 'google')
-                    <div class="space-y-4">
-                        <div class="p-3 bg-[#4285F4]/10 rounded-[3px] border border-[#4285F4]/20 flex items-center gap-3">
-                            <span class="w-8 h-8 rounded-full bg-[#4285F4] text-white flex items-center justify-center font-black text-xs">G</span>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-900 dark:text-white">{{ __('Google Reviews Fetcher') }}</h4>
-                                <p class="text-[11px] text-gray-600 dark:text-gray-300">{{ __('Fetch Google Reviews using your Google Maps link, Place ID, or official Google Places API.') }}</p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
-                                {{ __('Google Maps / Share Link') }}
-                            </label>
-                            <input type="text" wire:model="googleUrl"
-                                class="w-full px-3.5 py-2 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#4285F4]"
-                                placeholder="https://maps.app.goo.gl/... or https://www.google.com/maps/place/..." />
-                            <p class="text-[11px] text-gray-400 mt-1">
-                                {{ __('Paste your Google Maps location or share link (e.g. maps.app.goo.gl/...).') }}
-                            </p>
-                            @error('googleUrl') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
-                                    {{ __('Google Place ID (Optional)') }}
-                                </label>
-                                <input type="text" wire:model="googlePlaceId"
-                                    class="w-full px-3 py-2 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white"
-                                    placeholder="ChIJ..." />
-                                <p class="text-[10px] text-gray-400 mt-1">{{ __('Extracted automatically from your URL if available.') }}</p>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
-                                    {{ __('Google Places API Key (Optional)') }}
-                                </label>
-                                <input type="password" wire:model="googleApiKey"
-                                    class="w-full px-3 py-2 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white"
-                                    placeholder="AIzaSy..." />
-                                <p class="text-[10px] text-gray-400 mt-1">{{ __('Provides official 1-click sync without scraping limits.') }}</p>
-                            </div>
-                        </div>
-
-                        <label class="flex items-center gap-2 cursor-pointer text-xs text-gray-600 dark:text-gray-300">
-                            <input type="checkbox" wire:model="saveAsDefault" class="rounded text-[#4285F4] focus:ring-[#4285F4]">
-                            <span>{{ __('Save this Google URL and credentials as default') }}</span>
-                        </label>
-
-                        <div class="p-3 bg-gray-50 dark:bg-gray-800/40 rounded-[3px] border border-gray-100 dark:border-gray-800 text-xs text-gray-500 dark:text-gray-400 space-y-1">
-                            <p class="font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
-                                <x-icon name="information-circle" class="w-4 h-4 text-[#4285F4]" />
-                                {{ __('Google Reviews Tip:') }}
-                            </p>
-                            <p>{{ __('Google Maps frequently limits automated scraping. If an API key is not present, you can easily copy and paste your Google Reviews into the "Smart Paste" tab to import them in seconds!') }}</p>
-                        </div>
-
-                        <div class="flex justify-end gap-3 pt-2">
-                            <button wire:click="$set('showImportModal', false)"
-                                class="px-4 py-2 text-xs font-semibold rounded-[3px] border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
-                                {{ __('Close') }}
-                            </button>
-                            <button wire:click="executeGoogleScrape" wire:loading.attr="disabled"
-                                class="inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold rounded-[3px] bg-[#4285F4] hover:bg-[#3367d6] text-white shadow-sm disabled:opacity-50">
-                                <span wire:loading wire:target="executeGoogleScrape" class="animate-spin">⌛</span>
-                                <x-icon wire:loading.remove wire:target="executeGoogleScrape" name="arrow-path" class="w-3.5 h-3.5" />
-                                {{ __('Fetch Google Reviews') }}
-                            </button>
-                        </div>
-                    </div>
-                @endif
-
-                <!-- Tab 3: SafariBookings Fetcher -->
-                @if($importTab === 'safari_bookings')
-                    <div class="space-y-4">
-                        <div class="p-3 bg-amber-500/10 rounded-[3px] border border-amber-500/20 flex items-center gap-3">
-                            <span class="w-8 h-8 rounded-full bg-amber-600 text-white flex items-center justify-center font-black text-xs">SB</span>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-900 dark:text-white">{{ __('SafariBookings Review Fetcher') }}</h4>
-                                <p class="text-[11px] text-gray-600 dark:text-gray-300">{{ __('Connects to SafariBookings to import verified safari traveler reviews, ratings, and feedback.') }}</p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
-                                {{ __('SafariBookings Reviews URL') }}
-                            </label>
-                            <input type="url" wire:model="safaribookingsUrl"
-                                class="w-full px-3.5 py-2 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-amber-600"
-                                placeholder="https://www.safaribookings.com/reviews/p... or https://www.safaribookings.com/operators/..." />
-                            <p class="text-[11px] text-gray-400 mt-1">
-                                {{ __('Enter your SafariBookings operator reviews link.') }}
-                            </p>
-                            @error('safaribookingsUrl') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                        </div>
-
-                        <label class="flex items-center gap-2 cursor-pointer text-xs text-gray-600 dark:text-gray-300">
-                            <input type="checkbox" wire:model="saveAsDefault" class="rounded text-amber-600 focus:ring-amber-600">
-                            <span>{{ __('Save as default SafariBookings URL for website badges and future sync') }}</span>
-                        </label>
-
-                        <div class="p-3 bg-gray-50 dark:bg-gray-800/40 rounded-[3px] border border-gray-100 dark:border-gray-800 text-xs text-gray-500 dark:text-gray-400 space-y-1">
-                            <p class="font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
-                                <x-icon name="information-circle" class="w-4 h-4 text-amber-600" />
-                                {{ __('How it works:') }}
-                            </p>
-                            <p>{{ __('Extracts Schema.org JSON-LD structured reviews and review cards from SafariBookings, storing ratings, tour titles, and guest quotes without duplication.') }}</p>
-                        </div>
-
-                        <div class="flex justify-end gap-3 pt-2">
-                            <button wire:click="$set('showImportModal', false)"
-                                class="px-4 py-2 text-xs font-semibold rounded-[3px] border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
-                                {{ __('Close') }}
-                            </button>
-                            <button wire:click="executeSafariBookingsScrape" wire:loading.attr="disabled"
-                                class="inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold rounded-[3px] bg-amber-600 hover:bg-amber-700 text-white shadow-sm disabled:opacity-50">
-                                <span wire:loading wire:target="executeSafariBookingsScrape" class="animate-spin">⌛</span>
-                                <x-icon wire:loading.remove wire:target="executeSafariBookingsScrape" name="arrow-path" class="w-3.5 h-3.5" />
-                                {{ __('Fetch SafariBookings Reviews') }}
-                            </button>
-                        </div>
-                    </div>
-                @endif
-
-                <!-- Tab 4: Smart Paste / JSON / HTML -->
-                @if($importTab === 'paste')
-                    <div class="space-y-4">
-                        <!-- Instructions Banner -->
-                        <div class="p-3.5 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-blue-500/10 rounded-[3px] border border-emerald-500/30 flex items-start gap-3">
-                            <span class="p-2 rounded-[3px] bg-emerald-600 text-white shrink-0 mt-0.5">
-                                <x-icon name="document-text" class="w-4 h-4 text-emerald-100" />
-                            </span>
-                            <div class="flex-1 text-xs">
-                                <h4 class="font-bold text-gray-900 dark:text-white">{{ __('Smart Copy & Paste (100% Reliable on Localhost & Live Server)') }}</h4>
-                                <p class="text-gray-600 dark:text-gray-300 mt-1 leading-relaxed">
-                                    {{ __('Bypasses all Cloudflare bot protection and browser network security. Simply copy reviews from TripAdvisor, Google, or SafariBookings and paste them below.') }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- 2 Simple Methods Guide -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <div class="p-3 bg-white dark:bg-card rounded-[3px] border border-gray-150 dark:border-gray-800 space-y-1">
-                                <div class="flex items-center gap-1.5 font-bold text-xs text-gray-800 dark:text-gray-200">
-                                    <span class="w-4 h-4 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-[10px] flex items-center justify-center font-black">A</span>
-                                    <span>{{ __('Method A: Copy Normal Text') }}</span>
-                                </div>
-                                <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">
-                                    {{ __('Highlight any review on TripAdvisor or Google with your mouse, press Ctrl+C, paste below, and click Parse & Import.') }}
-                                </p>
-                            </div>
-
-                            <div class="p-3 bg-white dark:bg-card rounded-[3px] border border-gray-150 dark:border-gray-800 space-y-1" x-data="{ copiedSnippet: false }">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-1.5 font-bold text-xs text-gray-800 dark:text-gray-200">
-                                        <span class="w-4 h-4 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-[10px] flex items-center justify-center font-black">B</span>
-                                        <span>{{ __('Method B: 1-Click Copy All') }}</span>
-                                    </div>
-                                    <button type="button"
-                                        @click="navigator.clipboard.writeText('(function(){var revs=[];document.querySelectorAll(\'script[type=\x22application/ld+json\x22]\').forEach(function(s){try{var d=JSON.parse(s.textContent);(Array.isArray(d)?d:(d[\x27@graph\x27]||[d])).forEach(function(x){if(x.reviewBody||x[\x27@type\x27]===\x27Review\x27){revs.push({author_name:(x.author&&x.author.name)||\x27Traveler\x27,rating:(x.reviewRating&&x.reviewRating.ratingValue)||5,title:x.name||\x27\x27,content:x.reviewBody||\x27\x27,review_date:x.datePublished||null});}});}catch(e){}});document.querySelectorAll(\x27[class*=\x22bubble_\x22], svg[aria-label*=\x225\x22], svg[aria-label*=\x224\x22]\x27).forEach(function(r){var p=r.parentElement;for(var i=0;i<6;i++){if(!p)break;var t=p.innerText||\x27\x27;if(t.length>60&&t.includes(\x27Reviewed\x27)){var l=t.split(\x27\\n\x27).filter(function(x){return x.trim().length>0;});if(l.length>=2){revs.push({author_name:l[0],rating:5,title:l[1],content:l.slice(2).join(\x27\\n\x27)});}break;}p=p.parentElement;}});var text=JSON.stringify(revs,null,2);navigator.clipboard.writeText(text).then(function(){alert(\x27Copied \x27+revs.length+\x27 review(s) to clipboard! Now paste into Safari ERP.\x27);});})();'); copiedSnippet = true; setTimeout(() => copiedSnippet = false, 3000)"
-                                        class="text-[10px] font-bold text-blue-600 hover:text-blue-700 dark:text-blue-400 flex items-center gap-1">
-                                        <x-icon name="clipboard-document" class="w-3 h-3" />
-                                        <span x-text="copiedSnippet ? '{{ __('Copied!') }}' : '{{ __('Copy Grabber') }}'"></span>
-                                    </button>
-                                </div>
-                                <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">
-                                    {{ __('Click "Copy Grabber", paste it into TripAdvisor developer console (F12) to copy ALL reviews to clipboard at once.') }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
-                                    {{ __('Platform to Assign') }}
-                                </label>
-                                <select wire:model="pastePlatform"
-                                    class="w-full px-3 py-2 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white">
-                                    <option value="tripadvisor">TripAdvisor</option>
-                                    <option value="google">Google Reviews</option>
-                                    <option value="safari_bookings">SafariBookings</option>
-                                    <option value="direct">Direct / Guestbook</option>
-                                </select>
-                            </div>
-
-                            <div class="flex items-end justify-end" x-data>
-                                <button type="button"
-                                    @click="navigator.clipboard.readText().then(t => { $wire.set('pasteContent', t) })"
-                                    class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-[3px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-750 shadow-xs transition-all">
-                                    <x-icon name="clipboard" class="w-3.5 h-3.5 text-emerald-600" />
-                                    <span>{{ __('Paste from Clipboard') }}</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">
-                                {{ __('Paste Reviews Below') }}
-                            </label>
-                            <textarea wire:model="pasteContent" rows="8"
-                                placeholder="{{ __('Paste review text, HTML, or JSON here...') }}
-
-{{ __('Example:') }}
-John Smith
-5 stars
-15 Day East Africa Safari
-We had an incredible experience on our safari tour..."
-                                class="w-full px-3.5 py-2 text-xs font-mono bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-emerald-600"></textarea>
-                            <div class="flex items-center justify-between text-[11px] text-gray-400 mt-1">
-                                <span>{{ __('Recognizes reviewer names, star ratings (5/5, ★★★★★), dates, titles, and comments.') }}</span>
-                                <span>{{ __('Automatic duplicate prevention enabled') }}</span>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-end gap-3 pt-2">
-                            <button wire:click="$set('showImportModal', false)"
-                                class="px-4 py-2 text-xs font-semibold rounded-[3px] border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
-                                {{ __('Close') }}
-                            </button>
-                            <button wire:click="executePasteImport" wire:loading.attr="disabled"
-                                class="inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold rounded-[3px] bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm disabled:opacity-50">
-                                <x-icon name="check" class="w-3.5 h-3.5" />
-                                {{ __('Parse & Import') }}
-                            </button>
-                        </div>
-                    </div>
-                @endif
-
-                <!-- Tab 5: Platform Links Configuration -->
-                @if($importTab === 'links')
-                    <div class="space-y-4">
-                        <div class="p-3 bg-purple-50 dark:bg-purple-950/20 rounded-[3px] border border-purple-100 dark:border-purple-900/30">
-                            <h4 class="text-xs font-bold text-purple-900 dark:text-purple-200 flex items-center gap-1.5">
-                                <x-icon name="link" class="w-4 h-4 text-purple-600" />
-                                {{ __('Saved Review Platform Links') }}
-                            </h4>
-                            <p class="text-[11px] text-purple-700 dark:text-purple-300 mt-0.5">
-                                {{ __('Configure your links once here. They are used for automated review fetching and displayed on your frontend website badges.') }}
-                            </p>
-                        </div>
-
-                        <div class="space-y-3">
-                            <!-- TripAdvisor Link -->
-                            <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1 flex items-center gap-1.5">
-                                    <span class="w-3.5 h-3.5 rounded-full bg-[#00AA6C] text-white text-[8px] flex items-center justify-center font-bold">TA</span>
-                                    {{ __('TripAdvisor Listing URL') }}
-                                </label>
-                                <input type="url" wire:model="tripadvisorUrl"
-                                    class="w-full px-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white"
-                                    placeholder="https://www.tripadvisor.com/Attraction_Review-..." />
-                            </div>
-
-                            <!-- Google Link -->
-                            <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1 flex items-center gap-1.5">
-                                    <span class="w-3.5 h-3.5 rounded-full bg-[#4285F4] text-white text-[8px] flex items-center justify-center font-bold">G</span>
-                                    {{ __('Google Reviews / Maps URL') }}
-                                </label>
-                                <input type="text" wire:model="googleUrl"
-                                    class="w-full px-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white"
-                                    placeholder="https://maps.app.goo.gl/... or https://www.google.com/maps/place/..." />
-                            </div>
-
-                            <!-- SafariBookings Link -->
-                            <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1 flex items-center gap-1.5">
-                                    <span class="w-3.5 h-3.5 rounded-full bg-amber-600 text-white text-[8px] flex items-center justify-center font-bold">SB</span>
-                                    {{ __('SafariBookings Operator Reviews URL') }}
-                                </label>
-                                <input type="url" wire:model="safaribookingsUrl"
-                                    class="w-full px-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white"
-                                    placeholder="https://www.safaribookings.com/reviews/p... or https://www.safaribookings.com/operators/..." />
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                                <div>
-                                    <label class="block text-[11px] font-semibold text-gray-600 dark:text-gray-400 mb-1">{{ __('Google Place ID (Optional)') }}</label>
-                                    <input type="text" wire:model="googlePlaceId"
-                                        class="w-full px-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white"
-                                        placeholder="ChIJ..." />
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-semibold text-gray-600 dark:text-gray-400 mb-1">{{ __('Google Places API Key (Optional)') }}</label>
-                                    <input type="password" wire:model="googleApiKey"
-                                        class="w-full px-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-[3px] text-gray-900 dark:text-white"
-                                        placeholder="AIzaSy..." />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-end gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
-                            <button wire:click="$set('showImportModal', false)"
-                                class="px-4 py-2 text-xs font-semibold rounded-[3px] border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
-                                {{ __('Close') }}
-                            </button>
-                            <button wire:click="savePlatformLinks" wire:loading.attr="disabled"
-                                class="inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold rounded-[3px] bg-purple-600 hover:bg-purple-700 text-white shadow-sm disabled:opacity-50">
-                                <x-icon name="check" class="w-3.5 h-3.5" />
-                                {{ __('Save Platform Links') }}
-                            </button>
-                        </div>
-                    </div>
-                @endif
+                <div class="flex justify-end gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
+                    <button wire:click="$set('showLinksModal', false)"
+                        class="px-4 py-2 text-xs font-semibold rounded-[3px] border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
+                        {{ __('Cancel') }}
+                    </button>
+                    <button wire:click="savePlatformLinks" wire:loading.attr="disabled"
+                        class="inline-flex items-center gap-2 px-5 py-2 text-xs font-semibold rounded-[3px] bg-[#455537] hover:bg-[#354329] text-white shadow-sm disabled:opacity-50">
+                        <x-icon name="check" class="w-3.5 h-3.5" />
+                        {{ __('Save Links') }}
+                    </button>
+                </div>
             </div>
         </div>
     @endif

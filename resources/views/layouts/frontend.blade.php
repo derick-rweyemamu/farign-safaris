@@ -86,13 +86,13 @@
                     <!-- phone, email -->
                     <div class="flex items-center gap-6">
                         <a href="tel:{{ $companySetting?->phone ?? ' ' }}"
-                            class="flex items-center gap-2 text-gray-600 hover:text-black text-[12px] font-bold tracking-[0.1em] transition-colors uppercase whitespace-nowrap">
-                            <x-icon name="phone" class="w-4 h-4 text-gray-400" />
+                            class="flex items-center gap-2 text-gray-600 hover:text-black text-[11px] font-semibold tracking-[0.08em] transition-colors uppercase whitespace-nowrap">
+                            <x-icon name="phone" class="w-3.5 h-3.5 text-gray-400" />
                             {{ $companySetting?->phone ?? '' }}
                         </a>
                         <a href="mailto:{{ $companySetting?->email ?? ' ' }}"
-                            class="flex items-center gap-2 text-gray-600 hover:text-black text-[12px] font-bold tracking-[0.1em] transition-colors uppercase whitespace-nowrap">
-                            <x-icon name="envelope" class="w-4 h-4 text-gray-400" />
+                            class="flex items-center gap-2 text-gray-600 hover:text-black text-[11px] font-semibold tracking-[0.08em] transition-colors uppercase whitespace-nowrap">
+                            <x-icon name="envelope" class="w-3.5 h-3.5 text-gray-400" />
                             {{ $companySetting?->email ?? '' }}
                         </a>
                     </div>
@@ -126,7 +126,7 @@
                         <div class="ml-4">
                             <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $companySetting->whatsapp_number) }}"
                                 target="_blank" rel="noopener noreferrer"
-                                class="flex items-center gap-2 bg-[#25D366] text-white hover:bg-[#128C7E] px-[16px] py-[8px] rounded-[4px] text-[11px] font-bold tracking-[0.1em] uppercase transition-colors shadow-sm">
+                                class="flex items-center gap-2 bg-[#25D366] text-white hover:bg-[#128C7E] px-[12px] py-[6px] rounded-[4px] text-[10px] font-bold tracking-[0.08em] uppercase transition-colors shadow-sm">
                                 <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" /></svg>
                                 {{ __('WHATSAPP') }}
                             </a>
@@ -186,14 +186,15 @@
                                 <a href="{{ $hasRealUrl ? $item->resolved_url : 'javascript:void(0);' }}" 
                                     @if(!$hasRealUrl && $hasChildren) @click.prevent="open = !open" @endif
                                     @if($item->is_external && $hasRealUrl) target="_blank" rel="noopener noreferrer" @endif
-                                    class="relative z-10 flex items-center justify-center px-8 h-full text-[11px] font-bold tracking-[0.1em] uppercase transition-colors whitespace-nowrap {{ $isActive ? 'text-black font-extrabold' : 'text-gray-500 hover:text-black group-hover:text-black' }}">
-                                    <span>{{ __($item->label) }}</span>
+                                    class="relative z-10 flex items-center justify-center px-5 sm:px-6 h-full text-[13px] font-bold tracking-[0.05em] uppercase transition-colors whitespace-nowrap {{ $isActive ? 'text-black font-extrabold' : 'text-gray-500 hover:text-black group-hover:text-black' }}"
+                                    style="font-size: 13px !important;">
+                                    <span style="font-size: 13px !important;">{{ __($item->label) }}</span>
                                     @if($hasChildren)
                                         <button type="button" 
                                             @click.stop.prevent="open = !open"
                                             class="p-1 ml-1.5 focus:outline-none flex items-center justify-center cursor-pointer text-gray-400 group-hover:text-black"
                                             aria-label="Toggle {{ $item->label }} submenu">
-                                            <x-icon name="chevron-down" class="w-3 h-3 transition-transform duration-200" x-bind:class="open ? 'rotate-180 opacity-100 text-[#c69752]' : ''" />
+                                            <x-icon name="chevron-down" class="w-3.5 h-3.5 transition-transform duration-200" x-bind:class="open ? 'rotate-180 opacity-100 text-[#c69752]' : ''" />
                                         </button>
                                     @endif
                                 </a>
@@ -220,7 +221,7 @@
                                                 @endphp
                                                 <li class="w-full">
                                                     <a href="{{ $child->resolved_url }}" @if($child->is_external) target="_blank" rel="noopener noreferrer" @endif
-                                                        class="block py-3 px-6 text-[11px] font-bold tracking-[0.1em] uppercase transition-colors border-l-2 break-words whitespace-normal leading-normal {{ $isChildActive ? 'text-black font-extrabold bg-gray-50 border-l-[#fbb158]' : 'text-gray-600 hover:text-black hover:bg-gray-50 border-transparent hover:border-l-[#fbb158]' }}">
+                                                        class="block py-2.5 px-5 text-[10px] font-semibold tracking-[0.08em] uppercase transition-colors border-l-2 break-words whitespace-normal leading-normal {{ $isChildActive ? 'text-black font-extrabold bg-gray-50 border-l-[#fbb158]' : 'text-gray-600 hover:text-black hover:bg-gray-50 border-transparent hover:border-l-[#fbb158]' }}">
                                                         {{ $child->label }}
                                                     </a>
                                                 </li>
@@ -322,17 +323,17 @@
                                                 @else
                                                     @click="open = !open"
                                                 @endif
-                                                class="flex-1 flex items-center gap-3 px-4 py-[14px] group">
+                                                class="flex-1 flex items-center gap-3 px-4 py-[11px] group">
                                                 <span class="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-200"
                                                     x-bind:style="open || {{ $isActive ? 'true' : 'false' }} ? 'background:#fbb158' : 'background:rgba(201,168,76,0.4)'"></span>
-                                                <span class="text-[15px] font-medium tracking-[0.06em] uppercase transition-colors duration-200"
+                                                <span class="text-[13px] font-medium tracking-[0.05em] uppercase transition-colors duration-200"
                                                     style="font-family: 'Lora', Georgia, serif;"
                                                     x-bind:style="open || {{ $isActive ? 'true' : 'false' }} ? 'color:#fbb158; font-weight:700;' : 'color:rgba(255,255,255,0.85)'">
                                                     {{ __($item->label) }}
                                                 </span>
                                             </a>
                                             <button @click="open = !open" type="button"
-                                                class="flex items-center justify-center w-10 h-[50px] flex-shrink-0 focus:outline-none transition-colors duration-200"
+                                                class="flex items-center justify-center w-10 h-[44px] flex-shrink-0 focus:outline-none transition-colors duration-200"
                                                 aria-label="Toggle {{ $item->label }} submenu">
                                                 <svg class="w-4 h-4 transition-transform duration-300"
                                                     x-bind:style="open ? 'transform:rotate(180deg); color:#fbb158' : 'color:rgba(255,255,255,0.85)'"
@@ -359,7 +360,7 @@
                                                 @if($mcType === 'links')
                                                     <div class="{{ $mColIdx > 0 ? 'border-t border-white/10 pt-3' : '' }}">
                                                         @if(!empty($mCol['title']))
-                                                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#fbb158] block mb-2">{{ $mCol['title'] }}</span>
+                                                            <span class="text-[10px] font-bold uppercase tracking-wider text-[#fbb158] block mb-2">{{ $mCol['title'] }}</span>
                                                         @endif
                                                         <div class="space-y-1.5">
                                                             @foreach($mCol['items'] ?? [] as $mRoute)
@@ -369,13 +370,13 @@
                                                                         $mRUrl = url($mRUrl);
                                                                     }
                                                                 @endphp
-                                                                <a href="{{ $mRUrl }}" @click="mobileMenuOpen = false" class="flex items-center justify-between py-1 text-[13px] text-gray-300 hover:text-white">
+                                                                <a href="{{ $mRUrl }}" @click="mobileMenuOpen = false" class="flex items-center justify-between py-1 text-[11.5px] text-gray-300 hover:text-white">
                                                                     <span class="flex items-center gap-1.5">
                                                                         <span class="text-xs text-[#fbb158]">→</span>
                                                                         <span>{{ $mRoute['label'] ?? '' }}</span>
                                                                     </span>
                                                                     @if(!empty($mRoute['badge']))
-                                                                        <span class="bg-[#343a1a] text-[#c0d65b] text-[9px] font-bold px-1.5 py-0.5 rounded uppercase">{{ $mRoute['badge'] }}</span>
+                                                                        <span class="bg-[#343a1a] text-[#c0d65b] text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">{{ $mRoute['badge'] }}</span>
                                                                     @endif
                                                                 </a>
                                                             @endforeach
@@ -385,7 +386,7 @@
                                                 @elseif($mcType === 'media_list')
                                                     <div class="{{ $mColIdx > 0 ? 'border-t border-white/10 pt-3' : '' }}">
                                                         @if(!empty($mCol['title']))
-                                                            <span class="text-[11px] font-bold uppercase tracking-wider text-[#fbb158] block mb-2">{{ $mCol['title'] }}</span>
+                                                            <span class="text-[10px] font-bold uppercase tracking-wider text-[#fbb158] block mb-2">{{ $mCol['title'] }}</span>
                                                         @endif
                                                         <div class="space-y-2">
                                                             @foreach($mCol['items'] ?? [] as $mTrek)
@@ -398,9 +399,9 @@
                                                                 <a href="{{ $mTUrl }}" @click="mobileMenuOpen = false" class="flex items-center gap-2.5 p-1 rounded hover:bg-white/5">
                                                                     <img src="{{ $mTrek['image'] ?? asset('images/mega-menu/mount-meru.jpg') }}" class="w-10 h-8 rounded object-cover flex-shrink-0">
                                                                     <div class="min-w-0">
-                                                                        <span class="text-[12px] font-medium text-white block leading-tight truncate">{{ $mTrek['title'] ?? '' }}</span>
+                                                                        <span class="text-[11px] font-medium text-white block leading-tight truncate">{{ $mTrek['title'] ?? '' }}</span>
                                                                         @if(!empty($mTrek['subtitle']))
-                                                                            <span class="text-[10px] text-gray-400 block truncate">{{ $mTrek['subtitle'] }}</span>
+                                                                            <span class="text-[9.5px] text-gray-400 block truncate">{{ $mTrek['subtitle'] }}</span>
                                                                         @endif
                                                                     </div>
                                                                 </a>
@@ -411,9 +412,9 @@
                                                 @elseif($mcType === 'promo')
                                                     <div class="{{ $mColIdx > 0 ? 'border-t border-white/10 pt-3' : '' }}">
                                                         <a href="{{ url($mCol['btn_url'] ?? '#') }}" @click="mobileMenuOpen = false" class="block p-2.5 rounded bg-[#fbb158]/10 border border-[#fbb158]/40 text-center">
-                                                            <span class="text-[12px] font-bold text-white block mb-1.5">{{ $mCol['title'] ?? '' }}</span>
+                                                            <span class="text-[11px] font-bold text-white block mb-1.5">{{ $mCol['title'] ?? '' }}</span>
                                                             @if(!empty($mCol['btn_text']))
-                                                                <span class="inline-block px-3 py-1 bg-[#c69752] text-white text-[11px] font-bold rounded">» {{ $mCol['btn_text'] }}</span>
+                                                                <span class="inline-block px-3 py-1 bg-[#c69752] text-white text-[10px] font-bold rounded">» {{ $mCol['btn_text'] }}</span>
                                                             @endif
                                                         </a>
                                                     </div>
@@ -439,18 +440,18 @@
                                                 @else
                                                     @click="open = !open"
                                                 @endif
-                                                class="flex-1 flex items-center gap-3 px-4 py-[14px] group">
+                                                class="flex-1 flex items-center gap-3 px-4 py-[11px] group">
                                                 {{-- Gold dot accent --}}
                                                 <span class="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-200"
                                                     x-bind:style="open || {{ $isActive ? 'true' : 'false' }} ? 'background:#fbb158' : 'background:rgba(201,168,76,0.4)'"></span>
-                                                <span class="text-[15px] font-medium tracking-[0.06em] uppercase transition-colors duration-200"
+                                                <span class="text-[13px] font-medium tracking-[0.05em] uppercase transition-colors duration-200"
                                                     style="font-family: 'Lora', Georgia, serif;"
                                                     x-bind:style="open || {{ $isActive ? 'true' : 'false' }} ? 'color:#fbb158; font-weight:700;' : 'color:rgba(255,255,255,0.85)'">
                                                     {{ __($item->label) }}
                                                 </span>
                                             </a>
                                             <button @click="open = !open" type="button"
-                                                class="flex items-center justify-center w-10 h-[50px] flex-shrink-0 focus:outline-none transition-colors duration-200"
+                                                class="flex items-center justify-center w-10 h-[44px] flex-shrink-0 focus:outline-none transition-colors duration-200"
                                                 aria-label="Toggle {{ $item->label }} submenu">
                                                 <svg class="w-4 h-4 transition-transform duration-300"
                                                     x-bind:style="open ? 'transform:rotate(180deg); color:#fbb158' : 'color:rgba(255,255,255,0.85)'"
@@ -477,14 +478,14 @@
                                                 <a href="{{ $child->resolved_url }}"
                                                     @if($child->is_external) target="_blank" rel="noopener noreferrer" @endif
                                                     @click="mobileMenuOpen = false"
-                                                    class="flex items-center gap-3 pl-4 pr-4 py-3 transition-all duration-150 group"
+                                                    class="flex items-center gap-3 pl-4 pr-4 py-2 transition-all duration-150 group"
                                                     style="border-bottom: 1px solid rgba(201,168,76,0.08); background: {{ $isChildActive ? 'rgba(255,255,255,0.08)' : 'transparent' }};"
                                                     onmouseover="this.style.background='rgba(201,168,76,0.06)'; this.querySelector('span.sub-label').style.color='#fbb158'"
                                                     onmouseout="this.style.background='{{ $isChildActive ? 'rgba(255,255,255,0.08)' : 'transparent' }}'; this.querySelector('span.sub-label').style.color='{{ $isChildActive ? '#fbb158' : 'rgba(255,255,255,0.6)' }}'">
                                                     <svg class="w-2.5 h-2.5 flex-shrink-0" style="color:{{ $isChildActive ? '#fbb158' : 'rgba(201,168,76,0.6)' }}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                                                     </svg>
-                                                    <span class="sub-label text-[13px] tracking-[0.04em] font-light transition-colors duration-150"
+                                                    <span class="sub-label text-[11.5px] tracking-[0.04em] font-light transition-colors duration-150"
                                                         style="font-family: 'Lora', Georgia, serif; color: {{ $isChildActive ? '#fbb158; font-weight:600;' : 'rgba(255,255,255,0.6)' }};">
                                                         {{ $child->label }}
                                                     </span>
@@ -500,12 +501,12 @@
                                     <a href="{{ $item->resolved_url }}"
                                         @if($item->is_external) target="_blank" rel="noopener noreferrer" @endif
                                         @click="mobileMenuOpen = false"
-                                        class="flex items-center gap-3 px-4 py-[14px] mb-1 rounded-[6px] transition-all duration-200"
+                                        class="flex items-center gap-3 px-4 py-[11px] mb-1 rounded-[6px] transition-all duration-200"
                                         style="border: 1px solid {{ $isPlainActive ? 'rgba(201,168,76,0.25)' : 'rgba(201,168,76,0.0)' }}; background: {{ $isPlainActive ? 'rgba(201,168,76,0.08)' : 'transparent' }};"
                                         onmouseover="this.style.borderColor='rgba(201,168,76,0.18)'; this.style.background='rgba(201,168,76,0.05)'; this.querySelector('span.nav-label').style.color='#fbb158'; this.querySelector('span.nav-dot').style.background='#fbb158'"
                                         onmouseout="this.style.borderColor='{{ $isPlainActive ? 'rgba(201,168,76,0.25)' : 'rgba(201,168,76,0.0)' }}'; this.style.background='{{ $isPlainActive ? 'rgba(201,168,76,0.08)' : 'transparent' }}'; this.querySelector('span.nav-label').style.color='{{ $isPlainActive ? '#fbb158' : 'rgba(255,255,255,0.85)' }}'; this.querySelector('span.nav-dot').style.background='{{ $isPlainActive ? '#fbb158' : 'rgba(201,168,76,0.4)' }}'">
                                         <span class="nav-dot w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-200" style="background: {{ $isPlainActive ? '#fbb158' : 'rgba(201,168,76,0.4)' }};"></span>
-                                        <span class="nav-label text-[15px] font-medium tracking-[0.06em] uppercase transition-colors duration-200"
+                                        <span class="nav-label text-[13px] font-medium tracking-[0.05em] uppercase transition-colors duration-200"
                                             style="color: {{ $isPlainActive ? '#fbb158; font-weight:700;' : 'rgba(255,255,255,0.85)' }}; font-family: 'Lora', Georgia, serif;">
                                             {{ __($item->label) }}
                                         </span>
@@ -527,11 +528,11 @@
                         <div class="px-6 mb-4">
                             <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $companySetting->whatsapp_number) }}"
                                 target="_blank" rel="noopener noreferrer"
-                                class="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-[6px] font-bold text-[13px] tracking-[0.08em] uppercase text-white transition-all duration-200"
+                                class="flex items-center justify-center gap-2.5 w-full py-3 rounded-[6px] font-bold text-[11.5px] tracking-[0.08em] uppercase text-white transition-all duration-200"
                                 style="background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 4px 16px rgba(37,211,102,0.25);"
                                 onmouseover="this.style.boxShadow='0 6px 24px rgba(37,211,102,0.4)'; this.style.transform='translateY(-1px)'"
                                 onmouseout="this.style.boxShadow='0 4px 16px rgba(37,211,102,0.25)'; this.style.transform='translateY(0)'">
-                                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
                                 </svg>
                                 {{ __('Chat on WhatsApp') }}
@@ -543,14 +544,14 @@
 
                 {{-- ── FOOTER — Contact & Socials ── --}}
                 <div class="flex-shrink-0 px-6 py-5" style="border-top: 1px solid rgba(201,168,76,0.15); background: rgba(0,0,0,0.2);">
-                    <p class="text-[11px] font-semibold tracking-[0.14em] uppercase mb-3" style="color: rgba(251,177,88,0.75); font-family: 'Lora', Georgia, serif;">{{ __('Get In Touch') }}</p>
+                    <p class="text-[10px] font-semibold tracking-[0.12em] uppercase mb-3" style="color: rgba(251,177,88,0.75); font-family: 'Lora', Georgia, serif;">{{ __('Get In Touch') }}</p>
                     <div class="space-y-2.5">
                         @if(!empty($companySetting?->phone))<a href="tel:{{ $companySetting->phone }}"
                                 class="flex items-center gap-2.5 group">
                                 <div class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2);">
                                     <x-icon name="phone" class="w-3.5 h-3.5 text-[#fbb158]" />
                                 </div>
-                                <span class="text-[13px] font-light transition-colors duration-150" style="color: rgba(255,255,255,0.7); font-family: 'Lora', Georgia, serif;"
+                                <span class="text-[11.5px] font-light transition-colors duration-150" style="color: rgba(255,255,255,0.7); font-family: 'Lora', Georgia, serif;"
                                     onmouseover="this.style.color='#fbb158'"
                                     onmouseout="this.style.color='rgba(255,255,255,0.7)'">
                                     {{ $companySetting->phone }}
@@ -562,7 +563,7 @@
                                 <div class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.2);">
                                     <x-icon name="envelope" class="w-3.5 h-3.5 text-[#fbb158]" />
                                 </div>
-                                <span class="text-[13px] font-light transition-colors duration-150 truncate" style="color: rgba(255,255,255,0.7); font-family: 'Lora', Georgia, serif;"
+                                <span class="text-[11.5px] font-light transition-colors duration-150 truncate" style="color: rgba(255,255,255,0.7); font-family: 'Lora', Georgia, serif;"
                                     onmouseover="this.style.color='#fbb158'"
                                     onmouseout="this.style.color='rgba(255,255,255,0.7)'">
                                     {{ $companySetting->email }}

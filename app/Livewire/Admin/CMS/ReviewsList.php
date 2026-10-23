@@ -3,7 +3,6 @@
 namespace App\Livewire\Admin\CMS;
 
 use App\Models\Review;
-use App\Services\ReviewImportService;
 use App\Settings\GeneralSetting;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -24,27 +23,18 @@ class ReviewsList extends Component
     public int $perPage = 15;
 
     // Modals
-    public bool $showImportModal = false;
     public bool $showLinksModal = false;
     public bool $showCreateModal = false;
     public bool $showDeleteModal = false;
     public ?int $deletingId = null;
     public ?int $editingId = null;
 
-    // Import Form & Platform Links
-    public string $importTab = 'paste'; // paste, tripadvisor, google, safari_bookings, links
+    // Platform Review Links
     public string $tripadvisorUrl = '';
     public string $googleUrl = '';
     public string $googlePlaceId = '';
     public string $googleApiKey = '';
     public string $safaribookingsUrl = '';
-    public bool $saveAsDefault = true;
-
-    public string $pastePlatform = 'tripadvisor';
-    public string $pasteContent = '';
-    public bool $isImporting = false;
-    public ?string $importMessage = null;
-    public ?string $importMessageType = null;
 
     // Review Form (Create / Edit)
     public string $platform = 'tripadvisor';
@@ -104,112 +94,9 @@ class ReviewsList extends Component
         $this->dispatch('notify', message: __("Review by :name :status.", ['name' => $review->author_name, 'status' => $status]), type: 'success');
     }
 
-    public function openImportModal(?string $tab = null): void
-    {
-        $this->importMessage = null;
-        $this->importMessageType = null;
-        $this->importTab = $tab ?? 'paste';
-        $this->showImportModal = true;
-    }
-
     public function openLinksModal(): void
     {
-        $this->importTab = 'links';
-        $this->showImportModal = true;
-    }
-
-    public function executeScrape(): void
-    {
-        $this->validate([
-            'tripadvisorUrl' => 'required|url',
-        ]);
-
-        $this->isImporting = true;
-        $this->importMessage = null;
-
-        if ($this->saveAsDefault) {
-            $settings = app(GeneralSetting::class);
-            $settings->tripadvisor_url = $this->tripadvisorUrl;
-            $settings->save();
-        }
-
-        $service = new ReviewImportService();
-        $result = $service->scrapeFromTripAdvisor($this->tripadvisorUrl);
-
-        $this->isImporting = false;
-
-        if ($result['success']) {
-            $this->importMessageType = 'success';
-            $this->importMessage = $result['message'];
-            $this->dispatch('notify', message: $result['message'], type: 'success');
-        } else {
-            $this->importMessageType = 'error';
-            $this->importMessage = $result['message'];
-        }
-    }
-
-    public function executeSafariBookingsScrape(): void
-    {
-        $this->validate([
-            'safaribookingsUrl' => 'required|url',
-        ]);
-
-        $this->isImporting = true;
-        $this->importMessage = null;
-
-        if ($this->saveAsDefault) {
-            $settings = app(GeneralSetting::class);
-            $settings->safaribookings_url = $this->safaribookingsUrl;
-            $settings->save();
-        }
-
-        $service = new ReviewImportService();
-        $result = $service->scrapeFromSafariBookings($this->safaribookingsUrl);
-
-        $this->isImporting = false;
-
-        if ($result['success']) {
-            $this->importMessageType = 'success';
-            $this->importMessage = $result['message'];
-            $this->dispatch('notify', message: $result['message'], type: 'success');
-        } else {
-            $this->importMessageType = 'error';
-            $this->importMessage = $result['message'];
-        }
-    }
-
-    public function executeGoogleScrape(): void
-    {
-        if (empty($this->googleUrl) && empty($this->googlePlaceId)) {
-            $this->addError('googleUrl', __('Please provide either a Google Maps URL or a Google Place ID.'));
-            return;
-        }
-
-        $this->isImporting = true;
-        $this->importMessage = null;
-
-        if ($this->saveAsDefault) {
-            $settings = app(GeneralSetting::class);
-            if ($this->googleUrl) $settings->google_reviews_url = $this->googleUrl;
-            if ($this->googlePlaceId) $settings->google_place_id = $this->googlePlaceId;
-            if ($this->googleApiKey) $settings->google_places_api_key = $this->googleApiKey;
-            $settings->save();
-        }
-
-        $service = new ReviewImportService();
-        $query = $this->googlePlaceId ?: $this->googleUrl;
-        $result = $service->fetchFromGoogle($query, $this->googleApiKey ?: null);
-
-        $this->isImporting = false;
-
-        if ($result['success']) {
-            $this->importMessageType = 'success';
-            $this->importMessage = $result['message'];
-            $this->dispatch('notify', message: $result['message'], type: 'success');
-        } else {
-            $this->importMessageType = 'error';
-            $this->importMessage = $result['message'];
-        }
+        $this->showLinksModal = true;
     }
 
     public function savePlatformLinks(): void
@@ -230,30 +117,8 @@ class ReviewsList extends Component
         $settings->safaribookings_url = $this->safaribookingsUrl;
         $settings->save();
 
-        $this->importMessageType = 'success';
-        $this->importMessage = __('Platform review links and credentials saved successfully.');
+        $this->showLinksModal = false;
         $this->dispatch('notify', message: __('Platform review links saved successfully!'), type: 'success');
-    }
-
-    public function executePasteImport(): void
-    {
-        $this->validate([
-            'pasteContent' => 'required|string|min:10',
-            'pastePlatform' => 'required|in:tripadvisor,google,safari_bookings,direct',
-        ]);
-
-        $service = new ReviewImportService();
-        $result = $service->parseFreeText($this->pasteContent, $this->pastePlatform);
-
-        $this->pasteContent = '';
-        $msg = __("Imported :imported new review(s) (:skipped existing/duplicates updated).", [
-            'imported' => $result['imported'],
-            'skipped' => $result['skipped']
-        ]);
-
-        $this->importMessageType = 'success';
-        $this->importMessage = $msg;
-        $this->dispatch('notify', message: $msg, type: 'success');
     }
 
     public function openCreateModal(): void

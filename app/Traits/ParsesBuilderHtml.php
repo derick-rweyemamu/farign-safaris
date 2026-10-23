@@ -893,6 +893,7 @@ trait ParsesBuilderHtml
             $googleUrl = $node->getAttribute('data-google-url') ?: 'https://www.google.com/search?q=Fargin+Safaris+reviews';
             $safaribookingsUrl = $node->getAttribute('data-safaribookings-url') ?: 'https://www.safaribookings.com';
             $showBadges = $node->getAttribute('data-show-badges') !== 'false';
+            $showAddReview = $node->getAttribute('data-show-add-review') !== 'false';
 
             // Find outer section if wrapped
             $targetNode = $node;
@@ -917,7 +918,8 @@ trait ParsesBuilderHtml
                     "tripadvisorUrl" => $tripadvisorUrl,
                     "googleUrl" => $googleUrl,
                     "safaribookingsUrl" => $safaribookingsUrl,
-                    "showBadges" => $showBadges
+                    "showBadges" => $showBadges,
+                    "showAddReview" => $showAddReview
                 ])',
                 [
                     'platform' => $platform,
@@ -931,6 +933,7 @@ trait ParsesBuilderHtml
                     'googleUrl' => $googleUrl,
                     'safaribookingsUrl' => $safaribookingsUrl,
                     'showBadges' => $showBadges,
+                    'showAddReview' => $showAddReview,
                 ]
             );
 

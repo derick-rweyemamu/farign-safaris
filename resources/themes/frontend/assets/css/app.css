@@ -2600,30 +2600,34 @@ section.hero iframe {
 }
 
 /* Body text */
-.frontend-body p:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-desc *),
-.frontend-body ul:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
-.frontend-body ol:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
-.frontend-body li:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
-.frontend-body span:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *):not(.trekking-badge *):not(.trekking-badge),
-.frontend-body td:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
-.frontend-body .prose p:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
-.frontend-body .prose ul:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
-.frontend-body .prose ol:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
-.frontend-body .prose li:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
-.frontend-body .prose span:not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *) {
+.frontend-body p:not(header *):not(nav *):not(footer *):not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-desc *),
+.frontend-body ul:not(header *):not(nav *):not(footer *):not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body ol:not(header *):not(nav *):not(footer *):not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body li:not(header *):not(nav *):not(footer *):not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body span:not(header *):not(nav *):not(footer *):not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *):not(.trekking-heading *):not(.trekking-badge *):not(.trekking-badge),
+.frontend-body td:not(header *):not(nav *):not(footer *):not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body .prose p:not(header *):not(nav *):not(footer *):not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body .prose ul:not(header *):not(nav *):not(footer *):not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body .prose ol:not(header *):not(nav *):not(footer *):not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body .prose li:not(header *):not(nav *):not(footer *):not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *),
+.frontend-body .prose span:not(header *):not(nav *):not(footer *):not(.zanzibar-block *):not(.safaris-about-block *):not(.safaris-trekking-slider-block *):not(.safaris-trekking-slider-section *) {
   font-size: 15px !important;
   font-family: 'Lora', Georgia, serif !important;
 }
 
-/* ── Nav / Header Exception — override body 15px back to 12px ── */
-.frontend-body header li,
-.frontend-body header ul,
-.frontend-body header ol,
-.frontend-body header a,
-.frontend-body header span,
-.frontend-body header p,
-.frontend-body header button {
-  font-size: 12px !important;
+/* ── Nav & Header Typography Rules ── */
+.frontend-body header,
+.frontend-body header * {
+  font-family: inherit;
+}
+
+.frontend-body nav a,
+.frontend-body nav a * {
+  font-family: inherit;
+}
+
+.frontend-body nav a span {
+  font-size: inherit !important;
   font-family: inherit !important;
 }
 
