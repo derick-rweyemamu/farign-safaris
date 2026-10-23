@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
 
             // ── Safari / Travel ───────────────────────────────────
             AnimalIconSeeder::class,
+            DestinationSeeder::class,
 
             // ── CMS / Frontend ────────────────────────────────────
             NavigationMenuSeeder::class,
