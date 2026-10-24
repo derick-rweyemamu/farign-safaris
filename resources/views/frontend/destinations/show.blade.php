@@ -313,10 +313,10 @@
                                                                 }" class="relative group">
                     <!-- Carousel Container -->
                     <div x-ref="slider"
-                        class="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 -mx-4 px-4 md:mx-0 md:px-0"
+                        class="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 -mx-4 px-4 md:mx-0 md:px-0 {{ $destination->attractions->count() < 3 ? 'lg:justify-center' : '' }} {{ $destination->attractions->count() < 2 ? 'md:justify-center' : '' }}"
                         style="scrollbar-width: none; -ms-overflow-style: none;">
                         @foreach($destination->attractions->sortBy('sort_order') as $index => $attraction)
-                            <div class="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex-none snap-start relative">
+                            <div class="w-full {{ $destination->attractions->count() === 1 ? 'md:max-w-md' : 'md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]' }} flex-none snap-start relative">
                                 <!-- Image -->
                                 <div class="w-full h-[320px] overflow-hidden">
                                     @if($attraction->featured_image)
@@ -346,13 +346,13 @@
                     </div>
 
                     <!-- Navigation Arrows -->
-                    <button @click="scrollPrev" :disabled="currentPage === 0"
+                    <button @click="scrollPrev" :disabled="currentPage === 0" x-show="totalPages > 1"
                         class="absolute left-2 top-[30%] -translate-y-1/2 w-8 h-8 rounded-full bg-white/70 hover:bg-white text-gray-800 flex items-center justify-center shadow backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hidden md:flex z-20">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
                     </button>
-                    <button @click="scrollNext" :disabled="currentPage >= totalPages - 1"
+                    <button @click="scrollNext" :disabled="currentPage >= totalPages - 1" x-show="totalPages > 1"
                         class="absolute right-2 top-[30%] -translate-y-1/2 w-8 h-8 rounded-full bg-white/70 hover:bg-white text-gray-800 flex items-center justify-center shadow backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hidden md:flex z-20">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>

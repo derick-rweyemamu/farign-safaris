@@ -11,7 +11,7 @@ class ReviewsBlock extends Component
     public ?string $mode = 'all';
     public int|string|null $limit = 6;
     public ?string $layout = 'slider';
-    public ?string $subheading = 'What Travellers Say';
+    public ?string $subheading = null;
     public ?string $heading = 'Genuine Reviews From Our Guests';
     public ?string $description = null;
     public ?string $tripadvisorUrl = 'https://www.tripadvisor.com/Attraction_Review-g297913-d33011633-Reviews-Fargin_Safaris-Arusha_Arusha_Region.html';
@@ -36,7 +36,7 @@ class ReviewsBlock extends Component
         ?string $mode = 'all',
         $limit = 6,
         ?string $layout = 'slider',
-        ?string $subheading = 'What Travellers Say',
+        ?string $subheading = null,
         ?string $heading = 'Genuine Reviews From Our Guests',
         ?string $description = null,
         ?string $tripadvisorUrl = null,
@@ -55,7 +55,7 @@ class ReviewsBlock extends Component
         $this->mode = $mode ?: 'all';
         $this->limit = (int) $limit ?: 6;
         $this->layout = in_array($layout, ['slider', 'grid']) ? $layout : 'slider';
-        $this->subheading = $subheading ?: 'What Travellers Say';
+        $this->subheading = $subheading;
         $this->heading = $heading ?: 'Genuine Reviews From Our Guests';
         $this->description = $description;
         $this->tripadvisorUrl = $tripadvisorUrl ?: ($settings?->tripadvisor_url ?: 'https://www.tripadvisor.com/Attraction_Review-g297913-d33011633-Reviews-Fargin_Safaris-Arusha_Arusha_Region.html');

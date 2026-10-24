@@ -7,12 +7,6 @@
         <!-- Section Header -->
         <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
             <div class="max-w-2xl">
-                @if($subheading)
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#CA9A2E]/15 border border-[#CA9A2E]/30 text-[#CA9A2E] text-xs font-bold tracking-widest uppercase mb-3">
-                        <x-icon name="star" class="w-3.5 h-3.5" />
-                        <span>{{ $subheading }}</span>
-                    </div>
-                @endif
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
                     {!! nl2br(e($heading)) !!}
                 </h2>

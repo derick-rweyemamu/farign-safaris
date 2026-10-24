@@ -886,7 +886,7 @@ trait ParsesBuilderHtml
             $mode = $node->getAttribute('data-mode') ?: 'all';
             $limit = (int) ($node->getAttribute('data-limit') ?: 6);
             $layout = $node->getAttribute('data-layout') ?: 'slider';
-            $subheading = $node->getAttribute('data-subheading') ?: 'What Travellers Say';
+            $subheading = $node->getAttribute('data-subheading') ?: null;
             $heading = $node->getAttribute('data-heading') ?: 'Genuine Reviews From Our Guests';
             $description = $node->getAttribute('data-description') ?: null;
             $tripadvisorUrl = $node->getAttribute('data-tripadvisor-url') ?: 'https://www.tripadvisor.com/Attraction_Review-g297913-d33011633-Reviews-Fargin_Safaris-Arusha_Arusha_Region.html';

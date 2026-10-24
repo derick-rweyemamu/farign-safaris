@@ -29,9 +29,9 @@ class DestinationTours extends Component
         }
 
         $tours = $destination->tours()
-            ->with(['category', 'destinations'])
+            ->with(['category', 'destinations', 'tags'])
             ->orderBy('name')
-            ->paginate(6);
+            ->paginate(3);
 
         return view('livewire.frontend.destination-tours', [
             'destination' => $destination,

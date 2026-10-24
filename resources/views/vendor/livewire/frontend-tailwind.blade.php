@@ -62,11 +62,11 @@ $scrollIntoViewJsSnippet = '';
                     {{-- Previous Button --}}
                     @if ($paginator->onFirstPage())
                         <span class="w-9 h-9 flex items-center justify-center text-gray-300 bg-white/50 border border-gray-200/60 rounded-[3px] cursor-not-allowed dark:bg-gray-800/40 dark:border-gray-800 dark:text-gray-600" aria-disabled="true">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
                         </span>
                     @else
                         <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" class="w-9 h-9 flex items-center justify-center text-gray-700 bg-white border border-gray-200 rounded-[3px] hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-all duration-200 shadow-xs dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-brand-primary dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary" aria-label="Previous">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
                         </button>
                     @endif
 
@@ -94,11 +94,11 @@ $scrollIntoViewJsSnippet = '';
                     {{-- Next Button --}}
                     @if ($paginator->hasMorePages())
                         <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" class="w-9 h-9 flex items-center justify-center text-gray-700 bg-white border border-gray-200 rounded-[3px] hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-all duration-200 shadow-xs dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-brand-primary dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary" aria-label="Next">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4-4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
                         </button>
                     @else
                         <span class="w-9 h-9 flex items-center justify-center text-gray-300 bg-white/50 border border-gray-200/60 rounded-[3px] cursor-not-allowed dark:bg-gray-800/40 dark:border-gray-800 dark:text-gray-600" aria-disabled="true">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4-4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
                         </span>
                     @endif
 

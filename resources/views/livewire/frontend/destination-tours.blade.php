@@ -21,11 +21,11 @@
                     </a>
                 </div>
 
-                {{-- Tour cards grid --}}
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" wire:loading.class="opacity-60 transition-opacity">
+                {{-- Tour cards list (3 at a time, horizontal layout) --}}
+                <div class="flex flex-col gap-6 md:gap-8" wire:loading.class="opacity-60 transition-opacity">
                     @foreach($tours as $tour)
                         <div wire:key="tour-item-{{ $tour->id }}">
-                            <x-tour-card :tour="$tour" />
+                            <x-tour-card-list :tour="$tour" />
                         </div>
                     @endforeach
                 </div>
