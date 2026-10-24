@@ -120,6 +120,16 @@ class PageContentController extends Controller
             $data = json_encode($request->input('data', []));
         }
 
+        // Normalize any hardcoded local development URLs (127.0.0.1 / localhost) to root-relative paths
+        $cleanLocalUrls = function($str) {
+            return preg_replace_callback('#https?://(?:127\.0\.0\.1|localhost)(?::\d+)?(/[^"\'\s<>\\]*)?#i', function($m) {
+                return !empty($m[1]) ? $m[1] : '/';
+            }, $str ?? '');
+        };
+
+        $html = $cleanLocalUrls($html);
+        $data = $cleanLocalUrls($data);
+
         $model->setTranslation('builder_html', $locale, $html);
         $model->setTranslation('builder_data', $locale, $data);
         $model->save();

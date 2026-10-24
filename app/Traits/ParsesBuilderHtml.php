@@ -108,6 +108,11 @@ trait ParsesBuilderHtml
             }
 
 
+        // Normalize any hardcoded local development URLs (127.0.0.1 / localhost) to root-relative paths
+        $html = preg_replace_callback('#https?://(?:127\.0\.0\.1|localhost)(?::\d+)?(/[^"\'\s<>]*)?#i', function($m) {
+            return !empty($m[1]) ? $m[1] : '/';
+        }, $html ?? '');
+
         // Convert Alpine shorthand @events (e.g. @click, @mouseenter) to XML-safe x-on: events so libxml DOMDocument does not strip them
         $html = preg_replace('/(\s)@([a-zA-Z0-9_\.\:\-]+)=/', '$1x-on:$2=', $html ?? '');
 
