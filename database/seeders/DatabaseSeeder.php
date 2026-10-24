@@ -9,26 +9,26 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            // ── Core / Auth ──────────────────────────────────────
+                // ── Core / Auth ──────────────────────────────────────
             RoleAndPermissionSeeder::class,
 
-            // ── Geography ────────────────────────────────────────
+                // ── Geography ────────────────────────────────────────
             CountrySeeder::class,
             CitySeeder::class,
 
-            // ── Finance & Currency ────────────────────────────────
+                // ── Finance & Currency ────────────────────────────────
             CurrencySeeder::class,
             ExpenseTypeSeeder::class,
 
 
-            // ── Products ──────────────────────────────────────────
+                // ── Products ──────────────────────────────────────────
             ProductCategorySeeder::class,
 
-            // ── Safari / Travel ───────────────────────────────────
+                // ── Safari / Travel ───────────────────────────────────
             AnimalIconSeeder::class,
             DestinationSeeder::class,
 
-            // ── CMS / Frontend ────────────────────────────────────
+                // ── CMS / Frontend ────────────────────────────────────
             NavigationMenuSeeder::class,
         ]);
     }

@@ -19,11 +19,8 @@ class DestinationController extends Controller
             'city.country',
             'activities',
             'animals',
-            'tours' => function ($query) {
-                $query->with(['category', 'destinations'])
-                      ->orderBy('name');
-            },
         ])
+            ->withCount('tours')
             ->where('slug', $slug)
             ->where('is_active', true)
             ->firstOrFail();

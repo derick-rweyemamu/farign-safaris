@@ -63,10 +63,11 @@
                         {{ $destination->animals->count() }} {{ Str::plural('Animal', $destination->animals->count()) }}
                     </span>
                 @endif
-                @if($destination->tours->count())<span
+                @php $totalToursCount = $destination->tours_count ?? (isset($tours) ? $tours->total() : $destination->tours->count()); @endphp
+                @if($totalToursCount > 0)<span
                         class="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-[3px] text-sm font-medium text-gray-200">
                         <x-icon name="map-folded" class="w-4 h-4 mr-2 text-brand-primary" />
-                        {{ $destination->tours->count() }} {{ Str::plural('Tour', $destination->tours->count()) }}
+                        {{ $totalToursCount }} {{ Str::plural('Tour', $totalToursCount) }}
                     </span>
                 @endif
             </div>
@@ -83,7 +84,7 @@
                 <div>
                     <span
                         class="inline-block text-xs font-bold uppercase tracking-widest text-brand-primary mb-3 border-b-2 border-brand-primary pb-1">{{ __('About
-                            this Destination') }}</span>
+                                                                    this Destination') }}</span>
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white font-brand leading-snug mb-6">
                         Discover {{ $destination->name }}
                     </h2>
@@ -94,7 +95,8 @@
                         </div>
                     @else
                         <p class="text-gray-500 dark:text-gray-400 italic text-lg">{{ __('No description available for this destination
-                                    yet.') }}</p>
+                                                                                                                    yet.') }}
+                        </p>
                     @endif
                 </div>
 
@@ -103,20 +105,20 @@
                     @php $gallery = array_values($destination->gallery ?? []); @endphp
                     @if(count($gallery))
                         <div x-data="{
-                                                                                        current: 0,
-                                                                                        total: {{ count($gallery) }},
-                                                                                        lightbox: null,
-                                                                                        autoSlideInterval: null,
-                                                                                        startAutoSlide() {
-                                                                                            this.autoSlideInterval = setInterval(() => { this.next(); }, 4500);
-                                                                                        },
-                                                                                        stopAutoSlide() {
-                                                                                            clearInterval(this.autoSlideInterval);
-                                                                                        },
-                                                                                        prev() { this.current = (this.current - 1 + this.total) % this.total; },
-                                                                                        next() { this.current = (this.current + 1) % this.total; }
-                                                                                    }" x-init="startAutoSlide()"
-                            @keydown.escape.window="lightbox = null" @mouseenter="stopAutoSlide()"
+                                                                                                                                                                        current: 0,
+                                                                                                                                                                        total: {{ count($gallery) }},
+                                                                                                                                                                        lightbox: null,
+                                                                                                                                                                        autoSlideInterval: null,
+                                                                                                                                                                        startAutoSlide() {
+                                                                                                                                                                            this.autoSlideInterval = setInterval(() => { this.next(); }, 4500);
+                                                                                                                                                                        },
+                                                                                                                                                                        stopAutoSlide() {
+                                                                                                                                                                            clearInterval(this.autoSlideInterval);
+                                                                                                                                                                        },
+                                                                                                                                                                        prev() { this.current = (this.current - 1 + this.total) % this.total; },
+                                                                                                                                                                        next() { this.current = (this.current + 1) % this.total; }
+                                                                                                                                                                    }"
+                            x-init="startAutoSlide()" @keydown.escape.window="lightbox = null" @mouseenter="stopAutoSlide()"
                             @mouseleave="startAutoSlide()"
                             class="relative w-full rounded-[3px] overflow-hidden shadow-xl border border-gray-100 dark:border-gray-800 group"
                             style="aspect-ratio: 4/3;">
@@ -215,8 +217,7 @@
                 {{-- Section header --}}
                 <div class="text-center mb-12">
                     <span
-                        class="inline-block text-xs font-bold uppercase tracking-widest text-brand-primary mb-3 border-b-2 border-brand-primary pb-1">{{ __('Things
-                                to Do') }}</span>
+                        class="inline-block text-xs font-bold uppercase tracking-widest text-brand-primary mb-3 border-b-2 border-brand-primary pb-1">{{ __('Things to Do') }}</span>
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white font-brand">
                         Activities at {{ $destination->name }}
                     </h2>
@@ -241,9 +242,9 @@
                             );
                         @endphp
                         <div x-data="{
-                                            activityName: {{ Js::from($activity->name) }},
-                                            activityContent: {{ Js::from($activity->description ?? '') }}
-                                        }"
+                                                                                                                                                                    activityName: {{ Js::from($activity->name) }},
+                                                                                                                                                                    activityContent: {{ Js::from($activity->description ?? '') }}
+                                                                                                                                                                }"
                             class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] group bg-white dark:bg-gray-800 rounded-[3px] border border-gray-100 dark:border-gray-700 p-6 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col">
                             <h3
                                 class="text-lg text-center font-bold text-gray-900 dark:text-white font-brand mb-3 group-hover:text-brand-primary transition-colors">
@@ -263,7 +264,8 @@
                                 </div>
                             @else
                                 <p class="text-gray-400 dark:text-gray-500 text-sm italic flex-grow">
-                                    {{ __('An exciting activity awaiting you at this destination.') }}</p>
+                                    {{ __('An exciting activity awaiting you at this destination.') }}
+                                </p>
                             @endif
                         </div>
                     @endforeach
@@ -274,54 +276,53 @@
     {{-- ── ATTRACTIONS CAROUSEL ─────────────────────────────────────────────── --}}
     @if($destination->attractions->count())
         <section class="py-16 md:py-24 bg-white dark:bg-gray-950 overflow-hidden">
-            <div class="max-w-[1400px] mx-auto px-4 md:px-10 lg:px-16">
+            <div class="max-w-7xl mx-auto px-4 md:px-10 lg:px-16">
                 {{-- Section header --}}
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-[2.75rem] font-bold text-[#fbb158] mb-6" style="font-family: 'Indie Flower', cursive; letter-spacing: 0.05em; text-transform: uppercase;">
-                        {{ strtoupper($destination->name) }} ATTRACTIONS
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white font-brand">
+                        {{ ($destination->name) }} Attractions
                     </h2>
-                    @if($destination->content)
-                        <div class="mt-4 text-gray-600 dark:text-gray-400 max-w-4xl mx-auto text-[15px] leading-relaxed prose dark:prose-invert">
-                            {!! is_array($destination->content) ? ($destination->content['en'] ?? reset($destination->content)) : $destination->content !!}
-                        </div>
-                    @endif
                 </div>
 
                 {{-- Alpine.js Carousel --}}
                 <div x-data="{
-                    currentPage: 0,
-                    totalPages: 0,
-                    itemWidth: 0,
-                    init() {
-                        this.$nextTick(() => this.calculate());
-                        window.addEventListener('resize', () => this.calculate());
-                        this.$refs.slider.addEventListener('scroll', () => {
-                            if(this.itemWidth > 0) {
-                                this.currentPage = Math.round(this.$refs.slider.scrollLeft / this.itemWidth);
-                            }
-                        });
-                    },
-                    calculate() {
-                        const totalItems = {{ $destination->attractions->count() }};
-                        let itemsPerPage = window.innerWidth >= 1024 ? 3 : (window.innerWidth >= 768 ? 2 : 1);
-                        this.totalPages = Math.max(1, totalItems - itemsPerPage + 1);
-                        if (this.$refs.slider.children.length > 0) {
-                            const gap = 24; // 1.5rem (gap-6)
-                            this.itemWidth = this.$refs.slider.children[0].offsetWidth + gap;
-                        }
-                    },
-                    scrollNext() { this.$refs.slider.scrollBy({ left: this.itemWidth, behavior: 'smooth' }); },
-                    scrollPrev() { this.$refs.slider.scrollBy({ left: -this.itemWidth, behavior: 'smooth' }); },
-                    scrollToPage(index) { this.$refs.slider.scrollTo({ left: index * this.itemWidth, behavior: 'smooth' }); }
-                }" class="relative group">
+                                                                    currentPage: 0,
+                                                                    totalPages: 0,
+                                                                    itemWidth: 0,
+                                                                    init() {
+                                                                        this.$nextTick(() => this.calculate());
+                                                                        window.addEventListener('resize', () => this.calculate());
+                                                                        this.$refs.slider.addEventListener('scroll', () => {
+                                                                            if(this.itemWidth > 0) {
+                                                                                this.currentPage = Math.round(this.$refs.slider.scrollLeft / this.itemWidth);
+                                                                            }
+                                                                        });
+                                                                    },
+                                                                    calculate() {
+                                                                        const totalItems = {{ $destination->attractions->count() }};
+                                                                        let itemsPerPage = window.innerWidth >= 1024 ? 3 : (window.innerWidth >= 768 ? 2 : 1);
+                                                                        this.totalPages = Math.max(1, totalItems - itemsPerPage + 1);
+                                                                        if (this.$refs.slider.children.length > 0) {
+                                                                            const gap = 24; // 1.5rem (gap-6)
+                                                                            this.itemWidth = this.$refs.slider.children[0].offsetWidth + gap;
+                                                                        }
+                                                                    },
+                                                                    scrollNext() { this.$refs.slider.scrollBy({ left: this.itemWidth, behavior: 'smooth' }); },
+                                                                    scrollPrev() { this.$refs.slider.scrollBy({ left: -this.itemWidth, behavior: 'smooth' }); },
+                                                                    scrollToPage(index) { this.$refs.slider.scrollTo({ left: index * this.itemWidth, behavior: 'smooth' }); }
+                                                                }" class="relative group">
                     <!-- Carousel Container -->
-                    <div x-ref="slider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 -mx-4 px-4 md:mx-0 md:px-0" style="scrollbar-width: none; -ms-overflow-style: none;">
+                    <div x-ref="slider"
+                        class="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 -mx-4 px-4 md:mx-0 md:px-0"
+                        style="scrollbar-width: none; -ms-overflow-style: none;">
                         @foreach($destination->attractions->sortBy('sort_order') as $index => $attraction)
                             <div class="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex-none snap-start relative">
                                 <!-- Image -->
                                 <div class="w-full h-[320px] overflow-hidden">
                                     @if($attraction->featured_image)
-                                        <img src="{{ Storage::url($attraction->featured_image) }}" alt="{{ is_array($attraction->title) ? ($attraction->title['en'] ?? reset($attraction->title)) : $attraction->title }}" class="w-full h-full object-cover">
+                                        <img src="{{ Storage::url($attraction->featured_image) }}"
+                                            alt="{{ is_array($attraction->title) ? ($attraction->title['en'] ?? reset($attraction->title)) : $attraction->title }}"
+                                            class="w-full h-full object-cover">
                                     @else
                                         <div class="w-full h-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
                                             <x-icon name="photo" class="w-12 h-12 text-gray-400" />
@@ -329,7 +330,8 @@
                                     @endif
                                 </div>
                                 <!-- Content Box -->
-                                <div class="bg-[#F8F9FA] dark:bg-gray-900 mx-6 -mt-16 relative z-10 p-6 md:p-8 text-center h-[200px] flex flex-col justify-start shadow-sm hover:shadow-md transition-shadow">
+                                <div
+                                    class="bg-[#F8F9FA] dark:bg-gray-900 mx-6 -mt-16 relative z-10 p-6 md:p-8 text-center h-[200px] flex flex-col justify-start shadow-sm hover:shadow-md transition-shadow">
                                     <h3 class="text-base font-bold text-gray-900 dark:text-white font-brand mb-3 tracking-wide">
                                         {{ is_array($attraction->title) ? ($attraction->title['en'] ?? reset($attraction->title)) : $attraction->title }}
                                     </h3>
@@ -344,26 +346,33 @@
                     </div>
 
                     <!-- Navigation Arrows -->
-                    <button @click="scrollPrev" :disabled="currentPage === 0" class="absolute left-2 top-[30%] -translate-y-1/2 w-8 h-8 rounded-full bg-white/70 hover:bg-white text-gray-800 flex items-center justify-center shadow backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hidden md:flex z-20">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    <button @click="scrollPrev" :disabled="currentPage === 0"
+                        class="absolute left-2 top-[30%] -translate-y-1/2 w-8 h-8 rounded-full bg-white/70 hover:bg-white text-gray-800 flex items-center justify-center shadow backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hidden md:flex z-20">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
                     </button>
-                    <button @click="scrollNext" :disabled="currentPage >= totalPages - 1" class="absolute right-2 top-[30%] -translate-y-1/2 w-8 h-8 rounded-full bg-white/70 hover:bg-white text-gray-800 flex items-center justify-center shadow backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hidden md:flex z-20">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    <button @click="scrollNext" :disabled="currentPage >= totalPages - 1"
+                        class="absolute right-2 top-[30%] -translate-y-1/2 w-8 h-8 rounded-full bg-white/70 hover:bg-white text-gray-800 flex items-center justify-center shadow backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hidden md:flex z-20">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
                     </button>
 
                     <!-- Pagination Dots -->
                     <div class="flex justify-center items-center gap-2 mt-8" x-show="totalPages > 1" style="display: none;">
                         <template x-for="(_, index) in totalPages" :key="index">
-                            <button @click="scrollToPage(index)" 
-                                    class="h-1.5 transition-all duration-300 rounded-full"
-                                    :class="currentPage === index ? 'w-8 bg-[#fbb158]' : 'w-4 bg-[#F9E3C5] dark:bg-gray-700 hover:bg-[#fbb158]/50'">
+                            <button @click="scrollToPage(index)" class="h-1.5 transition-all duration-300 rounded-full"
+                                :class="currentPage === index ? 'w-8 bg-[#fbb158]' : 'w-4 bg-[#F9E3C5] dark:bg-gray-700 hover:bg-[#fbb158]/50'">
                             </button>
                         </template>
                     </div>
                 </div>
 
                 <style>
-                    .scrollbar-hide::-webkit-scrollbar { display: none; }
+                    .scrollbar-hide::-webkit-scrollbar {
+                        display: none;
+                    }
                 </style>
             </div>
         </section>
@@ -372,15 +381,21 @@
 
     {{-- ── SECTION 4: WILDLIFE / ANIMALS ──────────────────────────────── --}}
     @if($destination->animals->count())
-        <section class="py-16 md:py-20 bg-white dark:bg-gray-950">
-            <div class="max-w-7xl mx-auto px-6 md:px-16">
+        <section class="relative py-16 md:py-20 bg-brand-primary overflow-hidden">
+            {{-- Subtle ambient layers for depth --}}
+            <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/15 pointer-events-none"></div>
+            <div class="absolute -top-24 -left-24 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-black/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative max-w-7xl mx-auto px-6 md:px-16 z-10">
                 {{-- Section header --}}
                 <div class="text-center mb-12">
                     <span
-                        class="inline-block text-xs font-bold uppercase tracking-widest text-brand-primary mb-3 border-b-2 border-brand-primary pb-1">{{ __('Wildlife') }}</span>
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white font-brand">
-                        {{ __('Animals You Can Spot') }}</h2>
-                    <p class="mt-3 text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+                        class="inline-block text-xs font-bold uppercase tracking-widest text-white/90 mb-3 border-b-2 border-white/40 pb-1">{{ __('Wildlife') }}</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white font-brand">
+                        {{ __('Animals You Can Spot') }}
+                    </h2>
+                    <p class="mt-3 text-white/90 max-w-xl mx-auto text-base font-light">
                         {{ $destination->name }} is home to an incredible array of wildlife. Keep your eyes open for these
                         amazing creatures.
                     </p>
@@ -390,13 +405,13 @@
                 <div class="flex flex-wrap justify-center gap-5">
                     @foreach($destination->animals as $animal)
                         <div
-                            class="w-[140px] sm:w-[160px] lg:w-[200px] group relative text-center flex flex-col items-center justify-center h-full gap-3 p-5 bg-gray-50 dark:bg-gray-800/50 rounded-[3px] border border-gray-100 dark:border-gray-700 hover:border-brand-primary/40 hover:shadow-md transition-all duration-300 cursor-help">
+                            class="w-[140px] sm:w-[160px] lg:w-[200px] group relative text-center flex flex-col items-center justify-center h-full gap-3 p-5 bg-white dark:bg-gray-900 rounded-[3px] border border-white/20 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-help">
 
                             {{-- Icon pulled from the database --}}
                             @if($animal->icon)<img src="{{ Storage::url($animal->icon) }}" alt="{{ $animal->name }}"
                                 class="w-14 h-14 object-contain transition-transform duration-500 group-hover:scale-110 flex-shrink-0">
                             @else
-                                <x-icon name="heart" class="w-10 h-10 text-gray-400 dark:text-gray-500" />
+                                <x-icon name="heart" class="w-10 h-10 text-brand-primary" />
                             @endif
 
                             <span
@@ -434,64 +449,40 @@
     @endif
 
 
-    {{-- ── SECTION 5: TOURS AT THIS DESTINATION ──────────────────────── --}}
-
-    @if($destination->tours->count())
-        <section class="py-16 md:py-20 bg-gray-50 dark:bg-gray-900">
-            <div class="max-w-7xl mx-auto px-6 md:px-16">
-                {{-- Section header --}}
-                <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-4">
-                    <div>
-                        <span
-                            class="inline-block text-xs font-bold uppercase tracking-widest text-brand-primary mb-3 border-b-2 border-brand-primary pb-1">{{ __('Explore') }}</span>
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white font-brand">
-                            Tours in {{ $destination->name }}
-                        </h2>
-                        <p class="mt-3 text-gray-500 dark:text-gray-400 max-w-xl">
-                            {{ __('Hand-curated safari experiences taking you through the heart of this incredible destination.') }}
-                        </p>
-                    </div>
-                    <a href="{{ route('tours.index') }}"
-                        class="inline-flex items-center justify-center bg-brand-light text-brand-primary hover:bg-brand-primary hover:text-white dark:hover:text-gray-950 px-5 py-2.5 rounded-[3px] font-bold text-sm transition-all duration-300 group/btn">{{ __('View all tours') }}<x-icon
-                            name="arrow-right"
-                            class="w-4 h-4 ml-1.5 transform group-hover/btn:translate-x-1 transition-transform" />
-                    </a>
-                </div>
-
-                {{-- Tour cards grid --}}
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach($destination->tours as $tour)
-                        <x-tour-card :tour="$tour" />
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
+    {{-- ── SECTION 5: TOURS AT THIS DESTINATION (LIVEWIRE ASYNC) ─────────── --}}
+    <livewire:frontend.destination-tours :destination-id="$destination->id" />
 
 
     {{-- ── CTA BANNER ──────────────────────────────────────────────────── --}}
-    <section class="relative py-20 overflow-hidden"
-        style="background: linear-gradient(135deg, #1a0e06 0%, #2E1F12 50%, #3d2a18 100%);">
+    <section class="relative py-20 overflow-hidden bg-brand-primary">
+        {{-- Subtle decorative ambient layers for depth --}}
+        <div class="absolute inset-0 bg-gradient-to-br from-black/10 via-transparent to-black/20 pointer-events-none"></div>
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-black/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div class="relative max-w-4xl mx-auto px-6 text-center">
+        <div class="relative max-w-4xl mx-auto px-6 text-center z-10">
             <div
-                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-sm bg-brand-primary/20 border border-brand-primary/40 text-brand-primary text-xs font-bold uppercase tracking-widest mb-6">
-
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-sm bg-white/15 border border-white/25 text-white text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-sm shadow-sm">
                 Ready to Visit {{ $destination->name }}?
             </div>
-            <h2 class="text-3xl md:text-4xl font-bold text-white font-brand mb-5 leading-tight">
-                {{ __('Your Safari Adventure Awaits') }}</h2>
-            <p class="text-gray-300 text-lg mb-8 leading-relaxed max-w-2xl mx-auto">
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white font-brand mb-5 leading-tight drop-shadow-sm">
+                {{ __('Your Safari Adventure Awaits') }}
+            </h2>
+            <p class="text-white/90 text-lg md:text-xl mb-8 leading-relaxed max-w-2xl mx-auto font-light">
                 Let our experienced guides take you on an unforgettable journey through {{ $destination->name }}. Enquire
                 today to start planning.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a href="{{ route('tours.index') }}"
-                    class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-primary text-white font-bold rounded-[3px] hover:bg-brand-primary-hover transition-all duration-300 shadow-lg hover:shadow-brand-primary/30 hover:-translate-y-0.5 text-sm uppercase tracking-wide">
-                    <x-icon name="map-folded" class="w-4 h-4" />{{ __('Browse All Tours') }}</a>
+                    class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-brand-primary font-bold rounded-[3px] hover:bg-white/95 transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-0.5 text-sm uppercase tracking-wide">
+                    <x-icon name="map-folded" class="w-4 h-4 text-brand-primary" />
+                    {{ __('Browse All Tours') }}
+                </a>
                 <a href="{{ route('frontend.destinations.index') }}"
-                    class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 border border-white/30 text-white font-bold rounded-[3px] hover:bg-white/20 transition-all duration-300 text-sm uppercase tracking-wide backdrop-blur-sm">
-                    <x-icon name="map-pin" class="w-4 h-4" />{{ __('More Destinations') }}</a>
+                    class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 border border-white/30 text-white font-bold rounded-[3px] hover:bg-white/20 transition-all duration-300 text-sm uppercase tracking-wide backdrop-blur-sm hover:-translate-y-0.5">
+                    <x-icon name="map-pin" class="w-4 h-4" />
+                    {{ __('More Destinations') }}
+                </a>
             </div>
         </div>
     </section>
